@@ -72,8 +72,7 @@ export default function ContactUs() {
                   Book Your Consultation
                 </button>
   
-                <ul className="mt-5 space-y-3 text-sm sm:text-base text-zinc-300">
-                  <Bullet>Personalized project consultation & strategy</Bullet>
+                <ul className="mt-5 space-y-3 text-sm sm:text-base text-zinc-300"><Bullet>Personalized project consultation & strategy</Bullet>
                   <Bullet>Timeline & budget discussion</Bullet>
                   <Bullet>Creative direction & vision guidance</Bullet>
                   <Bullet>Custom proposal & implementation roadmap</Bullet>
