@@ -1344,7 +1344,7 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
             <select
               value={countryCode}
               onChange={e => setCountryCode(e.target.value)}
-              className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none text-white min-w-[120px]"
+              className="p-3 rounded bg-[#252529] border border-gray-700 focus:border-orange-500 focus:outline-none text-white min-w-[120px]"
               title="Select country code"
             >
               {countryCodes.map((country, index) => (
