@@ -952,37 +952,9 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
               )}
             </div>
           </div>
-          <div className="grid md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-sm font-medium text-white-400 mb-2">Phone Number</label>
-              <div className="flex gap-2">
-                <select
-                  value={countryCode}
-                  onChange={e => setCountryCode(e.target.value)}
-                  className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none text-white min-w-[120px]"
-                  title="Select country code"
-                >
-                  {countryCodes.map((country, index) => (
-                    <option key={`${country.code}-${country.name}-${index}`} value={country.code}>
-                      {country.flag} {country.code} {country.name}
-                    </option>
-                  ))}
-                </select>
-                <input
-                  type="tel"
-                  value={phone}
-                  onChange={e => setPhone(e.target.value.replace(/\D/g, ''))} // Only allow digits
-                  placeholder="123456789"
-                  className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none flex-1 text-white placeholder-orange-300 ${
-                    phone && phone.length >= 7 ? 'border-green-500' :
-                    phone && phone.length < 7 ? 'border-red-500' : 'border-orange-500'
-                  }`}
-                />
-              </div>
-              {phone && phone.length < 7 && (
-                <div className="text-red-400 text-xs mt-1">Please enter a valid phone number (at least 7 digits)</div>
-              )}
-            </div>
+
+          {/* Organization field - full width above phone */}
+          <div className="mb-4">
             <input
               type="text"
               value={organization}
@@ -994,6 +966,39 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
               required
             />
           </div>
+
+          {/* Phone number field - full width below organization */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-white-400 mb-2">Phone Number</label>
+            <div className="flex gap-2">
+              <select
+                value={countryCode}
+                onChange={e => setCountryCode(e.target.value)}
+                className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none text-white min-w-[120px]"
+                title="Select country code"
+              >
+                {countryCodes.map((country, index) => (
+                  <option key={`${country.code}-${country.name}-${index}`} value={country.code}>
+                    {country.flag} {country.code} {country.name}
+                  </option>
+                ))}
+              </select>
+              <input
+                type="tel"
+                value={phone}
+                onChange={e => setPhone(e.target.value.replace(/\D/g, ''))} // Only allow digits
+                placeholder="123456789"
+                className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none flex-1 text-white placeholder-orange-300 ${
+                  phone && phone.length >= 7 ? 'border-green-500' :
+                  phone && phone.length < 7 ? 'border-red-500' : 'border-orange-500'
+                }`}
+              />
+            </div>
+            {phone && phone.length < 7 && (
+              <div className="text-red-400 text-xs mt-1">Please enter a valid phone number (at least 7 digits)</div>
+            )}
+          </div>
+
           <textarea
             value={project}
             onChange={e => setProject(e.target.value)}
