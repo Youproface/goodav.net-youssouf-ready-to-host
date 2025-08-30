@@ -1311,9 +1311,9 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="Email Address *"
-              className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none w-full text-white placeholder-orange-300 ${
+              className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 ${
                 email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-green-500' :
-                email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-red-500' : 'border-orange-500'
+                email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-red-500' : 'border-gray-700 focus:border-orange-500'
               }`}
               required
             />
