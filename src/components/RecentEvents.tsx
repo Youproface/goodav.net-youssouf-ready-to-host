@@ -239,17 +239,17 @@ export default function RecentEvents() {
                 <GalleryTile
                   index={0}
                   onClick={() => openLightbox(0)}
-                  src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_1.jpg"
+                  src="/images/Home/Events/GOODAV_Event_1.jpg"
                 />
                 <GalleryTile
                   index={1}
                   onClick={() => openLightbox(1)}
-                  src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_2.jpg"
+                  src="/images/Home/Events/GOODAV_Event_2.jpg"
                 />
                 <GalleryTile
                   index={2}
                   onClick={() => openLightbox(2)}
-                  src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_3.jpg"
+                  src="/images/Home/Events/GOODAV_Event_3.jpg"
                 />
               </div>
 
@@ -281,19 +281,19 @@ export default function RecentEvents() {
                 className="col-span-1"
                 index={3}
                 onClick={() => openLightbox(3)}
-                src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_4.jpg"
+                src="/images/Home/Events/GOODAV_Event_4.jpg"
               />
               <GalleryTile
                 className="col-span-1"
                 index={4}
                 onClick={() => openLightbox(4)}
-                src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_5.jpg"
+                src="/images/Home/Events/GOODAV_Event_5.jpg"
               />
               <GalleryTile
                 className="col-span-1"
                 index={5}
                 onClick={() => openLightbox(5)}
-                src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_Master.jpg"
+                src="/images/Home/Events/GOODAV_Event_Master.jpg"
               />
             </div>
 
