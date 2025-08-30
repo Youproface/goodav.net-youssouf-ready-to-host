@@ -1353,14 +1353,14 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
         </div>
 
         {/* Organization field */}
-        <div className="mb-4">
+        <div className="mb-8 relative">
           <input
             type="text"
             value={organization}
             onChange={e => setOrganization(e.target.value)}
             placeholder="Organization *"
-            className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 ${
-              organization.trim() ? 'border-orange-500' : 'border-gray-700 focus:border-orange-500'
+            className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 transition-all duration-200 ${
+              organization.trim() ? 'border-orange-500 shadow-lg shadow-orange-500/20' : 'border-gray-700 focus:border-orange-500'
             }`}
             required
           />
