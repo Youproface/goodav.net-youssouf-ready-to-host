@@ -53,6 +53,7 @@ export default function BookingModal({
     if (!name.trim()) errors.push('Full name is required');
     if (!email.trim()) errors.push('Email address is required');
     if (!organization.trim()) errors.push('Organization is required');
+    if (!project.trim()) errors.push('Project description is required');
     if (!selectedDate) errors.push('Please select a date');
     if (!selectedTime) errors.push('Please select a time slot');
 
