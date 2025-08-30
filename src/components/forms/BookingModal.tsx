@@ -575,6 +575,67 @@ export default function BookingModal({
           </div>
         </div>
       )}
+
+      {/* Success/Error Popup */}
+      {showPopup && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-[#1b1b1d] w-full max-w-md mx-4 rounded-xl shadow-2xl border border-gray-700 p-6 relative">
+            {/* Close Button */}
+            <button
+              onClick={closePopup}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl transition-colors"
+              aria-label="Close popup"
+            >
+              ✕
+            </button>
+
+            {/* Icon */}
+            <div className="flex justify-center mb-4">
+              {popupType === 'success' ? (
+                <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              ) : (
+                <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </div>
+              )}
+            </div>
+
+            {/* Title */}
+            <h3 className={`text-xl font-semibold text-center mb-2 ${
+              popupType === 'success' ? 'text-green-400' : 'text-red-400'
+            }`}>
+              {popupMessage}
+            </h3>
+
+            {/* Details */}
+            {popupDetails && (
+              <p className="text-gray-300 text-center text-sm leading-relaxed mb-6">
+                {popupDetails}
+              </p>
+            )}
+
+            {/* Action Button */}
+            <div className="flex justify-center">
+              <button
+                onClick={closePopup}
+                className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+                  popupType === 'success'
+                    ? 'bg-green-600 hover:bg-green-700 text-white'
+                    : 'bg-red-600 hover:bg-red-700 text-white'
+                }`}
+              >
+                {popupType === 'success' ? 'Continue' : 'Try Again'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
