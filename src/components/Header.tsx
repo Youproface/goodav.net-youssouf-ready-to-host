@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from '../assets/images/all_site_images/Assets/logo.png';
 import { Link } from "react-router-dom";
+import BookingModal from "./forms/BookingModal";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
