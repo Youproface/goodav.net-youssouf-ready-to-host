@@ -139,8 +139,10 @@ All colors MUST be HSL for proper theming.
 
 /* Radix UI Tooltip Styles */
 [data-radix-tooltip-content] {
-  z-index: 9999;
+  z-index: 10000 !important;
+  position: relative;
   animation: tooltip-appear 0.2s ease-out;
+  pointer-events: none;
 }
 
 @keyframes tooltip-appear {
