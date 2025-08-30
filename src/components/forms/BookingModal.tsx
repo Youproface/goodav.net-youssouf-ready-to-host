@@ -576,7 +576,7 @@ export default function BookingModal({
                         Next →
                       </button>
                     </Tooltip.Trigger>
-                    {((step >= 1 && step <= 4 && !canProceed) || (step === 5 && !isFormValid()) || (step === 7 && (!selectedDate || !selectedTime))) && (
+                    {((step >= 1 && step <= 4 && !canProceed) || (step === 5 && !isFormValid()) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed))) && (
                       <Tooltip.Portal>
                         <Tooltip.Content
                           className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
