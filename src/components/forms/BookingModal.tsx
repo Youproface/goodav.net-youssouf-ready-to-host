@@ -151,7 +151,7 @@ export default function BookingModal({
               {step === 3 && <Step3 setCanProceed={setCanProceed} />}
               {step === 4 && <Step4 setCanProceed={setCanProceed} />}
               {step === 5 && <Step5 nextStep={nextStep} />}
-              {step === 6 && <Step6 />}
+              {step === 6 && <Step6 submitStatus={submitStatus} handleFormSubmit={handleFormSubmit} />}
             </div>
 
             {/* Navigation */}
