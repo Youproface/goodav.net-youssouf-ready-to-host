@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import {
   Video,
@@ -16,16 +17,368 @@ import {
   Settings,
   User,
   Building,
-} from "lucide-react"; // install via: npm install lucide-react
+} from "lucide-react";
 
-export default function BookingModal({
-  isOpen,
-  onClose,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
+// -------------------------
+// STEP 1
+// -------------------------
+function Step1({ setCanProceed }) {
+  const [active, setActive] = useState(null);
+  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
+  const options = [
+    { label: "Video Production", icon: Video },
+    { label: "Photography", icon: Camera },
+    { label: "Radio/Podcast", icon: Radio },
+    { label: "Corporate Event", icon: Briefcase },
+    { label: "Other", icon: Users },
+  ];
+  return (
+    <>
+      <h3 className="text-xl font-semibold mb-4">What type of project?</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        {options.map((opt, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`flex items-center gap-3 p-4 rounded-lg border border-gray-700 text-left ${active === i ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529]"}`}
+          >
+            <opt.icon className={`w-6 h-6 ${active === i ? "text-white" : "text-orange-400"}`} />
+            <span className="font-semibold">{opt.label}</span>
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// -------------------------
+// STEP 2
+// -------------------------
+function Step2({ setCanProceed }) {
+  const [active, setActive] = useState(null);
+  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
+  const options = [
+    { label: "Brand", icon: Building },
+    { label: "Individual", icon: User },
+    { label: "Organization", icon: Users },
+  ];
+  return (
+    <>
+      <h3 className="text-xl font-semibold mb-4">Who is this project for?</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        {options.map((opt, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`flex items-center gap-3 p-4 rounded-lg border border-gray-700 text-left ${active === i ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529]"}`}
+          >
+            <opt.icon className={`w-6 h-6 ${active === i ? "text-white" : "text-orange-400"}`} />
+            <span className="font-semibold">{opt.label}</span>
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// -------------------------
+// STEP 3
+// -------------------------
+function Step3({ setCanProceed }) {
+  const [active, setActive] = useState(null);
+  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
+  const options = [
+    { label: "Short-term", desc: "1-2 weeks", icon: Clock },
+    { label: "Medium-term", desc: "1-2 months", icon: Calendar },
+    { label: "Long-term", desc: "3+ months", icon: Layers },
+  ];
+  return (
+    <>
+      <h3 className="text-xl font-semibold mb-4">Project duration?</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        {options.map((opt, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`flex items-start gap-3 p-4 rounded-lg border border-gray-700 text-left ${active === i ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529]"}`}
+          >
+            <opt.icon className={`w-6 h-6 mt-1 ${active === i ? "text-white" : "text-orange-400"}`} />
+            <div>
+              <h4 className="font-semibold">{opt.label}</h4>
+              <p className="text-sm text-white-400">{opt.desc}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// -------------------------
+// STEP 4
+// -------------------------
+function Step4({ setCanProceed }) {
+  const [active, setActive] = useState(null);
+  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
+  const options = [
+    { label: "Startup Package", desc: "Essential production", icon: DollarSign },
+    { label: "Professional Package", desc: "Enhanced production", icon: Star },
+    { label: "Enterprise Package", desc: "Comprehensive service", icon: Layers },
+    { label: "Premium Package", desc: "Luxury features", icon: Settings },
+  ];
+  return (
+    <>
+      <h3 className="text-xl font-semibold mb-4">What’s your project investment level?</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        {options.map((opt, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`flex items-start gap-3 p-4 rounded-lg border border-gray-700 text-left ${active === i ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529]"}`}
+          >
+            <opt.icon className={`w-6 h-6 mt-1 ${active === i ? "text-white" : "text-orange-400"}`} />
+            <div>
+              <h4 className="font-semibold">{opt.label}</h4>
+              <p className="text-sm text-white-400">{opt.desc}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// -------------------------
+// STEP 5
+// -------------------------
+function Step5({ nextStep }) {
+  const [selected, setSelected] = useState<number[]>([]);
+  const options = [
+    { label: "Post-Production", desc: "Editing, sound design", icon: Film },
+    { label: "Animation & Graphics", desc: "Motion graphics, titles", icon: Layers },
+    { label: "Scriptwriting", desc: "Content creation", icon: PenTool },
+    { label: "Distribution", desc: "Social media, broadcasting", icon: Share2 },
+  ];
+  const toggleOption = (i: number) => {
+    setSelected((prev) =>
+      prev.includes(i) ? prev.filter((item) => item !== i) : [...prev, i]
+    );
+  };
+  return (
+    <>
+      <h3 className="text-xl font-semibold mb-4">Any additional services needed?</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        {options.map((opt, i) => {
+          const isActive = selected.includes(i);
+          return (
+            <button
+              key={i}
+              onClick={() => toggleOption(i)}
+              className={`flex items-start gap-3 p-4 rounded-lg border text-left transition-colors ${isActive ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529] border-gray-700 hover:bg-[#2f2f31]"}`}
+            >
+              <opt.icon className={`w-6 h-6 mt-1 ${isActive ? "text-white" : "text-orange-400"}`} />
+              <div>
+                <h4 className="font-semibold">{opt.label}</h4>
+                <p className="text-sm text-white-400">{opt.desc}</p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+      <div className="flex justify-center">
+        <button
+          onClick={() => { setSelected([]); nextStep(); }}
+          className="mt-4 bg-orange-500 text-white p-2 rounded"
+        >
+          Skip – None needed
+        </button>
+      </div>
+    </>
+  );
+}
+
+// -------------------------
+// STEP 6
+// -------------------------
+function Step6({
+  selectedDate,
+  setSelectedDate,
+  selectedTime,
+  setSelectedTime,
+  timezone,
+  setTimezone,
+  submitStatus,
+  handleFormSubmit,
 }) {
-  // Add missing state variables for booking form
+  // Calendar and time slot picker UI
+  const today = new Date();
+  const [calendarMonth, setCalendarMonth] = useState(today.getMonth());
+  const [calendarYear, setCalendarYear] = useState(today.getFullYear());
+  function getDaysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate();
+  }
+  function getFirstDayOfWeek(year, month) {
+    return new Date(year, month, 1).getDay();
+  }
+  const daysInMonth = getDaysInMonth(calendarYear, calendarMonth);
+  const firstDayOfWeek = getFirstDayOfWeek(calendarYear, calendarMonth);
+  const calendarGrid = [];
+  let dayNum = 1;
+  for (let i = 0; i < 6; i++) {
+    const week = [];
+    for (let j = 0; j < 7; j++) {
+      if ((i === 0 && j < firstDayOfWeek) || dayNum > daysInMonth) {
+        week.push(null);
+      } else {
+        week.push(dayNum);
+        dayNum++;
+      }
+    }
+    calendarGrid.push(week);
+  }
+  function isPastDate(year, month, day) {
+    const d = new Date(year, month, day);
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    return d.getTime() < todayMidnight;
+  }
+  const timeSlots = ['10:00', '11:00', '13:00', '14:30', '16:00'];
+  function getConvertedTime(time, fromTz, toTz, dateObj) {
+    const [h, m] = time.split(':').map(Number);
+    const baseDate = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate(), h, m);
+    const utcDate = new Date(baseDate.toLocaleString('en-US', { timeZone: fromTz }));
+    const targetDateStr = utcDate.toLocaleString('en-US', { timeZone: toTz, hour: '2-digit', minute: '2-digit', hour12: false });
+    return targetDateStr;
+  }
+  const timeZones = [
+    'Africa/Kigali',
+    'Africa/Maputo',
+    'Africa/Lagos',
+    'Africa/Cairo',
+    'Europe/London',
+    'Europe/Paris',
+    'Europe/Berlin',
+    'America/New_York',
+    'America/Chicago',
+    'America/Denver',
+    'America/Los_Angeles',
+    'Asia/Dubai',
+    'Asia/Kolkata',
+    'Asia/Tokyo',
+    'Asia/Shanghai',
+    'Australia/Sydney',
+    'Pacific/Auckland',
+    'UTC',
+  ];
+  return (
+    <div className="flex flex-col md:flex-row gap-8">
+      <div className="w-full md:w-1/2">
+        <h3 className="text-xl font-semibold mb-4">Select a Date & Time</h3>
+        <div className="flex items-center justify-between mb-2">
+          <button
+            className="text-lg px-2"
+            onClick={() => {
+              if (calendarMonth === 0) {
+                setCalendarMonth(11);
+                setCalendarYear(calendarYear - 1);
+              } else {
+                setCalendarMonth(calendarMonth - 1);
+              }
+            }}
+            disabled={calendarYear === today.getFullYear() && calendarMonth === today.getMonth()}
+          >&#60;</button>
+          <span className="font-medium">{new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}</span>
+          <button
+            className="text-lg px-2"
+            onClick={() => {
+              if (calendarMonth === 11) {
+                setCalendarMonth(0);
+                setCalendarYear(calendarYear + 1);
+              } else {
+                setCalendarMonth(calendarMonth + 1);
+              }
+            }}
+          >&#62;</button>
+        </div>
+        <div className="grid grid-cols-7 gap-2 mb-2 text-center text-gray-400 text-xs">
+          {['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => <div key={d}>{d}</div>)}
+        </div>
+        <div className="grid grid-cols-7 gap-2 text-center">
+          {calendarGrid.flat().map((day, i) => (
+            day ? (
+              <button
+                key={i}
+                className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-bold transition-all
+                  ${isPastDate(calendarYear, calendarMonth, day) ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-orange-100 text-orange-700 hover:bg-orange-300'}
+                  ${selectedDate && selectedDate.day === day && selectedDate.month === calendarMonth && selectedDate.year === calendarYear ? 'bg-orange-600 text-white ring-4 ring-orange-400 shadow-lg scale-110 z-10' : ''}`}
+                disabled={isPastDate(calendarYear, calendarMonth, day)}
+                onClick={() => setSelectedDate({ day, month: calendarMonth, year: calendarYear })}
+                aria-label={isPastDate(calendarYear, calendarMonth, day) ? 'Past date not selectable' : `Select ${day} ${calendarMonth+1} ${calendarYear}`}
+              >
+                {day}
+              </button>
+            ) : <div key={i}></div>
+          ))}
+        </div>
+        <div className="mt-4">
+          <label htmlFor="timezone" className="font-medium text-sm mr-2">Time zone</label>
+          <select
+            id="timezone"
+            className="p-1 rounded bg-[#1b1b1d] text-orange-500 border border-orange-500"
+            value={timezone}
+            onChange={e => setTimezone(e.target.value)}
+            title="Select your time zone"
+          >
+            {timeZones.map(tz => (
+              <option key={tz} value={tz}>{tz}</option>
+            ))}
+          </select>
+        </div>
+        {/* Feedback and validation comments */}
+        {!selectedDate && <div className="text-orange-400 mt-4 text-sm">Please select a date to view available times.</div>}
+        {selectedDate && !selectedTime && <div className="text-orange-400 mt-4 text-sm">Please select a time slot to confirm your booking.</div>}
+        {selectedDate && selectedTime && <div className="mt-4 text-sm font-semibold text-orange-300">Ready to confirm: {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()} at {selectedTime} ({timezone})</div>}
+      </div>
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
+        <div className="mb-4 text-lg font-medium">
+          {selectedDate ? `${new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()}` : 'Select a date'}
+        </div>
+        <div className="flex flex-col gap-3 w-full max-w-xs">
+          {/* Time slots: disabled until date selected */}
+          {timeSlots.map(slot => (
+            <div key={slot} className="flex gap-2">
+              <button
+                className={`flex-1 py-2 rounded border text-center font-medium transition-all
+                  ${selectedDate ? (selectedTime === slot ? 'bg-orange-700 text-white border-orange-700' : 'bg-[#1b1b1d] text-orange-500 border-orange-500 hover:bg-orange-100') : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'}`}
+                onClick={() => selectedDate && setSelectedTime(slot)}
+                disabled={!selectedDate}
+              >
+                {slot}
+                {/* Show converted time if timezone is not Africa/Kigali */}
+                {timezone !== 'Africa/Kigali' && selectedDate && (
+                  <span className="block text-xs text-orange-300 mt-1">
+                    {(() => {
+                      const dateObj = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
+                      return getConvertedTime(slot, 'Africa/Kigali', timezone, dateObj);
+                    })()} ({timezone})
+                  </span>
+                )}
+              </button>
+              {selectedTime === slot && selectedDate && (
+                <button className="px-4 py-2 rounded bg-orange-600 text-white font-semibold shadow" onClick={() => alert(`Confirmed: ${selectedDate.day}/${selectedDate.month+1}/${selectedDate.year} at ${selectedTime}`)}>
+                  Confirm
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+export default function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) {
+  // Booking form state
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -36,9 +389,8 @@ export default function BookingModal({
   const [timezone, setTimezone] = useState('Africa/Kigali');
   const [step, setStep] = useState(1);
   const [modalOpen, setModalOpen] = useState(isOpen);
-  // Validation state for Step 1
   const [canProceed, setCanProceed] = useState(false);
-
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   const nextStep = () => setStep((s) => Math.min(s + 1, 6));
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
@@ -51,33 +403,24 @@ export default function BookingModal({
     } else {
       document.body.style.overflow = "unset";
     }
-
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
-  const handleClose = () => {
-    setModalOpen(false);
-    onClose();
-  };
+  // Close on ESC
+  useEffect(() => {
+    if (!modalOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [modalOpen, onClose]);
 
-
-   // Close on ESC
-    useEffect(() => {
-      if (!open) return;
-      const onKey = (e: KeyboardEvent) => {
-        if (e.key === "Escape") onClose();
-      };
-      window.addEventListener("keydown", onKey);
-      return () => window.removeEventListener("keydown", onKey);
-    }, [open, onClose]);
-    
   // Send booking data to backend API
-  const [submitStatus, setSubmitStatus] = useState(null);
   async function handleFormSubmit(e) {
     e.preventDefault();
-    // Validate required fields
     if (!name || !email || !selectedDate || !selectedTime) {
       setSubmitStatus('Please fill in all required fields.');
       return;
@@ -114,112 +457,6 @@ export default function BookingModal({
   return (
     <>
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center 
-                bg-gradient-to-br from-black/70 via-gray-900/60 to-black/70 
-                backdrop-blur-sm h-[100vh]">
-          <div className="bg-[#1b1b1d] w-[90%] max-w-3xl rounded-xl shadow-lg text-white p-6 md:p-8  mx-auto">
-            {/* Close Button */}
-            {/* <button
-              onClick={handleClose}
-              className="absolute top-3 right-3 text-gray-400 hover:text-white text-xl"
-            >
-              ✕
-            </button> */}
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close dialog"
-              className="group absolute right-4 top-[50px] -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/10 backdrop-blur-xl ring-2 ring-white/30 hover:bg-white/20 flex items-center justify-center shadow-lg"
-            >
-              <span className="h-8 w-8 rounded-full bg-gradient-to-br from-zinc-100/80 to-white/60 shadow-inner flex items-center justify-center">
-                <svg viewBox="0 0 24 24" className="h-4 w-4 text-zinc-800/80" aria-hidden>
-                  <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </span>
-            </button>
-            {/* Header */}
-            <h2 className="text-lg font-semibold text-orange-400 flex items-center gap-2">
-              Let’s Start Your Project
-            </h2>
-
-            {/* Progress Bar */}
-            <div className="w-full bg-gray-700 h-1 mt-3 rounded">
-              <div
-                className={`bg-orange-500 h-1 rounded transition-all duration-300`}
-                style={{ width: `${(step / 6) * 100}%` }}
-                aria-valuenow={(step / 6) * 100}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                role="progressbar"
-              ></div>
-            </div>
-
-            {/* Step Title */}
-            <p className="mt-4 text-sm font-medium">Step {step} of 6</p>
-
-            {/* Step Content */}
-            <div className="mt-6">
-              {step === 1 && typeof Step1 === 'function' && <Step1 setCanProceed={setCanProceed} />}
-              {step === 2 && typeof Step2 === 'function' && <Step2 setCanProceed={setCanProceed} />}
-              {step === 3 && typeof Step3 === 'function' && <Step3 setCanProceed={setCanProceed} />}
-              {step === 4 && typeof Step4 === 'function' && <Step4 setCanProceed={setCanProceed} />}
-              {step === 5 && typeof Step5 === 'function' && <Step5 nextStep={nextStep} />}
-              {step === 6 && typeof Step6 === 'function' && (
-                <Step6
-                  selectedDate={selectedDate}
-                  setSelectedDate={setSelectedDate}
-                  selectedTime={selectedTime}
-                  setSelectedTime={setSelectedTime}
-                  timezone={timezone}
-                  setTimezone={setTimezone}
-                  submitStatus={submitStatus}
-                  handleFormSubmit={handleFormSubmit}
-                />
-              )}
-            </div>
-
-            {/* Navigation */}
-            <div className="flex justify-between mt-8">
-              {step > 1 ? (
-                <button
-                  onClick={prevStep}
-                  className="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
-                >
-                  ← Previous
-                </button>
-              ) : (
-                <div />
-              )}
-
-              {step < 6 ? (
-                <button
-                  onClick={nextStep}
-                  className={`px-6 py-2 rounded-lg ${(step >= 1 && step <= 4 && !canProceed) ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
-                  disabled={step >= 1 && step <= 4 && !canProceed}
-                >
-                  Next →
-                </button>
-              ) : (
-                <button
-                  onClick={handleFormSubmit}
-                  className="flex items-center px-6 py-2 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-semibold"
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  <span>Schedule Consultation</span>
-                </button>
-              )}
-              <div
-                className={`bg-orange-500 h-1 rounded transition-all duration-300`}
-                style={{ width: `${(step / 6) * 100}%` }}
-                role="progressbar"
-                aria-valuenow={Math.round((step / 6) * 100)}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-label="Booking progress"
-                title="Booking progress"
-              ></div>
-    <>
-      {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black/70 via-gray-900/60 to-black/70 backdrop-blur-sm h-[100vh]">
           <div className="bg-[#1b1b1d] w-[90%] max-w-3xl rounded-xl shadow-lg text-white p-6 md:p-8 mx-auto">
             {/* Close Button */}
@@ -236,32 +473,28 @@ export default function BookingModal({
               </span>
             </button>
             {/* Header */}
-            <h2 className="text-lg font-semibold text-orange-400 flex items-center gap-2">
-              Let’s Start Your Project
-            </h2>
+            <h2 className="text-lg font-semibold text-orange-400 flex items-center gap-2">Let’s Start Your Project</h2>
             {/* Progress Bar */}
             <div className="w-full bg-gray-700 h-1 mt-3 rounded">
               <div
                 className={`bg-orange-500 h-1 rounded transition-all duration-300`}
                 style={{ width: `${(step / 6) * 100}%` }}
-                aria-valuenow={Math.round((step / 6) * 100)}
+                aria-valuenow={(step / 6) * 100}
                 aria-valuemin={0}
                 aria-valuemax={100}
                 role="progressbar"
-                aria-label="Booking progress"
-                title="Booking progress"
               ></div>
             </div>
             {/* Step Title */}
             <p className="mt-4 text-sm font-medium">Step {step} of 6</p>
             {/* Step Content */}
             <div className="mt-6">
-              {step === 1 && typeof Step1 === 'function' && <Step1 setCanProceed={setCanProceed} />}
-              {step === 2 && typeof Step2 === 'function' && <Step2 setCanProceed={setCanProceed} />}
-              {step === 3 && typeof Step3 === 'function' && <Step3 setCanProceed={setCanProceed} />}
-              {step === 4 && typeof Step4 === 'function' && <Step4 setCanProceed={setCanProceed} />}
-              {step === 5 && typeof Step5 === 'function' && <Step5 nextStep={nextStep} />}
-              {step === 6 && typeof Step6 === 'function' && (
+              {step === 1 && <Step1 setCanProceed={setCanProceed} />}
+              {step === 2 && <Step2 setCanProceed={setCanProceed} />}
+              {step === 3 && <Step3 setCanProceed={setCanProceed} />}
+              {step === 4 && <Step4 setCanProceed={setCanProceed} />}
+              {step === 5 && <Step5 nextStep={nextStep} />}
+              {step === 6 && (
                 <Step6
                   selectedDate={selectedDate}
                   setSelectedDate={setSelectedDate}
@@ -304,11 +537,11 @@ export default function BookingModal({
                 </button>
               )}
             </div>
+            {/* Feedback */}
+            {submitStatus && <div className="mt-4 text-orange-400 text-sm text-center">{submitStatus}</div>}
           </div>
         </div>
       )}
-    </>
-      </div>
     </>
   );
 }
