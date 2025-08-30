@@ -42,7 +42,7 @@ export default function Partners() {
           },
           "founder": {
             return (
-              <React.Fragment>
+              <div>
                 <SEO
                   title="Partners - GoodAV | Trusted Audiovisual Collaborators"
                   description="Meet GoodAV’s partners and collaborators. Discover why global organizations trust GoodAV for audiovisual production in Rwanda and Africa."
@@ -84,7 +84,7 @@ export default function Partners() {
                 <div className="bg-gray-900 text-white font-sans">
                   {/* ...existing code... */}
                 </div>
-              </React.Fragment>
+              </div>
             );
         </div>
 
