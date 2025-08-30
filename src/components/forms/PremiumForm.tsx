@@ -10,13 +10,6 @@ type Props = {
 export default function PremiumProjectModal({ open, onClose }: Props) {
   const [submitStatus, setSubmitStatus] = React.useState<string | null>(null);
   const [submitting, setSubmitting] = React.useState(false);
-
-type Props = {
-  open: boolean;
-  onClose: () => void;
-};
-
-export default function PremiumProjectModal({ open, onClose }: Props) {
   const dialogRef = useRef<HTMLDivElement>(null);
 
   // Close on ESC
