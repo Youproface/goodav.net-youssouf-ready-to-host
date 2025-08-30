@@ -567,20 +567,20 @@ export default function BookingModal({
                     <Tooltip.Trigger asChild>
                       <button
                         onClick={nextStep}
-                        className={`px-6 py-2 rounded-lg ${(step >= 1 && step <= 4 && !canProceed) ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
-                        disabled={step >= 1 && step <= 4 && !canProceed}
+                        className={`px-6 py-2 rounded-lg ${(step >= 1 && step <= 4 && !canProceed) || (step === 6 && !isFormValid()) ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
+                        disabled={(step >= 1 && step <= 4 && !canProceed) || (step === 6 && !isFormValid())}
                       >
                         Next →
                       </button>
                     </Tooltip.Trigger>
-                    {(step >= 1 && step <= 4 && !canProceed) && (
+                    {((step >= 1 && step <= 4 && !canProceed) || (step === 6 && !isFormValid())) && (
                       <Tooltip.Portal>
                         <Tooltip.Content
                           className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
                           sideOffset={8}
                           side="top"
                         >
-                          Please make a selection to continue
+                          {step >= 1 && step <= 4 ? 'Please make a selection to continue' : 'Please complete all required fields to proceed'}
                           <Tooltip.Arrow className="fill-gray-900" />
                         </Tooltip.Content>
                       </Tooltip.Portal>
