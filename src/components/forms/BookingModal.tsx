@@ -1221,7 +1221,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                       <button
                         className={`flex-1 py-2 rounded border text-center font-medium transition-all
                           ${!selectedDate ? 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed' :
-                            timeSlotConfirmed && selectedTime === slot ? 'bg-green-600 text-white border-green-600 cursor-not-allowed' :
+                            timeSlotConfirmed && selectedTime === slot ? 'bg-orange-600 text-white border-orange-600 cursor-not-allowed' :
                             selectedTime === slot ? 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20' :
                             'bg-[#252529] text-orange-400 border-gray-700 hover:bg-[#2f2f31]'}`}
                         onClick={() => {
