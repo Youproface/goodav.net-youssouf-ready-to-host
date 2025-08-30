@@ -577,50 +577,6 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
     const targetDateStr = utcDate.toLocaleString('en-US', { timeZone: toTz, hour: '2-digit', minute: '2-digit', hour12: false });
     return targetDateStr;
   }
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [organization, setOrganization] = useState("");
-  const [project, setProject] = useState("");
-  const [submitStatus, setSubmitStatus] = useState(null);
-  const [submitting, setSubmitting] = useState(false);
-
-  async function handleFormSubmit(e) {
-    e.preventDefault();
-    if (!name || !email || !selectedDate || !selectedTime) {
-      setSubmitStatus('Please fill in all required fields.');
-      return;
-    }
-    setSubmitting(true);
-    setSubmitStatus('Submitting...');
-    const bookingData = {
-      name,
-      email,
-      phone,
-      organization,
-      project,
-      date: selectedDate ? `${selectedDate.year}-${selectedDate.month+1}-${selectedDate.day}` : '',
-      time: selectedTime,
-      timezone,
-    };
-    try {
-      const res = await fetch('http://localhost:4000/api/bookings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bookingData),
-      });
-      const result = await res.json();
-      if (result.success) {
-        setSubmitStatus('Booking submitted successfully!');
-        // Optionally reset form fields here
-      } else {
-        setSubmitStatus(result.error || 'Submission failed.');
-      }
-    } catch (err) {
-      setSubmitStatus('Network error. Please try again.');
-    }
-    setSubmitting(false);
-  }
   return (
     <div className="flex flex-col md:flex-row gap-8">
       <div className="w-full md:w-1/2">
