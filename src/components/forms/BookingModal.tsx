@@ -583,7 +583,7 @@ export default function BookingModal({
                           sideOffset={8}
                           side="top"
                         >
-                          {step >= 1 && step <= 4 ? 'Please make a selection to continue' : step === 5 ? 'Please complete all required fields to proceed' : 'Please select a date and time to continue'}
+                          {step >= 1 && step <= 4 ? 'Please make a selection to continue' : step === 5 ? 'Please complete all required fields to proceed' : 'Please select a date, time, and confirm your selection to continue'}
                           <Tooltip.Arrow className="fill-gray-900" />
                         </Tooltip.Content>
                       </Tooltip.Portal>
