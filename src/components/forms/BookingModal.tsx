@@ -110,7 +110,7 @@ export default function BookingModal({
     const errors = validateForm();
 
     if (errors.length > 0) {
-      setSubmitStatus(`❌ ${errors.join('. ')}.`);
+      setSubmitStatus(`<i class="fas fa-times-circle text-red-400"></i> ${errors.join('. ')}.`);
       return;
     }
 
