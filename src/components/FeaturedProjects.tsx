@@ -358,7 +358,7 @@ export default function FeaturedProjects() {
           >
             More Projects
           </button>
-          <button className="px-6 py-3 border border-gray-600 hover:border-orange-500 text-gray-300 hover:text-orange-400 font-medium rounded-lg transition">
+            <button className="px-6 py-3 border border-gray-600 hover:border-orange-500 text-gray-300 hover:text-orange-400 font-medium rounded-lg transition" aria-label="Start the project">
             Start The Project →
           </button>
         </div>
