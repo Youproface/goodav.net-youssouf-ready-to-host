@@ -151,7 +151,7 @@ const Footer = () => {
     <Icon className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
   </a>
 ))}
-                  <a target="_blank" href="https://www.flickr.com/photos/202425883@N07">
+                  <a target="_blank" href="https://www.flickr.com/photos/202425883@N07" rel="noopener noreferrer">
                   <img className="w-10 h-10 bg-card border border-border rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-200"  src="https://cdn-icons-png.flaticon.com/512/5968/5968712.png" alt="Flickr" />
                   </a>
                 </div>
