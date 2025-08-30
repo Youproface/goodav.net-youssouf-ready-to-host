@@ -8,12 +8,12 @@ export default function RecentEvents() {
 
   // NEW: central list of gallery image sources (from your JSX below)
   const galleryImages = [
-    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_1.jpg",
-    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_2.jpg",
-    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_3.jpg",
-    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_4.jpg",
-    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_5.jpg",
-    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_Master.jpg",
+  "/images/Home/Events/GOODAV_Event_1.jpg",
+  "/images/Home/Events/GOODAV_Event_2.jpg",
+  "/images/Home/Events/GOODAV_Event_3.jpg",
+  "/images/Home/Events/GOODAV_Event_4.jpg",
+  "/images/Home/Events/GOODAV_Event_5.jpg",
+  "/images/Home/Events/GOODAV_Event_Master.jpg",
   ];
 
   // NEW: open/close and navigation
