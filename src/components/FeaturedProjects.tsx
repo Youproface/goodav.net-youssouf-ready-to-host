@@ -418,7 +418,7 @@ function Card({ project, setSelectedVideo }: { project: { id: number; title: str
         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
         loading="lazy"
       />
-      <button className="absolute inset-0 flex items-center justify-center">
+  <button className="absolute inset-0 flex items-center justify-center" title="Play project video" aria-label="Play project video">
         <span className="flex items-center justify-center w-12 h-12 rounded-full bg-orange-600/80 hover:bg-orange-600 transition" title="Play project video">
           <Play className="w-6 h-6 text-white" />
         </span>
