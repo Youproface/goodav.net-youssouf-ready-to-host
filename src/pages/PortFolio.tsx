@@ -11,16 +11,16 @@ const Portfolio = () => {
       />
       <SchemaMarkup
         schema={{
-          "@context": "https://schema.org",
-          "@type": "CreativeWork",
-          "name": "GoodAV Portfolio",
-          "description": "Award-winning audiovisual productions, documentaries, and event coverage by GoodAV.",
-          "creator": {
-            "@type": "Organization",
-            "name": "GoodAV"
+          '@context': 'https://schema.org',
+          '@type': 'CreativeWork',
+          name: 'GoodAV Portfolio',
+          description: 'Award-winning audiovisual productions, documentaries, and event coverage by GoodAV.',
+          creator: {
+            '@type': 'Organization',
+            name: 'GoodAV',
           },
-          "url": "https://goodav.net/portfolio",
-          "image": "https://goodav.net/image/portfolio/ias2025-cover.jpg"
+          url: 'https://goodav.net/portfolio',
+          image: 'https://goodav.net/image/portfolio/ias2025-cover.jpg',
         }}
       />
       <div className="min-h-screen bg-black text-white">
