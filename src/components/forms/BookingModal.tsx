@@ -642,11 +642,14 @@ export default function BookingModal({
       {/* Success/Error Popup */}
       {showPopup && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="bg-[#1b1b1d] w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700 p-6 relative popup-enter transform translate-y-0">
+          <div className="bg-[#1b1b1d] w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700 
+            p-4 sm:p-6 relative popup-enter transform translate-y-0 max-h-[90vh] overflow-y-auto">
             {/* Close Button */}
             <button
               onClick={closePopup}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl transition-colors"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-white 
+                text-xl transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center
+                touch-manipulation active:scale-95"
               aria-label="Close popup"
             >
               ✕
@@ -655,20 +658,20 @@ export default function BookingModal({
             {/* Icon */}
             <div className="flex justify-center mb-4">
               {popupType === 'success' ? (
-                <div className="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-orange-500/20 rounded-full flex items-center justify-center">
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
               ) : popupType === 'warning' ? (
-                <div className="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-orange-500/20 rounded-full flex items-center justify-center">
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                   </svg>
                 </div>
               ) : (
-                <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-red-500/20 rounded-full flex items-center justify-center">
+                  <svg className="w-6 h-6 sm:w-8 sm:h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </div>
@@ -676,7 +679,7 @@ export default function BookingModal({
             </div>
 
             {/* Title */}
-            <h3 className={`text-xl font-semibold text-center mb-2 ${
+            <h3 className={`text-lg sm:text-xl font-semibold text-center mb-2 ${
               popupType === 'success' ? 'text-orange-400' :
               popupType === 'warning' ? 'text-orange-400' : 'text-red-400'
             }`}>
@@ -694,7 +697,8 @@ export default function BookingModal({
             <div className="flex justify-center">
               <button
                 onClick={closePopup}
-                className={`px-6 py-2 rounded-lg font-medium transition-colors ${
+                className={`px-6 py-3 rounded-lg font-medium transition-colors min-h-[44px] 
+                  touch-manipulation active:scale-95 text-sm sm:text-base ${
                   popupType === 'success'
                     ? 'bg-orange-600 hover:bg-orange-700 text-white'
                     : popupType === 'warning'
