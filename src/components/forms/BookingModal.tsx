@@ -262,7 +262,7 @@ export default function BookingModal({
     { code: "+998", name: "Uzbekistan", flag: "🇺🇿" }
   ];
 
-  const nextStep = () => setStep((s) => Math.min(s + 1, 7));
+  const nextStep = () => setStep((s) => Math.min(s + 1, 8));
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
 
   // Validation function
