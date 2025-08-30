@@ -999,31 +999,40 @@ function Step5({ nextStep }: { nextStep: () => void }) {
 
   return (
      <>
-      <h3 className="text-xl font-semibold mb-4">
+      <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">
         Any additional services needed?
       </h3>
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         {options.map((opt, i) => {
           const isActive = selected.includes(i);
           return (
             <button
               key={i}
               onClick={() => toggleOption(i)}
-              className={`flex items-start gap-3 p-4 rounded-lg border text-left transition-colors
-                ${
-                  isActive
-                    ? "bg-orange-500 border-orange-400 text-white"
-                    : "bg-[#252529] border-gray-700 hover:bg-[#2f2f31]"
-                }`}
+              className={`flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-lg border text-left 
+                transition-all duration-200 active:scale-95 touch-manipulation
+                min-h-[60px] sm:min-h-[70px] ${
+                isActive
+                  ? "bg-orange-500 border-orange-400 text-white shadow-lg shadow-orange-500/20"
+                  : "bg-[#252529] border-gray-700 hover:bg-[#2f2f31] active:bg-[#2a2a2c]"
+              }`}
             >
               <opt.icon
-                className={`w-6 h-6 mt-1 ${
+                className={`w-5 h-5 sm:w-6 sm:h-6 mt-1 flex-shrink-0 ${
                   isActive ? "text-white" : "text-orange-400"
                 }`}
               />
-              <div>
-                <h4 className="font-semibold">{opt.label}</h4>
-                <p className="text-sm text-white-400">{opt.desc}</p>
+              <div className="min-w-0 flex-1">
+                <h4 className={`font-semibold text-sm sm:text-base ${
+                  isActive ? "text-white" : "text-gray-200"
+                }`}>
+                  {opt.label}
+                </h4>
+                <p className={`text-xs sm:text-sm mt-1 ${
+                  isActive ? "text-white/90" : "text-gray-400"
+                }`}>
+                  {opt.desc}
+                </p>
               </div>
             </button>
           );
@@ -1032,7 +1041,7 @@ function Step5({ nextStep }: { nextStep: () => void }) {
 
       {/* Selection Summary */}
       {selected.length > 0 && (
-        <div className="mt-4 p-3 bg-orange-900/20 border border-orange-500/50 rounded-lg">
+        <div className="mt-4 sm:mt-6 p-3 sm:p-4 bg-orange-900/20 border border-orange-500/50 rounded-lg">
           <p className="text-orange-300 text-sm">
             <strong>Selected Services:</strong> {selected.map(i => options[i].label).join(", ")}
           </p>
@@ -1040,10 +1049,12 @@ function Step5({ nextStep }: { nextStep: () => void }) {
       )}
 
       {/* Skip Option */}
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 sm:mt-6">
         <button
           onClick={() => {setSelected([]); nextStep()}}
-          className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors"
+          className="bg-gray-600 hover:bg-gray-700 active:bg-gray-500 text-white 
+            px-4 py-3 sm:px-6 sm:py-3 rounded-lg transition-all duration-200 
+            active:scale-95 min-h-[44px] touch-manipulation text-sm sm:text-base"
         >
           Skip – None needed
         </button>
@@ -1051,7 +1062,7 @@ function Step5({ nextStep }: { nextStep: () => void }) {
 
       {/* Helper Text */}
       <div className="text-center mt-4">
-        <p className="text-gray-400 text-sm">
+        <p className="text-gray-400 text-xs sm:text-sm">
           {selected.length === 0
             ? "Select any additional services or click 'Skip' to continue"
             : `${selected.length} service${selected.length > 1 ? 's' : ''} selected - click 'Next' to continue`
