@@ -667,14 +667,6 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
           />
         {/* Schedule Consultation Button and feedback */}
         <div className="flex flex-col items-center mt-6">
-          <button
-            onClick={handleFormSubmit}
-            className="flex items-center px-6 py-2 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-semibold"
-            disabled={submitting}
-          >
-            <Calendar className="w-5 h-5 mr-2" />
-            <span>Schedule Consultation</span>
-          </button>
           {submitStatus && <div className="mt-2 text-orange-400 text-sm text-center">{submitStatus}</div>}
         </div>
         </div>
