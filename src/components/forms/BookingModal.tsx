@@ -247,6 +247,8 @@ function Step1({ setCanProceed }) {
 
         {/* Submission feedback */}
         {submitStatus && <div className="mt-2 text-orange-400 text-sm">{submitStatus}</div>}
+        {/* Submission feedback */}
+        {submitStatus && <div className="mt-2 text-orange-400 text-sm">{submitStatus}</div>}
       </div>
       {selectedOption === "Other" && (
         <div className="mt-4">
