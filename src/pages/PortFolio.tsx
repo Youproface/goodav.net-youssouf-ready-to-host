@@ -61,48 +61,7 @@ export default Portfolio;
         {/* Content */}
         <div className="relative max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r text-white bg-clip-text text-transparent">
-            Our Extensive Portfolio
-          </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-          Discover our creative journey through award-winning audiovisual productions that tell powerful stories across Africa
-          <button className="flex mt-10 items-center mx-auto z-99 gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg px-8 py-4 rounded-full shadow-lg transition-all duration-200">
-                <Rocket className="h-5 w-5" />
-                Start Your Journey
-       </button>
-        </button>
-      </div>
-    </div>
-
-    {/* Content Focus */}
-    <div className="md:col-span-4">
-      <h4 className="text-small font-semibold uppercase tracking-wider text-zinc-300">
-        Content Focus
-      </h4>
-      <div className="mt-3 flex flex-wrap gap-3">
-        {[
-          "Innovation",
-          "Development",
-          "Culture",
-          "Technology",
-          "Healthcare",
-          "Environment",
-          "Business",
-          "Youth",
-        ].map((tag) => (
-          <button
-            key={tag}
-            type="button"
-            className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-small text-zinc-200 hover:bg-white/10"
-          >
-            {tag}
-          </button>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
-
-</section>
+            export default Portfolio;
 
 
       {/* Portfolio Section */}
