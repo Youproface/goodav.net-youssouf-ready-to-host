@@ -1057,7 +1057,7 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
                  )}
                </button>
                {selectedTime === slot && selectedDate && (
-                 <button className="px-4 py-2 rounded bg-orange-600 text-white font-semibold shadow" onClick={() => alert(`Confirmed: ${selectedDate.day}/${selectedDate.month+1}/${selectedDate.year} at ${selectedTime}`)}>
+                 <button className="px-4 py-2 rounded bg-orange-600 text-white font-semibold shadow hover:bg-orange-700 transition-colors" onClick={handleTimeConfirmation}>
                    Confirm
                  </button>
                )}
