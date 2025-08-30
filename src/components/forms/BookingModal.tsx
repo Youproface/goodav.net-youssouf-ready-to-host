@@ -327,6 +327,7 @@ export default function BookingModal({
     });
     const message = `<i class="fas fa-check-circle text-green-400 text-xl"></i> <strong>Time Slot Confirmed!</strong><br><i class="fas fa-calendar text-orange-400"></i> <strong>${formattedDate}</strong><br><i class="fas fa-clock text-orange-400"></i> <strong>${selectedTime}</strong> (${timezone})`;
     setConfirmationMessage(message);
+    setTimeSlotConfirmed(true);
     
     // Auto-hide the message after 5 seconds
     setTimeout(() => setConfirmationMessage(null), 5000);
