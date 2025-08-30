@@ -44,6 +44,7 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
       <Head>
         <title>{service.title} | Our Services</title>
         <meta name="description" content={service.details.heroDescription} />
+        <link rel="canonical" href={`https://goodav.net/services/${service.id}`} />
       </Head>
 
       {/* Hero Section */}
