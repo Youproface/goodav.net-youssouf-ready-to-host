@@ -1287,7 +1287,7 @@ function Step7({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
                 <span className={selectedTime ? 'text-green-400' : 'text-orange-300'}>{selectedTime ? '✓' : '×'}</span> Time Selection
               </div>
               <div className={`flex items-center gap-2 ${meetingSoftware ? 'text-green-400' : 'text-orange-300'}`}>
-                <span className={meetingSoftware ? 'text-green-400' : 'text-orange-300'}>{meetingSoftware ? '✓' : '×'}</span> Meeting Platform
+                <span className={meetingSoftware ? 'text-green-400' : 'text-orange-300'}>{meetingSoftware ? '✓' : '×'}</span> Meeting Platform (Selected in Step 6)
               </div>
             </div>
           </div>
