@@ -76,10 +76,10 @@ export default function ContactUs() {
                 </button>
   
                 <ul className="mt-5 space-y-3 text-sm sm:text-base text-zinc-300">
-                  <Bullet>Personalized project consultation & strategy</Bullet>
-                  <Bullet>Timeline & budget discussion</Bullet>
-                  <Bullet>Creative direction & vision guidance</Bullet>
-                  <Bullet>Custom proposal & implementation roadmap</Bullet>
+                  <li>Personalized project consultation & strategy</li>
+                  <li>Timeline & budget discussion</li>
+                  <li>Creative direction & vision guidance</li>
+                  <li>Custom proposal & implementation roadmap</li>
                 </ul>
                  {/* Contact blocks */}
               <div className="mt-6 space-y-3 md:space-y-4">
