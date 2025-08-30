@@ -18,7 +18,8 @@ case "$1" in
         git checkout develop
         git pull origin develop
         echo "✅ Ready to work on dev environment"
-        echo "🌐 Changes will deploy to: dev.goodav.net"
+        echo "🌐 Changes will deploy to: dev.goodav.net (YOUR custom domain)"
+        echo "🚫 No Netlify subdomain used - only your domains!"
         ;;
 
     "prod")
