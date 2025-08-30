@@ -14,12 +14,15 @@ export default function ContactUs() {
     try {
       const form = formRef.current!;
       const data = new FormData(form);
-      const res = await fetch("https://www.goodav.net/php/form_process.php", {
+      // Convert FormData to JSON
+      const jsonData = Object.fromEntries(data.entries());
+      const res = await fetch("http://localhost:4000/api/contact", {
         method: "POST",
-        body: data,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(jsonData),
       });
       const json = await res.json();
-      setStatus({ ok: res.ok, msg: json.message || (res.ok ? "✅ Your message was sent successfully! We will contact you soon." : "❌ Submission failed. Please try again or contact support.") });
+      setStatus({ ok: res.ok && json.success, msg: json.success ? "✅ Your message was sent successfully! We will contact you soon." : (json.error ? `❌ ${json.error}` : "❌ Submission failed. Please try again or contact support.") });
     } catch (err) {
       setStatus({ ok: false, msg: "❌ Network error. Please try again or contact support." });
     } finally {
