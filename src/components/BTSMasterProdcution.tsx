@@ -48,18 +48,18 @@ export default function BTSMasterProduction() {
           {/* Grid gallery (balanced layout) */}
           <div className="mt-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {[
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_1.jpg", className: "col-span-2 h-40" },
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_2.jpg", className: "col-span-2 h-40" },
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_3v.jpg", className: "col-span-1 row-span-2 h-full" },
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_4v.jpg", className: "col-span-1 row-span-2 h-full" },
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_5.jpg", className: "col-span-2 h-44" },
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_6.jpg", className: "col-span-2 h-44" },
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_7v.jpg", className: "col-span-2 h-44" },
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_8v.jpg", className: "col-span-2 h-44" },
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_9v.jpg", className: "col-span-2 h-44" },
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_10v.jpg", className: "col-span-2 h-44" },
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_11v.jpg", className: "col-span-2 h-44" },
-              { src: "/src/assets/images/all_site_images/Home/BTS/GOODAV_BTS_12v.jpg", className: "col-span-2 h-44" },
+              { src: "/images/Home/BTS/GOODAV_BTS_1.jpg", className: "col-span-2 h-40" },
+              { src: "/images/Home/BTS/GOODAV_BTS_2.jpg", className: "col-span-2 h-40" },
+              { src: "/images/Home/BTS/GOODAV_BTS_3v.jpg", className: "col-span-1 row-span-2 h-full" },
+              { src: "/images/Home/BTS/GOODAV_BTS_4v.jpg", className: "col-span-1 row-span-2 h-full" },
+              { src: "/images/Home/BTS/GOODAV_BTS_5.jpg", className: "col-span-2 h-44" },
+              { src: "/images/Home/BTS/GOODAV_BTS_6.jpg", className: "col-span-2 h-44" },
+              { src: "/images/Home/BTS/GOODAV_BTS_7v.jpg", className: "col-span-2 h-44" },
+              { src: "/images/Home/BTS/GOODAV_BTS_8v.jpg", className: "col-span-2 h-44" },
+              { src: "/images/Home/BTS/GOODAV_BTS_9v.jpg", className: "col-span-2 h-44" },
+              { src: "/images/Home/BTS/GOODAV_BTS_10v.jpg", className: "col-span-2 h-44" },
+              { src: "/images/Home/BTS/GOODAV_BTS_11v.jpg", className: "col-span-2 h-44" },
+              { src: "/images/Home/BTS/GOODAV_BTS_12v.jpg", className: "col-span-2 h-44" },
             ].map((img, index) => (
               <GalleryImg 
                 key={index}
