@@ -165,6 +165,7 @@ function Step1({ setCanProceed }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   // Validation: update canProceed when selection changes
+  // Step 1: canProceed is true only if an option is selected
   useEffect(() => { setCanProceed(!!selectedOption); }, [selectedOption, setCanProceed]);
   const options = [
     {
@@ -226,6 +227,7 @@ function Step1({ setCanProceed }) {
 ------------------------- */
 function Step2({ setCanProceed }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  // Step 2: canProceed is true only if an option is selected
   useEffect(() => { setCanProceed(activeIndex !== null); }, [activeIndex, setCanProceed]);
   const options = [
     {
@@ -289,6 +291,7 @@ function Step2({ setCanProceed }) {
 ------------------------- */
 function Step3({ setCanProceed }) {
   const [active, setActive] = useState(null);
+  // Step 3: canProceed is true only if an option is selected
   useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
   const options = [
     { label: "Urgent (1–2 weeks)", desc: "Rush delivery", icon: Clock },
@@ -337,6 +340,7 @@ function Step3({ setCanProceed }) {
 ------------------------- */
 function Step4({ setCanProceed }) {
   const [active, setActive] = useState(null);
+  // Step 4: canProceed is true only if an option is selected
   useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
   const options = [
     { label: "Startup Package", desc: "Essential production", icon: DollarSign },
@@ -371,7 +375,7 @@ function Step4({ setCanProceed }) {
 }
 
 /* -------------------------
-   STEP 5
+  STEP 5 (No validation required, user can always proceed)
 ------------------------- */
 function Step5({ nextStep }: { nextStep: () => void }) {
   // const [active, setActive] = useState(null);
