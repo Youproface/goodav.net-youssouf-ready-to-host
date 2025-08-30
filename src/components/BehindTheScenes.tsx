@@ -33,7 +33,7 @@ const BehindTheScenes = () => {
                 </div>
 
                 {/* Play Button */}
-                <button className="w-16 h-16 flex items-center justify-center rounded-full bg-orange-500 hover:bg-orange-600 transition mb-6 mx-auto" aria-label="Open Behind The Scenes Gallery">
+                <button className="w-16 h-16 flex items-center justify-center rounded-full bg-orange-500 hover:bg-orange-600 transition mb-6 mx-auto" aria-label="Play behind the scenes video">
                 <Play size={32} className="text-white" />
                 </button>
 
@@ -48,7 +48,7 @@ const BehindTheScenes = () => {
         <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
   <div className="group relative overflow-hidden rounded-xl">
     <img
-  src="/images/Home/Team/Team_2.png"
+      src="src/assets/images/all_site_images/Home/Team/Team_2.png"
       alt="Behind the scenes 1"
       className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-[1.02]"
     />
