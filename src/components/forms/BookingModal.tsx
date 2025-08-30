@@ -1013,7 +1013,7 @@ function Step6({ meetingSoftware, setMeetingSoftware }) {
 /* -------------------------
    STEP 7 - Date, Time & Contact Info
 ------------------------- */
-function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, countryCode, setCountryCode, countryCodes, organization, setOrganization, project, setProject, selectedDate, setSelectedDate, selectedTime, setSelectedTime, timezone, setTimezone, submitting, handleTimeConfirmation, confirmationMessage, timeSlotConfirmed, setTimeSlotConfirmed, meetingSoftware, setMeetingSoftware }) {
+function Step7({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, countryCode, setCountryCode, countryCodes, organization, setOrganization, project, setProject, selectedDate, setSelectedDate, selectedTime, setSelectedTime, timezone, setTimezone, submitting, handleTimeConfirmation, confirmationMessage, timeSlotConfirmed, setTimeSlotConfirmed, meetingSoftware }) {
   // Calendar and time slot picker UI
   // List of time zones (IANA)
   const timeZones = [
