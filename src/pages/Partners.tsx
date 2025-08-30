@@ -1,12 +1,52 @@
 import BTSMasterProduction from '@/components/BTSMasterProdcution';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import SEO from '@/components/SEO';
+import SchemaMarkup from '@/components/SchemaMarkup';
 
 export default function Partners() {
   const navigate = useNavigate();
-  
   return (
-    <div className="bg-gray-900 text-white font-sans">
+    <>
+      <SEO
+        title="Partners - GoodAV | Trusted Audiovisual Collaborators"
+        description="Meet GoodAV’s partners and collaborators. Discover why global organizations trust GoodAV for audiovisual production in Rwanda and Africa."
+        canonical="https://goodav.net/partner"
+      />
+      <SchemaMarkup
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "GoodAV",
+          "url": "https://goodav.net",
+          "logo": "https://goodav.net/image/Assets/logo-fav.png",
+          "description": "Africa's premier audiovisual agency transforming ideas into impactful visual stories. GoodAV empowers African narratives through cinematic production, live streaming, photography, and strategic media coverage.",
+          "sameAs": [
+            "https://www.instagram.com/goodaudiovisual",
+            "https://www.youtube.com/@goodaudiovisuals",
+            "https://www.facebook.com/goodaudiovisuals",
+            "https://www.linkedin.com/company/goodav"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+250788613332",
+            "email": "info@goodav.net",
+            "contactType": "Customer Support",
+            "areaServed": ["Rwanda", "Africa", "International"],
+            "availableLanguage": ["en", "fr"]
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kigali",
+            "addressCountry": "RW"
+          },
+          "founder": {
+            "@type": "Person",
+            "name": "Youssouf Hakizimana"
+          }
+        }}
+      />
+      <div className="bg-gray-900 text-white font-sans">
       {/* Header Navigation */}
       <header className="px-6 py-4 flex justify-between items-center">
         <div className="text-xl font-bold text-white flex items-center">
@@ -498,5 +538,7 @@ export default function Partners() {
         </div>
       </section>
     </div>
+      </div>
+    </>
   );
 }
