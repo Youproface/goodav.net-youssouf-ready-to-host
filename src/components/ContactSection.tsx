@@ -13,19 +13,15 @@ export default function ContactUs() {
     setStatus(null);
     try {
       const form = formRef.current!;
-      const data = new FormData(form); // contains firstName, lastName, email, subject, message
-      console.log("FormData:", data);
-      
+      const data = new FormData(form);
       const res = await fetch("https://www.goodav.net/php/form_process.php", {
         method: "POST",
-        body: data, // PHP can read via $_POST + $_FILES
+        body: data,
       });
       const json = await res.json();
-      console.log("Response:", json);
-      
-      setStatus({ ok: res.ok, msg: json.message || (res.ok ? "Message sent" : "Failed") });
+      setStatus({ ok: res.ok, msg: json.message || (res.ok ? "✅ Your message was sent successfully! We will contact you soon." : "❌ Submission failed. Please try again or contact support.") });
     } catch (err) {
-      setStatus({ ok: false, msg: "Network error. Please try again." });
+      setStatus({ ok: false, msg: "❌ Network error. Please try again or contact support." });
     } finally {
       setSubmitting(false);
     }
@@ -118,7 +114,7 @@ export default function ContactUs() {
                     <Field label="Email Address*" type="email" name="email" />
                     <Field label="Project Subject*" type="text" name="subject" />
                   </div>
-  
+
                   <div>
                     <Label>Tell us about your project, timeline, and creative vision…</Label>
                     <textarea
@@ -128,16 +124,27 @@ export default function ContactUs() {
                       placeholder="Describe the goals, audience, deliverables, and any references"
                     />
                   </div>
-  
-                  <div className="pt-2">
+
+                  <div className="pt-2 flex flex-col items-center gap-2">
                     <button
                       type="submit"
-                      onClick={handleContactFormSubmit}
                       className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-3.5 text-sm sm:text-base font-semibold text-zinc-900 shadow hover:from-orange-400 hover:to-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60 transition-all duration-200"
+                      disabled={submitting}
                     >
                       <span className="grid h-6 w-6 place-items-center rounded bg-orange-700/10 text-zinc-900">➤</span>
-                      Send Message
+                      {submitting ? 'Submitting...' : 'Send Message'}
                     </button>
+                    {status && (
+                      <div className="mt-2 text-orange-400 text-sm text-center">
+                        {status.msg}
+                        {status.ok && status.msg.includes('successfully') && (
+                          <div className="mt-1 text-orange-300">Thank you for contacting GoodAV. You will receive a reply soon.</div>
+                        )}
+                        {!status.ok && status.msg.includes('failed') && (
+                          <div className="mt-1 text-orange-300">If the problem persists, please contact us at form@goodav.net.</div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </form>
               </div>
