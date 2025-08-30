@@ -1181,7 +1181,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                     <Tooltip.Trigger asChild>
                       <button
                         className={`flex-1 py-2 rounded border text-center font-medium transition-all
-                          ${selectedDate ? (selectedTime === slot ? 'bg-orange-700 text-white border-orange-700' : 'bg-[#1b1b1d] text-orange-500 border-orange-500 hover:bg-orange-100') : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'}`}
+                          ${selectedDate ? (selectedTime === slot ? 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20' : 'bg-[#252529] text-orange-400 border-gray-700 hover:bg-[#2f2f31]') : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'}`}
                         onClick={() => {
                           selectedDate && setSelectedTime(slot);
                           setTimeSlotConfirmed(false); // Reset confirmation when selecting new time
