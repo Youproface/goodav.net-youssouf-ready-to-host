@@ -1358,9 +1358,9 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
               value={phone}
               onChange={e => setPhone(e.target.value.replace(/\D/g, ''))} // Only allow digits
               placeholder="123456789"
-              className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none flex-1 text-white placeholder-orange-300 ${
+              className={`p-3 rounded bg-[#252529] border focus:outline-none flex-1 text-white placeholder-gray-400 ${
                 phone && phone.length >= 7 ? 'border-green-500' :
-                phone && phone.length < 7 ? 'border-red-500' : 'border-orange-500'
+                phone && phone.length < 7 ? 'border-red-500' : 'border-gray-700 focus:border-orange-500'
               }`}
             />
           </div>
