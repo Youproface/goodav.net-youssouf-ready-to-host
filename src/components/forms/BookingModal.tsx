@@ -218,117 +218,96 @@ export default function BookingModal({
                 aria-label="Booking progress"
                 title="Booking progress"
               ></div>
-// ...existing code...
-}
-
-/* -------------------------
-   STEP 2
-------------------------- */
-function Step2({ setCanProceed }) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  // Step 2: canProceed is true only if an option is selected
-  useEffect(() => { setCanProceed(activeIndex !== null); }, [activeIndex, setCanProceed]);
-  const options = [
-    {
-      label: "Small Scale",
-      desc: "1 location, 1–2 days\n1–2 camera operators, 1 photographer",
-      icon: User,
-    },
-    {
-      label: "Medium Scale",
-      desc: "1–7 days\n2+ camera operators, 1 photographer",
-      icon: Users,
-    },
-    {
-      label: "Large Scale",
-      desc: "Multiple locations, 1+ weeks\n5+ camera operators, 2+ photographers",
-      icon: Building,
-    },
-  ];
-  return (
     <>
-      <h3 className="text-xl font-semibold mb-4">
-        What’s the scale of your project?
-      </h3>
-      <div className="grid md:grid-cols-3 gap-4">
-        {options.map((opt, i) => (
-          <button
-            key={i}
-            onClick={() => setActiveIndex(i)}
-            className={`flex items-start gap-3 p-4 rounded-lg border text-left transition-colors ${activeIndex === i
-                ? "bg-orange-500 border-orange-500 text-white"
-                : "bg-[#252529] hover:bg-[#2f2f31] border-gray-700"
-              }`}
-          >
-            <opt.icon
-              className={`w-6 h-6 mt-1 ${activeIndex === i ? "text-white" : "text-orange-400"
-                }`}
-            />
-            <div>
-              <h4
-                className={`font-semibold ${activeIndex === i ? "text-white" : "text-gray-200"
-                  }`}
-              >
-                {opt.label}
-              </h4>
-              <p
-                className={`text-sm whitespace-pre-line ${activeIndex === i ? "text-white/90" : "text-gray-400"
-                  }`}
-              >
-                {opt.desc}
-              </p>
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black/70 via-gray-900/60 to-black/70 backdrop-blur-sm h-[100vh]">
+          <div className="bg-[#1b1b1d] w-[90%] max-w-3xl rounded-xl shadow-lg text-white p-6 md:p-8 mx-auto">
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close dialog"
+              className="group absolute right-4 top-[50px] -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/10 backdrop-blur-xl ring-2 ring-white/30 hover:bg-white/20 flex items-center justify-center shadow-lg"
+            >
+              <span className="h-8 w-8 rounded-full bg-gradient-to-br from-zinc-100/80 to-white/60 shadow-inner flex items-center justify-center">
+                <svg viewBox="0 0 24 24" className="h-4 w-4 text-zinc-800/80" aria-hidden>
+                  <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </span>
+            </button>
+            {/* Header */}
+            <h2 className="text-lg font-semibold text-orange-400 flex items-center gap-2">
+              Let’s Start Your Project
+            </h2>
+            {/* Progress Bar */}
+            <div className="w-full bg-gray-700 h-1 mt-3 rounded">
+              <div
+                className={`bg-orange-500 h-1 rounded transition-all duration-300`}
+                style={{ width: `${(step / 6) * 100}%` }}
+                aria-valuenow={Math.round((step / 6) * 100)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                role="progressbar"
+                aria-label="Booking progress"
+                title="Booking progress"
+              ></div>
             </div>
-          </button>
-        ))}
-      </div>
+            {/* Step Title */}
+            <p className="mt-4 text-sm font-medium">Step {step} of 6</p>
+            {/* Step Content */}
+            <div className="mt-6">
+              {step === 1 && typeof Step1 === 'function' && <Step1 setCanProceed={setCanProceed} />}
+              {step === 2 && typeof Step2 === 'function' && <Step2 setCanProceed={setCanProceed} />}
+              {step === 3 && typeof Step3 === 'function' && <Step3 setCanProceed={setCanProceed} />}
+              {step === 4 && typeof Step4 === 'function' && <Step4 setCanProceed={setCanProceed} />}
+              {step === 5 && typeof Step5 === 'function' && <Step5 nextStep={nextStep} />}
+              {step === 6 && typeof Step6 === 'function' && (
+                <Step6
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                  selectedTime={selectedTime}
+                  setSelectedTime={setSelectedTime}
+                  timezone={timezone}
+                  setTimezone={setTimezone}
+                  submitStatus={submitStatus}
+                  handleFormSubmit={handleFormSubmit}
+                />
+              )}
+            </div>
+            {/* Navigation */}
+            <div className="flex justify-between mt-8">
+              {step > 1 ? (
+                <button
+                  onClick={prevStep}
+                  className="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
+                >
+                  ← Previous
+                </button>
+              ) : (
+                <div />
+              )}
+              {step < 6 ? (
+                <button
+                  onClick={nextStep}
+                  className={`px-6 py-2 rounded-lg ${(step >= 1 && step <= 4 && !canProceed) ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
+                  disabled={step >= 1 && step <= 4 && !canProceed}
+                >
+                  Next →
+                </button>
+              ) : (
+                <button
+                  onClick={handleFormSubmit}
+                  className="flex items-center px-6 py-2 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-semibold"
+                >
+                  <Calendar className="w-5 h-5 mr-2" />
+                  <span>Schedule Consultation</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </>
-  );
-}
-
-/* -------------------------
-   STEP 3
-------------------------- */
-function Step3({ setCanProceed }) {
-  const [active, setActive] = useState(null);
-  // Step 3: canProceed is true only if an option is selected
-  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
-  const options = [
-    { label: "Urgent (1–2 weeks)", desc: "Rush delivery", icon: Clock },
-    { label: "Standard (3–4 weeks)", desc: "Normal production timeline", icon: Calendar },
-    { label: "Flexible (1–2 months)", desc: "We can work around your schedule", icon: Calendar },
-    { label: "Planning Phase", desc: "Just exploring options", icon: PenTool },
-  ];
-  return (
-    <>
-      <h3 className="text-xl font-semibold mb-4">
-        When do you need this completed?
-      </h3>
-      <div className="grid md:grid-cols-2 gap-4">
-        {options.map((opt, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
-            className={`flex items-start gap-3 p-4 rounded-lg border text-left transition-colors
-            ${active === i
-                ? "bg-orange-500 border-orange-400"
-                : "bg-[#252529] hover:bg-[#2f2f31] border-gray-700"
-              }`}
-          >
-            <opt.icon
-              className={`w-6 h-6 mt-1 ${active === i ? "text-white-500" : "text-orange-400"
-                }`}
-            />
-            <div>
-              <h4
-                className={`font-semibold ${active === i ? "text-white-400" : ""
-                  }`}
-              >
-                {opt.label}
-              </h4>
-              <p className="text-sm text-white-400">{opt.desc}</p>
-            </div>
-          </button>
-        ))}
       </div>
     </>
   );
