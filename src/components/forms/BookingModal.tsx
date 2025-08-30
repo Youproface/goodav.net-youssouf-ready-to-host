@@ -774,7 +774,7 @@ function Step5({ nextStep }: { nextStep: () => void }) {
 /* -------------------------
    STEP 6
 ------------------------- */
-function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, countryCode, setCountryCode, countryCodes, organization, setOrganization, project, setProject, selectedDate, setSelectedDate, selectedTime, setSelectedTime, timezone, setTimezone, submitting }) {
+function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, countryCode, setCountryCode, countryCodes, organization, setOrganization, project, setProject, selectedDate, setSelectedDate, selectedTime, setSelectedTime, timezone, setTimezone, submitting, handleTimeConfirmation, confirmationMessage }) {
   // Calendar and time slot picker UI
   // List of time zones (IANA)
   const timeZones = [
