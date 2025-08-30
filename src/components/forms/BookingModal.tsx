@@ -43,6 +43,7 @@ export default function BookingModal({
   const [submitStatus, setSubmitStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState(null);
+  const [timeSlotConfirmed, setTimeSlotConfirmed] = useState(false);
 
   // Comprehensive list of country codes
   const countryCodes = [
