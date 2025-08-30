@@ -413,6 +413,7 @@ export default function BookingModal({
         setSelectedTime('');
         setStep(1);
         setTimeSlotConfirmed(false);
+        setMeetingSoftware('');
         
         // Show success popup or warning popup based on email status
         if (result.warning) {
