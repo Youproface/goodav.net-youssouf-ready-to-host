@@ -48,7 +48,6 @@ function Step1({ setCanProceed }) {
     </>
   );
 }
-}
 
 /* -------------------------
    STEP 4
