@@ -1282,7 +1282,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                   </Tooltip.Provider>
                 )}
                 {selectedTime === slot && selectedDate && timeSlotConfirmed && (
-                  <div className="px-4 py-2 rounded font-semibold bg-green-600 text-white opacity-75">
+                  <div className="px-4 py-2 rounded font-semibold bg-orange-600 text-white opacity-75">
                     Confirmed
                   </div>
                 )}
