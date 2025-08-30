@@ -94,7 +94,7 @@ export default function BookingModal({
             </button>
             {/* Header */}
             <h2 className="text-lg font-semibold text-orange-400 flex items-center gap-2">
-              🚀 Let’s Start Your Project
+              Let’s Start Your Project
             </h2>
 
             {/* Progress Bar */}
