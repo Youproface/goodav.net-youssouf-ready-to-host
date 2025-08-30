@@ -27,7 +27,8 @@ case "$1" in
         git checkout main
         git pull origin main
         echo "✅ Ready to work on production"
-        echo "🌐 Changes will deploy to: goodav.net"
+        echo "🌐 Changes will deploy to: goodav.net (YOUR custom domain)"
+        echo "🚫 No Netlify subdomain used - only your domains!"
         ;;
 
     "merge")
