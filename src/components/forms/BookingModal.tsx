@@ -1292,7 +1292,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
 
           {/* Professional Confirmation Message */}
           {confirmationMessage && (
-            <div className="mt-6 p-4 bg-green-900/20 border border-green-500/50 rounded-lg animate-in slide-in-from-top-2 duration-300">
+            <div className="mt-6 p-4 bg-orange-900/20 border border-orange-500/50 rounded-lg animate-in slide-in-from-top-2 duration-300">
               <div className="text-center" dangerouslySetInnerHTML={{__html: confirmationMessage}} />
             </div>
           )}
