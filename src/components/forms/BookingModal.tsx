@@ -568,6 +568,45 @@ function Step6() {
   const [phone, setPhone] = useState("");
   const [organization, setOrganization] = useState("");
   const [project, setProject] = useState("");
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  async function handleFormSubmit(e) {
+    e.preventDefault();
+    if (!name || !email || !selectedDate || !selectedTime) {
+      setSubmitStatus('Please fill in all required fields.');
+      return;
+    }
+    setSubmitting(true);
+    setSubmitStatus('Submitting...');
+    const bookingData = {
+      name,
+      email,
+      phone,
+      organization,
+      project,
+      date: selectedDate ? `${selectedDate.year}-${selectedDate.month+1}-${selectedDate.day}` : '',
+      time: selectedTime,
+      timezone,
+    };
+    try {
+      const res = await fetch('http://localhost:4000/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingData),
+      });
+      const result = await res.json();
+      if (result.success) {
+        setSubmitStatus('Booking submitted successfully!');
+        // Optionally reset form fields here
+      } else {
+        setSubmitStatus(result.error || 'Submission failed.');
+      }
+    } catch (err) {
+      setSubmitStatus('Network error. Please try again.');
+    }
+    setSubmitting(false);
+  }
   return (
     <div className="flex flex-col md:flex-row gap-8">
       <div className="w-full md:w-1/2">
@@ -679,6 +718,7 @@ function Step6() {
           <button
             onClick={handleFormSubmit}
             className="flex items-center px-6 py-2 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-semibold"
+            disabled={submitting}
           >
             <Calendar className="w-5 h-5 mr-2" />
             <span>Schedule Consultation</span>
