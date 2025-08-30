@@ -1,29 +1,29 @@
-
-import React, { useState } from 'react';
-import { Play, Star, Calendar, Users, Award, Rocket } from 'lucide-react';
-import heroBackground from '../assets/images/all_site_images/Home/BG/Home_BG.png';
-// Manually import all images from the Videos directory
-import img1 from '../assets/images/all_site_images/Portfolio/Videos/2023 ReSAKSS.jpg';
-import img2 from '../assets/images/all_site_images/Portfolio/Videos/ABH_2023.jpg';
-import img3 from '../assets/images/all_site_images/Portfolio/Videos/AIMS-Corporate-Video.jpg';
-import img4 from '../assets/images/all_site_images/Portfolio/Videos/AIMS-GLADUATION.jpg';
-import img5 from '../assets/images/all_site_images/Portfolio/Videos/AfricanGirlsCanCodeInitiative.jpg';
-import img6 from '../assets/images/all_site_images/Portfolio/Videos/Bralirwa.jpg';
-import img7 from '../assets/images/all_site_images/Portfolio/Videos/BralirwaLaunchNewProductionLine.jpg';
-import img8 from '../assets/images/all_site_images/Portfolio/Videos/DBB-GO.jpg';
-import img9 from '../assets/images/all_site_images/Portfolio/Videos/DBBGOLiveEvent.jpg';
-import img10 from '../assets/images/all_site_images/Portfolio/Videos/EmpoweringYouthKepler.jpg';
-import img11 from '../assets/images/all_site_images/Portfolio/Videos/KigaliInternational.jpg';
-import img12 from '../assets/images/all_site_images/Portfolio/Videos/NEF-Corporate-video.jpg';
-import img13 from '../assets/images/all_site_images/Portfolio/Videos/RSSB.jpg';
-import img14 from '../assets/images/all_site_images/Portfolio/Videos/SONARWADusangireLunch.jpg';
-import img15 from '../assets/images/all_site_images/Portfolio/Videos/The-Connected-GirlsHub.jpg';
-import img16 from '../assets/images/all_site_images/Portfolio/Videos/The-catalyst-Workshop.jpg';
-import img17 from '../assets/images/all_site_images/Portfolio/Videos/UNDP-GOMERA-MAXWELL.jpg';
-import img18 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-2.jpg';
-import img19 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-22.jpg';
-import img20 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-23.jpg';
-import img21 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-25.jpg';
+  return (
+    <React.Fragment>
+      <SEO
+        title="Portfolio - GoodAV | Award-Winning Audiovisual Projects"
+        description="Explore GoodAV’s portfolio of award-winning audiovisual productions, documentaries, and event coverage across Africa."
+        canonical="https://goodav.net/portfolio"
+      />
+      <SchemaMarkup
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          "name": "GoodAV Portfolio",
+          "description": "Award-winning audiovisual productions, documentaries, and event coverage by GoodAV.",
+          "creator": {
+            "@type": "Organization",
+            "name": "GoodAV"
+          },
+          "url": "https://goodav.net/portfolio",
+          "image": "https://goodav.net/image/portfolio/ias2025-cover.jpg"
+        }}
+      />
+      <div className="min-h-screen bg-black text-white">
+        {/* ...existing code... */}
+      </div>
+    </React.Fragment>
+  );
 import img22 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-27.jpg';
 import img23 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-28.jpg';
 import img24 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-29.jpg';
