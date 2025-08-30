@@ -358,6 +358,7 @@ export default function BookingModal({
         setName('');
         setEmail('');
         setPhone('');
+        setCountryCode('+250'); // Reset to Rwanda default
         setOrganization('');
         setProject('');
         setSelectedDate(null);
