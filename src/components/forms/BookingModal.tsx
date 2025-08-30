@@ -1364,6 +1364,11 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
             }`}
             required
           />
+          {organization && !organization.trim() && (
+            <div className="absolute -bottom-6 left-0 text-orange-400 text-xs font-medium bg-orange-900/20 px-2 py-1 rounded border border-orange-500/50 animate-in slide-in-from-top-1 duration-200">
+              ⚠️ Organization is required
+            </div>
+          )}
         </div>
 
         {/* Phone number field */}
@@ -1410,6 +1415,28 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
           rows={4}
           required
         />
+        {project && !project.trim() && (
+          <div className="mb-4 text-orange-400 text-xs font-medium bg-orange-900/20 px-3 py-2 rounded border border-orange-500/50 animate-in slide-in-from-top-1 duration-200">
+            ⚠️ Project description is required
+          </div>
+        )}
+
+        {/* Validation Summary - Show in middle when required fields are missing */}
+        {(!name.trim() || !email.trim() || !organization.trim() || !project.trim() || (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) || (phone && phone.length < 7)) && (
+          <div className="mb-6 p-4 bg-orange-900/20 border border-orange-500/50 rounded-lg animate-in slide-in-from-top-2 duration-300">
+            <div className="text-center">
+              <h4 className="text-orange-400 font-semibold mb-2">⚠️ Please Complete Required Fields</h4>
+              <div className="text-orange-300 text-sm space-y-1">
+                {!name.trim() && <p>• Full name is required</p>}
+                {!email.trim() && <p>• Email address is required</p>}
+                {email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && <p>• Please enter a valid email address</p>}
+                {!organization.trim() && <p>• Organization is required</p>}
+                {!project.trim() && <p>• Project description is required</p>}
+                {phone && phone.length < 7 && <p>• Please enter a valid phone number (at least 7 digits)</p>}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Schedule Consultation Button and feedback */}
