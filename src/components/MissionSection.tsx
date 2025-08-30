@@ -1,0 +1,325 @@
+import React from 'react';
+import { motion, Variants } from 'framer-motion';
+import { Award, Globe, Heart, Target, Users, Zap, LucideIcon } from 'lucide-react';
+import OurFoundationSection from './OurFoundationSection';
+
+interface CoreValue {
+  title: string;
+  description: string;
+}
+
+interface WhyChooseUs {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+const MissionSection: React.FC = () => {
+  const coreValues: CoreValue[] = [
+    {
+      title: "Pan-African Unity",
+      description: "Fostering collaboration across Africa's 54 nations, celebrating our diversity while strengthening our collective narrative through unified storytelling excellence."
+    },
+    {
+      title: "Authentic Representation",
+      description: "Preserving and presenting Africa's rich heritage with integrity, ensuring every story honors our traditions while embracing contemporary innovation."
+    },
+    {
+      title: "Innovation Leadership",
+      description: "Pioneering cutting-edge audiovisual technologies and creative methodologies that set new standards for storytelling excellence across the continent."
+    }
+  ];
+
+  const whyChooseUs: WhyChooseUs[] = [
+    {
+      icon: Award,
+      title: "Award-Winning Portfolio",
+      description: "Internationally recognized excellence with 500+ successful projects across 15+ African countries, delivering measurable impact and client satisfaction."
+    },
+    {
+      icon: Heart,
+      title: "Cultural Intelligence",
+      description: "Deep understanding of African contexts combined with global expertise, ensuring content that resonates authentically across diverse audiences worldwide."
+    },
+    {
+      icon: Zap,
+      title: "Future-Ready Solutions",
+      description: "State-of-the-art technology and innovative approaches delivering powerful, future-proof content that drives engagement and creates lasting impact."
+    }
+  ];
+
+  const container: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const item: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1]
+      }
+    },
+  };
+
+  const fadeIn: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { duration: 0.8 }
+    },
+  };
+
+  return (
+    <motion.section
+      id="about"
+      className="py-20 bg-background"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={fadeIn}
+    >
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div
+            className="text-primary font-semibold text-sm uppercase tracking-wider mb-4"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            AFRICAN CREATORS
+          </motion.div>
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold mb-6 max-w-4xl mx-auto leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
+            <motion.span
+              className="gradient-text block"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.7 }}
+            >
+              TRANSFORMING
+            </motion.span>
+            <motion.span
+              className="gradient-text block"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.7 }}
+            >
+              AFRICA'S NARRATIVE
+            </motion.span>
+            <motion.span
+              className="gradient-text block"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6, duration: 0.7 }}
+            >
+              GLOBALLY
+            </motion.span>
+          </motion.h2>
+          <motion.p
+            className="text-lg text-muted-foreground max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.7, duration: 0.8 }}
+          >
+            We are more than storytellers—we are cultural ambassadors crafting authentic African narratives
+            that command global attention and drive meaningful change across continents.
+          </motion.p>
+        </motion.div>
+
+        {/* Impact Badges */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20 max-w-3xl mx-auto"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
+          {[
+            { icon: Award, text: "Award-Winning Excellence" },
+            { icon: Globe, text: "Global Reach" },
+            { icon: Heart, text: "Cultural Authenticity" }
+          ].map((badge, index) => {
+            const Icon = badge.icon;
+            return (
+              <motion.div
+                key={index}
+                className="text-center p-6 glass-card rounded-xl hover-lift"
+                variants={item}
+                whileHover={{
+                  y: -5,
+                  transition: { duration: 0.2 }
+                }}
+              >
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  whileInView={{
+                    scale: 1,
+                    opacity: 1,
+                    transition: {
+                      delay: 0.2 * index,
+                      type: 'spring',
+                      stiffness: 300
+                    }
+                  }}
+                  viewport={{ once: true }}
+                >
+                  <Icon className="h-8 w-8 text-primary mx-auto mb-2" />
+                </motion.div>
+                <div className="font-bold text-foreground">{badge.text}</div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+        <OurFoundationSection/>
+        {/* Core Values */}
+        <motion.div
+          className="mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="text-center mb-12">
+            <motion.h3
+              className="text-3xl md:text-4xl font-bold mb-4"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <span className="gradient-text">OUR CORE VALUES</span>
+            </motion.h3>
+            <motion.p
+              className="text-muted-foreground"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              The pillars that guide our work and define who we are
+            </motion.p>
+          </div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            {coreValues.map((value, index) => (
+              <motion.div
+                key={index}
+                className="p-6 glass-card rounded-xl hover-lift"
+                variants={item}
+                whileHover={{
+                  y: -5,
+                  transition: { duration: 0.2 }
+                }}
+              >
+                <h4 className="text-xl font-bold mb-3 text-primary">
+                  {value.title}
+                </h4>
+                <p className="text-muted-foreground">
+                  {value.description}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* Why Choose Us */}
+        <motion.div
+          className="mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="text-center mb-12">
+            <motion.h3
+              className="text-3xl md:text-4xl font-bold mb-4"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <span className="gradient-text">WHY CHOOSE US</span>
+            </motion.h3>
+            <motion.p
+              className="text-muted-foreground"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              Unmatched expertise and dedication to excellence
+            </motion.p>
+          </div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+          >
+            {whyChooseUs.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={index}
+                  className="p-6 glass-card rounded-xl hover-lift group"
+                  // variants={item}
+                  whileHover={{
+                    y: -5,
+                    transition: { duration: 0.2 }
+                  }}
+                >
+                  <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4 group-hover:shadow-glow transition-all duration-300">
+                    <Icon className="h-6 w-6 text-primary-foreground" />
+                  </div>
+                  <h4 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                    {item.title}
+                  </h4>
+                  <p className="text-muted-foreground">
+                    {item.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </motion.div>
+      </div>
+    </motion.section>
+  );
+};
+
+export default MissionSection;
