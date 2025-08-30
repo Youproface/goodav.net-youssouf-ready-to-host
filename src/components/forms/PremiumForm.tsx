@@ -270,6 +270,7 @@ function LabeledSelect({
         required={required}
         defaultValue={defaultValue ?? (placeholder ? "" : options[0])}
         className="h-11 rounded-lg border border-white/15 bg-white/5 px-3 text-sm outline-none transition focus:border-orange-300/40 focus:bg-white/10"
+        title={label}
       >
         {placeholder && (
           <option value="" disabled>
