@@ -13,7 +13,40 @@ export default function FAQSection() {
           schema={{
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            "mainEntity": [] // Optionally, you can add structured Q&A here
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What services does GoodAV offer?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "GoodAV delivers professional audiovisual services including video production (documentaries, event coverage, interviews, highlight reels), photography (event, branding, photojournalism), live streaming (multi-camera, remote), and audio production (podcasts, voiceovers, mastering)."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How does GoodAV deliver high-quality audiovisual results?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A senior creative lead oversees each project, using cinematic cameras, calibrated audio chains, and color-managed workflows. We combine on-site specialists with streamlined post-production pipelines for consistent, broadcast-ready output."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can GoodAV provide services in remote areas?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Mobile kits and reliable power/network redundancies enable production in rural and low-infrastructure environments, with risk-assessed logistics and local crew support."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What makes GoodAV different from other audiovisual companies?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A storytelling-first approach, multilingual crews, and fast turnarounds—supported by a quality bar aligned with international broadcast standards and NGO compliance."
+                }
+              }
+            ]
           }}
         />
         <main className="min-h-screen bg-[#0f1012] text-zinc-100">
