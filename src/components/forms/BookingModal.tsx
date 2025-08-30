@@ -769,7 +769,7 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
           />
         {/* Schedule Consultation Button and feedback */}
         <div className="flex flex-col items-center mt-6">
-          {submitStatus && <div className="mt-2 text-orange-400 text-sm text-center">{submitStatus}</div>}
+          {submitStatus && <div className="mt-2 text-sm text-center" dangerouslySetInnerHTML={{__html: submitStatus}} />}
         </div>
         </div>
       </div>
