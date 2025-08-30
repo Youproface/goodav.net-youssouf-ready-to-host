@@ -159,12 +159,23 @@ export default function BookingModal({
 
             {/* Step Content */}
             <div className="mt-6">
-              {step === 1 && <Step1 setCanProceed={setCanProceed} />}
-              {step === 2 && <Step2 setCanProceed={setCanProceed} />}
-              {step === 3 && <Step3 setCanProceed={setCanProceed} />}
-              {step === 4 && <Step4 setCanProceed={setCanProceed} />}
-              {step === 5 && <Step5 nextStep={nextStep} />}
-              {step === 6 && <Step6 submitStatus={submitStatus} handleFormSubmit={handleFormSubmit} />}
+              {step === 1 && typeof Step1 === 'function' && <Step1 setCanProceed={setCanProceed} />}
+              {step === 2 && typeof Step2 === 'function' && <Step2 setCanProceed={setCanProceed} />}
+              {step === 3 && typeof Step3 === 'function' && <Step3 setCanProceed={setCanProceed} />}
+              {step === 4 && typeof Step4 === 'function' && <Step4 setCanProceed={setCanProceed} />}
+              {step === 5 && typeof Step5 === 'function' && <Step5 nextStep={nextStep} />}
+              {step === 6 && typeof Step6 === 'function' && (
+                <Step6
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                  selectedTime={selectedTime}
+                  setSelectedTime={setSelectedTime}
+                  timezone={timezone}
+                  setTimezone={setTimezone}
+                  submitStatus={submitStatus}
+                  handleFormSubmit={handleFormSubmit}
+                />
+              )}
             </div>
 
             {/* Navigation */}
@@ -197,14 +208,16 @@ export default function BookingModal({
                   <span>Schedule Consultation</span>
                 </button>
               )}
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
-
+              <div
+                className={`bg-orange-500 h-1 rounded transition-all duration-300`}
+                style={{ width: `${(step / 6) * 100}%` }}
+                role="progressbar"
+                aria-valuenow={Math.round((step / 6) * 100)}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-label="Booking progress"
+                title="Booking progress"
+              ></div>
 /* -------------------------
    STEP 6
 function Step6({
