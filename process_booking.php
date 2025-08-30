@@ -130,7 +130,7 @@ try {
 function sendEmailNotification($data) {
     try {
         // Email configuration - Update these with your actual settings
-        $to = 'your-email@example.com'; // Replace with your email
+        $to = 'test@goodav.net'; // Test email for MailHog
         $subject = 'New Booking Submission - GoodAV';
 
         // Create HTML email content
@@ -197,23 +197,27 @@ function sendEmailNotification($data) {
         </html>
         ";
 
-        // Email headers
+        // Email headers for MailHog
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
         $headers .= "From: GoodAV Contact Form <noreply@goodav.net>" . "\r\n";
+        $headers .= "Reply-To: {$data['email']}" . "\r\n";
 
-        // Send email
+        // Send email using SMTP (MailHog)
+        ini_set('SMTP', 'localhost');
+        ini_set('smtp_port', '1025');
+
         $email_sent = mail($to, $subject, $message, $headers);
 
         if ($email_sent) {
             return [
                 'success' => true,
-                'message' => 'Email sent successfully'
+                'message' => 'Email sent successfully to MailHog'
             ];
         } else {
             return [
                 'success' => false,
-                'error' => 'PHP mail function failed'
+                'error' => 'PHP mail function failed - check MailHog is running'
             ];
         }
 
