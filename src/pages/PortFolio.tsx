@@ -20,7 +20,7 @@ const Portfolio = () => {
             name: 'GoodAV',
           },
           url: 'https://goodav.net/portfolio',
-          image: 'https://goodav.net/image/portfolio/ias2025-cover.jpg',
+          image: '/src/assets/images/all_site_images/Portfolio/ias2025-cover.jpg',
         }}
       />
       <div className="min-h-screen bg-black text-white">
