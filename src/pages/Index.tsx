@@ -1,5 +1,4 @@
-import React, { Suspense, lazy, useState } from 'react';
-import BookingModal from '@/components/forms/BookingModal';
+import React, { Suspense, lazy } from 'react';
 import Header from '@/components/Header';
 const Hero = lazy(() => import('@/components/Hero'));
 const PartnersSection = lazy(() => import('@/components/PartnersSection'));
@@ -21,7 +20,6 @@ import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
 
 const Index = () => {
-  const [showModal, setShowModal] = useState(false);
   return (
     <div className="min-h-screen">
       <SEO
@@ -104,16 +102,6 @@ const Index = () => {
       <Suspense fallback={<div className="text-center py-20">Loading...</div>}>
         <Header />
         <main>
-          <button
-            className="bg-blue-600 text-white px-4 py-2 rounded my-4"
-            onClick={() => setShowModal(true)}
-            aria-label="Open Booking Modal Test"
-          >
-            Open Booking Modal (Test)
-          </button>
-          {showModal && (
-            <BookingModal onClose={() => setShowModal(false)} />
-          )}
           <Hero />
           <PartnersSection />
           <ServicesSection />
