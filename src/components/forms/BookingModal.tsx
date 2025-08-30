@@ -18,27 +18,52 @@ import {
   User,
   Building,
 } from "lucide-react";
-// -------------------------
-// STEP 1
-// -------------------------
-function Step1({ setCanProceed }) {
-  const [active, setActive] = useState(null);
-  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
-  const options = [
-    { label: "Video Production", icon: Video },
-    { label: "Photography", icon: Camera },
-    { label: "Radio/Podcast", icon: Radio },
-    { label: "Corporate Event", icon: Briefcase },
-    { label: "Other", icon: Users },
-  ];
+// Main BookingModal wrapper component
+const BookingModal = () => {
+  // All booking modal logic and state
+  // ...existing code...
+  // Place the step logic and form here
+  // For demonstration, render the main booking form content
+  // You can later add step navigation if needed
   return (
-    <>
-      <h3 className="text-xl font-semibold mb-4">What type of project?</h3>
-      <div className="grid md:grid-cols-2 gap-4">
-        {options.map((opt, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+      <div className="bg-[#18181b] rounded-lg shadow-lg p-8 max-w-3xl w-full relative">
+        <button
+          className="absolute top-4 right-4 text-orange-500 hover:text-orange-700"
+          aria-label="Close modal"
+          onClick={() => {
+            // Add modal close logic here (e.g., setModalOpen(false))
+          }}
+        >
+          <X className="w-6 h-6" />
+        </button>
+        {/* --- Begin Booking Form Content --- */}
+        <h3 className="text-xl font-semibold mb-4">What type of project?</h3>
+        <div className="grid md:grid-cols-2 gap-4">
+          {/* Example options, you can refactor to use Step1, Step4, etc. */}
+          <button className="p-4 bg-[#1b1b1d] border border-orange-500 rounded flex items-center gap-2">
+            <Video className="w-5 h-5" /> Video Production
+          </button>
+          <button className="p-4 bg-[#1b1b1d] border border-orange-500 rounded flex items-center gap-2">
+            <Camera className="w-5 h-5" /> Photography
+          </button>
+          <button className="p-4 bg-[#1b1b1d] border border-orange-500 rounded flex items-center gap-2">
+            <Radio className="w-5 h-5" /> Radio/Podcast
+          </button>
+          <button className="p-4 bg-[#1b1b1d] border border-orange-500 rounded flex items-center gap-2">
+            <Briefcase className="w-5 h-5" /> Corporate Event
+          </button>
+          <button className="p-4 bg-[#1b1b1d] border border-orange-500 rounded flex items-center gap-2">
+            <Users className="w-5 h-5" /> Other
+          </button>
+        </div>
+        {/* --- End Booking Form Content --- */}
+      </div>
+    </div>
+  );
+};
+
+export default BookingModal;
             className={`flex items-center gap-3 p-4 rounded-lg border border-gray-700 text-left ${active === i ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529]"}`}
           >
             <opt.icon className={`w-6 h-6 ${active === i ? "text-white" : "text-orange-400"}`} />
