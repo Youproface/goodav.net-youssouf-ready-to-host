@@ -44,6 +44,14 @@ const Header = () => {
 
           {/* CTA Button & Mobile Menu */}
           <div className="flex items-center space-x-4">
+            <Button
+              onClick={() => setIsBookingOpen(true)}
+              variant="default"
+              className="hidden md:inline-flex bg-gradient-primary hover:shadow-glow"
+            >
+              FREE CONSULTATION
+            </Button>
+
             {/* Mobile Menu Button */}
             <Button
               variant="ghost"
