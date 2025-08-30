@@ -263,7 +263,13 @@ export default function BookingModal({
   ];
 
   const nextStep = () => setStep((s) => Math.min(s + 1, 8));
-  const prevStep = () => setStep((s) => Math.max(s - 1, 1));
+  const prevStep = () => {
+    setStep((s) => Math.max(s - 1, 1));
+    // Clear submit status when navigating back
+    if (submitStatus) {
+      setSubmitStatus('');
+    }
+  };
 
   // Validation function
   const validateForm = () => {
