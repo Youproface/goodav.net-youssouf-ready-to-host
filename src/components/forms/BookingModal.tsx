@@ -5,52 +5,7 @@ import {
   Film,
   Radio,
 
-  Users,
-  Clock,
-  Calendar,
-  Briefcase,
-  DollarSign,
-  Star,
-  Layers,
-  PenTool,
-  Share2,
-  Settings,
-  User,
-  Building,
-} from "lucide-react";
-// Main BookingModal wrapper component
-const BookingModal = () => {
-  // All booking modal logic and state
-  // ...existing code...
-  // Place the step logic and form here
-  // For demonstration, render the main booking form content
-  // You can later add step navigation if needed
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
-      <div className="bg-[#18181b] rounded-lg shadow-lg p-8 max-w-3xl w-full relative">
-        <button
-          className="absolute top-4 right-4 text-orange-500 hover:text-orange-700"
-          aria-label="Close modal"
-          onClick={() => {
-            // Add modal close logic here (e.g., setModalOpen(false))
-          }}
-        >
-          <X className="w-6 h-6" />
-        </button>
-        {/* --- Begin Booking Form Content --- */}
-        <h3 className="text-xl font-semibold mb-4">What type of project?</h3>
-        <div className="grid md:grid-cols-2 gap-4">
-          {/* Example options, you can refactor to use Step1, Step4, etc. */}
-          <button className="p-4 bg-[#1b1b1d] border border-orange-500 rounded flex items-center gap-2">
-            <Video className="w-5 h-5" /> Video Production
-          </button>
-          <button className="p-4 bg-[#1b1b1d] border border-orange-500 rounded flex items-center gap-2">
-            <Camera className="w-5 h-5" /> Photography
-          </button>
-          <button className="p-4 bg-[#1b1b1d] border border-orange-500 rounded flex items-center gap-2">
-            <Radio className="w-5 h-5" /> Radio/Podcast
-          </button>
-          <button className="p-4 bg-[#1b1b1d] border border-orange-500 rounded flex items-center gap-2">
+
             <Briefcase className="w-5 h-5" /> Corporate Event
           </button>
           <button className="p-4 bg-[#1b1b1d] border border-orange-500 rounded flex items-center gap-2">
