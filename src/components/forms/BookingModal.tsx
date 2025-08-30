@@ -1360,7 +1360,7 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
                     : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31]'
                 }`}
               >
-                <i className={`${option.icon} w-6 h-6 mt-1 ${meetingSoftware === option.label ? 'text-white' : 'text-orange-400'}`}></i>
+                <i className={`${option.icon} w-6 h-6 mt-1 ${meetingSoftware === option.label ? 'text-white' : 'text-green-400'}`}></i>
                 <div>
                   <h5 className="font-semibold">{option.label}</h5>
                   <p className="text-sm text-gray-400">{option.desc}</p>
