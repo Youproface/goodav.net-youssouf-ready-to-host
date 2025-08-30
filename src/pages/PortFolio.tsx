@@ -39,6 +39,8 @@ import img32 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-4
 // Array of all imported images
 const images = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25, img26, img27, img28, img29, img30, img31, img32];
 
+import SEO from '@/components/SEO';
+import SchemaMarkup from '@/components/SchemaMarkup';
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('all');
 
@@ -98,7 +100,27 @@ const Portfolio = () => {
     : portfolioItems.filter(item => item.category === activeFilter);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <>
+      <SEO
+        title="Portfolio - GoodAV | Award-Winning Audiovisual Projects"
+        description="Explore GoodAV’s portfolio of award-winning audiovisual productions, documentaries, and event coverage across Africa."
+        canonical="https://goodav.net/portfolio"
+      />
+      <SchemaMarkup
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          "name": "GoodAV Portfolio",
+          "description": "Award-winning audiovisual productions, documentaries, and event coverage by GoodAV.",
+          "creator": {
+            "@type": "Organization",
+            "name": "GoodAV"
+          },
+          "url": "https://goodav.net/portfolio",
+          "image": "https://goodav.net/image/portfolio/ias2025-cover.jpg"
+        }}
+      />
+      <div className="min-h-screen bg-black text-white">
       {/* Hero Section */}
       <div className="relative mt-10 py-32 px-4 bg-transparent">
         {/* Background Image with Overlay */}
@@ -406,6 +428,8 @@ const Portfolio = () => {
         </div>
       </div>
     </div>
+      </div>
+    </>
   );
 };
 
