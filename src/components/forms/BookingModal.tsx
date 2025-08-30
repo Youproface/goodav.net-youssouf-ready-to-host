@@ -568,8 +568,8 @@ export default function BookingModal({
                     <Tooltip.Trigger asChild>
                       <button
                         onClick={nextStep}
-                        className={`px-6 py-2 rounded-lg ${(step >= 1 && step <= 4 && !canProceed) || (step === 6 && !isFormValid()) ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
-                        disabled={(step >= 1 && step <= 4 && !canProceed) || (step === 6 && !isFormValid())}
+                        className={`px-6 py-2 rounded-lg ${(step >= 1 && step <= 4 && !canProceed) || (step === 5 && !isFormValid()) ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
+                        disabled={(step >= 1 && step <= 4 && !canProceed) || (step === 5 && !isFormValid())}
                       >
                         Next →
                       </button>
