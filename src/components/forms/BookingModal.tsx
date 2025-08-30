@@ -27,7 +27,11 @@ export default function BookingModal({
   onClose: () => void;
 }) {
   const [step, setStep] = useState(1);
-  const [modalOpen, setModalOpen] = useState(isOpen);
+  const [progressWidth, setProgressWidth] = useState(0);
+
+  useEffect(() => {
+    setProgressWidth((step / 8) * 100);
+  }, [step]);
   // Validation state for Step 1
   const [canProceed, setCanProceed] = useState(false);
 
