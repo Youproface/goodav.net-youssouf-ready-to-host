@@ -136,8 +136,8 @@ export default function BookingModal({
               {step < 6 ? (
                 <button
                   onClick={nextStep}
-                  className={`px-6 py-2 rounded-lg ${step === 1 && !canProceed ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
-                  disabled={step === 1 && !canProceed}
+                  className={`px-6 py-2 rounded-lg ${(step >= 1 && step <= 4 && !canProceed) ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
+                  disabled={step >= 1 && step <= 4 && !canProceed}
                 >
                   Next →
                 </button>
