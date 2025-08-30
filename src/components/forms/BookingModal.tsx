@@ -482,11 +482,13 @@ function Step6() {
           ))}
         </div>
         <div className="mt-4">
-          <span className="font-medium text-sm">Time zone</span>
+          <label htmlFor="timezone" className="font-medium text-sm mr-2">Time zone</label>
           <select
-            className="ml-2 p-1 rounded bg-gray-100 text-gray-700"
+            id="timezone"
+            className="p-1 rounded bg-gray-100 text-gray-700"
             value={timezone}
             onChange={e => setTimezone(e.target.value)}
+            title="Select your time zone"
           >
             <option>Eastern time - US & Canada</option>
             <option>Central time - US & Canada</option>
