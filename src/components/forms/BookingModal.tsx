@@ -52,6 +52,7 @@ export default function BookingModal({
     // Required fields validation
     if (!name.trim()) errors.push('Full name is required');
     if (!email.trim()) errors.push('Email address is required');
+    if (!organization.trim()) errors.push('Organization is required');
     if (!selectedDate) errors.push('Please select a date');
     if (!selectedTime) errors.push('Please select a time slot');
 
