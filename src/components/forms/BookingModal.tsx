@@ -630,6 +630,9 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
             <div className={`flex items-center gap-2 ${email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}`}>
               <span className={email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '✓' : '○'}></span> Valid Email
             </div>
+            <div className={`flex items-center gap-2 ${organization.trim() ? 'text-green-400' : 'text-orange-300'}`}>
+              <span className={organization.trim() ? '✓' : '○'}></span> Organization
+            </div>
             <div className={`flex items-center gap-2 ${selectedDate ? 'text-green-400' : 'text-orange-300'}`}>
               <span className={selectedDate ? '✓' : '○'}></span> Date Selection
             </div>
