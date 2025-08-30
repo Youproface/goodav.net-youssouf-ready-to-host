@@ -1230,11 +1230,12 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
                    {!selectedDate && (
                      <Tooltip.Portal>
                        <Tooltip.Content
-                         className="bg-gray-800 text-white px-3 py-2 rounded-md text-sm shadow-lg border border-gray-600"
-                         sideOffset={5}
+                         className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
+                         sideOffset={8}
+                         side="top"
                        >
                          Please select a date first
-                         <Tooltip.Arrow className="fill-gray-800" />
+                         <Tooltip.Arrow className="fill-gray-900" />
                        </Tooltip.Content>
                      </Tooltip.Portal>
                    )}
