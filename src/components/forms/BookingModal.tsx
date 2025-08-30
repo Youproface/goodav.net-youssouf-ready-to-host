@@ -324,7 +324,7 @@ export default function BookingModal({
       month: 'long',
       day: 'numeric'
     });
-    const message = `🎉 <strong>Time Slot Confirmed!</strong><br><br>📅 <strong>${formattedDate}</strong><br>🕐 <strong>${selectedTime}</strong> (${timezone})<br><br><em>Your consultation has been scheduled. We'll send you a confirmation email shortly.</em>`;
+    const message = `<i class="fas fa-check-circle text-green-400 text-xl"></i> <strong>Time Slot Confirmed!</strong><br><br><i class="fas fa-calendar text-orange-400"></i> <strong>${formattedDate}</strong><br><i class="fas fa-clock text-orange-400"></i> <strong>${selectedTime}</strong> (${timezone})<br><br><em>Your consultation has been scheduled. We'll send you a confirmation email shortly.</em>`;
     setConfirmationMessage(message);
     
     // Auto-hide the message after 5 seconds
