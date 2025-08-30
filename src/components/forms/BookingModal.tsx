@@ -339,7 +339,7 @@ export default function BookingModal({
   };
 
   // Show popup notification
-  const showNotificationPopup = (type: 'success' | 'error', message: string, details: string = '') => {
+  const showNotificationPopup = (type: 'success' | 'error' | 'warning', message: string, details: string = '') => {
     setPopupType(type);
     setPopupMessage(message);
     setPopupDetails(details);
