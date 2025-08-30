@@ -404,9 +404,23 @@ export default function BookingModal({
         setSelectedTime('');
         setStep(1);
         setTimeSlotConfirmed(false);
+        
+        // Show success popup
+        showNotificationPopup(
+          'success',
+          'Booking Submitted Successfully!',
+          `Your consultation request has been received. Booking ID: ${result.id}. We will contact you soon to confirm your appointment.`
+        );
       } else {
         const errorMessage = result.error || 'Submission failed. Please try again.';
         setSubmitStatus(`<i class="fas fa-times-circle text-red-400"></i> ${errorMessage}`);
+        
+        // Show error popup
+        showNotificationPopup(
+          'error',
+          'Booking Submission Failed',
+          errorMessage
+        );
       }
     } catch (error) {
       console.error('Submission error:', error);
