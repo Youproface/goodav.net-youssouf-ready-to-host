@@ -89,57 +89,61 @@ export default function RecentEvents() {
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 
             <ul className="space-y-3">
-            <h2 className="text-md text-center font-semibold text-zinc-200">Deliveries</h2>
-            {[
-                "Full-length recap and highlight videos",
-                "Street-style interviews and cinematic b-roll",
-                "Event photography for internal and external communications",
-                "Fast-turnaround edits to meet real-time content needs",
-            ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-orange-500/15 ring-1 ring-white/10">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="h-3.5 w-3.5 text-orange-400"
-                    aria-hidden="true"
-                    >
-                    <path
-                        fillRule="evenodd"
-                        d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.01 7.06a1 1 0 0 1-1.423.01L3.29 8.773a1 1 0 1 1 1.418-1.41l3.07 3.09 6.3-6.34a1 1 0 0 1 1.426.176Z"
-                        clipRule="evenodd"
-                    />
-                    </svg>
-                </span>
-                <span className=" text-md leading-6 text-zinc-200">{item}</span>
-                </li>
-            ))}
+      </ul>
+      <h2 className="text-md text-center font-semibold text-zinc-200">Deliveries</h2>
+      <ul className="space-y-3">
+      {[
+        "Full-length recap and highlight videos",
+        "Street-style interviews and cinematic b-roll",
+        "Event photography for internal and external communications",
+        "Fast-turnaround edits to meet real-time content needs",
+      ].map((item) => (
+        <li key={item} className="flex items-start gap-3">
+        <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-orange-500/15 ring-1 ring-white/10">
+          <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className="h-3.5 w-3.5 text-orange-400"
+          aria-hidden="true"
+          >
+          <path
+            fillRule="evenodd"
+            d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.01 7.06a1 1 0 0 1-1.423.01L3.29 8.773a1 1 0 1 1 1.418-1.41l3.07 3.09 6.3-6.34a1 1 0 0 1 1.426.176Z"
+            clipRule="evenodd"
+          />
+          </svg>
+        </span>
+        <span className=" text-md leading-6 text-zinc-200">{item}</span>
+        </li>
+      ))}
             </ul>
 
 
             <ul className=" space-y-4">
-            <h2 className="text-sm text-center font-semibold text-zinc-200">Clients</h2>
-            {["Gilead Sciences", "Plus Life Media"].map((client) => (
-                <li key={client} className="flex items-start gap-3">
-                <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-orange-500/15 ring-1 ring-white/10">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="h-3.5 w-3.5 text-orange-400"
-                    aria-hidden="true"
-                    >
-                    <path
-                        fillRule="evenodd"
-                        d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.01 7.06a1 1 0 0 1-1.423.01L3.29 8.773a1 1 0 1 1 1.418-1.41l3.07 3.09 6.3-6.34a1 1 0 0 1 1.426.176Z"
-                        clipRule="evenodd"
-                    />
-                    </svg>
-                </span>
-                <span className="text-md leading-6 text-zinc-200">{client}</span>
-                </li>
-            ))}
+      </ul>
+      <h2 className="text-sm text-center font-semibold text-zinc-200">Clients</h2>
+      <ul className=" space-y-4">
+      {["Gilead Sciences", "Plus Life Media"].map((client) => (
+        <li key={client} className="flex items-start gap-3">
+        <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-orange-500/15 ring-1 ring-white/10">
+          <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className="h-3.5 w-3.5 text-orange-400"
+          aria-hidden="true"
+          >
+          <path
+            fillRule="evenodd"
+            d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.01 7.06a1 1 0 0 1-1.423.01L3.29 8.773a1 1 0 1 1 1.418-1.41l3.07 3.09 6.3-6.34a1 1 0 0 1 1.426.176Z"
+            clipRule="evenodd"
+          />
+          </svg>
+        </span>
+        <span className="text-md leading-6 text-zinc-200">{client}</span>
+        </li>
+      ))}
             </ul>
 
             </div>
