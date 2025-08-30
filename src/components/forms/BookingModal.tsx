@@ -1258,11 +1258,9 @@ function Step7({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
         </div>
       </div>
 
-      {/* Personal Information and Meeting Platform Section */}
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Personal Information Section */}
-        <div className="w-full lg:w-1/2">
-          <h3 className="text-xl font-semibold mb-4">Personal Information</h3>
+      {/* Personal Information Section */}
+      <div className="w-full">
+        <h3 className="text-xl font-semibold mb-4">Personal Information</h3>
 
           {/* Validation Summary */}
           <div className="mb-4 p-3 bg-orange-900/20 border border-orange-500/30 rounded-lg">
