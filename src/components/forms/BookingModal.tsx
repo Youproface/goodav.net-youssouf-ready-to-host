@@ -46,7 +46,7 @@ export default function BookingModal({
   const [confirmationMessage, setConfirmationMessage] = useState(null);
   const [timeSlotConfirmed, setTimeSlotConfirmed] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const [popupType, setPopupType] = useState<'success' | 'error' | null>(null);
+  const [popupType, setPopupType] = useState<'success' | 'error' | 'warning' | null>(null);
   const [popupMessage, setPopupMessage] = useState('');
   const [popupDetails, setPopupDetails] = useState('');
 
