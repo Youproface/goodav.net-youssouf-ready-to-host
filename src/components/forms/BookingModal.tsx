@@ -330,6 +330,9 @@ export default function BookingModal({
     // Auto-hide the message after 5 seconds
     setTimeout(() => setConfirmationMessage(null), 5000);
   };
+
+  // Send booking data to backend API
+  async function handleFormSubmit(e) {
     e.preventDefault();
 
     // Comprehensive validation
