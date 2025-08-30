@@ -1043,7 +1043,7 @@ function Step7({ meetingSoftware, setMeetingSoftware, handleFormSubmit, submitti
     </div>
   );
 }
-function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, countryCode, setCountryCode, countryCodes, organization, setOrganization, project, setProject, selectedDate, setSelectedDate, selectedTime, setSelectedTime, timezone, setTimezone, submitting, handleTimeConfirmation, confirmationMessage, timeSlotConfirmed, setTimeSlotConfirmed }) {
+function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, countryCode, setCountryCode, countryCodes, organization, setOrganization, project, setProject, selectedDate, setSelectedDate, selectedTime, setSelectedTime, timezone, setTimezone, submitting, handleTimeConfirmation, confirmationMessage, timeSlotConfirmed, setTimeSlotConfirmed, meetingSoftware, setMeetingSoftware }) {
   // Calendar and time slot picker UI
   // List of time zones (IANA)
   const timeZones = [
