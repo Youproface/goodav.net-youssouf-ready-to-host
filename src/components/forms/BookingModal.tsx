@@ -519,7 +519,7 @@ export default function BookingModal({
               <div className="w-full bg-gray-700 h-2 rounded-full mb-4 overflow-hidden">
                 <div
                   className="bg-orange-500 h-full rounded-full transition-all duration-500 ease-out"
-                  style={{ width: `${(step / 8) * 100}%` }}
+                  style={{ width: `${(step / 8) * 100}%` } as any}
                 />
               </div>
 
