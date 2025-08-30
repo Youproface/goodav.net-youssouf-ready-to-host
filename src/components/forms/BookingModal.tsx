@@ -1023,100 +1023,214 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
     return targetDateStr;
   }
   return (
-    <div className="flex flex-col md:flex-row gap-8">
-      <div className="w-full md:w-1/2">
-        <h3 className="text-xl font-semibold mb-4">Select a Date & Time</h3>
+    <div className="space-y-8">
+      {/* Calendar and Time Selection Section */}
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Calendar Section */}
+        <div className="w-full lg:w-1/2">
+          <h3 className="text-xl font-semibold mb-4">Select a Date</h3>
 
-        {/* Validation Summary */}
-        <div className="mb-4 p-3 bg-orange-900/20 border border-orange-500/30 rounded-lg">
-          <div className="text-sm text-orange-300 font-medium mb-2">Required Information:</div>
-          <div className="text-xs text-orange-200 space-y-1">
-            <div className={`flex items-center gap-2 ${name.trim() ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={name.trim() ? 'text-green-400' : 'text-orange-300'}>{name.trim() ? '✓' : '×'}</span> Full Name
-            </div>
-            <div className={`flex items-center gap-2 ${email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}>{email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '✓' : '×'}</span> Valid Email
-            </div>
-            <div className={`flex items-center gap-2 ${organization.trim() ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={organization.trim() ? 'text-green-400' : 'text-orange-300'}>{organization.trim() ? '✓' : '×'}</span> Organization
-            </div>
-            <div className={`flex items-center gap-2 ${project.trim() ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={project.trim() ? 'text-green-400' : 'text-orange-300'}>{project.trim() ? '✓' : '×'}</span> Project Description
-            </div>
-            <div className={`flex items-center gap-2 ${selectedDate ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={selectedDate ? 'text-green-400' : 'text-orange-300'}>{selectedDate ? '✓' : '×'}</span> Date Selection
-            </div>
-            <div className={`flex items-center gap-2 ${selectedTime ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={selectedTime ? 'text-green-400' : 'text-orange-300'}>{selectedTime ? '✓' : '×'}</span> Time Selection
-            </div>
-            <div className={`flex items-center gap-2 ${meetingSoftware ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={meetingSoftware ? 'text-green-400' : 'text-orange-300'}>{meetingSoftware ? '✓' : '×'}</span> Meeting Platform
-            </div>
+          {/* Calendar Navigation */}
+          <div className="flex items-center justify-between mb-2">
+            <button
+              className="text-lg px-2"
+              onClick={() => {
+                if (calendarMonth === 0) {
+                  setCalendarMonth(11);
+                  setCalendarYear(calendarYear - 1);
+                } else {
+                  setCalendarMonth(calendarMonth - 1);
+                }
+              }}
+              disabled={calendarYear === today.getFullYear() && calendarMonth === today.getMonth()}
+            >&#60;</button>
+            <span className="font-medium">{new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}</span>
+            <button
+              className="text-lg px-2"
+              onClick={() => {
+                if (calendarMonth === 11) {
+                  setCalendarMonth(0);
+                  setCalendarYear(calendarYear + 1);
+                } else {
+                  setCalendarMonth(calendarMonth + 1);
+                }
+              }}
+            >&#62;</button>
+          </div>
+
+          {/* Calendar Grid */}
+          <div className="grid grid-cols-7 gap-2 mb-2 text-center text-gray-400 text-xs">
+            {['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => <div key={d}>{d}</div>)}
+          </div>
+          <div className="grid grid-cols-7 gap-2 text-center mb-4">
+            {calendarGrid.flat().map((day, i) => (
+              day ? (
+                <button
+                  key={i}
+                  className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-bold transition-all
+                    ${isPastDate(calendarYear, calendarMonth, day) ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-orange-100 text-orange-700 hover:bg-orange-300'}
+                    ${selectedDate && selectedDate.day === day && selectedDate.month === calendarMonth && selectedDate.year === calendarYear ? 'bg-orange-600 text-white ring-4 ring-orange-400 shadow-lg scale-110 z-10' : ''}`}
+                  disabled={isPastDate(calendarYear, calendarMonth, day)}
+                  onClick={() => setSelectedDate({ day, month: calendarMonth, year: calendarYear })}
+                  aria-label={isPastDate(calendarYear, calendarMonth, day) ? 'Past date not selectable' : `Select ${day} ${calendarMonth+1} ${calendarYear}`}
+                >
+                  {day}
+                </button>
+              ) : <div key={i}></div>
+            ))}
+          </div>
+
+          {/* Timezone Selection */}
+          <div className="mb-4">
+            <label htmlFor="timezone" className="font-medium text-sm mr-2">Time zone</label>
+            <select
+              id="timezone"
+              className="p-1 rounded bg-[#1b1b1d] text-orange-500 border border-orange-500"
+              value={timezone}
+              onChange={e => setTimezone(e.target.value)}
+              title="Select your time zone"
+            >
+              {timeZones.map(tz => (
+                <option key={tz} value={tz}>{tz}</option>
+              ))}
+            </select>
           </div>
         </div>
-         {/* Calendar UI: dynamic, only current/future dates selectable */}
-         <div className="flex items-center justify-between mb-2">
-           <button
-             className="text-lg px-2"
-             onClick={() => {
-               if (calendarMonth === 0) {
-                 setCalendarMonth(11);
-                 setCalendarYear(calendarYear - 1);
-               } else {
-                 setCalendarMonth(calendarMonth - 1);
-               }
-             }}
-             disabled={calendarYear === today.getFullYear() && calendarMonth === today.getMonth()}
-           >&#60;</button>
-           <span className="font-medium">{new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}</span>
-           <button
-             className="text-lg px-2"
-             onClick={() => {
-               if (calendarMonth === 11) {
-                 setCalendarMonth(0);
-                 setCalendarYear(calendarYear + 1);
-               } else {
-                 setCalendarMonth(calendarMonth + 1);
-               }
-             }}
-           >&#62;</button>
-         </div>
-         <div className="grid grid-cols-7 gap-2 mb-2 text-center text-gray-400 text-xs">
-           {['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => <div key={d}>{d}</div>)}
-         </div>
-         <div className="grid grid-cols-7 gap-2 text-center">
-           {calendarGrid.flat().map((day, i) => (
-             day ? (
-               <button
-                 key={i}
-                 className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-bold transition-all
-                   ${isPastDate(calendarYear, calendarMonth, day) ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-orange-100 text-orange-700 hover:bg-orange-300'}
-                   ${selectedDate && selectedDate.day === day && selectedDate.month === calendarMonth && selectedDate.year === calendarYear ? 'bg-orange-600 text-white ring-4 ring-orange-400 shadow-lg scale-110 z-10' : ''}`}
-                 disabled={isPastDate(calendarYear, calendarMonth, day)}
-                 onClick={() => setSelectedDate({ day, month: calendarMonth, year: calendarYear })}
-                 aria-label={isPastDate(calendarYear, calendarMonth, day) ? 'Past date not selectable' : `Select ${day} ${calendarMonth+1} ${calendarYear}`}
-               >
-                 {day}
-               </button>
-             ) : <div key={i}></div>
-           ))}
-         </div>
-         <div className="mt-4">
-           <label htmlFor="timezone" className="font-medium text-sm mr-2">Time zone</label>
-           <select
-             id="timezone"
-             className="p-1 rounded bg-[#1b1b1d] text-orange-500 border border-orange-500"
-             value={timezone}
-             onChange={e => setTimezone(e.target.value)}
-             title="Select your time zone"
-           >
-             {timeZones.map(tz => (
-               <option key={tz} value={tz}>{tz}</option>
-             ))}
-           </select>
-         </div>
-        {/* Contact & Project Info Section */}
-        <div className="w-full mt-8">
+
+        {/* Time Slots Section */}
+        <div className="w-full lg:w-1/2">
+          <h3 className="text-xl font-semibold mb-4">Select a Time</h3>
+
+          <div className="mb-4 text-lg font-medium">
+            {selectedDate ? `${new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()}` : 'Select a date first'}
+          </div>
+
+          <div className="flex flex-col gap-3 w-full max-w-xs">
+            {/* Time slots: disabled until date selected */}
+            {timeSlots.map(slot => (
+              <div key={slot} className="flex gap-2">
+                <Tooltip.Provider>
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <button
+                        className={`flex-1 py-2 rounded border text-center font-medium transition-all
+                          ${selectedDate ? (selectedTime === slot ? 'bg-orange-700 text-white border-orange-700' : 'bg-[#1b1b1d] text-orange-500 border-orange-500 hover:bg-orange-100') : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'}`}
+                        onClick={() => {
+                          selectedDate && setSelectedTime(slot);
+                          setTimeSlotConfirmed(false); // Reset confirmation when selecting new time
+                        }}
+                        disabled={!selectedDate}
+                      >
+                        {slot}
+                        {/* Show converted time if timezone is not Africa/Kigali */}
+                        {timezone !== 'Africa/Kigali' && selectedDate && (
+                          <span className="block text-xs text-orange-300 mt-1">
+                            {(() => {
+                              const dateObj = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
+                              return getConvertedTime(slot, 'Africa/Kigali', timezone, dateObj);
+                            })()} ({timezone})
+                          </span>
+                        )}
+                      </button>
+                    </Tooltip.Trigger>
+                    {!selectedDate && (
+                      <Tooltip.Portal>
+                        <Tooltip.Content
+                          className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
+                          sideOffset={8}
+                          side="top"
+                        >
+                          Please select a date first
+                          <Tooltip.Arrow className="fill-gray-900" />
+                        </Tooltip.Content>
+                      </Tooltip.Portal>
+                    )}
+                  </Tooltip.Root>
+                </Tooltip.Provider>
+                {selectedTime === slot && selectedDate && (
+                  <Tooltip.Provider>
+                    <Tooltip.Root>
+                      <Tooltip.Trigger asChild>
+                        <button
+                          className={`px-4 py-2 rounded font-semibold shadow transition-colors ${
+                            timeSlotConfirmed
+                              ? 'bg-green-600 text-white cursor-not-allowed opacity-75'
+                              : 'bg-orange-600 text-white hover:bg-orange-700'
+                          }`}
+                          onClick={timeSlotConfirmed ? undefined : handleTimeConfirmation}
+                          disabled={timeSlotConfirmed}
+                        >
+                          {timeSlotConfirmed ? 'Confirmed' : 'Confirm'}
+                        </button>
+                      </Tooltip.Trigger>
+                      {timeSlotConfirmed && (
+                        <Tooltip.Portal>
+                          <Tooltip.Content
+                            className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
+                            sideOffset={8}
+                            side="top"
+                          >
+                            Time slot already confirmed
+                            <Tooltip.Arrow className="fill-gray-900" />
+                          </Tooltip.Content>
+                        </Tooltip.Portal>
+                      )}
+                    </Tooltip.Root>
+                  </Tooltip.Provider>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Professional Confirmation Message */}
+          {confirmationMessage && (
+            <div className="mt-6 p-4 bg-green-900/20 border border-green-500/50 rounded-lg animate-in slide-in-from-top-2 duration-300">
+              <div className="text-center" dangerouslySetInnerHTML={{__html: confirmationMessage}} />
+            </div>
+          )}
+
+          {/* Feedback and validation comments */}
+          {!selectedDate && <div className="text-red-400 mt-4 text-sm">Please select a date to view available times.</div>}
+          {selectedDate && !selectedTime && <div className="text-red-400 mt-4 text-sm">Please select a time slot to confirm your booking.</div>}
+          {selectedDate && selectedTime && <div className="mt-4 text-sm font-semibold text-green-400">Ready to confirm: {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()} at {selectedTime} ({timezone})</div>}
+        </div>
+      </div>
+
+      {/* Personal Information and Meeting Platform Section */}
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Personal Information Section */}
+        <div className="w-full lg:w-1/2">
+          <h3 className="text-xl font-semibold mb-4">Personal Information</h3>
+
+          {/* Validation Summary */}
+          <div className="mb-4 p-3 bg-orange-900/20 border border-orange-500/30 rounded-lg">
+            <div className="text-sm text-orange-300 font-medium mb-2">Required Information:</div>
+            <div className="text-xs text-orange-200 space-y-1">
+              <div className={`flex items-center gap-2 ${name.trim() ? 'text-green-400' : 'text-orange-300'}`}>
+                <span className={name.trim() ? 'text-green-400' : 'text-orange-300'}>{name.trim() ? '✓' : '×'}</span> Full Name
+              </div>
+              <div className={`flex items-center gap-2 ${email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}`}>
+                <span className={email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}>{email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '✓' : '×'}</span> Valid Email
+              </div>
+              <div className={`flex items-center gap-2 ${organization.trim() ? 'text-green-400' : 'text-orange-300'}`}>
+                <span className={organization.trim() ? 'text-green-400' : 'text-orange-300'}>{organization.trim() ? '✓' : '×'}</span> Organization
+              </div>
+              <div className={`flex items-center gap-2 ${project.trim() ? 'text-green-400' : 'text-orange-300'}`}>
+                <span className={project.trim() ? 'text-green-400' : 'text-orange-300'}>{project.trim() ? '✓' : '×'}</span> Project Description
+              </div>
+              <div className={`flex items-center gap-2 ${selectedDate ? 'text-green-400' : 'text-orange-300'}`}>
+                <span className={selectedDate ? 'text-green-400' : 'text-orange-300'}>{selectedDate ? '✓' : '×'}</span> Date Selection
+              </div>
+              <div className={`flex items-center gap-2 ${selectedTime ? 'text-green-400' : 'text-orange-300'}`}>
+                <span className={selectedTime ? 'text-green-400' : 'text-orange-300'}>{selectedTime ? '✓' : '×'}</span> Time Selection
+              </div>
+              <div className={`flex items-center gap-2 ${meetingSoftware ? 'text-green-400' : 'text-orange-300'}`}>
+                <span className={meetingSoftware ? 'text-green-400' : 'text-orange-300'}>{meetingSoftware ? '✓' : '×'}</span> Meeting Platform
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form */}
           <div className="grid md:grid-cols-2 gap-4 mb-4">
             <div>
               <input
@@ -1149,7 +1263,7 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
             </div>
           </div>
 
-          {/* Organization field - full width above phone */}
+          {/* Organization field */}
           <div className="mb-4">
             <input
               type="text"
@@ -1163,7 +1277,7 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
             />
           </div>
 
-          {/* Phone number field - full width below organization */}
+          {/* Phone number field */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-white-400 mb-2">Phone Number</label>
             <div className="flex gap-2">
@@ -1205,154 +1319,62 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
             rows={4}
             required
           />
-
-          {/* Meeting Software Selection */}
-          <div className="mb-6">
-            <h4 className="text-lg font-semibold mb-3">Preferred Meeting Platform</h4>
-            <p className="text-gray-300 text-sm mb-4">
-              Choose your preferred platform for our consultation meeting. We'll send you the meeting details via email.
-            </p>
-            <div className="grid md:grid-cols-2 gap-3">
-              {[
-                {
-                  label: "Zoom",
-                  desc: "Most popular video conferencing platform",
-                  icon: "📹",
-                },
-                {
-                  label: "Microsoft Teams",
-                  desc: "Integrated with Microsoft ecosystem",
-                  icon: "👥",
-                },
-                {
-                  label: "Google Meet",
-                  desc: "Simple and easy to use",
-                  icon: "🎯",
-                },
-                {
-                  label: "Phone Call",
-                  desc: "Traditional phone consultation",
-                  icon: "📞",
-                },
-              ].map((option, i) => (
-                <button
-                  key={i}
-                  onClick={() => setMeetingSoftware(option.label)}
-                  className={`flex items-start gap-3 p-3 rounded-lg border text-left transition-all duration-200 ${
-                    meetingSoftware === option.label
-                      ? 'bg-orange-500 border-orange-500 shadow-lg shadow-orange-500/20'
-                      : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31]'
-                  }`}
-                >
-                  <span className="text-2xl mt-1">{option.icon}</span>
-                  <div>
-                    <h5 className="font-semibold">{option.label}</h5>
-                    <p className="text-sm text-gray-400">{option.desc}</p>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-        {/* Schedule Consultation Button and feedback */}
-        <div className="flex flex-col items-center mt-6">
-          {submitStatus && <div className="mt-2 text-sm text-center" dangerouslySetInnerHTML={{__html: submitStatus}} />}
         </div>
+
+        {/* Meeting Platform Section */}
+        <div className="w-full lg:w-1/2">
+          <h3 className="text-xl font-semibold mb-4">Preferred Meeting Platform</h3>
+          <p className="text-gray-300 text-sm mb-6">
+            Choose your preferred platform for our consultation meeting. We'll send you the meeting details via email.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-3">
+            {[
+              {
+                label: "Zoom",
+                desc: "Most popular video conferencing platform",
+                icon: "fas fa-video",
+              },
+              {
+                label: "Microsoft Teams",
+                desc: "Integrated with Microsoft ecosystem",
+                icon: "fas fa-users",
+              },
+              {
+                label: "Google Meet",
+                desc: "Simple and easy to use",
+                icon: "fas fa-search",
+              },
+              {
+                label: "Phone Call",
+                desc: "Traditional phone consultation",
+                icon: "fas fa-phone",
+              },
+            ].map((option, i) => (
+              <button
+                key={i}
+                onClick={() => setMeetingSoftware(option.label)}
+                className={`flex items-start gap-3 p-3 rounded-lg border text-left transition-all duration-200 ${
+                  meetingSoftware === option.label
+                    ? 'bg-orange-500 border-orange-500 shadow-lg shadow-orange-500/20'
+                    : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31]'
+                }`}
+              >
+                <i className={`${option.icon} w-6 h-6 mt-1 ${meetingSoftware === option.label ? 'text-white' : 'text-orange-400'}`}></i>
+                <div>
+                  <h5 className="font-semibold">{option.label}</h5>
+                  <p className="text-sm text-gray-400">{option.desc}</p>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-       <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
-         <div className="mb-4 text-lg font-medium">
-           {selectedDate ? `${new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()}` : 'Select a date'}
-         </div>
-         <div className="flex flex-col gap-3 w-full max-w-xs">
-           {/* Time slots: disabled until date selected */}
-           {timeSlots.map(slot => (
-             <div key={slot} className="flex gap-2">
-               <Tooltip.Provider>
-                 <Tooltip.Root>
-                   <Tooltip.Trigger asChild>
-                     <button
-                       className={`flex-1 py-2 rounded border text-center font-medium transition-all
-                         ${selectedDate ? (selectedTime === slot ? 'bg-orange-700 text-white border-orange-700' : 'bg-[#1b1b1d] text-orange-500 border-orange-500 hover:bg-orange-100') : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'}`}
-                       onClick={() => {
-                         selectedDate && setSelectedTime(slot);
-                         setTimeSlotConfirmed(false); // Reset confirmation when selecting new time
-                       }}
-                       disabled={!selectedDate}
-                     >
-                       {slot}
-                       {/* Show converted time if timezone is not Africa/Kigali */}
-                       {timezone !== 'Africa/Kigali' && selectedDate && (
-                         <span className="block text-xs text-orange-300 mt-1">
-                           {(() => {
-                             const dateObj = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
-                             return getConvertedTime(slot, 'Africa/Kigali', timezone, dateObj);
-                           })()} ({timezone})
-                         </span>
-                       )}
-                     </button>
-                   </Tooltip.Trigger>
-                   {!selectedDate && (
-                     <Tooltip.Portal>
-                       <Tooltip.Content
-                         className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
-                         sideOffset={8}
-                         side="top"
-                       >
-                         Please select a date first
-                         <Tooltip.Arrow className="fill-gray-900" />
-                       </Tooltip.Content>
-                     </Tooltip.Portal>
-                   )}
-                 </Tooltip.Root>
-               </Tooltip.Provider>
-               {selectedTime === slot && selectedDate && (
-                 <Tooltip.Provider>
-                   <Tooltip.Root>
-                     <Tooltip.Trigger asChild>
-                       <button 
-                         className={`px-4 py-2 rounded font-semibold shadow transition-colors ${
-                           timeSlotConfirmed 
-                             ? 'bg-green-600 text-white cursor-not-allowed opacity-75' 
-                             : 'bg-orange-600 text-white hover:bg-orange-700'
-                         }`} 
-                         onClick={timeSlotConfirmed ? undefined : handleTimeConfirmation}
-                         disabled={timeSlotConfirmed}
-                       >
-                         {timeSlotConfirmed ? 'Confirmed' : 'Confirm'}
-                       </button>
-                     </Tooltip.Trigger>
-                     {timeSlotConfirmed && (
-                       <Tooltip.Portal>
-                         <Tooltip.Content
-                           className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
-                           sideOffset={8}
-                           side="top"
-                         >
-                           Time slot already confirmed
-                           <Tooltip.Arrow className="fill-gray-900" />
-                         </Tooltip.Content>
-                       </Tooltip.Portal>
-                     )}
-                   </Tooltip.Root>
-                 </Tooltip.Provider>
-               )}
-             </div>
-           ))}
-         </div>
-         
-         {/* Professional Confirmation Message */}
-         {confirmationMessage && (
-           <div className="mt-6 p-4 bg-green-900/20 border border-green-500/50 rounded-lg animate-in slide-in-from-top-2 duration-300">
-             <div className="text-center" dangerouslySetInnerHTML={{__html: confirmationMessage}} />
-           </div>
-         )}
-         
-         {/* Feedback and validation comments */}
-         {!selectedDate && <div className="text-red-400 mt-4 text-sm">Please select a date to view available times.</div>}
-         {selectedDate && !selectedTime && <div className="text-red-400 mt-4 text-sm">Please select a time slot to confirm your booking.</div>}
-         {selectedDate && selectedTime && <div className="mt-4 text-sm font-semibold text-green-400">Ready to confirm: {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()} at {selectedTime} ({timezone})</div>}
-       </div>
+
+      {/* Schedule Consultation Button and feedback */}
+      <div className="flex flex-col items-center mt-6">
+        {submitStatus && <div className="mt-2 text-sm text-center" dangerouslySetInnerHTML={{__html: submitStatus}} />}
+      </div>
     </div>
   );
 }
