@@ -149,7 +149,7 @@ export default function BookingModal({
             <div className="w-full bg-gray-700 h-1 mt-3 rounded">
               <div
                 className="bg-orange-500 h-1 rounded transition-all duration-300 ease-in-out"
-                style={{ width: `${(step / 6) * 100}%` }} // Dynamic width based on current step - inline style necessary for real-time updates
+                style={{ width: `${(step / 6) * 100}%` }} // eslint-disable-line no-inline-styles -- Dynamic width based on current step - inline style necessary for real-time updates
               />
             </div>
 
