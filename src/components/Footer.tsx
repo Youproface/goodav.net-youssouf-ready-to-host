@@ -43,7 +43,7 @@ const Footer = () => {
   const isServicePage = location.pathname.startsWith('/services');
 
   return (
-    <footer className="bg-gradient-section border-t border-border">
+    <footer className="bg-gradient-section border-t border-border" role="contentinfo">
       {!isServicePage && (
         <>
           <ContactSection />
