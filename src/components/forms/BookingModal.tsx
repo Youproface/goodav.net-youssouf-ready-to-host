@@ -73,9 +73,32 @@ export default function BookingModal({
       };
       window.addEventListener("keydown", onKey);
       return () => window.removeEventListener("keydown", onKey);
-    }, [modalOpen, onClose]);
-    
-  // Send booking data to backend API
+  // Validation function
+  const validateForm = () => {
+    const errors = [];
+
+    // Required fields validation
+    if (!name.trim()) errors.push('Full name is required');
+    if (!email.trim()) errors.push('Email address is required');
+    if (!selectedDate) errors.push('Please select a date');
+    if (!selectedTime) errors.push('Please select a time slot');
+
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) errors.push('Please enter a valid email address');
+
+    // Phone validation (optional but if provided, should be valid)
+    if (phone && !/^\+?[\d\s\-\(\)]{10,}$/.test(phone.replace(/\s/g, ''))) {
+      errors.push('Please enter a valid phone number');
+    }
+
+    return errors;
+  };
+
+  // Check if form is valid for button state
+  const isFormValid = () => {
+    return validateForm().length === 0;
+  };
   async function handleFormSubmit(e) {
     e.preventDefault();
 
