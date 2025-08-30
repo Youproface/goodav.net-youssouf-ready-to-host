@@ -466,26 +466,60 @@ export default function BookingModal({
               )}
 
               {step === 6 ? (
-                <button
-                  onClick={handleFormSubmit}
-                  className={`flex items-center px-6 py-2 rounded-lg text-white font-semibold ${
-                    submitting || !isFormValid()
-                      ? 'bg-gray-500 cursor-not-allowed'
-                      : 'bg-orange-600 hover:bg-orange-700'
-                  }`}
-                  disabled={submitting || !isFormValid()}
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  <span>Schedule Consultation</span>
-                </button>
+                <Tooltip.Provider>
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <button
+                        onClick={handleFormSubmit}
+                        className={`flex items-center px-6 py-2 rounded-lg text-white font-semibold ${
+                          submitting || !isFormValid()
+                            ? 'bg-gray-500 cursor-not-allowed'
+                            : 'bg-orange-600 hover:bg-orange-700'
+                        }`}
+                        disabled={submitting || !isFormValid()}
+                      >
+                        <Calendar className="w-5 h-5 mr-2" />
+                        <span>Schedule Consultation</span>
+                      </button>
+                    </Tooltip.Trigger>
+                    {(submitting || !isFormValid()) && (
+                      <Tooltip.Portal>
+                        <Tooltip.Content
+                          className="bg-gray-800 text-white px-3 py-2 rounded-md text-sm shadow-lg border border-gray-600"
+                          sideOffset={5}
+                        >
+                          {submitting ? 'Submitting your booking...' : 'Please complete all required fields to proceed'}
+                          <Tooltip.Arrow className="fill-gray-800" />
+                        </Tooltip.Content>
+                      </Tooltip.Portal>
+                    )}
+                  </Tooltip.Root>
+                </Tooltip.Provider>
               ) : step < 6 ? (
-                <button
-                  onClick={nextStep}
-                  className={`px-6 py-2 rounded-lg ${(step >= 1 && step <= 4 && !canProceed) ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
-                  disabled={step >= 1 && step <= 4 && !canProceed}
-                >
-                  Next →
-                </button>
+                <Tooltip.Provider>
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <button
+                        onClick={nextStep}
+                        className={`px-6 py-2 rounded-lg ${(step >= 1 && step <= 4 && !canProceed) ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
+                        disabled={step >= 1 && step <= 4 && !canProceed}
+                      >
+                        Next →
+                      </button>
+                    </Tooltip.Trigger>
+                    {(step >= 1 && step <= 4 && !canProceed) && (
+                      <Tooltip.Portal>
+                        <Tooltip.Content
+                          className="bg-gray-800 text-white px-3 py-2 rounded-md text-sm shadow-lg border border-gray-600"
+                          sideOffset={5}
+                        >
+                          Please make a selection to continue
+                          <Tooltip.Arrow className="fill-gray-800" />
+                        </Tooltip.Content>
+                      </Tooltip.Portal>
+                    )}
+                  </Tooltip.Root>
+                </Tooltip.Provider>
               ) : (
                 <div />
               )}
