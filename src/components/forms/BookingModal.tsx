@@ -27,6 +27,8 @@ export default function BookingModal({
 }) {
   const [step, setStep] = useState(1);
   const [modalOpen, setModalOpen] = useState(isOpen);
+  // Validation state for Step 1
+  const [canProceed, setCanProceed] = useState(false);
 
 
   const nextStep = () => setStep((s) => Math.min(s + 1, 6));
@@ -479,11 +481,12 @@ function Step6() {
             className="p-3 rounded bg-[#2a2a2c] border border-gray-600 focus:outline-none w-full"
           />
         </div>
-        <select value={timePreference} onChange={(e) => { setTimePreference(e.target.value) }} className="p-3 rounded bg-[#2a2a2c] border border-gray-600 focus:outline-none w-full">
-          <option>Select preferred time</option>
-          <option>Morning</option>
-          <option>Afternoon</option>
-          <option>Evening</option>
+        <label htmlFor="timePreference" className="block text-sm font-medium text-white-400 mb-1">Preferred time</label>
+        <select id="timePreference" value={timePreference} onChange={(e) => { setTimePreference(e.target.value) }} className="p-3 rounded bg-[#2a2a2c] border border-gray-600 focus:outline-none w-full">
+          <option value="">Select preferred time</option>
+          <option value="Morning">Morning</option>
+          <option value="Afternoon">Afternoon</option>
+          <option value="Evening">Evening</option>
         </select>
         <textarea
           placeholder="Tell us more about your project vision..."
