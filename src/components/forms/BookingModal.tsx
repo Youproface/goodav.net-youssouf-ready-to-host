@@ -1322,7 +1322,7 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
               onChange={e => setName(e.target.value)}
               placeholder="Full Name *"
               className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 ${
-                name.trim() ? 'border-green-500' : 'border-gray-700 focus:border-orange-500'
+                name.trim() ? 'border-orange-500' : 'border-gray-700 focus:border-orange-500'
               }`}
               required
             />
