@@ -110,7 +110,7 @@ export default function BookingModal({
 
             {/* Step Content */}
             <div className="mt-6">
-              {step === 1 && <Step1 />}
+              {step === 1 && <Step1 setCanProceed={setCanProceed} />}
               {step === 2 && <Step2 />}
               {step === 3 && <Step3 />}
               {step === 4 && <Step4 />}
@@ -134,7 +134,8 @@ export default function BookingModal({
               {step < 6 ? (
                 <button
                   onClick={nextStep}
-                  className="px-6 py-2 bg-orange-500 rounded-lg hover:bg-orange-600"
+                  className={`px-6 py-2 rounded-lg ${step === 1 && !canProceed ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
+                  disabled={step === 1 && !canProceed}
                 >
                   Next →
                 </button>
@@ -146,7 +147,6 @@ export default function BookingModal({
                   <Calendar className="w-5 h-5 mr-2" />
                   <span>Schedule Consultation</span>
                 </button>
-
               )}
             </div>
           </div>
@@ -159,9 +159,11 @@ export default function BookingModal({
 /* -------------------------
    STEP 1
 ------------------------- */
-function Step1() {
+function Step1({ setCanProceed }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  // Validation: update canProceed when selection changes
+  useEffect(() => { setCanProceed(!!selectedOption); }, [selectedOption, setCanProceed]);
   const options = [
     {
       label: "Video Production",
