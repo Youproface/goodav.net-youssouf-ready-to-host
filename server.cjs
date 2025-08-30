@@ -24,7 +24,7 @@ app.post('/api/bookings', async (req, res) => {
       // Send email notification using Nodemailer
       try {
         // Configure transporter with better error handling
-        let transporter = nodemailer.createTransporter({
+        let transporter = nodemailer.createTransport({
           host: process.env.SMTP_HOST,
           port: parseInt(process.env.SMTP_PORT) || 587,
           secure: false, // true for 465, false for other ports
