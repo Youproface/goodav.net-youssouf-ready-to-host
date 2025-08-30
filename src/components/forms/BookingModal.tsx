@@ -19,6 +19,15 @@ import {
 } from "lucide-react"; // install via: npm install lucide-react
 
 export default function BookingModal({
+  // Add missing state variables for booking form
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [organization, setOrganization] = useState('');
+  const [project, setProject] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null); // { year, month, day }
+  const [selectedTime, setSelectedTime] = useState('');
+  const [timezone, setTimezone] = useState('Africa/Kigali');
   isOpen,
   onClose,
 }: {
