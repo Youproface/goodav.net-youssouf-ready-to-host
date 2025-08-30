@@ -1272,11 +1272,162 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
             </div>
           )}
 
-          {/* Feedback and validation comments */}
-          {!selectedDate && <div className="text-red-400 mt-4 text-sm">Please select a date to view available times.</div>}
-          {selectedDate && !selectedTime && <div className="text-red-400 mt-4 text-sm">Please select a time slot to confirm your booking.</div>}
-          {selectedDate && selectedTime && <div className="mt-4 text-sm font-semibold text-green-400">Ready to confirm: {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()} at {selectedTime} ({timezone})</div>}
         </div>
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------
+   STEP 8 - Personal Information
+------------------------- */
+function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, countryCode, setCountryCode, countryCodes, organization, setOrganization, project, setProject, selectedDate, selectedTime, timezone, submitting, meetingSoftware }) {
+  return (
+    <div className="space-y-8">
+      {/* Validation Summary - Moved to top */}
+      <div className="p-3 bg-orange-900/20 border border-orange-500/30 rounded-lg">
+        <div className="text-sm text-orange-300 font-medium mb-2">Required Information:</div>
+        <div className="text-xs text-orange-200 space-y-1">
+          <div className={`flex items-center gap-2 ${name.trim() ? 'text-green-400' : 'text-orange-300'}`}>
+            <span className={name.trim() ? 'text-green-400' : 'text-orange-300'}>{name.trim() ? '✓' : '×'}</span> Full Name
+          </div>
+          <div className={`flex items-center gap-2 ${email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}`}>
+            <span className={email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}>{email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '✓' : '×'}</span> Valid Email
+          </div>
+          <div className={`flex items-center gap-2 ${organization.trim() ? 'text-green-400' : 'text-orange-300'}`}>
+            <span className={organization.trim() ? 'text-green-400' : 'text-orange-300'}>{organization.trim() ? '✓' : '×'}</span> Organization
+          </div>
+          <div className={`flex items-center gap-2 ${project.trim() ? 'text-green-400' : 'text-orange-300'}`}>
+            <span className={project.trim() ? 'text-green-400' : 'text-orange-300'}>{project.trim() ? '✓' : '×'}</span> Project Description
+          </div>
+          <div className={`flex items-center gap-2 ${selectedDate ? 'text-green-400' : 'text-orange-300'}`}>
+            <span className={selectedDate ? 'text-green-400' : 'text-orange-300'}>{selectedDate ? '✓' : '×'}</span> Date Selection
+          </div>
+          <div className={`flex items-center gap-2 ${selectedTime ? 'text-green-400' : 'text-orange-300'}`}>
+            <span className={selectedTime ? 'text-green-400' : 'text-orange-300'}>{selectedTime ? '✓' : '×'}</span> Time Selection
+          </div>
+          <div className={`flex items-center gap-2 ${meetingSoftware ? 'text-green-400' : 'text-orange-300'}`}>
+            <span className={meetingSoftware ? 'text-green-400' : 'text-orange-300'}>{meetingSoftware ? '✓' : '×'}</span> Meeting Platform (Selected in Step 6)
+          </div>
+        </div>
+      </div>
+
+      {/* Personal Information Section */}
+      <div className="w-full">
+        <h3 className="text-xl font-semibold mb-4">Personal Information</h3>
+
+        {/* Contact Form */}
+        <div className="grid md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <input
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="Full Name *"
+              className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none w-full text-white placeholder-orange-300 ${
+                name.trim() ? 'border-green-500' : 'border-orange-500'
+              }`}
+              required
+            />
+            {name && !name.trim() && <div className="text-red-400 text-xs mt-1">Full name is required</div>}
+          </div>
+          <div>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="Email Address *"
+              className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none w-full text-white placeholder-orange-300 ${
+                email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-green-500' :
+                email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-red-500' : 'border-orange-500'
+              }`}
+              required
+            />
+            {email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && (
+              <div className="text-red-400 text-xs mt-1">Please enter a valid email address</div>
+            )}
+          </div>
+        </div>
+
+        {/* Organization field */}
+        <div className="mb-4">
+          <input
+            type="text"
+            value={organization}
+            onChange={e => setOrganization(e.target.value)}
+            placeholder="Organization *"
+            className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none w-full text-white placeholder-orange-300 ${
+              organization.trim() ? 'border-green-500' : 'border-orange-500'
+            }`}
+            required
+          />
+        </div>
+
+        {/* Phone number field */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-white-400 mb-2">Phone Number</label>
+          <div className="flex gap-2">
+            <select
+              value={countryCode}
+              onChange={e => setCountryCode(e.target.value)}
+              className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none text-white min-w-[120px]"
+              title="Select country code"
+            >
+              {countryCodes.map((country, index) => (
+                <option key={`${country.code}-${country.name}-${index}`} value={country.code}>
+                  {country.flag} {country.code} {country.name}
+                </option>
+              ))}
+            </select>
+            <input
+              type="tel"
+              value={phone}
+              onChange={e => setPhone(e.target.value.replace(/\D/g, ''))} // Only allow digits
+              placeholder="123456789"
+              className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none flex-1 text-white placeholder-orange-300 ${
+                phone && phone.length >= 7 ? 'border-green-500' :
+                phone && phone.length < 7 ? 'border-red-500' : 'border-orange-500'
+              }`}
+            />
+          </div>
+          {phone && phone.length < 7 && (
+            <div className="text-red-400 text-xs mt-1">Please enter a valid phone number (at least 7 digits)</div>
+          )}
+        </div>
+
+        <textarea
+          value={project}
+          onChange={e => setProject(e.target.value)}
+          placeholder="Tell us more about your project vision... *"
+          className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none w-full text-white placeholder-orange-300 mb-4 ${
+            project.trim() ? 'border-green-500' : 'border-orange-500'
+          }`}
+          rows={4}
+          required
+        />
+
+        {/* Selected Date/Time Summary */}
+        {selectedDate && selectedTime && (
+          <div className="mb-4 p-4 bg-green-900/20 border border-green-500/50 rounded-lg">
+            <h4 className="text-green-400 font-semibold mb-2">Selected Appointment:</h4>
+            <p className="text-green-300">
+              {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })} at {selectedTime} ({timezone})
+            </p>
+            {meetingSoftware && (
+              <p className="text-green-300 mt-1">Meeting Platform: {meetingSoftware}</p>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Schedule Consultation Button and feedback */}
+      <div className="flex flex-col items-center mt-6">
+        {submitStatus && <div className="mt-2 text-sm text-center" dangerouslySetInnerHTML={{__html: submitStatus}} />}
       </div>
     </div>
   );
