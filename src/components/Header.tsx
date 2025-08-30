@@ -8,7 +8,6 @@ import BookingModal from "./forms/BookingModal";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   const navigation = [
     { name: "HOMEPAGE", href: "/" },
