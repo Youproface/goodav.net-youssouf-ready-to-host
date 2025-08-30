@@ -114,7 +114,7 @@ export default function BookingModal({
             <div className="mt-6">
               {step === 1 && <Step1 setCanProceed={setCanProceed} />}
               {step === 2 && <Step2 setCanProceed={setCanProceed} />}
-              {step === 3 && <Step3 />}
+              {step === 3 && <Step3 setCanProceed={setCanProceed} />}
               {step === 4 && <Step4 />}
               {step === 5 && <Step5 nextStep={nextStep} />}
               {step === 6 && <Step6 />}
@@ -287,8 +287,9 @@ function Step2({ setCanProceed }) {
 /* -------------------------
    STEP 3
 ------------------------- */
-function Step3() {
+function Step3({ setCanProceed }) {
   const [active, setActive] = useState(null);
+  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
   const options = [
     { label: "Urgent (1–2 weeks)", desc: "Rush delivery", icon: Clock },
     { label: "Standard (3–4 weeks)", desc: "Normal production timeline", icon: Calendar },
