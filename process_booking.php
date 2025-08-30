@@ -161,18 +161,20 @@ try {
 }
 
 // Return response
-if ($email_sent) {
+if ($email_result['success']) {
     echo json_encode([
         'success' => true,
         'id' => $booking_id,
-        'message' => 'Booking saved and email sent successfully'
+        'message' => 'Booking saved and email sent successfully',
+        'email_status' => 'sent'
     ]);
 } else {
     echo json_encode([
         'success' => true,
         'id' => $booking_id,
-        'warning' => 'Booking saved, but email failed to send: ' . $email_error,
-        'email_error' => $email_error
+        'warning' => 'Booking saved, but email failed to send: ' . ($email_result['error'] ?? 'Unknown error'),
+        'email_status' => 'failed',
+        'email_error' => $email_result['error'] ?? 'Unknown error'
     ]);
 }
 ?>
