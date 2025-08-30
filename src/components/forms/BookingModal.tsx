@@ -444,7 +444,27 @@ function Step6() {
   // Calendar and time slot picker UI
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
-  const [timezone, setTimezone] = useState('Central African Time');
+  // List of time zones (IANA)
+  const timeZones = [
+    'Africa/Maputo', // Central African Time
+    'Africa/Lagos',
+    'Africa/Cairo',
+    'Europe/London',
+    'Europe/Paris',
+    'Europe/Berlin',
+    'America/New_York',
+    'America/Chicago',
+    'America/Denver',
+    'America/Los_Angeles',
+    'Asia/Dubai',
+    'Asia/Kolkata',
+    'Asia/Tokyo',
+    'Asia/Shanghai',
+    'Australia/Sydney',
+    'Pacific/Auckland',
+    'UTC',
+  ];
+  const [timezone, setTimezone] = useState('Africa/Maputo');
   // Calendar logic: allow selection from today to any future date
   const today = new Date();
   const [calendarMonth, setCalendarMonth] = useState(today.getMonth());
@@ -482,21 +502,16 @@ function Step6() {
   }
   const timeSlots = ['10:00', '11:00', '13:00', '14:30', '16:00']; // 24h format for clarity
   // Timezone conversion logic
-  const timeZoneOffsets = {
-    'Central African Time': 2,
-    'Eastern time - US & Canada': -4,
-    'Central time - US & Canada': -5,
-    'Pacific time - US & Canada': -7,
-    'GMT': 0,
-  };
-  function getConvertedTime(time, fromTz, toTz) {
-    // time: 'HH:mm', fromTz/toTz: string
+  // Robust time conversion using Intl API
+  function getConvertedTime(time, fromTz, toTz, dateObj) {
+    // time: 'HH:mm', fromTz/toTz: IANA string, dateObj: Date
     const [h, m] = time.split(':').map(Number);
-    const offset = timeZoneOffsets[toTz] - timeZoneOffsets[fromTz];
-    let newH = h + offset;
-    if (newH < 0) newH += 24;
-    if (newH >= 24) newH -= 24;
-    return `${String(newH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+    const baseDate = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate(), h, m);
+    // Convert from base timezone to UTC
+    const utcDate = new Date(baseDate.toLocaleString('en-US', { timeZone: fromTz }));
+    // Convert UTC to target timezone
+    const targetDateStr = utcDate.toLocaleString('en-US', { timeZone: toTz, hour: '2-digit', minute: '2-digit', hour12: false });
+    return targetDateStr;
   }
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -563,11 +578,9 @@ function Step6() {
              onChange={e => setTimezone(e.target.value)}
              title="Select your time zone"
            >
-             <option>Central African Time</option>
-             <option>Eastern time - US & Canada</option>
-             <option>Central time - US & Canada</option>
-             <option>Pacific time - US & Canada</option>
-             <option>GMT</option>
+             {timeZones.map(tz => (
+               <option key={tz} value={tz}>{tz}</option>
+             ))}
            </select>
          </div>
         {/* Contact & Project Info Section */}
@@ -628,8 +641,14 @@ function Step6() {
                  disabled={!selectedDate}
                >
                  {slot}
-                 {timezone !== 'Central African Time' && selectedDate && (
-                   <span className="block text-xs text-orange-300 mt-1">{getConvertedTime(slot, 'Central African Time', timezone)} ({timezone})</span>
+                 {/* Show converted time if timezone is not Africa/Maputo */}
+                 {timezone !== 'Africa/Maputo' && selectedDate && (
+                   <span className="block text-xs text-orange-300 mt-1">
+                     {(() => {
+                       const dateObj = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
+                       return getConvertedTime(slot, 'Africa/Maputo', timezone, dateObj);
+                     })()} ({timezone})
+                   </span>
                  )}
                </button>
                {selectedTime === slot && selectedDate && (
