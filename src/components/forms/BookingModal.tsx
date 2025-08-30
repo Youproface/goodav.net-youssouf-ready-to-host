@@ -298,6 +298,8 @@ export default function BookingModal({
     setModalOpen(isOpen);
     if (isOpen) {
       setStep(1);
+      // Clear any previous submit status when modal opens
+      setSubmitStatus('');
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
