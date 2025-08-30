@@ -593,8 +593,8 @@ export default function BookingModal({
 
       {/* Success/Error Popup */}
       {showPopup && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="bg-[#1b1b1d] w-full max-w-md mx-4 rounded-xl shadow-2xl border border-gray-700 p-6 relative popup-enter">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm">
+          <div className="bg-[#1b1b1d] w-full max-w-md mx-4 rounded-xl shadow-2xl border border-gray-700 p-6 relative popup-enter transform translate-y-0">
             {/* Close Button */}
             <button
               onClick={closePopup}
@@ -630,7 +630,7 @@ export default function BookingModal({
 
             {/* Details */}
             {popupDetails && (
-              <p className="text-gray-300 text-center text-sm leading-relaxed mb-6">
+              <p className="text-gray-300 text-center text-sm leading-relaxed mb-6 max-h-32 overflow-y-auto">
                 {popupDetails}
               </p>
             )}
