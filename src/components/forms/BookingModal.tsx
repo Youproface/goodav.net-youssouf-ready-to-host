@@ -1191,7 +1191,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
           </div>
 
           <div className="flex flex-col gap-3 w-full max-w-xs">
-            {/* Time slots: disabled until date selected */}
+            {/* Time slots: disabled until date selected, locked when confirmed */}
             {timeSlots.map(slot => (
               <div key={slot} className="flex gap-2">
                 <Tooltip.Provider>
@@ -1199,12 +1199,16 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                     <Tooltip.Trigger asChild>
                       <button
                         className={`flex-1 py-2 rounded border text-center font-medium transition-all
-                          ${selectedDate ? (selectedTime === slot ? 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20' : 'bg-[#252529] text-orange-400 border-gray-700 hover:bg-[#2f2f31]') : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'}`}
+                          ${!selectedDate ? 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed' :
+                            timeSlotConfirmed && selectedTime === slot ? 'bg-green-600 text-white border-green-600 cursor-not-allowed' :
+                            selectedTime === slot ? 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20' :
+                            'bg-[#252529] text-orange-400 border-gray-700 hover:bg-[#2f2f31]'}`}
                         onClick={() => {
-                          selectedDate && setSelectedTime(slot);
-                          setTimeSlotConfirmed(false); // Reset confirmation when selecting new time
+                          if (selectedDate && !timeSlotConfirmed) {
+                            setSelectedTime(slot);
+                          }
                         }}
-                        disabled={!selectedDate}
+                        disabled={!selectedDate || timeSlotConfirmed}
                       >
                         {slot}
                         {/* Show converted time if timezone is not Africa/Kigali */}
@@ -1218,50 +1222,48 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                         )}
                       </button>
                     </Tooltip.Trigger>
-                    {!selectedDate && (
+                    {(!selectedDate || timeSlotConfirmed) && (
                       <Tooltip.Portal>
                         <Tooltip.Content
                           className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
                           sideOffset={8}
                           side="top"
                         >
-                          Please select a date first
+                          {!selectedDate ? 'Please select a date first' : 'Time slot confirmed - cannot change'}
                           <Tooltip.Arrow className="fill-gray-900" />
                         </Tooltip.Content>
                       </Tooltip.Portal>
                     )}
                   </Tooltip.Root>
                 </Tooltip.Provider>
-                {selectedTime === slot && selectedDate && (
+                {selectedTime === slot && selectedDate && !timeSlotConfirmed && (
                   <Tooltip.Provider>
                     <Tooltip.Root>
                       <Tooltip.Trigger asChild>
                         <button
-                          className={`px-4 py-2 rounded font-semibold shadow transition-colors ${
-                            timeSlotConfirmed
-                              ? 'bg-green-600 text-white cursor-not-allowed opacity-75'
-                              : 'bg-orange-600 text-white hover:bg-orange-700'
-                          }`}
-                          onClick={timeSlotConfirmed ? undefined : handleTimeConfirmation}
-                          disabled={timeSlotConfirmed}
+                          className="px-4 py-2 rounded font-semibold shadow transition-colors bg-orange-600 text-white hover:bg-orange-700"
+                          onClick={handleTimeConfirmation}
                         >
-                          {timeSlotConfirmed ? 'Confirmed' : 'Confirm'}
+                          Confirm
                         </button>
                       </Tooltip.Trigger>
-                      {timeSlotConfirmed && (
-                        <Tooltip.Portal>
-                          <Tooltip.Content
-                            className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
-                            sideOffset={8}
-                            side="top"
-                          >
-                            Time slot already confirmed
-                            <Tooltip.Arrow className="fill-gray-900" />
-                          </Tooltip.Content>
-                        </Tooltip.Portal>
-                      )}
+                      <Tooltip.Portal>
+                        <Tooltip.Content
+                          className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
+                          sideOffset={8}
+                          side="top"
+                        >
+                          Confirm this time slot
+                          <Tooltip.Arrow className="fill-gray-900" />
+                        </Tooltip.Content>
+                      </Tooltip.Portal>
                     </Tooltip.Root>
                   </Tooltip.Provider>
+                )}
+                {selectedTime === slot && selectedDate && timeSlotConfirmed && (
+                  <div className="px-4 py-2 rounded font-semibold bg-green-600 text-white opacity-75">
+                    Confirmed
+                  </div>
                 )}
               </div>
             ))}
