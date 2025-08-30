@@ -218,32 +218,7 @@ export default function BookingModal({
                 aria-label="Booking progress"
                 title="Booking progress"
               ></div>
-// Move all step components above BookingModal
-// ...existing Step1, Step2, Step3, Step4, Step5, Step6 definitions above...
-          </button>
-          {submitStatus && (
-            <div className="mt-2 text-orange-400 text-sm text-center">
-              {submitStatus}
-              {submitStatus.includes('successfully') && (
-                <div className="mt-1 text-orange-300">Thank you for booking with GoodAV. You will receive a confirmation email soon.</div>
-              )}
-              {submitStatus.includes('failed') && (
-                <div className="mt-1 text-orange-300">If the problem persists, please contact us at form@goodav.net.</div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
-      {/* Only render 'Other' input if selectedOption is 'Other' and inside Step1's scope */}
-      {selectedOption === "Other" && (
-        <div className="mt-4">
-          <label className="block text-sm font-medium text-white-400" htmlFor="other">Please specify your project type:</label>
-          <input type="text" id="other" name="other" className="mt-1 block w-full rounded-md border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500" placeholder="Describe your project" />
-        </div>
-      )}
-      {/* Only render 'Other' input if selectedOption is 'Other' and inside Step1's scope */}
-  </>
-  );
+// ...existing code...
 }
 
 /* -------------------------
