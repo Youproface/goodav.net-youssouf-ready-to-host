@@ -1152,7 +1152,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
             <label htmlFor="timezone" className="font-medium text-sm mr-2">Time zone</label>
             <select
               id="timezone"
-              className="p-1 rounded bg-[#1b1b1d] text-orange-500 border border-orange-500"
+              className="p-2 rounded bg-[#252529] text-orange-400 border border-gray-700 focus:border-orange-500 focus:outline-none"
               value={timezone}
               onChange={e => setTimezone(e.target.value)}
               title="Select your time zone"
