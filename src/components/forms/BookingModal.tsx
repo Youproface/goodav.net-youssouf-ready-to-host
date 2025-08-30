@@ -1086,8 +1086,8 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
     return targetDateStr;
   }
 
-  // Step 7: canProceed is true only if date and time are selected
-  useEffect(() => { setCanProceed(selectedDate && selectedTime); }, [selectedDate, selectedTime, setCanProceed]);
+  // Step 7: canProceed is true only if date and time are selected AND confirmed
+  useEffect(() => { setCanProceed(selectedDate && selectedTime && timeSlotConfirmed); }, [selectedDate, selectedTime, timeSlotConfirmed, setCanProceed]);
 
   return (
     <div className="space-y-8">
