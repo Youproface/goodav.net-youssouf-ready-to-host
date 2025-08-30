@@ -29,7 +29,6 @@ const Portfolio = () => {
     </div>
   );
 };
-
 export default Portfolio;
         schema={{
           "@context": "https://schema.org",
