@@ -663,7 +663,7 @@ function Step6() {
          {/* Feedback and validation comments */}
          {!selectedDate && <div className="text-orange-400 mt-4 text-sm">Please select a date to view available times.</div>}
          {selectedDate && !selectedTime && <div className="text-orange-400 mt-4 text-sm">Please select a time slot to confirm your booking.</div>}
-         {selectedDate && selectedTime && <div className="text-orange-500 mt-4 text-sm font-semibold">Ready to confirm: {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()} at {selectedTime} ({timezone})</div>}
+         {selectedDate && selectedTime && <div className="mt-4 text-sm font-semibold" style={{color: '#FFA726'}}>Ready to confirm: {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()} at {selectedTime} ({timezone})</div>}
        </div>
     </div>
   );
