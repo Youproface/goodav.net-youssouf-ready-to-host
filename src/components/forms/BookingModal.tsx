@@ -501,12 +501,12 @@ export default function BookingModal({
             <div className="w-full bg-gray-700 h-1 mt-3 rounded">
               <div
                 className="bg-orange-500 h-1 rounded transition-all duration-300 ease-in-out"
-                style={{ width: `${(step / 7) * 100}%` }} // eslint-disable-line no-inline-styles -- Dynamic width based on current step - inline style necessary for real-time updates
+                style={{ width: `${(step / 6) * 100}%` }} // eslint-disable-line no-inline-styles -- Dynamic width based on current step - inline style necessary for real-time updates
               />
             </div>
 
             {/* Step Title */}
-            <p className="mt-4 text-sm font-medium">Step {step} of 7</p>
+            <p className="mt-4 text-sm font-medium">Step {step} of 6</p>
 
             {/* Step Content */}
             <div className="mt-6">
