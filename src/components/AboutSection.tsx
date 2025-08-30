@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, easeInOut } from "framer-motion";
+import { motion } from "framer-motion";
 import { Heart, Award, Globe2, Lightbulb, Play } from "lucide-react";
 import { useState } from "react";
 
@@ -24,7 +24,7 @@ export default function AboutUsSection() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: easeInOut
+        ease: 'easeInOut'
       }
     }
   };
@@ -37,15 +37,6 @@ export default function AboutUsSection() {
       viewport={{ once: true, margin: "-100px" }}
       variants={containerVariants}
     >
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0">
-        <img
-          src="/images/Home/BG/Home_BG.png"
-          alt="About GoodAV"
-          className="w-full h-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b" />
-      </div>
       {/* Section Tag */}
       <motion.div 
         className="flex justify-center mb-6"
