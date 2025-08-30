@@ -1,10 +1,9 @@
-import { GetStaticProps, GetStaticPaths } from 'next';
-import { useRouter } from 'next/router';
-import Head from 'next/head';
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { services, getServiceById } from '@/data/services';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import SEO from '@/components/SEO';
 
 interface ServiceDetailsProps {
   service: {
@@ -28,12 +27,10 @@ interface ServiceDetailsProps {
   };
 }
 
-export default function ServiceDetails({ service }: ServiceDetailsProps) {
-  const router = useRouter();
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
+const ServiceDetails: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const service = getServiceById(id || '');
 
   if (!service) {
     return <div>Service not found</div>;
@@ -41,20 +38,22 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
 
   return (
     <>
-      <Head>
-        <title>{service.title} | Our Services</title>
-        <meta name="description" content={service.details.heroDescription} />
-        <link rel="canonical" href={`https://goodav.net/services/${service.id}`} />
-      </Head>
-
+      <SEO
+        title={`${service.title} | Our Services`}
+        description={service.details.heroDescription}
+        canonical={`https://goodav.net/services/${service.id}`}
+      />
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-b from-background to-background/90">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <Link href="/#services" className="inline-flex items-center text-orange-500 hover:text-orange-400 mb-8 transition-colors">
+            <button
+              onClick={() => navigate('/#services')}
+              className="inline-flex items-center text-orange-500 hover:text-orange-400 mb-8 transition-colors"
+            >
               <ArrowLeft className="w-5 h-5 mr-2" />
               Back to Services
-            </Link>
+            </button>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               {service.details.heroTitle}
             </h1>
@@ -64,7 +63,6 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
           </div>
         </div>
       </section>
-
       {/* Overview Section */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
@@ -73,7 +71,6 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
             <p className="text-lg text-muted-foreground mb-8">
               {service.details.overview}
             </p>
-            
             <div className="grid md:grid-cols-2 gap-8 mt-12">
               <div>
                 <h3 className="text-2xl font-semibold mb-4">Our Process</h3>
@@ -91,7 +88,6 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
                   ))}
                 </div>
               </div>
-              
               <div>
                 <h3 className="text-2xl font-semibold mb-4">Key Benefits</h3>
                 <ul className="space-y-3">
@@ -109,7 +105,6 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
           </div>
         </div>
       </section>
-
       {/* FAQ Section */}
       {service.details.faqs.length > 0 && (
         <section className="py-16 bg-muted/50">
@@ -128,7 +123,6 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
           </div>
         </section>
       )}
-
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-orange-500 to-amber-500">
         <div className="container mx-auto px-4 text-center">
@@ -143,28 +137,6 @@ export default function ServiceDetails({ service }: ServiceDetailsProps) {
       </section>
     </>
   );
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = services.map((service) => ({
-    params: { id: service.id },
-  }));
-
-  return { paths, fallback: false };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const service = getServiceById(params?.id as string);
-
-  if (!service) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      service,
-    },
-  };
-};
+export default ServiceDetails;
