@@ -415,8 +415,8 @@ export default function BookingModal({
         // Show success popup or warning popup based on email status
         if (result.warning) {
           showNotificationPopup(
-            'success', // Use success styling since booking was saved
-            'Booking Saved Successfully',
+            'warning', // Use warning styling for email issues
+            'Booking Saved - Email Issue',
             `Your booking has been saved successfully (ID: ${result.id}), but there was an issue sending the confirmation email. ${result.warning}. We will still contact you to confirm your appointment.`
           );
         } else {
