@@ -964,7 +964,7 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
                 >
                   {countryCodes.map((country, index) => (
                     <option key={`${country.code}-${country.name}-${index}`} value={country.code}>
-                      {country.flag} {country.code}
+                      {country.flag} {country.code} {country.name}
                     </option>
                   ))}
                 </select>
