@@ -113,7 +113,7 @@ export default function BookingModal({
             {/* Step Content */}
             <div className="mt-6">
               {step === 1 && <Step1 setCanProceed={setCanProceed} />}
-              {step === 2 && <Step2 />}
+              {step === 2 && <Step2 setCanProceed={setCanProceed} />}
               {step === 3 && <Step3 />}
               {step === 4 && <Step4 />}
               {step === 5 && <Step5 nextStep={nextStep} />}
@@ -224,9 +224,9 @@ function Step1({ setCanProceed }) {
 /* -------------------------
    STEP 2
 ------------------------- */
-function Step2() {
+function Step2({ setCanProceed }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  useEffect(() => { setCanProceed(activeIndex !== null); }, [activeIndex, setCanProceed]);
   const options = [
     {
       label: "Small Scale",
