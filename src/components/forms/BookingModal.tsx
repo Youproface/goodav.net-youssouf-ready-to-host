@@ -1,3 +1,16 @@
+  // Booking form state
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [organization, setOrganization] = useState('');
+  const [project, setProject] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null); // { year, month, day }
+  const [selectedTime, setSelectedTime] = useState('');
+  const [timezone, setTimezone] = useState('Africa/Kigali');
+  const [step, setStep] = useState(1);
+  const [modalOpen, setModalOpen] = useState(isOpen);
+  const [canProceed, setCanProceed] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
 import { useEffect, useState } from "react";
 import {
