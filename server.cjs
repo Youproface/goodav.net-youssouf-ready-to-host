@@ -23,22 +23,42 @@ app.post('/api/bookings', async (req, res) => {
       }
       // Send email notification using Nodemailer
       try {
-        // Configure transporter (use your SMTP provider or Gmail for demo)
-        let transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST || 'smtp.goodav.net',
-          port: process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT) : 587,
-          secure: false,
+        // Configure transporter with better error handling
+        let transporter = nodemailer.createTransporter({
+          host: process.env.SMTP_HOST,
+          port: parseInt(process.env.SMTP_PORT) || 587,
+          secure: false, // true for 465, false for other ports
           auth: {
-            user: process.env.SMTP_USER || 'form@goodav.net',
+            user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS
-          }
+          },
+          // Add timeout and debug options
+          debug: true,
+          logger: true
         });
+
+        // Verify connection before sending
+        await transporter.verify();
+
         // Email content
         let mailOptions = {
-          from: 'form@goodav.net',
-          to: 'form@goodav.net',
-          subject: 'New Booking Submission',
-          text: `A new booking has been submitted:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nOrganization: ${organization}\nProject: ${project}\nDate: ${date}\nTime: ${time}\nTimezone: ${timezone}`
+          from: `"GoodAV Contact Form" <${process.env.SMTP_USER}>`,
+          to: process.env.SMTP_USER, // Send to yourself for notifications
+          subject: 'New Booking Submission - GoodAV',
+          html: `
+            <h2>New Booking Request</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+            <p><strong>Organization:</strong> ${organization}</p>
+            <p><strong>Project:</strong> ${project || 'Not specified'}</p>
+            <p><strong>Preferred Date:</strong> ${date}</p>
+            <p><strong>Preferred Time:</strong> ${time}</p>
+            <p><strong>Timezone:</strong> ${timezone}</p>
+            <hr>
+            <p><em>This booking was submitted via the GoodAV website contact form.</em></p>
+          `,
+          text: `A new booking has been submitted:\n\nName: ${name}\nEmail: ${email}\nPhone: ${phone || 'Not provided'}\nOrganization: ${organization}\nProject: ${project || 'Not specified'}\nDate: ${date}\nTime: ${time}\nTimezone: ${timezone}`
         };
         await transporter.sendMail(mailOptions);
         res.json({ success: true, id: this.lastID });
