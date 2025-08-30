@@ -363,6 +363,13 @@ export default function BookingModal({
 
     if (errors.length > 0) {
       setSubmitStatus(`<i class="fas fa-times-circle text-red-400"></i> ${errors.join('. ')}.`);
+      
+      // Show validation error popup
+      showNotificationPopup(
+        'error',
+        'Please Complete Required Fields',
+        errors.join('. ')
+      );
       return;
     }
 
