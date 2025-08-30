@@ -956,7 +956,7 @@ function Step5({ nextStep }: { nextStep: () => void }) {
 function Step6({ meetingSoftware, setMeetingSoftware }) {
   return (
     <div className="max-w-2xl mx-auto">
-      <h3 className="text-2xl font-semibold mb-6 text-center">Preferred Meeting Platform</h3>
+      <h3 className="text-xl font-semibold mb-4">Preferred Meeting Platform</h3>
       <p className="text-gray-300 text-center text-sm mb-8">
         Choose your preferred platform for our consultation meeting. We'll send you the meeting details via email.
       </p>
@@ -989,14 +989,14 @@ function Step6({ meetingSoftware, setMeetingSoftware }) {
             onClick={() => setMeetingSoftware(option.label)}
             className={`flex items-start gap-3 p-4 rounded-lg border text-left transition-all duration-200 ${
               meetingSoftware === option.label
-                ? 'bg-green-500/10 border-green-500 shadow-lg shadow-green-500/10'
-                : 'bg-[#252529] border-orange-500 hover:bg-[#2f2f31]'
+                ? 'bg-orange-500 border-orange-500 shadow-lg shadow-orange-500/20'
+                : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31]'
             }`}
           >
-            <i className={`${option.icon} w-6 h-6 mt-1 ${meetingSoftware === option.label ? 'text-green-400' : 'text-orange-400'}`}></i>
+            <i className={`${option.icon} w-6 h-6 mt-1 ${meetingSoftware === option.label ? 'text-white' : 'text-orange-400'}`}></i>
             <div>
-              <h5 className={`font-semibold ${meetingSoftware === option.label ? 'text-green-400' : 'text-orange-400'}`}>{option.label}</h5>
-              <p className={`text-sm ${meetingSoftware === option.label ? 'text-green-300' : 'text-orange-300'}`}>{option.desc}</p>
+              <h5 className={`font-semibold ${meetingSoftware === option.label ? 'text-white' : 'text-gray-200'}`}>{option.label}</h5>
+              <p className={`text-sm ${meetingSoftware === option.label ? 'text-white/90' : 'text-gray-400'}`}>{option.desc}</p>
             </div>
           </button>
         ))}
