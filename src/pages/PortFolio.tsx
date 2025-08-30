@@ -43,32 +43,33 @@ import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('all');
-
-  // Portfolio items with all imported images
-  const portfolioItems = [
-    { id: 1, title: "ReSAKSS 2023", category: "events", image: img1, rating: 4.8, year: "2023" },
-    { id: 2, title: "ABH 2023", category: "corporate", image: img2, rating: 4.6, year: "2023" },
-    { id: 3, title: "AIMS Corporate Video", category: "corporate", image: img3, rating: 4.9, year: "2024" },
-    { id: 4, title: "AIMS Graduation", category: "education", image: img4, rating: 4.7, year: "2023" },
-    { id: 5, title: "African Girls Can Code", category: "ngo", image: img5, rating: 4.7, year: "2023" },
-    { id: 6, title: "Bralirwa Corporate", category: "corporate", image: img6, rating: 4.5, year: "2024" },
-    { id: 7, title: "Bralirwa Production Launch", category: "corporate", image: img7, rating: 4.5, year: "2024" },
-    { id: 8, title: "DBB GO Campaign", category: "corporate", image: img8, rating: 4.8, year: "2024" },
-    { id: 9, title: "DBB GO Live Event", category: "events", image: img9, rating: 4.8, year: "2024" },
-    { id: 10, title: "Empowering Youth", category: "ngo", image: img10, rating: 4.4, year: "2023" },
-    { id: 11, title: "Kigali International", category: "events", image: img11, rating: 4.9, year: "2024" },
-    { id: 12, title: "NEF Corporate Video", category: "corporate", image: img12, rating: 4.6, year: "2023" },
-    { id: 13, title: "RSSB Project", category: "corporate", image: img13, rating: 4.5, year: "2023" },
-    { id: 14, title: "SONARWA Dusangire Launch", category: "corporate", image: img14, rating: 4.7, year: "2023" },
-    { id: 15, title: "Connected Girls Hub", category: "ngo", image: img15, rating: 4.7, year: "2024" },
-    { id: 16, title: "The Catalyst Workshop", category: "education", image: img16, rating: 4.6, year: "2024" },
-    { id: 17, title: "UNDP Gomera Maxwell", category: "ngo", image: img17, rating: 4.8, year: "2024" },
-    { id: 18, title: "Corporate Event Coverage", category: "corporate", image: img18, rating: 4.3, year: "2023" },
-    { id: 19, title: "Product Showcase", category: "corporate", image: img19, rating: 4.5, year: "2023" },
-    { id: 20, title: "Event Highlights", category: "events", image: img20, rating: 4.4, year: "2023" },
-    { id: 21, title: "Team Building", category: "corporate", image: img21, rating: 4.6, year: "2023" },
-    { id: 22, title: "Conference Session", category: "events", image: img22, rating: 4.7, year: "2024" },
-    { id: 23, title: "Workshop Session", category: "education", image: img23, rating: 4.5, year: "2024" },
+  return (
+    <div>
+      <SEO
+        title="Portfolio - GoodAV | Award-Winning Audiovisual Projects"
+        description="Explore GoodAV’s portfolio of award-winning audiovisual productions, documentaries, and event coverage across Africa."
+        canonical="https://goodav.net/portfolio"
+      />
+      <SchemaMarkup
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          "name": "GoodAV Portfolio",
+          "description": "Award-winning audiovisual productions, documentaries, and event coverage by GoodAV.",
+          "creator": {
+            "@type": "Organization",
+            "name": "GoodAV"
+          },
+          "url": "https://goodav.net/portfolio",
+          "image": "https://goodav.net/image/portfolio/ias2025-cover.jpg"
+        }}
+      />
+      <div className="min-h-screen bg-black text-white">
+        {/* Hero Section */}
+        {/* ...rest of the page content... */}
+      </div>
+    </div>
+  );
     { id: 24, title: "Panel Discussion", category: "events", image: img24, rating: 4.6, year: "2024" },
     { id: 25, title: "Networking Event", category: "events", image: img25, rating: 4.7, year: "2024" },
     { id: 26, title: "Award Ceremony", category: "events", image: img26, rating: 4.8, year: "2024" },
