@@ -574,7 +574,7 @@ export default function BookingModal({
                         Next →
                       </button>
                     </Tooltip.Trigger>
-                    {((step >= 1 && step <= 4 && !canProceed) || (step === 6 && !isFormValid())) && (
+                    {((step >= 1 && step <= 4 && !canProceed) || (step === 5 && !isFormValid())) && (
                       <Tooltip.Portal>
                         <Tooltip.Content
                           className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
