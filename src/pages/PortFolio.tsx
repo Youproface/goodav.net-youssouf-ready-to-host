@@ -1,5 +1,5 @@
   return (
-    <React.Fragment>
+    <div>
       <SEO
         title="Portfolio - GoodAV | Award-Winning Audiovisual Projects"
         description="Explore GoodAV’s portfolio of award-winning audiovisual productions, documentaries, and event coverage across Africa."
@@ -22,7 +22,7 @@
       <div className="min-h-screen bg-black text-white">
         {/* ...existing code... */}
       </div>
-    </React.Fragment>
+    </div>
   );
 import img22 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-27.jpg';
 import img23 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-28.jpg';
