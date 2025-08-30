@@ -360,7 +360,7 @@ export default function BookingModal({
     };
 
     try {
-      const response = await fetch('http://localhost:4000/api/bookings', {
+      const response = await fetch('http://localhost:8000/process_booking.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
