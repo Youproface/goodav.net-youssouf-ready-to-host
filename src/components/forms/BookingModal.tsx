@@ -888,10 +888,9 @@ function Step4({ setCanProceed }) {
 }
 
 /* -------------------------
-  STEP 5 (No validation required, user can always proceed)
+  STEP 5 (Service selection - can always proceed)
 ------------------------- */
 function Step5({ nextStep }: { nextStep: () => void }) {
-  // const [active, setActive] = useState(null);
   const [selected, setSelected] = useState<number[]>([]);
 
   const options = [
@@ -906,6 +905,7 @@ function Step5({ nextStep }: { nextStep: () => void }) {
       prev.includes(i) ? prev.filter((item) => item !== i) : [...prev, i]
     );
   };
+
   return (
      <>
       <h3 className="text-xl font-semibold mb-4">
@@ -938,13 +938,34 @@ function Step5({ nextStep }: { nextStep: () => void }) {
           );
         })}
       </div>
-      <div className="flex justify-center">
+
+      {/* Selection Summary */}
+      {selected.length > 0 && (
+        <div className="mt-4 p-3 bg-orange-900/20 border border-orange-500/50 rounded-lg">
+          <p className="text-orange-300 text-sm">
+            <strong>Selected Services:</strong> {selected.map(i => options[i].label).join(", ")}
+          </p>
+        </div>
+      )}
+
+      {/* Skip Option */}
+      <div className="flex justify-center mt-4">
         <button
           onClick={() => {setSelected([]); nextStep()}}
-          className="mt-4 bg-orange-500 text-white p-2 rounded"
+          className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors"
         >
           Skip – None needed
         </button>
+      </div>
+
+      {/* Helper Text */}
+      <div className="text-center mt-4">
+        <p className="text-gray-400 text-sm">
+          {selected.length === 0
+            ? "Select any additional services or click 'Skip' to continue"
+            : `${selected.length} service${selected.length > 1 ? 's' : ''} selected - click 'Next' to continue`
+          }
+        </p>
       </div>
     </>
   );
