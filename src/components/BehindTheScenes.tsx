@@ -33,7 +33,7 @@ const BehindTheScenes = () => {
                 </div>
 
                 {/* Play Button */}
-                <button className="w-16 h-16 flex items-center justify-center rounded-full bg-orange-500 hover:bg-orange-600 transition mb-6 mx-auto">
+                <button className="w-16 h-16 flex items-center justify-center rounded-full bg-orange-500 hover:bg-orange-600 transition mb-6 mx-auto" aria-label="Open Behind The Scenes Gallery">
                 <Play size={32} className="text-white" />
                 </button>
 
