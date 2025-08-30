@@ -9,18 +9,6 @@ import NotFound from "./pages/NotFound";
 import BlogDetailsPage from "./components/BlogDetailsPage";
 import { services } from "./data/services";
 import { blogPosts } from "./data/blog";
-
-// Wrapper component to handle blog post data fetching
-const BlogPostWrapper = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const blog = blogPosts.find(post => post.slug === slug);
-  
-  if (!blog) {
-    return <div>Blog post not found</div>;
-  }
-  
-  return <BlogDetailsPage blog={blog} />;
-};
 import { 
   VideoProduction, 
   Photography, 
