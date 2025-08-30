@@ -41,51 +41,51 @@ export default function Partners() {
             "addressCountry": "RW"
           },
           "founder": {
-            "@type": "Person",
-            "name": "Youssouf Hakizimana"
-          }
-        }}
-      />
-      <div className="bg-gray-900 text-white font-sans">
-      {/* Header Navigation */}
-      <header className="px-6 py-4 flex justify-between items-center">
-        <div className="text-xl font-bold text-white flex items-center">
-          <span className="mr-2">◾</span> GoodAv
-        </div>
-        <nav className="hidden md:flex space-x-6">
-          {['HOMEPAGE', 'PORTFOLIO', 'ABOUT US', 'BLOG ARCHIVES', 'PARTNER', 'CONTACT'].map(item => (
-            <a key={item} href="#" className="text-sm hover:text-orange-500 transition-colors duration-300">
-              {item}
-            </a>
-          ))}
-        </nav>
-      </header>
-
-      {/* Hero Section */}
-      <section className="px-6 text-center max-w-5xl mx-auto py-16">
-        <p className="text-sm sm:text-base text-white mb-3 uppercase tracking-wide">📹 YOUR TRUSTED AV PARTNER IN RWANDA</p>
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white mb-6">
-          FULL-SERVICE<br />AUDIOVISUAL PRODUCTION
-        </h1>
-        <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-orange-500 mb-8">
-          FROM PERMITS TO POST-PRODUCTION
-        </h2>
-        <p className="text-base sm:text-lg text-gray-300 mb-10 max-w-2xl mx-auto">
-          Trusted by GIZ, Gilead, SNV, and more for cinematic filming, drone permits,
-          multilingual teams, and cloud-based delivery -- all under one trusted roof.
-        </p>
-        
-        {/* Action Buttons */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <button className="bg-orange-500 hover:bg-orange-600 py-3 px-6 rounded-md font-semibold text-sm transition-colors">
-            ▶ WATCH 5-MINUTE REEL
-          </button>
-          <button className="bg-gray-700 hover:bg-gray-600 py-3 px-6 rounded-md font-semibold text-sm transition-colors">
-            📄 DOWNLOAD DECK
-          </button>
-          <button className="bg-gray-700 hover:bg-gray-600 py-3 px-6 rounded-md font-semibold text-sm transition-colors">
-            📞 BOOK A CALL
-          </button>
+            return (
+              <React.Fragment>
+                <SEO
+                  title="Partners - GoodAV | Trusted Audiovisual Collaborators"
+                  description="Meet GoodAV’s partners and collaborators. Discover why global organizations trust GoodAV for audiovisual production in Rwanda and Africa."
+                  canonical="https://goodav.net/partner"
+                />
+                <SchemaMarkup
+                  schema={{
+                    "@context": "https://schema.org",
+                    "@type": "Organization",
+                    "name": "GoodAV",
+                    "url": "https://goodav.net",
+                    "logo": "https://goodav.net/image/Assets/logo-fav.png",
+                    "description": "Africa's premier audiovisual agency transforming ideas into impactful visual stories. GoodAV empowers African narratives through cinematic production, live streaming, photography, and strategic media coverage.",
+                    "sameAs": [
+                      "https://www.instagram.com/goodaudiovisual",
+                      "https://www.youtube.com/@goodaudiovisuals",
+                      "https://www.facebook.com/goodaudiovisuals",
+                      "https://www.linkedin.com/company/goodav"
+                    ],
+                    "contactPoint": {
+                      "@type": "ContactPoint",
+                      "telephone": "+250788613332",
+                      "email": "info@goodav.net",
+                      "contactType": "Customer Support",
+                      "areaServed": ["Rwanda", "Africa", "International"],
+                      "availableLanguage": ["en", "fr"]
+                    },
+                    "address": {
+                      "@type": "PostalAddress",
+                      "addressLocality": "Kigali",
+                      "addressCountry": "RW"
+                    },
+                    "founder": {
+                      "@type": "Person",
+                      "name": "Youssouf Hakizimana"
+                    }
+                  }}
+                />
+                <div className="bg-gray-900 text-white font-sans">
+                  {/* ...existing code... */}
+                </div>
+              </React.Fragment>
+            );
         </div>
 
         {/* Award Recognition */}
