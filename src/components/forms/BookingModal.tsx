@@ -940,22 +940,36 @@ function Step4({ setCanProceed }) {
   ];
   return (
     <>
-      <h3 className="text-xl font-semibold mb-4">
-        What’s your project investment level?
+      <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">
+        What's your project investment level?
       </h3>
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         {options.map((opt, i) => (
           <button
             key={i}
             onClick={() => setActive(i)}
-            className={`flex items-start gap-3 p-4 rounded-lg border border-gray-700 text-left
-              ${active === i ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529]"}
-              `}
+            className={`flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-lg border text-left 
+              transition-all duration-200 active:scale-95 touch-manipulation
+              min-h-[60px] sm:min-h-[70px] ${
+              active === i 
+                ? "bg-orange-500 border-orange-400 text-white shadow-lg shadow-orange-500/20" 
+                : "bg-[#252529] border-gray-700 hover:bg-[#2f2f31] active:bg-[#2a2a2c]"
+            }`}
           >
-            <opt.icon className={`w-6 h-6 mt-1 ${active === i ? "text-white" : "text-orange-400"}`} />
-            <div>
-              <h4 className="font-semibold">{opt.label}</h4>
-              <p className="text-sm text-white-400">{opt.desc}</p>
+            <opt.icon className={`w-5 h-5 sm:w-6 sm:h-6 mt-1 flex-shrink-0 ${
+              active === i ? "text-white" : "text-orange-400"
+            }`} />
+            <div className="min-w-0 flex-1">
+              <h4 className={`font-semibold text-sm sm:text-base ${
+                active === i ? "text-white" : "text-gray-200"
+              }`}>
+                {opt.label}
+              </h4>
+              <p className={`text-xs sm:text-sm mt-1 ${
+                active === i ? "text-white/90" : "text-gray-400"
+              }`}>
+                {opt.desc}
+              </p>
             </div>
           </button>
         ))}
