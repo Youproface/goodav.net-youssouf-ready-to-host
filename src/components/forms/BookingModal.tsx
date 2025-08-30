@@ -410,6 +410,12 @@ export default function BookingModal({
 
       if (response.ok && result.success) {
         setSubmitStatus('<i class="fas fa-check-circle text-green-400"></i> Your booking was submitted successfully! We will contact you soon.');
+        
+        // Auto-clear success message after 5 seconds
+        setTimeout(() => {
+          setSubmitStatus('');
+        }, 5000);
+        
         // Reset form after successful submission
         setName('');
         setEmail('');
