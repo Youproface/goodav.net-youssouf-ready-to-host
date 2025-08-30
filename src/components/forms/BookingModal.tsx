@@ -412,12 +412,20 @@ export default function BookingModal({
         setStep(1);
         setTimeSlotConfirmed(false);
         
-        // Show success popup
-        showNotificationPopup(
-          'success',
-          'Booking Submitted Successfully!',
-          `Your consultation request has been received. Booking ID: ${result.id}. We will contact you soon to confirm your appointment.`
-        );
+        // Show success popup or warning popup based on email status
+        if (result.warning) {
+          showNotificationPopup(
+            'error', // Use error styling for warnings too
+            'Booking Saved - Email Issue',
+            `Your booking has been saved successfully (ID: ${result.id}), but there was an issue sending the confirmation email. ${result.warning}. We will still contact you to confirm your appointment.`
+          );
+        } else {
+          showNotificationPopup(
+            'success',
+            'Booking Submitted Successfully!',
+            `Your consultation request has been received. Booking ID: ${result.id}. We will contact you soon to confirm your appointment.`
+          );
+        }
       } else {
         const errorMessage = result.error || 'Submission failed. Please try again.';
         setSubmitStatus(`<i class="fas fa-times-circle text-red-400"></i> ${errorMessage}`);
