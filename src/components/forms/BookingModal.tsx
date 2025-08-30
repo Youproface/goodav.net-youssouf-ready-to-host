@@ -1077,38 +1077,72 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
            {/* Time slots: disabled until date selected */}
            {timeSlots.map(slot => (
              <div key={slot} className="flex gap-2">
-               <button
-                 className={`flex-1 py-2 rounded border text-center font-medium transition-all
-                   ${selectedDate ? (selectedTime === slot ? 'bg-orange-700 text-white border-orange-700' : 'bg-[#1b1b1d] text-orange-500 border-orange-500 hover:bg-orange-100') : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'}`}
-                 onClick={() => {
-                   selectedDate && setSelectedTime(slot);
-                   setTimeSlotConfirmed(false); // Reset confirmation when selecting new time
-                 }}
-                 disabled={!selectedDate}
-               >
-                 {slot}
-                 {/* Show converted time if timezone is not Africa/Kigali */}
-                 {timezone !== 'Africa/Kigali' && selectedDate && (
-                   <span className="block text-xs text-orange-300 mt-1">
-                     {(() => {
-                       const dateObj = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
-                       return getConvertedTime(slot, 'Africa/Kigali', timezone, dateObj);
-                     })()} ({timezone})
-                   </span>
-                 )}
-               </button>
+               <Tooltip.Provider>
+                 <Tooltip.Root>
+                   <Tooltip.Trigger asChild>
+                     <button
+                       className={`flex-1 py-2 rounded border text-center font-medium transition-all
+                         ${selectedDate ? (selectedTime === slot ? 'bg-orange-700 text-white border-orange-700' : 'bg-[#1b1b1d] text-orange-500 border-orange-500 hover:bg-orange-100') : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'}`}
+                       onClick={() => {
+                         selectedDate && setSelectedTime(slot);
+                         setTimeSlotConfirmed(false); // Reset confirmation when selecting new time
+                       }}
+                       disabled={!selectedDate}
+                     >
+                       {slot}
+                       {/* Show converted time if timezone is not Africa/Kigali */}
+                       {timezone !== 'Africa/Kigali' && selectedDate && (
+                         <span className="block text-xs text-orange-300 mt-1">
+                           {(() => {
+                             const dateObj = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
+                             return getConvertedTime(slot, 'Africa/Kigali', timezone, dateObj);
+                           })()} ({timezone})
+                         </span>
+                       )}
+                     </button>
+                   </Tooltip.Trigger>
+                   {!selectedDate && (
+                     <Tooltip.Portal>
+                       <Tooltip.Content
+                         className="bg-gray-800 text-white px-3 py-2 rounded-md text-sm shadow-lg border border-gray-600"
+                         sideOffset={5}
+                       >
+                         Please select a date first
+                         <Tooltip.Arrow className="fill-gray-800" />
+                       </Tooltip.Content>
+                     </Tooltip.Portal>
+                   )}
+                 </Tooltip.Root>
+               </Tooltip.Provider>
                {selectedTime === slot && selectedDate && (
-                 <button 
-                   className={`px-4 py-2 rounded font-semibold shadow transition-colors ${
-                     timeSlotConfirmed 
-                       ? 'bg-green-600 text-white cursor-not-allowed opacity-75' 
-                       : 'bg-orange-600 text-white hover:bg-orange-700'
-                   }`} 
-                   onClick={timeSlotConfirmed ? undefined : handleTimeConfirmation}
-                   disabled={timeSlotConfirmed}
-                 >
-                   {timeSlotConfirmed ? 'Confirmed' : 'Confirm'}
-                 </button>
+                 <Tooltip.Provider>
+                   <Tooltip.Root>
+                     <Tooltip.Trigger asChild>
+                       <button 
+                         className={`px-4 py-2 rounded font-semibold shadow transition-colors ${
+                           timeSlotConfirmed 
+                             ? 'bg-green-600 text-white cursor-not-allowed opacity-75' 
+                             : 'bg-orange-600 text-white hover:bg-orange-700'
+                         }`} 
+                         onClick={timeSlotConfirmed ? undefined : handleTimeConfirmation}
+                         disabled={timeSlotConfirmed}
+                       >
+                         {timeSlotConfirmed ? 'Confirmed' : 'Confirm'}
+                       </button>
+                     </Tooltip.Trigger>
+                     {timeSlotConfirmed && (
+                       <Tooltip.Portal>
+                         <Tooltip.Content
+                           className="bg-gray-800 text-white px-3 py-2 rounded-md text-sm shadow-lg border border-gray-600"
+                           sideOffset={5}
+                         >
+                           Time slot already confirmed
+                           <Tooltip.Arrow className="fill-gray-800" />
+                         </Tooltip.Content>
+                       </Tooltip.Portal>
+                     )}
+                   </Tooltip.Root>
+                 </Tooltip.Provider>
                )}
              </div>
            ))}
