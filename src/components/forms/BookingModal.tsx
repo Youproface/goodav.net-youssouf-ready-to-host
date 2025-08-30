@@ -233,8 +233,12 @@ export default function BookingModal({
               {step === 6 ? (
                 <button
                   onClick={handleFormSubmit}
-                  className="flex items-center px-6 py-2 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-semibold"
-                  disabled={submitting}
+                  className={`flex items-center px-6 py-2 rounded-lg text-white font-semibold ${
+                    submitting || !isFormValid()
+                      ? 'bg-gray-500 cursor-not-allowed'
+                      : 'bg-orange-600 hover:bg-orange-700'
+                  }`}
+                  disabled={submitting || !isFormValid()}
                 >
                   <Calendar className="w-5 h-5 mr-2" />
                   <span>Schedule Consultation</span>
