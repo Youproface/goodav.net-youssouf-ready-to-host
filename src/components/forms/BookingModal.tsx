@@ -1141,6 +1141,9 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
             <div className={`flex items-center gap-2 ${selectedTime ? 'text-green-400' : 'text-orange-300'}`}>
               <span className={selectedTime ? 'text-green-400' : 'text-orange-300'}>{selectedTime ? '✓' : '×'}</span> Time Selection
             </div>
+            <div className={`flex items-center gap-2 ${meetingSoftware ? 'text-green-400' : 'text-orange-300'}`}>
+              <span className={meetingSoftware ? 'text-green-400' : 'text-orange-300'}>{meetingSoftware ? '✓' : '×'}</span> Meeting Platform
+            </div>
           </div>
         </div>
          {/* Calendar UI: dynamic, only current/future dates selectable */}
