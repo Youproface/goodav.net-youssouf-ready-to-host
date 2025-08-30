@@ -56,10 +56,9 @@ const Hero = () => {
   const navigate = useNavigate();
   return (
     <section className="relative">
-      {/* Background Image - use imported asset for Vite compatibility */}
+      {/* Background Image */}
       <motion.div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBackground})` }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
