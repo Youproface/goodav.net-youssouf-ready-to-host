@@ -755,8 +755,9 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
               type="text"
               value={organization}
               onChange={e => setOrganization(e.target.value)}
-              placeholder="Organization"
+              placeholder="Organization *"
               className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none w-full text-white placeholder-orange-300"
+              required
             />
           </div>
           <textarea
