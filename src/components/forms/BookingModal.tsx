@@ -441,64 +441,83 @@ function Step5({ nextStep }: { nextStep: () => void }) {
    STEP 6
 ------------------------- */
 function Step6() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [organization, setOrganization] = useState("");
-  const [timePreference, setTimePreference] = useState("");
-
-
+  // Calendar and time slot picker UI
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [timezone, setTimezone] = useState('Eastern time - US & Canada');
+  const month = 'July 2024';
+  const days = [
+    [30, 1, 2, 3, 4, 5, 6],
+    [7, 8, 9, 10, 11, 12, 13],
+    [14, 15, 16, 17, 18, 19, 20],
+    [21, 22, 23, 24, 25, 26, 27],
+    [28, 29, 30, 31, 1, 2, 3],
+  ];
+  const availableDays = [16, 17, 19, 22, 23, 24, 25, 30, 31];
+  const timeSlots = ['10:00am', '11:00am', '1:00pm', '2:30pm', '4:00pm'];
   return (
-    <>
-      <h3 className="text-xl font-semibold mb-4">
-        Let’s schedule your consultation!
-      </h3>
-
-      <form className="space-y-4">
-        <div className="grid md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => { setName(e.target.value) }}
-            placeholder="Full Name *"
-            className="p-3 rounded bg-[#2a2a2c] border border-gray-600 focus:outline-none w-full"
-          />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => { setEmail(e.target.value) }}
-            placeholder="Email Address *"
-            className="p-3 rounded bg-[#2a2a2c] border border-gray-600 focus:outline-none w-full"
-          />
+    <div className="flex flex-col md:flex-row gap-8">
+      <div className="w-full md:w-1/2">
+        <h3 className="text-xl font-semibold mb-4">Select a Date & Time</h3>
+        <div className="flex items-center justify-between mb-2">
+          <button className="text-lg px-2">&#60;</button>
+          <span className="font-medium">{month}</span>
+          <button className="text-lg px-2">&#62;</button>
         </div>
-        <div className="grid md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            value={phone}
-            onChange={(e) => { setPhone(e.target.value) }}
-            placeholder="Phone Number"
-            className="p-3 rounded bg-[#2a2a2c] border border-gray-600 focus:outline-none w-full"
-          />
-          <input
-            type="text"
-            value={organization}
-            onChange={(e) => { setOrganization(e.target.value) }}
-            placeholder="Organization"
-            className="p-3 rounded bg-[#2a2a2c] border border-gray-600 focus:outline-none w-full"
-          />
+        <div className="grid grid-cols-7 gap-2 mb-2 text-center text-gray-400 text-xs">
+          {['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => <div key={d}>{d}</div>)}
         </div>
-        <label htmlFor="timePreference" className="block text-sm font-medium text-white-400 mb-1">Preferred time</label>
-        <select id="timePreference" value={timePreference} onChange={(e) => { setTimePreference(e.target.value) }} className="p-3 rounded bg-[#2a2a2c] border border-gray-600 focus:outline-none w-full">
-          <option value="">Select preferred time</option>
-          <option value="Morning">Morning</option>
-          <option value="Afternoon">Afternoon</option>
-          <option value="Evening">Evening</option>
-        </select>
-        <textarea
-          placeholder="Tell us more about your project vision..."
-          className="p-3 rounded bg-[#2a2a2c] border border-gray-600 focus:outline-none w-full h-24"
-        />
-      </form>
-    </>
+        <div className="grid grid-cols-7 gap-2 text-center">
+          {days.flat().map((day, i) => (
+            <button
+              key={i}
+              className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-medium transition-all
+                ${availableDays.includes(day) ? 'bg-blue-100 text-blue-700 hover:bg-blue-300' : 'text-gray-500'}
+                ${selectedDate === day ? 'bg-blue-600 text-white' : ''}`}
+              disabled={!availableDays.includes(day)}
+              onClick={() => setSelectedDate(day)}
+            >
+              {day}
+            </button>
+          ))}
+        </div>
+        <div className="mt-4">
+          <span className="font-medium text-sm">Time zone</span>
+          <select
+            className="ml-2 p-1 rounded bg-gray-100 text-gray-700"
+            value={timezone}
+            onChange={e => setTimezone(e.target.value)}
+          >
+            <option>Eastern time - US & Canada</option>
+            <option>Central time - US & Canada</option>
+            <option>Pacific time - US & Canada</option>
+            <option>GMT</option>
+          </select>
+        </div>
+      </div>
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
+        <div className="mb-4 text-lg font-medium">
+          {selectedDate ? `Monday, July ${selectedDate}` : 'Select a date'}
+        </div>
+        <div className="flex flex-col gap-3 w-full max-w-xs">
+          {timeSlots.map(slot => (
+            <div key={slot} className="flex gap-2">
+              <button
+                className={`flex-1 py-2 rounded border text-center font-medium transition-all
+                  ${selectedTime === slot ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-blue-700 border-blue-300 hover:bg-blue-100'}`}
+                onClick={() => setSelectedTime(slot)}
+              >
+                {slot}
+              </button>
+              {selectedTime === slot && (
+                <button className="px-4 py-2 rounded bg-blue-600 text-white font-semibold shadow" onClick={() => alert(`Confirmed: ${selectedDate} at ${selectedTime}`)}>
+                  Confirm
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
