@@ -148,9 +148,9 @@ export default function BookingModal({
             {/* Progress Bar */}
             <div className="w-full bg-gray-700 h-1 mt-3 rounded">
               <div
-                className="bg-orange-500 h-1 rounded"
-                style={{ width: `${(step / 6) * 100}%` }}
-              ></div>
+                className="bg-orange-500 h-1 rounded transition-all duration-300 ease-in-out"
+                style={{ '--progress-width': `${(step / 6) * 100}%` } as React.CSSProperties}
+              />
             </div>
 
             {/* Step Title */}
