@@ -355,11 +355,11 @@ export default function FeaturedProjects() {
           <button
             onClick={() => navigate("/portfolio")}
             className="px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg shadow transition"
-            title="More Projects"
+            aria-label="More Projects"
           >
             More Projects
           </button>
-          <button className="px-6 py-3 border border-gray-600 hover:border-orange-500 text-gray-300 hover:text-orange-400 font-medium rounded-lg transition" title="Start The Project">
+          <button className="px-6 py-3 border border-gray-600 hover:border-orange-500 text-gray-300 hover:text-orange-400 font-medium rounded-lg transition" aria-label="Start The Project">
             Start The Project →
           </button>
         </div>
