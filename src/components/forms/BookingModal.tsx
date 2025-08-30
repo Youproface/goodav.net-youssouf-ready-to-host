@@ -1225,12 +1225,12 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
   useEffect(() => { setCanProceed(selectedDate && selectedTime && timeSlotConfirmed); }, [selectedDate, selectedTime, timeSlotConfirmed, setCanProceed]);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Selected Appointment Summary - Show only when confirmed */}
       {selectedDate && selectedTime && timeSlotConfirmed && (
-        <div className="p-4 bg-orange-900/20 border border-orange-500/50 rounded-lg">
-          <h4 className="text-orange-400 font-semibold mb-2">Selected Appointment:</h4>
-          <p className="text-orange-300">
+        <div className="p-3 sm:p-4 bg-orange-900/20 border border-orange-500/50 rounded-lg">
+          <h4 className="text-orange-400 font-semibold mb-2 text-sm sm:text-base">Selected Appointment:</h4>
+          <p className="text-orange-300 text-sm sm:text-base">
             {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
               weekday: 'long',
               year: 'numeric',
@@ -1239,21 +1239,21 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
             })} at {selectedTime} ({timezone})
           </p>
           {meetingSoftware && (
-            <p className="text-orange-300 mt-1">Meeting Platform: {meetingSoftware}</p>
+            <p className="text-orange-300 mt-1 text-sm">Meeting Platform: {meetingSoftware}</p>
           )}
         </div>
       )}
 
       {/* Calendar and Time Selection Section */}
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
         {/* Calendar Section */}
         <div className="w-full lg:w-1/2">
-          <h3 className="text-xl font-semibold mb-4">Select a Date</h3>
+          <h3 className="text-lg sm:text-xl font-semibold mb-4">Select a Date</h3>
 
           {/* Calendar Navigation */}
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
             <button
-              className="text-lg px-2"
+              className="text-lg sm:text-xl px-3 py-2 sm:px-4 sm:px-3 touch-manipulation active:scale-95"
               onClick={() => {
                 if (calendarMonth === 0) {
                   setCalendarMonth(11);
@@ -1263,10 +1263,16 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                 }
               }}
               disabled={calendarYear === today.getFullYear() && calendarMonth === today.getMonth()}
-            >&#60;</button>
-            <span className="font-medium">{new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}</span>
+            >
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <span className="font-medium text-sm sm:text-base px-2">
+              {new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}
+            </span>
             <button
-              className="text-lg px-2"
+              className="text-lg sm:text-xl px-3 py-2 sm:px-4 sm:px-3 touch-manipulation active:scale-95"
               onClick={() => {
                 if (calendarMonth === 11) {
                   setCalendarMonth(0);
@@ -1275,21 +1281,29 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                   setCalendarMonth(calendarMonth + 1);
                 }
               }}
-            >&#62;</button>
+            >
+              <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
 
           {/* Calendar Grid */}
-          <div className="grid grid-cols-7 gap-2 mb-2 text-center text-gray-400 text-xs">
-            {['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => <div key={d}>{d}</div>)}
+          <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-3 sm:mb-4 text-center text-gray-400 text-xs">
+            {['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => <div key={d} className="py-2">{d}</div>)}
           </div>
-          <div className="grid grid-cols-7 gap-2 text-center mb-4">
+          <div className="grid grid-cols-7 gap-1 sm:gap-2 text-center mb-4">
             {calendarGrid.flat().map((day, i) => (
               day ? (
                 <button
                   key={i}
-                  className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-bold transition-all
-                    ${isPastDate(calendarYear, calendarMonth, day) ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-[#252529] text-gray-200 border border-gray-700 hover:bg-[#2f2f31]'}
-                    ${selectedDate && selectedDate.day === day && selectedDate.month === calendarMonth && selectedDate.year === calendarYear ? 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20' : ''}`}
+                  className={`rounded-full h-8 w-8 sm:h-10 sm:w-10 flex items-center justify-center 
+                    text-sm font-bold transition-all active:scale-95 touch-manipulation
+                    ${isPastDate(calendarYear, calendarMonth, day) 
+                      ? 'bg-gray-800 text-gray-500 cursor-not-allowed' 
+                      : 'bg-[#252529] text-gray-200 border border-gray-700 hover:bg-[#2f2f31] active:bg-[#2a2a2c]'}
+                    ${selectedDate && selectedDate.day === day && selectedDate.month === calendarMonth && selectedDate.year === calendarYear 
+                      ? 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20' : ''}`}
                   disabled={isPastDate(calendarYear, calendarMonth, day)}
                   onClick={() => setSelectedDate({ day, month: calendarMonth, year: calendarYear })}
                   aria-label={isPastDate(calendarYear, calendarMonth, day) ? 'Past date not selectable' : `Select ${day} ${calendarMonth+1} ${calendarYear}`}
@@ -1302,10 +1316,11 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
 
           {/* Timezone Selection */}
           <div className="mb-4">
-            <label htmlFor="timezone" className="font-medium text-sm mr-2">Time zone</label>
+            <label htmlFor="timezone" className="font-medium text-sm mb-2 block">Time zone</label>
             <select
               id="timezone"
-              className="p-2 rounded bg-[#252529] text-orange-400 border border-gray-700 focus:border-orange-500 focus:outline-none"
+              className="w-full p-3 rounded bg-[#252529] text-orange-400 border border-gray-700 
+                focus:border-orange-500 focus:outline-none text-sm sm:text-base min-h-[44px] touch-manipulation"
               value={timezone}
               onChange={e => setTimezone(e.target.value)}
               title="Select your time zone"
@@ -1319,9 +1334,9 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
 
         {/* Time Slots Section */}
         <div className="w-full lg:w-1/2">
-          <h3 className="text-xl font-semibold mb-4">Select a Time</h3>
+          <h3 className="text-lg sm:text-xl font-semibold mb-4">Select a Time</h3>
 
-          <div className="mb-4 text-lg font-medium">
+          <div className="mb-4 text-sm sm:text-base font-medium">
             {selectedDate ? `${new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()}` : 'Select a date first'}
           </div>
 
@@ -1333,11 +1348,12 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
                       <button
-                        className={`flex-1 py-2 rounded border text-center font-medium transition-all
+                        className={`flex-1 py-3 sm:py-4 px-3 rounded border text-center font-medium 
+                          transition-all active:scale-95 touch-manipulation min-h-[44px]
                           ${!selectedDate ? 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed' :
                             timeSlotConfirmed && selectedTime === slot ? 'bg-orange-600 text-white border-orange-600 cursor-not-allowed' :
                             selectedTime === slot ? 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20' :
-                            'bg-[#252529] text-orange-400 border-gray-700 hover:bg-[#2f2f31]'}`}
+                            'bg-[#252529] text-orange-400 border-gray-700 hover:bg-[#2f2f31] active:bg-[#2a2a2c]'}`}
                         onClick={() => {
                           if (selectedDate && !timeSlotConfirmed) {
                             setSelectedTime(slot);
@@ -1345,15 +1361,15 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                         }}
                         disabled={!selectedDate || timeSlotConfirmed}
                       >
-                        {slot}
+                        <div className="text-sm sm:text-base">{slot}</div>
                         {/* Show converted time if timezone is not Africa/Kigali */}
                         {timezone !== 'Africa/Kigali' && selectedDate && (
-                          <span className="block text-xs text-orange-300 mt-1">
+                          <div className="text-xs text-orange-300 mt-1">
                             {(() => {
                               const dateObj = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
                               return getConvertedTime(slot, 'Africa/Kigali', timezone, dateObj);
                             })()} ({timezone})
-                          </span>
+                          </div>
                         )}
                       </button>
                     </Tooltip.Trigger>
@@ -1376,10 +1392,14 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                     <Tooltip.Root>
                       <Tooltip.Trigger asChild>
                         <button
-                          className="px-4 py-2 rounded font-semibold shadow transition-colors bg-orange-600 text-white hover:bg-orange-700"
+                          className="px-3 py-3 sm:px-4 sm:py-4 rounded font-semibold shadow transition-colors 
+                            bg-orange-600 text-white hover:bg-orange-700 active:bg-orange-500
+                            min-h-[44px] touch-manipulation active:scale-95"
                           onClick={handleTimeConfirmation}
                         >
-                          Confirm
+                          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
                         </button>
                       </Tooltip.Trigger>
                       <Tooltip.Portal>
@@ -1396,8 +1416,10 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                   </Tooltip.Provider>
                 )}
                 {selectedTime === slot && selectedDate && timeSlotConfirmed && (
-                  <div className="px-4 py-2 rounded font-semibold bg-orange-600 text-white opacity-75">
-                    Confirmed
+                  <div className="px-3 py-3 sm:px-4 sm:py-4 rounded font-semibold bg-orange-600 text-white opacity-75 min-h-[44px] flex items-center justify-center">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
                   </div>
                 )}
               </div>
@@ -1406,7 +1428,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
 
           {/* Professional Confirmation Message */}
           {confirmationMessage && (
-            <div className="mt-6 p-4 bg-orange-900/20 border border-orange-500/50 rounded-lg animate-in slide-in-from-top-2 duration-300">
+            <div className="mt-6 p-3 sm:p-4 bg-orange-900/20 border border-orange-500/50 rounded-lg animate-in slide-in-from-top-2 duration-300">
               <div className="text-center" dangerouslySetInnerHTML={{__html: confirmationMessage}} />
             </div>
           )}
