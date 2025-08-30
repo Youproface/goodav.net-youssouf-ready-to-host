@@ -744,32 +744,54 @@ function Step1({ setCanProceed }) {
 
   return (
     <>
-      <h3 className="text-xl font-semibold mb-4">
+      <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">
         What type of project do you have in mind?
       </h3>
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         {options.map((opt, i) => (
           <button
             key={i}
             onClick={() => setSelectedOption(opt.label)}
-            className={`flex items-start gap-3 p-4 rounded-lg border text-left transition-all duration-200 ${selectedOption === opt.label
-                ? ' bg-orange-500 border-orange-500 shadow-lg shadow-orange-500/20'
-                : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31]'
-              }`}
+            className={`flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-lg border text-left 
+              transition-all duration-200 active:scale-95 touch-manipulation
+              min-h-[60px] sm:min-h-[70px] ${
+              selectedOption === opt.label
+                ? 'bg-orange-500 border-orange-500 shadow-lg shadow-orange-500/20'
+                : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31] active:bg-[#2a2a2c]'
+            }`}
           >
-            <opt.icon className={`w-6 h-6 mt-1 ${selectedOption === opt.label ? 'text-white-400' : 'text-orange-400/80'
-              }`} />
-            <div>
-              <h4 className="font-semibold">{opt.label}</h4>
-              <p className="text-sm text-white-400">{opt.desc}</p>
+            <opt.icon className={`w-5 h-5 sm:w-6 sm:h-6 mt-1 flex-shrink-0 ${
+              selectedOption === opt.label ? 'text-white' : 'text-orange-400/80'
+            }`} />
+            <div className="min-w-0 flex-1">
+              <h4 className={`font-semibold text-sm sm:text-base ${
+                selectedOption === opt.label ? 'text-white' : 'text-gray-200'
+              }`}>
+                {opt.label}
+              </h4>
+              <p className={`text-xs sm:text-sm mt-1 ${
+                selectedOption === opt.label ? 'text-white/90' : 'text-gray-400'
+              }`}>
+                {opt.desc}
+              </p>
             </div>
           </button>
         ))}
       </div>
       {selectedOption === "Other" && (
-        <div className="mt-4">
-          <label className="block text-sm font-medium text-white-400" htmlFor="other">Please specify your project type:</label>
-          <input type="text" id="other" name="other" className="mt-1 block w-full rounded-md border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500" placeholder="Desribe your project" />
+        <div className="mt-4 sm:mt-6">
+          <label className="block text-sm font-medium text-gray-300 mb-2" htmlFor="other">
+            Please specify your project type:
+          </label>
+          <input
+            type="text"
+            id="other"
+            name="other"
+            className="w-full rounded-lg border-gray-600 bg-gray-800 px-4 py-3 text-white 
+              placeholder-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20
+              text-base min-h-[44px] touch-manipulation"
+            placeholder="Describe your project"
+          />
         </div>
       )}
     </>
