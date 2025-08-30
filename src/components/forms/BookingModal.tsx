@@ -663,6 +663,8 @@ function Step6() {
             className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none w-full text-white placeholder-orange-300 mb-4"
             rows={4}
           />
+  {/* Submission feedback */}
+  {submitStatus && <div className="mt-2 text-orange-400 text-sm">{submitStatus}</div>}
         </div>
       </div>
        <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
