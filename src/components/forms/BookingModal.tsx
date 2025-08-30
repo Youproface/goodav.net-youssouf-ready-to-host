@@ -1297,6 +1297,55 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
             rows={4}
             required
           />
+
+          {/* Meeting Software Selection */}
+          <div className="mb-6">
+            <h4 className="text-lg font-semibold mb-3">Preferred Meeting Platform</h4>
+            <p className="text-gray-300 text-sm mb-4">
+              Choose your preferred platform for our consultation meeting. We'll send you the meeting details via email.
+            </p>
+            <div className="grid md:grid-cols-2 gap-3">
+              {[
+                {
+                  label: "Zoom",
+                  desc: "Most popular video conferencing platform",
+                  icon: "📹",
+                },
+                {
+                  label: "Microsoft Teams",
+                  desc: "Integrated with Microsoft ecosystem",
+                  icon: "👥",
+                },
+                {
+                  label: "Google Meet",
+                  desc: "Simple and easy to use",
+                  icon: "🎯",
+                },
+                {
+                  label: "Phone Call",
+                  desc: "Traditional phone consultation",
+                  icon: "📞",
+                },
+              ].map((option, i) => (
+                <button
+                  key={i}
+                  onClick={() => setMeetingSoftware(option.label)}
+                  className={`flex items-start gap-3 p-3 rounded-lg border text-left transition-all duration-200 ${
+                    meetingSoftware === option.label
+                      ? 'bg-orange-500 border-orange-500 shadow-lg shadow-orange-500/20'
+                      : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31]'
+                  }`}
+                >
+                  <span className="text-2xl mt-1">{option.icon}</span>
+                  <div>
+                    <h5 className="font-semibold">{option.label}</h5>
+                    <p className="text-sm text-gray-400">{option.desc}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
         {/* Schedule Consultation Button and feedback */}
         <div className="flex flex-col items-center mt-6">
           {submitStatus && <div className="mt-2 text-sm text-center" dangerouslySetInnerHTML={{__html: submitStatus}} />}
