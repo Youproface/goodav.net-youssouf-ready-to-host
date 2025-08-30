@@ -477,7 +477,8 @@ function Step6() {
   // Validation: only allow current/future dates
   function isPastDate(year, month, day) {
     const d = new Date(year, month, day);
-    return d < today.setHours(0,0,0,0);
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    return d.getTime() < todayMidnight;
   }
   const timeSlots = ['10:00', '11:00', '13:00', '14:30', '16:00']; // 24h format for clarity
   // Timezone conversion logic
