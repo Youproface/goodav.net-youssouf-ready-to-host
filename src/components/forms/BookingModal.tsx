@@ -1315,33 +1315,39 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
 
         {/* Contact Form */}
         <div className="grid md:grid-cols-2 gap-4 mb-4">
-          <div>
+          <div className="relative">
             <input
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="Full Name *"
-              className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 ${
-                name.trim() ? 'border-orange-500' : 'border-gray-700 focus:border-orange-500'
+              className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 transition-all duration-200 ${
+                name.trim() ? 'border-orange-500 shadow-lg shadow-orange-500/20' : 'border-gray-700 focus:border-orange-500'
               }`}
               required
             />
-            {name && !name.trim() && <div className="text-red-400 text-xs mt-1">Full name is required</div>}
+            {name && !name.trim() && (
+              <div className="absolute -bottom-6 left-0 text-orange-400 text-xs font-medium bg-orange-900/20 px-2 py-1 rounded border border-orange-500/50 animate-in slide-in-from-top-1 duration-200">
+                ⚠️ Full name is required
+              </div>
+            )}
           </div>
-          <div>
+          <div className="relative">
             <input
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="Email Address *"
-              className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 ${
-                email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-orange-500' :
+              className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 transition-all duration-200 ${
+                email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-orange-500 shadow-lg shadow-orange-500/20' :
                 email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-red-500' : 'border-gray-700 focus:border-orange-500'
               }`}
               required
             />
             {email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && (
-              <div className="text-red-400 text-xs mt-1">Please enter a valid email address</div>
+              <div className="absolute -bottom-6 left-0 text-red-400 text-xs font-medium bg-red-900/20 px-2 py-1 rounded border border-red-500/50 animate-in slide-in-from-top-1 duration-200">
+                ⚠️ Please enter a valid email address
+              </div>
             )}
           </div>
         </div>
