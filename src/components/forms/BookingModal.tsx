@@ -618,6 +618,25 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
     <div className="flex flex-col md:flex-row gap-8">
       <div className="w-full md:w-1/2">
         <h3 className="text-xl font-semibold mb-4">Select a Date & Time</h3>
+
+        {/* Validation Summary */}
+        <div className="mb-4 p-3 bg-orange-900/20 border border-orange-500/30 rounded-lg">
+          <div className="text-sm text-orange-300 font-medium mb-2">Required Information:</div>
+          <div className="text-xs text-orange-200 space-y-1">
+            <div className={`flex items-center gap-2 ${name.trim() ? 'text-green-400' : 'text-orange-300'}`}>
+              <span className={name.trim() ? '✓' : '○'}></span> Full Name
+            </div>
+            <div className={`flex items-center gap-2 ${email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}`}>
+              <span className={email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '✓' : '○'}></span> Valid Email
+            </div>
+            <div className={`flex items-center gap-2 ${selectedDate ? 'text-green-400' : 'text-orange-300'}`}>
+              <span className={selectedDate ? '✓' : '○'}></span> Date Selection
+            </div>
+            <div className={`flex items-center gap-2 ${selectedTime ? 'text-green-400' : 'text-orange-300'}`}>
+              <span className={selectedTime ? '✓' : '○'}></span> Time Selection
+            </div>
+          </div>
+        </div>
          {/* Calendar UI: dynamic, only current/future dates selectable */}
          <div className="flex items-center justify-between mb-2">
            <button
