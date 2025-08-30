@@ -1455,7 +1455,7 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
 
       {/* Schedule Consultation Button and feedback */}
       <div className="flex flex-col items-center mt-6">
-        {submitStatus && <div className="mt-2 text-sm text-center" dangerouslySetInnerHTML={{__html: submitStatus}} />}
+        {submitStatus && !submitStatus.includes('Your booking was submitted successfully') && <div className="mt-2 text-sm text-center" dangerouslySetInnerHTML={{__html: submitStatus}} />}
       </div>
     </div>
   );
