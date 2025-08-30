@@ -516,13 +516,10 @@ export default function BookingModal({
               </h2>
 
               {/* Progress Bar */}
-              <div className="w-full bg-gray-700 h-2 rounded-full mb-4">
+              <div className="w-full bg-gray-700 h-2 rounded-full mb-4 overflow-hidden">
                 <div
-                  className="bg-orange-500 h-2 rounded-full transition-all duration-500 ease-out"
-                  style={{ '--progress-width': `${(step / 8) * 100}%` } as React.CSSProperties}
-                  ref={(el) => {
-                    if (el) el.style.width = `${(step / 8) * 100}%`;
-                  }}
+                  className="bg-orange-500 h-full rounded-full transition-all duration-500 ease-out"
+                  style={{ width: `${(step / 8) * 100}%` }}
                 />
               </div>
 
