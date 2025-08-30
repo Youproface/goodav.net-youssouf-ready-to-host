@@ -46,6 +46,21 @@ export default function PremiumProjectModal({ open, onClose }: Props) {
     return () => el.removeEventListener("keydown", handler as any);
   }, [open]);
 
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setSubmitting(true);
+    setSubmitStatus(null);
+    // Simulate API call (replace with real API logic)
+    try {
+      await new Promise(res => setTimeout(res, 1200));
+      // Simulate success
+      setSubmitStatus('✅ Your project request was submitted successfully! We will contact you soon.');
+    } catch (err) {
+      setSubmitStatus('❌ Submission failed. Please try again or contact support.');
+    }
+    setSubmitting(false);
+  }
+
   return (
     <Dialog.Root open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
       <Dialog.Portal>
