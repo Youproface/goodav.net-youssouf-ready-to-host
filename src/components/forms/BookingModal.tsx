@@ -206,65 +206,68 @@ export default function BookingModal({
 }
 
 /* -------------------------
-   STEP 1
-------------------------- */
-function Step1({ setCanProceed }) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  // Validation: update canProceed when selection changes
-  // Step 1: canProceed is true only if an option is selected
-  useEffect(() => { setCanProceed(!!selectedOption); }, [selectedOption, setCanProceed]);
-  const options = [
-    {
-      label: "Video Production",
-      desc: "Corporate videos, documentaries, promotional content",
-      icon: Film,
-    },
-    { label: "Live Streaming", desc: "Events, conferences, webinars", icon: Radio },
-    {
-      label: "Photography",
-      desc: "Event coverage, corporate headshots, product photography",
-      icon: Camera,
-    },
-    {
-      label: "Full Production",
-      desc: "Complete audiovisual package",
-      icon: Video,
-    },
-    { label: "Other", desc: "Custom project – please specify", icon: Briefcase },
+   STEP 6
+function Step6({
+  selectedDate,
+  setSelectedDate,
+  selectedTime,
+  setSelectedTime,
+  timezone,
+  setTimezone,
+  submitStatus,
+  handleFormSubmit
+}) {
+  // List of time zones (IANA)
+  const timeZones = [
+    'Africa/Kigali', // Kigali (Central African Time)
+    'Africa/Maputo',
+    'Africa/Lagos',
+    'Africa/Cairo',
+    'Europe/London',
+    'Europe/Paris',
+    'Europe/Berlin',
+    'America/New_York',
+    'America/Chicago',
+    'America/Denver',
+    'America/Los_Angeles',
+    'Asia/Dubai',
+    'Asia/Kolkata',
+    'Asia/Tokyo',
+    'Asia/Shanghai',
+    'Australia/Sydney',
+    'Pacific/Auckland',
+    'UTC',
   ];
-
-  return (
-    <>
-      <h3 className="text-xl font-semibold mb-4">
-        What type of project do you have in mind?
-      </h3>
-      <div className="grid md:grid-cols-2 gap-4">
-        {options.map((opt, i) => (
-          <button
-            key={i}
-            onClick={() => setSelectedOption(opt.label)}
-            className={`flex items-start gap-3 p-4 rounded-lg border text-left transition-all duration-200 ${selectedOption === opt.label
-                ? ' bg-orange-500 border-orange-500 shadow-lg shadow-orange-500/20'
-                : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31]'
-              }`}
-          >
-            <opt.icon className={`w-6 h-6 mt-1 ${selectedOption === opt.label ? 'text-white-400' : 'text-orange-400/80'
-              }`} />
-            <div>
-              <h4 className="font-semibold">{opt.label}</h4>
-              <p className="text-sm text-white-400">{opt.desc}</p>
-            </div>
-          </button>
-        ))}
-
-        <div className="flex flex-col items-center mt-6">
-          <button
-            onClick={handleFormSubmit}
-            className="flex items-center px-6 py-2 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-semibold"
-          >
-            <Calendar className="w-5 h-5 mr-2" />
-            <span>Schedule Consultation</span>
+  // Calendar logic: allow selection from today to any future date
+  const today = new Date();
+  const [calendarMonth, setCalendarMonth] = useState(today.getMonth());
+  const [calendarYear, setCalendarYear] = useState(today.getFullYear());
+  // Helper to get days in month
+  function getDaysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate();
+  }
+  // Helper to get first day of week (0=Sun)
+  function getFirstDayOfWeek(year, month) {
+    return new Date(year, month, 1).getDay();
+  }
+  const daysInMonth = getDaysInMonth(calendarYear, calendarMonth);
+  const firstDayOfWeek = getFirstDayOfWeek(calendarYear, calendarMonth);
+  // Build calendar grid
+  const calendarGrid = [];
+  let dayNum = 1;
+  for (let i = 0; i < 6; i++) {
+    const week = [];
+    for (let j = 0; j < 7; j++) {
+      if ((i === 0 && j < firstDayOfWeek) || dayNum > daysInMonth) {
+        week.push(null);
+      } else {
+        week.push(dayNum);
+        dayNum++;
+      }
+    }
+    calendarGrid.push(week);
+  }
+  // ...existing code...
           </button>
           {submitStatus && (
             <div className="mt-2 text-orange-400 text-sm text-center">
