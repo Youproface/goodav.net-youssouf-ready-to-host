@@ -960,6 +960,7 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
                   value={countryCode}
                   onChange={e => setCountryCode(e.target.value)}
                   className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none text-white min-w-[120px]"
+                  title="Select country code"
                 >
                   {countryCodes.map((country, index) => (
                     <option key={`${country.code}-${country.name}-${index}`} value={country.code}>
