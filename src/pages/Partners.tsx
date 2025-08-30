@@ -46,27 +46,20 @@ export default function Partners() {
           }
         }}
       />
-      {/* ...existing page content here... */}
-    </div>
-  );
-
-        {/* Award Recognition */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {[1, 2, 3].map((num) => (
-            <div key={num} className="bg-gray-800 h-16 w-32 rounded-md flex items-center justify-center text-gray-400 text-xs">
-              🏆 Recent Award Recognition
-            </div>
-          ))}
-        </div>
-
-        {/* Trust Badge */}
-        <div className="bg-orange-600 p-4 rounded text-xs max-w-sm mx-auto">
-          <strong>TRUSTED BY GLOBAL ORGANIZATIONS</strong>
-          <br />
-          GIZ, Gilead Sciences, SNV, AMC, Keping, and many more trust us for their audiovisual needs.
-        </div>
-      </section>
-
+      {/* Award Recognition */}
+      <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {[1, 2, 3].map((num) => (
+          <div key={num} className="bg-gray-800 h-16 w-32 rounded-md flex items-center justify-center text-gray-400 text-xs">
+            🏆 Recent Award Recognition
+          </div>
+        ))}
+      </div>
+      {/* Trust Badge */}
+      <div className="bg-orange-600 p-4 rounded text-xs max-w-sm mx-auto">
+        <strong>TRUSTED BY GLOBAL ORGANIZATIONS</strong>
+        <br />
+        GIZ, Gilead Sciences, SNV, AMC, Keping, and many more trust us for their audiovisual needs.
+      </div>
       {/* About Section */}
       <section className="px-6 py-12 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -83,7 +76,6 @@ export default function Partners() {
               and media agencies by providing cinematic filming, drone permits, multilingual teams,
               cloud-based delivery, and behind-the-scenes content -- all under one trusted roof.
             </p>
-            
             <div className="mb-6">
               <h5 className="font-semibold text-white text-lg mb-3">WHY PARTNER WITH GOODAV?</h5>
               <p className="text-base text-gray-300">
@@ -92,7 +84,6 @@ export default function Partners() {
                 Our local expertise combined with global standards ensures your projects run smoothly from concept to delivery.
               </p>
             </div>
-
             <div className="flex gap-8">
               <div className="text-center">
                 <p className="text-3xl font-bold text-orange-500">20+</p>
@@ -112,7 +103,6 @@ export default function Partners() {
               </div>
             </div>
           </div>
-          
           <div>
             <div className="bg-gray-800 h-64 flex items-center justify-center rounded-lg cursor-pointer hover:bg-gray-700 transition-colors">
               <div className="text-center">
@@ -125,7 +115,6 @@ export default function Partners() {
           </div>
         </div>
       </section>
-
       {/* Why Partner With Us Section */}
       <section className="bg-gray-900 px-6 py-20">
         <div className="max-w-7xl mx-auto">
@@ -133,7 +122,6 @@ export default function Partners() {
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">WHY PARTNER WITH US</h2>
             <div className="w-24 h-1.5 bg-orange-500 mx-auto"></div>
           </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Benefit 1 */}
             <div className="bg-gray-800 p-8 rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
@@ -143,7 +131,6 @@ export default function Partners() {
               <h3 className="text-xl md:text-2xl font-bold text-white text-center mb-4">END-TO-END PRODUCTION</h3>
               <p className="text-gray-300 text-center text-base md:text-lg">Full-service production from concept to delivery, ensuring seamless execution and high-quality results for every project.</p>
             </div>
-            
             {/* Benefit 2 */}
             <div className="bg-gray-800 p-8 rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-6 mx-auto">
@@ -152,7 +139,6 @@ export default function Partners() {
               <h3 className="text-xl font-bold text-white text-center mb-4">GLOBAL REACH</h3>
               <p className="text-gray-300 text-center">Extensive network and experience working with international clients, ensuring your content resonates globally.</p>
             </div>
-            
             {/* Benefit 3 */}
             <div className="bg-gray-800 p-8 rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-6 mx-auto">
@@ -161,7 +147,6 @@ export default function Partners() {
               <h3 className="text-xl font-bold text-white text-center mb-4">FAST TURNAROUND</h3>
               <p className="text-gray-300 text-center">Efficient workflows and dedicated teams that deliver exceptional results on time, every time.</p>
             </div>
-            
             {/* Benefit 4 */}
             <div className="bg-gray-800 p-8 rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-6 mx-auto">
@@ -170,7 +155,6 @@ export default function Partners() {
               <h3 className="text-xl font-bold text-white text-center mb-4">SECURE DELIVERY</h3>
               <p className="text-gray-300 text-center">Secure cloud-based delivery with 90-day backup and multiple format options for your convenience.</p>
             </div>
-            
             {/* Benefit 5 */}
             <div className="bg-gray-800 p-8 rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-6 mx-auto">
@@ -179,7 +163,6 @@ export default function Partners() {
               <h3 className="text-xl font-bold text-white text-center mb-4">MULTILINGUAL SUPPORT</h3>
               <p className="text-gray-300 text-center">Bilingual and multilingual capabilities for seamless communication and content localization.</p>
             </div>
-            
             {/* Benefit 6 */}
             <div className="bg-gray-800 p-8 rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-6 mx-auto">
@@ -189,7 +172,6 @@ export default function Partners() {
               <p className="text-gray-300 text-center">Full handling of government permits, drone authorizations, and all legal requirements.</p>
             </div>
           </div>
-          
           <div className="mt-16 text-center">
             <button className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105">
               START YOUR PROJECT TODAY
@@ -197,7 +179,6 @@ export default function Partners() {
           </div>
         </div>
       </section>
-
       {/* Types of Partnerships Section */}
       <section className="bg-gray-800 px-6 py-16">
         <div className="max-w-6xl mx-auto">
@@ -205,7 +186,6 @@ export default function Partners() {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">TYPES OF PARTNERSHIPS</h2>
             <div className="w-24 h-1 bg-orange-500 mx-auto"></div>
           </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {/* Strategic Alliances */}
             <div className="bg-gray-900 p-8 rounded-lg">
@@ -217,7 +197,6 @@ export default function Partners() {
                 Long-term partnerships for ongoing audiovisual needs across multiple projects and regions.
               </p>
             </div>
-            
             {/* Project-Based Engagements */}
             <div className="bg-gray-900 p-8 rounded-lg">
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-6">
@@ -228,7 +207,6 @@ export default function Partners() {
                 Dedicated support for specific events, documentaries, or campaigns with full-service coverage.
               </p>
             </div>
-            
             {/* Retainer / Ongoing AV Coverage */}
             <div className="bg-gray-900 p-8 rounded-lg">
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-6">
@@ -239,7 +217,6 @@ export default function Partners() {
                 Monthly or quarterly service agreements for consistent audiovisual support and rapid deployment.
               </p>
             </div>
-            
             {/* Compliance & Permits */}
             <div className="bg-gray-900 p-8 rounded-lg">
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-6">
@@ -266,7 +243,6 @@ export default function Partners() {
               </ul>
             </div>
           </div>
-          
           <div className="flex flex-wrap justify-center gap-6">
             <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105">
               DOWNLOAD DECK
@@ -277,7 +253,6 @@ export default function Partners() {
           </div>
         </div>
       </section>
-
       {/* Featured Project Section */}
       <section className="max-w-6xl mx-auto px-6 py-16">
         <h3 className="text-3xl md:text-4xl font-bold mb-10 text-white text-center">FEATURED PROJECTS</h3>
@@ -295,7 +270,6 @@ export default function Partners() {
               </div>
             </div>
           </div>
-          
           {/* Project 2 */}
           <div className="group relative h-64 rounded-lg overflow-hidden cursor-pointer">
             <img 
@@ -309,7 +283,6 @@ export default function Partners() {
               </div>
             </div>
           </div>
-          
           {/* Project 3 */}
           <div className="group relative h-64 rounded-lg overflow-hidden cursor-pointer">
             <img 
@@ -339,7 +312,6 @@ export default function Partners() {
           </button>
         </div>
       </section>
-
       {/* Successful Partnerships Section */}
       <section className="max-w-6xl mx-auto px-6 py-16">
         <h3 className="text-3xl md:text-4xl font-bold mb-10 text-white">SUCCESSFUL PARTNERSHIPS</h3>
@@ -356,7 +328,6 @@ export default function Partners() {
               VIEW CASE STUDY
             </button>
           </div>
-          
           <div className="bg-gray-800 rounded-lg p-6 hover:bg-gray-700 transition-colors">
             <div className="h-32 mb-4 bg-gray-600 rounded-lg flex items-center justify-center">
               <span className="text-2xl">▶</span>
@@ -396,7 +367,6 @@ export default function Partners() {
               VIEW CASE STUDY
             </button>
           </div>
-          
           <div className="bg-gray-800 rounded-lg p-6 hover:bg-gray-700 transition-colors">
             <div className="h-32 mb-4 bg-gray-600 rounded-lg flex items-center justify-center">
               <span className="text-2xl">▶</span>
@@ -438,7 +408,6 @@ export default function Partners() {
           </div>
         </div>
       </section>
-
       {/* Testimonials Section */}
       <section className="max-w-6xl mx-auto px-6 py-16">
         <h3 className="text-3xl md:text-4xl font-bold mb-12 text-white">WHAT OUR PARTNERS SAY</h3>
@@ -452,7 +421,6 @@ export default function Partners() {
               - Project Lead, Gilead Sciences
             </footer>
           </blockquote>
-          
           <blockquote className="bg-gray-800 p-8 rounded-lg">
             <div className="text-yellow-400 mb-4">★★★★★</div>
             <p className="text-gray-300 mb-4 italic">
@@ -465,7 +433,6 @@ export default function Partners() {
           </blockquote>
         </div>
       </section>
-
       {/* Ready to Collaborate Section */}
       <section className="bg-gray-800 px-6 py-16 mb-10 text-center">
         <div className="max-w-4xl mx-auto">
@@ -485,9 +452,7 @@ export default function Partners() {
           <p className="text-xl text-gray-400">Contact us: yousouf@goodav.net</p>
         </div>
       </section>
-
       <BTSMasterProduction />
-
       {/* Previous Projects Section */}
       <section className="bg-gray-800 text-white px-6 py-12 text-center">
         <div className="max-w-4xl mx-auto">
@@ -500,7 +465,5 @@ export default function Partners() {
         </div>
       </section>
     </div>
-      </div>
-    </>
   );
 }
