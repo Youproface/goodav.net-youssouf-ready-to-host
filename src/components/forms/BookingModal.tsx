@@ -157,9 +157,9 @@ export default function BookingModal({
     } catch (error) {
       console.error('Submission error:', error);
       if (error instanceof TypeError && error.message.includes('fetch')) {
-        setSubmitStatus('❌ Network error. Please check your connection and try again.');
+        setSubmitStatus('<i class="fas fa-times-circle text-red-400"></i> Network error. Please check your connection and try again.');
       } else {
-        setSubmitStatus('❌ An unexpected error occurred. Please try again or contact support.');
+        setSubmitStatus('<i class="fas fa-times-circle text-red-400"></i> An unexpected error occurred. Please try again or contact support.');
       }
     } finally {
       setSubmitting(false);
