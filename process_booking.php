@@ -114,43 +114,9 @@ try {
         'booking_id' => $booking_id
     ];
 
-    // Use cURL to send data to email forwarder
-    $ch = curl_init('http://localhost:8000/email_forwarder.php');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($email_data));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        'Content-Type: application/json',
-        'Accept: application/json'
-    ]);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 30); // 30 second timeout
-
-    $email_response = curl_exec($ch);
-    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    $curl_error = curl_error($ch);
-    curl_close($ch);
-
-    if ($curl_error) {
-        $email_result = [
-            'success' => false,
-            'error' => 'Email service connection failed: ' . $curl_error
-        ];
-    } elseif ($http_code >= 200 && $http_code < 300) {
-        $email_response_data = json_decode($email_response, true);
-        if ($email_response_data && isset($email_response_data['success'])) {
-            $email_result = $email_response_data;
-        } else {
-            $email_result = [
-                'success' => false,
-                'error' => 'Invalid response from email service'
-            ];
-        }
-    } else {
-        $email_result = [
-            'success' => false,
-            'error' => 'Email service returned HTTP ' . $http_code
-        ];
-    }
+    // Include and call email forwarder directly (avoiding HTTP request to self)
+    $email_forwarder_result = sendEmailNotification($email_data);
+    $email_result = $email_forwarder_result;
 
 } catch (Exception $e) {
     $email_result = [
@@ -158,6 +124,105 @@ try {
         'error' => 'Email forwarding failed: ' . $e->getMessage()
     ];
     error_log('Email forwarding error: ' . $e->getMessage());
+}
+
+// Email forwarder function
+function sendEmailNotification($data) {
+    try {
+        // Email configuration - Update these with your actual settings
+        $to = 'your-email@example.com'; // Replace with your email
+        $subject = 'New Booking Submission - GoodAV';
+
+        // Create HTML email content
+        $message = "
+        <html>
+        <head>
+            <title>New Booking Request</title>
+            <style>
+                body { font-family: Arial, sans-serif; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: #ff6b35; color: white; padding: 20px; text-align: center; }
+                .content { background: #f9f9f9; padding: 20px; }
+                .field { margin: 10px 0; }
+                .label { font-weight: bold; color: #333; }
+                .value { color: #666; }
+            </style>
+        </head>
+        <body>
+            <div class='container'>
+                <div class='header'>
+                    <h2>🎉 New Booking Request</h2>
+                    <p>GoodAV Contact Form Submission</p>
+                </div>
+                <div class='content'>
+                    <div class='field'>
+                        <span class='label'>Name:</span>
+                        <span class='value'>{$data['name']}</span>
+                    </div>
+                    <div class='field'>
+                        <span class='label'>Email:</span>
+                        <span class='value'>{$data['email']}</span>
+                    </div>
+                    <div class='field'>
+                        <span class='label'>Phone:</span>
+                        <span class='value'>" . ($data['phone'] ?? 'Not provided') . "</span>
+                    </div>
+                    <div class='field'>
+                        <span class='label'>Organization:</span>
+                        <span class='value'>{$data['organization']}</span>
+                    </div>
+                    <div class='field'>
+                        <span class='label'>Project:</span>
+                        <span class='value'>{$data['project']}</span>
+                    </div>
+                    <div class='field'>
+                        <span class='label'>Preferred Date:</span>
+                        <span class='value'>{$data['date']}</span>
+                    </div>
+                    <div class='field'>
+                        <span class='label'>Preferred Time:</span>
+                        <span class='value'>{$data['time']}</span>
+                    </div>
+                    <div class='field'>
+                        <span class='label'>Timezone:</span>
+                        <span class='value'>{$data['timezone']}</span>
+                    </div>
+                    <div class='field'>
+                        <span class='label'>Booking ID:</span>
+                        <span class='value'>{$data['booking_id']}</span>
+                    </div>
+                </div>
+            </div>
+        </body>
+        </html>
+        ";
+
+        // Email headers
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        $headers .= "From: GoodAV Contact Form <noreply@goodav.net>" . "\r\n";
+
+        // Send email
+        $email_sent = mail($to, $subject, $message, $headers);
+
+        if ($email_sent) {
+            return [
+                'success' => true,
+                'message' => 'Email sent successfully'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'error' => 'PHP mail function failed'
+            ];
+        }
+
+    } catch (Exception $e) {
+        return [
+            'success' => false,
+            'error' => 'Email sending failed: ' . $e->getMessage()
+        ];
+    }
 }
 
 // Return response
