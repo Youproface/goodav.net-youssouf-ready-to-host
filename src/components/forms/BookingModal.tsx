@@ -576,14 +576,14 @@ export default function BookingModal({
                         Next →
                       </button>
                     </Tooltip.Trigger>
-                    {((step >= 1 && step <= 4 && !canProceed) || (step === 5 && !isFormValid())) && (
+                    {((step >= 1 && step <= 4 && !canProceed) || (step === 5 && !isFormValid()) || (step === 7 && (!selectedDate || !selectedTime))) && (
                       <Tooltip.Portal>
                         <Tooltip.Content
                           className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
                           sideOffset={8}
                           side="top"
                         >
-                          {step >= 1 && step <= 4 ? 'Please make a selection to continue' : 'Please complete all required fields to proceed'}
+                          {step >= 1 && step <= 4 ? 'Please make a selection to continue' : step === 5 ? 'Please complete all required fields to proceed' : 'Please select a date and time to continue'}
                           <Tooltip.Arrow className="fill-gray-900" />
                         </Tooltip.Content>
                       </Tooltip.Portal>
