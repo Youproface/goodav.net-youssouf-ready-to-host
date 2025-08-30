@@ -256,27 +256,6 @@ function Step1({ setCanProceed }) {
             </div>
           </button>
         ))}
-
-        <div className="flex flex-col items-center mt-6">
-          <button
-            onClick={handleFormSubmit}
-            className="flex items-center px-6 py-2 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-semibold"
-          >
-            <Calendar className="w-5 h-5 mr-2" />
-            <span>Schedule Consultation</span>
-          </button>
-          {submitStatus && (
-            <div className="mt-2 text-orange-400 text-sm text-center">
-              {submitStatus}
-              {submitStatus.includes('successfully') && (
-                <div className="mt-1 text-orange-300">Thank you for booking with GoodAV. You will receive a confirmation email soon.</div>
-              )}
-              {submitStatus.includes('failed') && (
-                <div className="mt-1 text-orange-300">If the problem persists, please contact us at form@goodav.net.</div>
-              )}
-            </div>
-          )}
-        </div>
       </div>
       {selectedOption === "Other" && (
         <div className="mt-4">
