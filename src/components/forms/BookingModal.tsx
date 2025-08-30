@@ -426,8 +426,22 @@ export default function BookingModal({
       console.error('Submission error:', error);
       if (error instanceof TypeError && error.message.includes('fetch')) {
         setSubmitStatus('<i class="fas fa-times-circle text-red-400"></i> Network error. Please check your connection and try again.');
+        
+        // Show network error popup
+        showNotificationPopup(
+          'error',
+          'Network Error',
+          'Please check your internet connection and try again. If the problem persists, contact our support team.'
+        );
       } else {
         setSubmitStatus('<i class="fas fa-times-circle text-red-400"></i> An unexpected error occurred. Please try again or contact support.');
+        
+        // Show generic error popup
+        showNotificationPopup(
+          'error',
+          'Unexpected Error',
+          'An unexpected error occurred while submitting your booking. Please try again or contact our support team for assistance.'
+        );
       }
     } finally {
       setSubmitting(false);
