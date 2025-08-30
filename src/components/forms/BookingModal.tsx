@@ -338,6 +338,22 @@ export default function BookingModal({
     setTimeout(() => setConfirmationMessage(null), 5000);
   };
 
+  // Show popup notification
+  const showNotificationPopup = (type: 'success' | 'error', message: string, details: string = '') => {
+    setPopupType(type);
+    setPopupMessage(message);
+    setPopupDetails(details);
+    setShowPopup(true);
+  };
+
+  // Close popup
+  const closePopup = () => {
+    setShowPopup(false);
+    setPopupType(null);
+    setPopupMessage('');
+    setPopupDetails('');
+  };
+
   // Send booking data to backend API
   async function handleFormSubmit(e) {
     e.preventDefault();
