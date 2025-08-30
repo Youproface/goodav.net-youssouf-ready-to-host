@@ -8,6 +8,7 @@ import {
   Users,
   Clock,
   Calendar,
+  Briefcase,
   DollarSign,
   Star,
   Layers,
