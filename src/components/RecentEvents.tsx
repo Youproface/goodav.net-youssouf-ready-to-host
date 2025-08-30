@@ -88,8 +88,8 @@ export default function RecentEvents() {
             {/* deliveries + clients */}
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 
-            <ul className="space-y-3">
             <h2 className="text-md text-center font-semibold text-zinc-200">Deliveries</h2>
+            <ul className="space-y-3">
             {[
                 "Full-length recap and highlight videos",
                 "Street-style interviews and cinematic b-roll",
