@@ -168,16 +168,7 @@ export default function BookingModal({
 
             {/* Navigation */}
             <div className="flex justify-between mt-8">
-              {step === 6 ? (
-                <button
-                  onClick={handleFormSubmit}
-                  className="flex items-center px-6 py-2 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-semibold"
-                  disabled={submitting}
-                >
-                  <Calendar className="w-5 h-5 mr-2" />
-                  <span>Schedule Consultation</span>
-                </button>
-              ) : step > 1 ? (
+              {step > 1 ? (
                 <button
                   onClick={prevStep}
                   className="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
@@ -188,7 +179,16 @@ export default function BookingModal({
                 <div />
               )}
 
-              {step < 6 ? (
+              {step === 6 ? (
+                <button
+                  onClick={handleFormSubmit}
+                  className="flex items-center px-6 py-2 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-semibold"
+                  disabled={submitting}
+                >
+                  <Calendar className="w-5 h-5 mr-2" />
+                  <span>Schedule Consultation</span>
+                </button>
+              ) : step < 6 ? (
                 <button
                   onClick={nextStep}
                   className={`px-6 py-2 rounded-lg ${(step >= 1 && step <= 4 && !canProceed) ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
