@@ -64,6 +64,7 @@ import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
 const Portfolio = () => {
   const [activeFilter, setActiveFilter] = useState('all');
+  // ...all logic and arrays above...
   return (
     <div>
       <SEO
@@ -91,34 +92,6 @@ const Portfolio = () => {
       </div>
     </div>
   );
-  ];
-
-  const stats = [
-    { label: "Projects delivered", value: "200+", icon: Award },
-    { label: "Clients & partners", value: "150+", icon: Users },
-    { label: "Countries served", value: "15+", icon: Calendar },
-    { label: "Years of excellence", value: "5+", icon: Star }
-  ];
-
-  const categories = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'game', label: 'PC Games' },
-    { id: 'mobile', label: 'Mobile Games' },
-    { id: 'vr', label: 'VR Projects' },
-    { id: 'arcade', label: 'Arcade Games' }
-  ];
-
-  const filteredItems = activeFilter === 'all' 
-    ? portfolioItems 
-    : portfolioItems.filter(item => item.category === activeFilter);
-
-  return (
-    <>
-      <SEO
-        title="Portfolio - GoodAV | Award-Winning Audiovisual Projects"
-        description="Explore GoodAV’s portfolio of award-winning audiovisual productions, documentaries, and event coverage across Africa."
-        canonical="https://goodav.net/portfolio"
-      />
       <SchemaMarkup
         schema={{
           "@context": "https://schema.org",
