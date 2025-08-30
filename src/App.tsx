@@ -30,6 +30,18 @@ import ScrollToTop from './components/ScrollToTop';
 
 const queryClient = new QueryClient();
 
+// Wrapper component to handle blog post data fetching
+const BlogPostWrapper = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const blog = blogPosts.find(post => post.slug === slug);
+  
+  if (!blog) {
+    return <div>Blog post not found</div>;
+  }
+  
+  return <BlogDetailsPage blog={blog} />;
+};
+
 // Map of service IDs to their corresponding components
 const serviceComponents: Record<string, React.ComponentType> = {
   'video-production': VideoProduction,
