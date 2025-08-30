@@ -34,6 +34,7 @@ export default function BookingModal({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [countryCode, setCountryCode] = useState("+250"); // Rwanda default
   const [organization, setOrganization] = useState("");
   const [project, setProject] = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
