@@ -1079,12 +1079,12 @@ function Step5({ nextStep }: { nextStep: () => void }) {
 function Step6({ meetingSoftware, setMeetingSoftware }) {
   return (
     <div className="max-w-2xl mx-auto">
-      <h3 className="text-xl font-semibold mb-4">Preferred Meeting Platform</h3>
-      <p className="text-gray-300 text-center text-sm mb-8">
+      <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Preferred Meeting Platform</h3>
+      <p className="text-gray-300 text-center text-sm sm:text-base mb-6 sm:mb-8">
         Choose your preferred platform for our consultation meeting. We'll send you the meeting details via email.
       </p>
 
-      <div className="grid md:grid-cols-2 gap-4 max-w-lg mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-lg mx-auto">
         {[
           {
             label: "Zoom",
@@ -1110,23 +1110,35 @@ function Step6({ meetingSoftware, setMeetingSoftware }) {
           <button
             key={i}
             onClick={() => setMeetingSoftware(option.label)}
-            className={`flex items-start gap-3 p-4 rounded-lg border text-left transition-all duration-200 ${
+            className={`flex items-start gap-3 sm:gap-4 p-4 sm:p-5 rounded-lg border text-left 
+              transition-all duration-200 active:scale-95 touch-manipulation
+              min-h-[60px] sm:min-h-[70px] ${
               meetingSoftware === option.label
                 ? 'bg-orange-500 border-orange-500 shadow-lg shadow-orange-500/20'
-                : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31]'
+                : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31] active:bg-[#2a2a2c]'
             }`}
           >
-            <i className={`${option.icon} w-6 h-6 mt-1 ${meetingSoftware === option.label ? 'text-white' : 'text-orange-400'}`}></i>
-            <div>
-              <h5 className={`font-semibold ${meetingSoftware === option.label ? 'text-white' : 'text-gray-200'}`}>{option.label}</h5>
-              <p className={`text-sm ${meetingSoftware === option.label ? 'text-white/90' : 'text-gray-400'}`}>{option.desc}</p>
+            <i className={`${option.icon} w-5 h-5 sm:w-6 sm:h-6 mt-1 flex-shrink-0 ${
+              meetingSoftware === option.label ? 'text-white' : 'text-orange-400'
+            }`}></i>
+            <div className="min-w-0 flex-1">
+              <h5 className={`font-semibold text-sm sm:text-base ${
+                meetingSoftware === option.label ? 'text-white' : 'text-gray-200'
+              }`}>
+                {option.label}
+              </h5>
+              <p className={`text-xs sm:text-sm mt-1 ${
+                meetingSoftware === option.label ? 'text-white/90' : 'text-gray-400'
+              }`}>
+                {option.desc}
+              </p>
             </div>
           </button>
         ))}
       </div>
 
       {!meetingSoftware && (
-        <div className="text-center mt-6">
+        <div className="text-center mt-4 sm:mt-6">
           <p className="text-orange-400 text-sm">Please select a meeting platform to continue</p>
         </div>
       )}
