@@ -625,19 +625,19 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
           <div className="text-sm text-orange-300 font-medium mb-2">Required Information:</div>
           <div className="text-xs text-orange-200 space-y-1">
             <div className={`flex items-center gap-2 ${name.trim() ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={name.trim() ? '✓' : '○'}></span> Full Name
+              <i className={`fas ${name.trim() ? 'fa-check text-green-400' : 'fa-circle text-orange-300'}`}></i> Full Name
             </div>
             <div className={`flex items-center gap-2 ${email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '✓' : '○'}></span> Valid Email
+              <i className={`fas ${email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'fa-check text-green-400' : 'fa-circle text-orange-300'}`}></i> Valid Email
             </div>
             <div className={`flex items-center gap-2 ${organization.trim() ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={organization.trim() ? '✓' : '○'}></span> Organization
+              <i className={`fas ${organization.trim() ? 'fa-check text-green-400' : 'fa-circle text-orange-300'}`}></i> Organization
             </div>
             <div className={`flex items-center gap-2 ${selectedDate ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={selectedDate ? '✓' : '○'}></span> Date Selection
+              <i className={`fas ${selectedDate ? 'fa-check text-green-400' : 'fa-circle text-orange-300'}`}></i> Date Selection
             </div>
             <div className={`flex items-center gap-2 ${selectedTime ? 'text-green-400' : 'text-orange-300'}`}>
-              <span className={selectedTime ? '✓' : '○'}></span> Time Selection
+              <i className={`fas ${selectedTime ? 'fa-check text-green-400' : 'fa-circle text-orange-300'}`}></i> Time Selection
             </div>
           </div>
         </div>
