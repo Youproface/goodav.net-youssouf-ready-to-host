@@ -19,7 +19,7 @@ export default function Partners() {
           "@type": "Organization",
           "name": "GoodAV",
           "url": "https://goodav.net",
-          "logo": "https://goodav.net/image/Assets/logo-fav.png",
+          "logo": "/src/assets/images/Assets/logo-fav.png",
           "description": "Africa's premier audiovisual agency transforming ideas into impactful visual stories. GoodAV empowers African narratives through cinematic production, live streaming, photography, and strategic media coverage.",
           "sameAs": [
             "https://www.instagram.com/goodaudiovisual",
