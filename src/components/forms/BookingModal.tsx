@@ -446,7 +446,8 @@ function Step6() {
   const [selectedTime, setSelectedTime] = useState(null);
   // List of time zones (IANA)
   const timeZones = [
-    'Africa/Maputo', // Central African Time
+    'Africa/Kigali', // Kigali (Central African Time)
+    'Africa/Maputo',
     'Africa/Lagos',
     'Africa/Cairo',
     'Europe/London',
@@ -464,7 +465,7 @@ function Step6() {
     'Pacific/Auckland',
     'UTC',
   ];
-  const [timezone, setTimezone] = useState('Africa/Maputo');
+  const [timezone, setTimezone] = useState('Africa/Kigali');
   // Calendar logic: allow selection from today to any future date
   const today = new Date();
   const [calendarMonth, setCalendarMonth] = useState(today.getMonth());
@@ -641,12 +642,12 @@ function Step6() {
                  disabled={!selectedDate}
                >
                  {slot}
-                 {/* Show converted time if timezone is not Africa/Maputo */}
-                 {timezone !== 'Africa/Maputo' && selectedDate && (
+                 {/* Show converted time if timezone is not Africa/Kigali */}
+                 {timezone !== 'Africa/Kigali' && selectedDate && (
                    <span className="block text-xs text-orange-300 mt-1">
                      {(() => {
                        const dateObj = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
-                       return getConvertedTime(slot, 'Africa/Maputo', timezone, dateObj);
+                       return getConvertedTime(slot, 'Africa/Kigali', timezone, dateObj);
                      })()} ({timezone})
                    </span>
                  )}
