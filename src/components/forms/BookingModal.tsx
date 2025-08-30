@@ -532,7 +532,7 @@ export default function BookingModal({
                 <div />
               )}
 
-              {step === 6 ? (
+              {step === 7 ? (
                 <Tooltip.Provider>
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
@@ -563,7 +563,7 @@ export default function BookingModal({
                     )}
                   </Tooltip.Root>
                 </Tooltip.Provider>
-              ) : step < 6 ? (
+              ) : step < 7 ? (
                 <Tooltip.Provider>
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
