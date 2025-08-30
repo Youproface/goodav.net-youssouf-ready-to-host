@@ -382,6 +382,7 @@ export default function BookingModal({
         setSelectedDate(null);
         setSelectedTime('');
         setStep(1);
+        setTimeSlotConfirmed(false);
       } else {
         const errorMessage = result.error || 'Submission failed. Please try again.';
         setSubmitStatus(`<i class="fas fa-times-circle text-red-400"></i> ${errorMessage}`);
