@@ -1379,24 +1379,6 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
           rows={4}
           required
         />
-
-        {/* Selected Date/Time Summary */}
-        {selectedDate && selectedTime && (
-          <div className="mb-4 p-4 bg-green-900/20 border border-green-500/50 rounded-lg">
-            <h4 className="text-green-400 font-semibold mb-2">Selected Appointment:</h4>
-            <p className="text-green-300">
-              {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })} at {selectedTime} ({timezone})
-            </p>
-            {meetingSoftware && (
-              <p className="text-green-300 mt-1">Meeting Platform: {meetingSoftware}</p>
-            )}
-          </div>
-        )}
       </div>
 
       {/* Schedule Consultation Button and feedback */}
