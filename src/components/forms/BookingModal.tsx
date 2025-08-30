@@ -625,19 +625,22 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
           <div className="text-sm text-orange-300 font-medium mb-2">Required Information:</div>
           <div className="text-xs text-orange-200 space-y-1">
             <div className={`flex items-center gap-2 ${name.trim() ? 'text-green-400' : 'text-orange-300'}`}>
-              <i className={`fas ${name.trim() ? 'fa-check text-green-400' : 'fa-circle text-orange-300'}`}></i> Full Name
+              <span className={name.trim() ? 'text-green-400' : 'text-orange-300'}>{name.trim() ? '✓' : '×'}</span> Full Name
             </div>
             <div className={`flex items-center gap-2 ${email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}`}>
-              <i className={`fas ${email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'fa-check text-green-400' : 'fa-circle text-orange-300'}`}></i> Valid Email
+              <span className={email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}>{email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '✓' : '×'}</span> Valid Email
             </div>
             <div className={`flex items-center gap-2 ${organization.trim() ? 'text-green-400' : 'text-orange-300'}`}>
-              <i className={`fas ${organization.trim() ? 'fa-check text-green-400' : 'fa-circle text-orange-300'}`}></i> Organization
+              <span className={organization.trim() ? 'text-green-400' : 'text-orange-300'}>{organization.trim() ? '✓' : '×'}</span> Organization
+            </div>
+            <div className={`flex items-center gap-2 ${project.trim() ? 'text-green-400' : 'text-orange-300'}`}>
+              <span className={project.trim() ? 'text-green-400' : 'text-orange-300'}>{project.trim() ? '✓' : '×'}</span> Project Description
             </div>
             <div className={`flex items-center gap-2 ${selectedDate ? 'text-green-400' : 'text-orange-300'}`}>
-              <i className={`fas ${selectedDate ? 'fa-check text-green-400' : 'fa-circle text-orange-300'}`}></i> Date Selection
+              <span className={selectedDate ? 'text-green-400' : 'text-orange-300'}>{selectedDate ? '✓' : '×'}</span> Date Selection
             </div>
             <div className={`flex items-center gap-2 ${selectedTime ? 'text-green-400' : 'text-orange-300'}`}>
-              <i className={`fas ${selectedTime ? 'fa-check text-green-400' : 'fa-circle text-orange-300'}`}></i> Time Selection
+              <span className={selectedTime ? 'text-green-400' : 'text-orange-300'}>{selectedTime ? '✓' : '×'}</span> Time Selection
             </div>
           </div>
         </div>
