@@ -1,3 +1,20 @@
+  const [submitStatus, setSubmitStatus] = React.useState<string | null>(null);
+  const [submitting, setSubmitting] = React.useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setSubmitting(true);
+    setSubmitStatus(null);
+    // Simulate API call (replace with real API logic)
+    try {
+      await new Promise(res => setTimeout(res, 1200));
+      // Simulate success
+      setSubmitStatus('✅ Your project request was submitted successfully! We will contact you soon.');
+    } catch (err) {
+      setSubmitStatus('❌ Submission failed. Please try again or contact support.');
+    }
+    setSubmitting(false);
+  }
 import React, { useEffect, useRef } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
@@ -93,7 +110,7 @@ export default function PremiumProjectModal({ open, onClose }: Props) {
 
         {/* Form */}
         <form
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={handleSubmit}
           className="grid gap-6 p-6 sm:p-8"
         >
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -163,25 +180,39 @@ export default function PremiumProjectModal({ open, onClose }: Props) {
           </div>
 
           {/* Footer actions */}
-          <div className="mt-2 flex items-center justify-end gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="h-11 rounded-lg border border-white/15 bg-transparent px-4 text-sm text-white/90 transition hover:bg-white/10"
-            >
-              Not Now
-            </button>
-            <button
-              type="submit"
-              className="group inline-flex h-11 items-center gap-2 rounded-lg bg-gradient-to-r from-orange-400 to-orange-500 px-4 text-sm font-medium text-black shadow-[0_6px_20px_-6px_rgba(255,140,0,0.6)] transition hover:brightness-105 focus:outline-none"
-            >
-              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-black/10">
-                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-black/80" aria-hidden>
-                  <path d="M2 21l20-9L2 3v6l14 3L2 15v6z" />
-                </svg>
-              </span>
-              Send Project Request
-            </button>
+          <div className="mt-2 flex flex-col items-center justify-end gap-3">
+            <div className="w-full flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={onClose}
+                className="h-11 rounded-lg border border-white/15 bg-transparent px-4 text-sm text-white/90 transition hover:bg-white/10"
+              >
+                Not Now
+              </button>
+              <button
+                type="submit"
+                className="group inline-flex h-11 items-center gap-2 rounded-lg bg-gradient-to-r from-orange-400 to-orange-500 px-4 text-sm font-medium text-black shadow-[0_6px_20px_-6px_rgba(255,140,0,0.6)] transition hover:brightness-105 focus:outline-none"
+                disabled={submitting}
+              >
+                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-black/10">
+                  <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-black/80" aria-hidden>
+                    <path d="M2 21l20-9L2 3v6l14 3L2 15v6z" />
+                  </svg>
+                </span>
+                {submitting ? 'Submitting...' : 'Send Project Request'}
+              </button>
+            </div>
+            {submitStatus && (
+              <div className="mt-3 text-orange-400 text-sm text-center">
+                {submitStatus}
+                {submitStatus.includes('successfully') && (
+                  <div className="mt-1 text-orange-300">Thank you for starting your project with GoodAV. You will receive a confirmation email soon.</div>
+                )}
+                {submitStatus.includes('failed') && (
+                  <div className="mt-1 text-orange-300">If the problem persists, please contact us at form@goodav.net.</div>
+                )}
+              </div>
+            )}
           </div>
         </form>
         </Dialog.Content>
