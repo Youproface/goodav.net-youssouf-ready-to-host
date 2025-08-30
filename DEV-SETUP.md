@@ -27,9 +27,22 @@
    - Fill in the details:
      ```
      Name: dev
-     Value: [YOUR-NETLIFY-SITE-NAME].netlify.app
+     Value: [YOUR-CUSTOM-NETLIFY-SITE].netlify.app
      TTL: 1 Hour (or default)
      ```
+   - **Note**: This points to Netlify's servers but uses YOUR domain `dev.goodav.net`
+   - Click **"Save"**
+
+4. **Add CNAME Record for Main Domain** (for production):
+   - Click **"Add"** or **"Add Record"**
+   - Select **"CNAME"** as the record type
+   - Fill in the details:
+     ```
+     Name: @
+     Value: [YOUR-PRODUCTION-NETLIFY-SITE].netlify.app
+     TTL: 1 Hour (or default)
+     ```
+   - **Note**: This points to Netlify's servers but uses YOUR domain `goodav.net`
    - Click **"Save"**
 
 4. **Wait for DNS Propagation**:
