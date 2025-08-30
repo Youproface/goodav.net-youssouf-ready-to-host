@@ -147,61 +147,34 @@ const Portfolio = () => {
                 Start Your Journey
        </button>
           </p>
-        </div>
-      
-      </div>
-
-      {/* Stats Section */}
-      <div className="py-16 px-4 bg-gray-900">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="flex justify-center mb-4">
-                  <stat.icon className="w-8 h-8 text-orange-500" />
-                </div>
-                <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
-                <div className="text-gray-400">{stat.label}</div>
-              </div>
-            ))}
+        // ...all logic and arrays above...
+        return (
+          <div>
+            <SEO
+              title="Portfolio - GoodAV | Award-Winning Audiovisual Projects"
+              description="Explore GoodAV’s portfolio of award-winning audiovisual productions, documentaries, and event coverage across Africa."
+              canonical="https://goodav.net/portfolio"
+            />
+            <SchemaMarkup
+              schema={{
+                "@context": "https://schema.org",
+                "@type": "CreativeWork",
+                "name": "GoodAV Portfolio",
+                "description": "Award-winning audiovisual productions, documentaries, and event coverage by GoodAV.",
+                "creator": {
+                  "@type": "Organization",
+                  "name": "GoodAV"
+                },
+                "url": "https://goodav.net/portfolio",
+                "image": "https://goodav.net/image/portfolio/ias2025-cover.jpg"
+              }}
+            />
+            <div className="min-h-screen bg-black text-white">
+              {/* Hero Section */}
+              {/* ...rest of the page content... */}
+            </div>
           </div>
-        </div>
-      </div>
-
-{/* Portfolio header + filters section */}
-<section className="relative mx-auto max-w-6xl px-6 py-10 text-zinc-100">
-  {/* Heading */}
-  <div className="text-center">
-    <div className="mx-auto mb-2 w-max rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[1rem] font-semibold uppercase tracking-wider text-orange-300 backdrop-blur">
-      Our Extensive Portfolio
-    </div>
-    <h2 className="text-6xl md:text-4xl font-bold">200+ Professional Projects</h2>
-    <p className="mx-auto mt-3 max-w-3xl text-body text-zinc-300">
-      Discover a comprehensive collection of audiovisual productions spanning corporate documentaries,
-      international events, educational content, and transformational storytelling across Africa and beyond.
-    </p>
-  </div>
-
-  {/* Filter shell */}
-  <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-    {/* category chips */}
-    <div className="flex flex-wrap items-center gap-3">
-      <button className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-small font-semibold text-zinc-900 shadow hover:from-orange-400 hover:to-amber-300">
-        <span className="grid h-5 w-5 place-items-center rounded bg-orange-700/10">▦</span>
-        All Projects <span className="opacity-80">(106+)</span>
-      </button>
-
-      <button className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-small text-zinc-200 hover:bg-white/10">
-        <span className="grid h-5 w-5 place-items-center rounded bg-white/10">🎬</span>
-        Documentaries <span className="text-zinc-400">(26+)</span>
-      </button>
-
-      <button className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-small text-zinc-200 hover:bg-white/10">
-        <span className="grid h-5 w-5 place-items-center rounded bg-white/10">📅</span>
-        Events <span className="text-zinc-400">(28+)</span>
-      </button>
-
-      <button className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-small text-zinc-200 hover:bg-white/10">
+        );
         <span className="grid h-5 w-5 place-items-center rounded bg-white/10">🏢</span>
         Corporate <span className="text-zinc-400">(23+)</span>
       </button>
