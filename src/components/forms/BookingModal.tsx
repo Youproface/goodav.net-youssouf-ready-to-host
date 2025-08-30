@@ -228,7 +228,8 @@ function Step1({ setCanProceed }) {
       </h3>
       <div className="grid md:grid-cols-2 gap-4">
         {options.map((opt, i) => (
-  // Removed duplicate declarations of submitStatus and submitting
+          <button
+            key={i}
             onClick={() => setSelectedOption(opt.label)}
             className={`flex items-start gap-3 p-4 rounded-lg border text-left transition-all duration-200 ${selectedOption === opt.label
                 ? ' bg-orange-500 border-orange-500 shadow-lg shadow-orange-500/20'
