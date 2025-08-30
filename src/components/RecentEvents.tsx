@@ -118,8 +118,8 @@ export default function RecentEvents() {
             </ul>
 
 
-            <ul className=" space-y-4">
             <h2 className="text-sm text-center font-semibold text-zinc-200">Clients</h2>
+            <ul className=" space-y-4">
             {["Gilead Sciences", "Plus Life Media"].map((client) => (
                 <li key={client} className="flex items-start gap-3">
                 <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-orange-500/15 ring-1 ring-white/10">
