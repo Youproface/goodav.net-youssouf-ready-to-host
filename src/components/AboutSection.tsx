@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, easeInOut } from "framer-motion";
 import { Heart, Award, Globe2, Lightbulb, Play } from "lucide-react";
 import { useState } from "react";
 
@@ -24,7 +24,7 @@ export default function AboutUsSection() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: "easeInOut"
+        ease: easeInOut
       }
     }
   };
