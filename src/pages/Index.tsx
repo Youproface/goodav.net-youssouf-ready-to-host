@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import Header from '@/components/Header';
-import Hero from '@/components/Hero';
-import PartnersSection from '@/components/PartnersSection';
-import ServicesSection from '@/components/ServicesSection';
-import MissionSection from '@/components/MissionSection';
-import Footer from '@/components/Footer';
-import AboutUs from '../components/AboutSection';
-import OurJourney from '@/components/OurJourney';
-import FeaturedProjects from '@/components/FeaturedProjects';
-import FoundersVision from '@/components/FoundersVision';
-import CreativeExcellence from '@/components/CreativeExcellence';
-import RecentEvents from '@/components/RecentEvents';
-import Testimonials from '@/components/Testimonials';
-import Blogs from '@/components/BlogsSection';
-import BTSMasterProdcution from '@/components/BTSMasterProdcution';
-import Excellence from '@/components/Excellence';
-import GlobalImpact from '@/components/GlobalImpact';
+const Hero = lazy(() => import('@/components/Hero'));
+const PartnersSection = lazy(() => import('@/components/PartnersSection'));
+const ServicesSection = lazy(() => import('@/components/ServicesSection'));
+const MissionSection = lazy(() => import('@/components/MissionSection'));
+const Footer = lazy(() => import('@/components/Footer'));
+const AboutUs = lazy(() => import('../components/AboutSection'));
+const OurJourney = lazy(() => import('@/components/OurJourney'));
+const FeaturedProjects = lazy(() => import('@/components/FeaturedProjects'));
+const FoundersVision = lazy(() => import('@/components/FoundersVision'));
+const CreativeExcellence = lazy(() => import('@/components/CreativeExcellence'));
+const RecentEvents = lazy(() => import('@/components/RecentEvents'));
+const Testimonials = lazy(() => import('@/components/Testimonials'));
+const Blogs = lazy(() => import('@/components/BlogsSection'));
+const BTSMasterProdcution = lazy(() => import('@/components/BTSMasterProdcution'));
+const Excellence = lazy(() => import('@/components/Excellence'));
+const GlobalImpact = lazy(() => import('@/components/GlobalImpact'));
 import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
 
@@ -99,24 +99,27 @@ const Index = () => {
           ]
         }}
       />
-      <main>
-        <Hero />
-        <PartnersSection />
-        <ServicesSection />
-        <MissionSection />
-        <GlobalImpact />
-        <AboutUs />
-        <OurJourney />
-        <FeaturedProjects />
-        <FoundersVision />
-        <CreativeExcellence />
-        <RecentEvents />
-        <Testimonials />
-        <Blogs />
-        <BTSMasterProdcution /> 
-        <Excellence/>
-      </main>
-      <Footer role="contentinfo" />
+      <Suspense fallback={<div className="text-center py-20">Loading...</div>}>
+        <Header />
+        <main>
+          <Hero />
+          <PartnersSection />
+          <ServicesSection />
+          <MissionSection />
+          <GlobalImpact />
+          <AboutUs />
+          <OurJourney />
+          <FeaturedProjects />
+          <FoundersVision />
+          <CreativeExcellence />
+          <RecentEvents />
+          <Testimonials />
+          <Blogs />
+          <BTSMasterProdcution />
+          <Excellence />
+        </main>
+        <Footer />
+      </Suspense>
     </div>
   );
 };
