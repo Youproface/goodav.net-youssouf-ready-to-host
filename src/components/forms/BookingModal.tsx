@@ -2,14 +2,7 @@
 import { useEffect, useState } from "react";
 import {
   // ...existing code...
-  const [project, setProject] = useState('');
-  const [selectedDate, setSelectedDate] = useState(null); // { year, month, day }
-  const [selectedTime, setSelectedTime] = useState('');
-  const [timezone, setTimezone] = useState('Africa/Kigali');
-  const [step, setStep] = useState(1);
-  const [modalOpen, setModalOpen] = useState(isOpen);
-  const [canProceed, setCanProceed] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  // ...existing code...
 
   const nextStep = () => setStep((s) => Math.min(s + 1, 6));
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
