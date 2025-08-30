@@ -1380,7 +1380,6 @@ function Step7({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
             required
           />
         </div>
-      </div>
 
       {/* Schedule Consultation Button and feedback */}
       <div className="flex flex-col items-center mt-6">
