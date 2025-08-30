@@ -1380,55 +1380,6 @@ function Step7({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
             required
           />
         </div>
-
-        {/* Meeting Platform Section */}
-        <div className="w-full lg:w-1/2">
-          <h3 className="text-xl font-semibold mb-4">Preferred Meeting Platform</h3>
-          <p className="text-gray-300 text-sm mb-6">
-            Choose your preferred platform for our consultation meeting. We'll send you the meeting details via email.
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-3">
-            {[
-              {
-                label: "Zoom",
-                desc: "Most popular video conferencing platform",
-                icon: "fas fa-video",
-              },
-              {
-                label: "Microsoft Teams",
-                desc: "Integrated with Microsoft ecosystem",
-                icon: "fas fa-users",
-              },
-              {
-                label: "Google Meet",
-                desc: "Simple and easy to use",
-                icon: "fas fa-search",
-              },
-              {
-                label: "Phone Call",
-                desc: "Traditional phone consultation",
-                icon: "fas fa-phone",
-              },
-            ].map((option, i) => (
-              <button
-                key={i}
-                onClick={() => setMeetingSoftware(option.label)}
-                className={`flex items-start gap-3 p-3 rounded-lg border text-left transition-all duration-200 ${
-                  meetingSoftware === option.label
-                    ? 'bg-green-500/10 border-green-500 shadow-lg shadow-green-500/10'
-                    : 'bg-[#252529] border-orange-500 hover:bg-[#2f2f31]'
-                }`}
-              >
-                <i className={`${option.icon} w-6 h-6 mt-1 ${meetingSoftware === option.label ? 'text-green-400' : 'text-orange-400'}`}></i>
-                <div>
-                  <h5 className={`font-semibold ${meetingSoftware === option.label ? 'text-green-400' : 'text-orange-400'}`}>{option.label}</h5>
-                  <p className={`text-sm ${meetingSoftware === option.label ? 'text-green-300' : 'text-orange-300'}`}>{option.desc}</p>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Schedule Consultation Button and feedback */}
