@@ -316,8 +316,20 @@ export default function BookingModal({
     return () => window.removeEventListener("keydown", onKey);
   }, [modalOpen, onClose]);
 
-  // Send booking data to backend API
-  async function handleFormSubmit(e) {
+  // Handle time slot confirmation
+  const handleTimeConfirmation = () => {
+    const formattedDate = new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    const message = `🎉 <strong>Time Slot Confirmed!</strong><br><br>📅 <strong>${formattedDate}</strong><br>🕐 <strong>${selectedTime}</strong> (${timezone})<br><br><em>Your consultation has been scheduled. We'll send you a confirmation email shortly.</em>`;
+    setConfirmationMessage(message);
+    
+    // Auto-hide the message after 5 seconds
+    setTimeout(() => setConfirmationMessage(null), 5000);
+  };
     e.preventDefault();
 
     // Comprehensive validation
