@@ -1,4 +1,356 @@
 import { useEffect, useState } from "react";
+// -------------------------
+// STEP 1
+// -------------------------
+function Step1({ setCanProceed }) {
+  const [active, setActive] = useState(null);
+  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
+  const options = [
+    { label: "Video Production", icon: Video },
+    { label: "Photography", icon: Camera },
+    { label: "Radio/Podcast", icon: Radio },
+    { label: "Corporate Event", icon: Briefcase },
+    { label: "Other", icon: Users },
+  ];
+  return (
+    <>
+      <h3 className="text-xl font-semibold mb-4">What type of project?</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        {options.map((opt, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`flex items-center gap-3 p-4 rounded-lg border border-gray-700 text-left ${active === i ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529]"}`}
+          >
+            <opt.icon className={`w-6 h-6 ${active === i ? "text-white" : "text-orange-400"}`} />
+            <span className="font-semibold">{opt.label}</span>
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// -------------------------
+// STEP 2
+// -------------------------
+function Step2({ setCanProceed }) {
+  const [active, setActive] = useState(null);
+  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
+  const options = [
+    { label: "Brand", icon: Building },
+    { label: "Individual", icon: User },
+    { label: "Organization", icon: Users },
+  ];
+  return (
+    <>
+      <h3 className="text-xl font-semibold mb-4">Who is this project for?</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        {options.map((opt, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`flex items-center gap-3 p-4 rounded-lg border border-gray-700 text-left ${active === i ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529]"}`}
+          >
+            <opt.icon className={`w-6 h-6 ${active === i ? "text-white" : "text-orange-400"}`} />
+            <span className="font-semibold">{opt.label}</span>
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// -------------------------
+// STEP 3
+// -------------------------
+function Step3({ setCanProceed }) {
+  const [active, setActive] = useState(null);
+  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
+  const options = [
+    { label: "Short-term", desc: "1-2 weeks", icon: Clock },
+    { label: "Medium-term", desc: "1-2 months", icon: Calendar },
+    { label: "Long-term", desc: "3+ months", icon: Layers },
+  ];
+  return (
+    <>
+      <h3 className="text-xl font-semibold mb-4">Project duration?</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        {options.map((opt, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`flex items-start gap-3 p-4 rounded-lg border border-gray-700 text-left ${active === i ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529]"}`}
+          >
+            <opt.icon className={`w-6 h-6 mt-1 ${active === i ? "text-white" : "text-orange-400"}`} />
+            <div>
+              <h4 className="font-semibold">{opt.label}</h4>
+              <p className="text-sm text-white-400">{opt.desc}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// -------------------------
+// STEP 4
+// -------------------------
+function Step4({ setCanProceed }) {
+  const [active, setActive] = useState(null);
+  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
+  const options = [
+    { label: "Startup Package", desc: "Essential production", icon: DollarSign },
+    { label: "Professional Package", desc: "Enhanced production", icon: Star },
+    { label: "Enterprise Package", desc: "Comprehensive service", icon: Layers },
+    { label: "Premium Package", desc: "Luxury features", icon: Settings },
+  ];
+  return (
+    <>
+      <h3 className="text-xl font-semibold mb-4">What’s your project investment level?</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        {options.map((opt, i) => (
+          <button
+            key={i}
+            onClick={() => setActive(i)}
+            className={`flex items-start gap-3 p-4 rounded-lg border border-gray-700 text-left ${active === i ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529]"}`}
+          >
+            <opt.icon className={`w-6 h-6 mt-1 ${active === i ? "text-white" : "text-orange-400"}`} />
+            <div>
+              <h4 className="font-semibold">{opt.label}</h4>
+              <p className="text-sm text-white-400">{opt.desc}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// -------------------------
+// STEP 5
+// -------------------------
+function Step5({ nextStep }) {
+  const [selected, setSelected] = useState<number[]>([]);
+  const options = [
+    { label: "Post-Production", desc: "Editing, sound design", icon: Film },
+    { label: "Animation & Graphics", desc: "Motion graphics, titles", icon: Layers },
+    { label: "Scriptwriting", desc: "Content creation", icon: PenTool },
+    { label: "Distribution", desc: "Social media, broadcasting", icon: Share2 },
+  ];
+  const toggleOption = (i: number) => {
+    setSelected((prev) =>
+      prev.includes(i) ? prev.filter((item) => item !== i) : [...prev, i]
+    );
+  };
+  return (
+    <>
+      <h3 className="text-xl font-semibold mb-4">Any additional services needed?</h3>
+      <div className="grid md:grid-cols-2 gap-4">
+        {options.map((opt, i) => {
+          const isActive = selected.includes(i);
+          return (
+            <button
+              key={i}
+              onClick={() => toggleOption(i)}
+              className={`flex items-start gap-3 p-4 rounded-lg border text-left transition-colors ${isActive ? "bg-orange-500 border-orange-400 text-white" : "bg-[#252529] border-gray-700 hover:bg-[#2f2f31]"}`}
+            >
+              <opt.icon className={`w-6 h-6 mt-1 ${isActive ? "text-white" : "text-orange-400"}`} />
+              <div>
+                <h4 className="font-semibold">{opt.label}</h4>
+                <p className="text-sm text-white-400">{opt.desc}</p>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+      <div className="flex justify-center">
+        <button
+          onClick={() => { setSelected([]); nextStep(); }}
+          className="mt-4 bg-orange-500 text-white p-2 rounded"
+        >
+          Skip – None needed
+        </button>
+      </div>
+    </>
+  );
+}
+
+// -------------------------
+// STEP 6
+// -------------------------
+function Step6({
+  selectedDate,
+  setSelectedDate,
+  selectedTime,
+  setSelectedTime,
+  timezone,
+  setTimezone,
+  submitStatus,
+  handleFormSubmit,
+}) {
+  // Calendar and time slot picker UI
+  const today = new Date();
+  const [calendarMonth, setCalendarMonth] = useState(today.getMonth());
+  const [calendarYear, setCalendarYear] = useState(today.getFullYear());
+  function getDaysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate();
+  }
+  function getFirstDayOfWeek(year, month) {
+    return new Date(year, month, 1).getDay();
+  }
+  const daysInMonth = getDaysInMonth(calendarYear, calendarMonth);
+  const firstDayOfWeek = getFirstDayOfWeek(calendarYear, calendarMonth);
+  const calendarGrid = [];
+  let dayNum = 1;
+  for (let i = 0; i < 6; i++) {
+    const week = [];
+    for (let j = 0; j < 7; j++) {
+      if ((i === 0 && j < firstDayOfWeek) || dayNum > daysInMonth) {
+        week.push(null);
+      } else {
+        week.push(dayNum);
+        dayNum++;
+      }
+    }
+    calendarGrid.push(week);
+  }
+  function isPastDate(year, month, day) {
+    const d = new Date(year, month, day);
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    return d.getTime() < todayMidnight;
+  }
+  const timeSlots = ['10:00', '11:00', '13:00', '14:30', '16:00'];
+  function getConvertedTime(time, fromTz, toTz, dateObj) {
+    const [h, m] = time.split(':').map(Number);
+    const baseDate = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate(), h, m);
+    const utcDate = new Date(baseDate.toLocaleString('en-US', { timeZone: fromTz }));
+    const targetDateStr = utcDate.toLocaleString('en-US', { timeZone: toTz, hour: '2-digit', minute: '2-digit', hour12: false });
+    return targetDateStr;
+  }
+  const timeZones = [
+    'Africa/Kigali',
+    'Africa/Maputo',
+    'Africa/Lagos',
+    'Africa/Cairo',
+    'Europe/London',
+    'Europe/Paris',
+    'Europe/Berlin',
+    'America/New_York',
+    'America/Chicago',
+    'America/Denver',
+    'America/Los_Angeles',
+    'Asia/Dubai',
+    'Asia/Kolkata',
+    'Asia/Tokyo',
+    'Asia/Shanghai',
+    'Australia/Sydney',
+    'Pacific/Auckland',
+    'UTC',
+  ];
+  return (
+    <div className="flex flex-col md:flex-row gap-8">
+      <div className="w-full md:w-1/2">
+        <h3 className="text-xl font-semibold mb-4">Select a Date & Time</h3>
+        <div className="flex items-center justify-between mb-2">
+          <button
+            className="text-lg px-2"
+            onClick={() => {
+              if (calendarMonth === 0) {
+                setCalendarMonth(11);
+                setCalendarYear(calendarYear - 1);
+              } else {
+                setCalendarMonth(calendarMonth - 1);
+              }
+            }}
+            disabled={calendarYear === today.getFullYear() && calendarMonth === today.getMonth()}
+          >&#60;</button>
+          <span className="font-medium">{new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}</span>
+          <button
+            className="text-lg px-2"
+            onClick={() => {
+              if (calendarMonth === 11) {
+                setCalendarMonth(0);
+                setCalendarYear(calendarYear + 1);
+              } else {
+                setCalendarMonth(calendarMonth + 1);
+              }
+            }}
+          >&#62;</button>
+        </div>
+        <div className="grid grid-cols-7 gap-2 mb-2 text-center text-gray-400 text-xs">
+          {['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => <div key={d}>{d}</div>)}
+        </div>
+        <div className="grid grid-cols-7 gap-2 text-center">
+          {calendarGrid.flat().map((day, i) => (
+            day ? (
+              <button
+                key={i}
+                className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-bold transition-all
+                  ${isPastDate(calendarYear, calendarMonth, day) ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-orange-100 text-orange-700 hover:bg-orange-300'}
+                  ${selectedDate && selectedDate.day === day && selectedDate.month === calendarMonth && selectedDate.year === calendarYear ? 'bg-orange-600 text-white ring-4 ring-orange-400 shadow-lg scale-110 z-10' : ''}`}
+                disabled={isPastDate(calendarYear, calendarMonth, day)}
+                onClick={() => setSelectedDate({ day, month: calendarMonth, year: calendarYear })}
+                aria-label={isPastDate(calendarYear, calendarMonth, day) ? 'Past date not selectable' : `Select ${day} ${calendarMonth+1} ${calendarYear}`}
+              >
+                {day}
+              </button>
+            ) : <div key={i}></div>
+          ))}
+        </div>
+        <div className="mt-4">
+          <label htmlFor="timezone" className="font-medium text-sm mr-2">Time zone</label>
+          <select
+            id="timezone"
+            className="p-1 rounded bg-[#1b1b1d] text-orange-500 border border-orange-500"
+            value={timezone}
+            onChange={e => setTimezone(e.target.value)}
+            title="Select your time zone"
+          >
+            {timeZones.map(tz => (
+              <option key={tz} value={tz}>{tz}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
+        <div className="mb-4 text-lg font-medium">
+          {selectedDate ? `${new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()}` : 'Select a date'}
+        </div>
+        <div className="flex flex-col gap-3 w-full max-w-xs">
+          {/* Time slots: disabled until date selected */}
+          {timeSlots.map(slot => (
+            <div key={slot} className="flex gap-2">
+              <button
+                className={`flex-1 py-2 rounded border text-center font-medium transition-all
+                  ${selectedDate ? (selectedTime === slot ? 'bg-orange-700 text-white border-orange-700' : 'bg-[#1b1b1d] text-orange-500 border-orange-500 hover:bg-orange-100') : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'}`}
+                onClick={() => selectedDate && setSelectedTime(slot)}
+                disabled={!selectedDate}
+              >
+                {slot}
+                {/* Show converted time if timezone is not Africa/Kigali */}
+                {timezone !== 'Africa/Kigali' && selectedDate && (
+                  <span className="block text-xs text-orange-300 mt-1">
+                    {(() => {
+                      const dateObj = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
+                      return getConvertedTime(slot, 'Africa/Kigali', timezone, dateObj);
+                    })()} ({timezone})
+                  </span>
+                )}
+              </button>
+              {selectedTime === slot && selectedDate && (
+                <button className="px-4 py-2 rounded bg-orange-600 text-white font-semibold shadow" onClick={() => alert(`Confirmed: ${selectedDate.day}/${selectedDate.month+1}/${selectedDate.year} at ${selectedTime}`)}>
+                  Confirm
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 import {
   Video,
   Camera,
