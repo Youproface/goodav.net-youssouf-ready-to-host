@@ -1268,33 +1268,23 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
 function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, countryCode, setCountryCode, countryCodes, organization, setOrganization, project, setProject, selectedDate, selectedTime, timezone, submitting, meetingSoftware }) {
   return (
     <div className="space-y-8">
-      {/* Validation Summary - Moved to top */}
-      <div className="p-3 bg-orange-900/20 border border-orange-500/30 rounded-lg">
-        <div className="text-sm text-orange-300 font-medium mb-2">Required Information:</div>
-        <div className="text-xs text-orange-200 space-y-1">
-          <div className={`flex items-center gap-2 ${name.trim() ? 'text-green-400' : 'text-orange-300'}`}>
-            <span className={name.trim() ? 'text-green-400' : 'text-orange-300'}>{name.trim() ? '✓' : '×'}</span> Full Name
-          </div>
-          <div className={`flex items-center gap-2 ${email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}`}>
-            <span className={email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'text-green-400' : 'text-orange-300'}>{email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '✓' : '×'}</span> Valid Email
-          </div>
-          <div className={`flex items-center gap-2 ${organization.trim() ? 'text-green-400' : 'text-orange-300'}`}>
-            <span className={organization.trim() ? 'text-green-400' : 'text-orange-300'}>{organization.trim() ? '✓' : '×'}</span> Organization
-          </div>
-          <div className={`flex items-center gap-2 ${project.trim() ? 'text-green-400' : 'text-orange-300'}`}>
-            <span className={project.trim() ? 'text-green-400' : 'text-orange-300'}>{project.trim() ? '✓' : '×'}</span> Project Description
-          </div>
-          <div className={`flex items-center gap-2 ${selectedDate ? 'text-green-400' : 'text-orange-300'}`}>
-            <span className={selectedDate ? 'text-green-400' : 'text-orange-300'}>{selectedDate ? '✓' : '×'}</span> Date Selection
-          </div>
-          <div className={`flex items-center gap-2 ${selectedTime ? 'text-green-400' : 'text-orange-300'}`}>
-            <span className={selectedTime ? 'text-green-400' : 'text-orange-300'}>{selectedTime ? '✓' : '×'}</span> Time Selection
-          </div>
-          <div className={`flex items-center gap-2 ${meetingSoftware ? 'text-green-400' : 'text-orange-300'}`}>
-            <span className={meetingSoftware ? 'text-green-400' : 'text-orange-300'}>{meetingSoftware ? '✓' : '×'}</span> Meeting Platform (Selected in Step 6)
-          </div>
+      {/* Selected Appointment Summary */}
+      {selectedDate && selectedTime && (
+        <div className="p-4 bg-green-900/20 border border-green-500/50 rounded-lg">
+          <h4 className="text-green-400 font-semibold mb-2">Selected Appointment:</h4>
+          <p className="text-green-300">
+            {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })} at {selectedTime} ({timezone})
+          </p>
+          {meetingSoftware && (
+            <p className="text-green-300 mt-1">Meeting Platform: {meetingSoftware}</p>
+          )}
         </div>
-      </div>
+      )}
 
       {/* Personal Information Section */}
       <div className="w-full">
