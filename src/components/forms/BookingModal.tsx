@@ -30,6 +30,17 @@ export default function BookingModal({
   // Validation state for Step 1
   const [canProceed, setCanProceed] = useState(false);
 
+  // Form state
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [organization, setOrganization] = useState("");
+  const [project, setProject] = useState("");
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [timezone, setTimezone] = useState('Africa/Kigali');
+  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const nextStep = () => setStep((s) => Math.min(s + 1, 6));
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
@@ -56,16 +67,15 @@ export default function BookingModal({
 
    // Close on ESC
     useEffect(() => {
-      if (!open) return;
+      if (!modalOpen) return;
       const onKey = (e: KeyboardEvent) => {
         if (e.key === "Escape") onClose();
       };
       window.addEventListener("keydown", onKey);
       return () => window.removeEventListener("keydown", onKey);
-    }, [open, onClose]);
+    }, [modalOpen, onClose]);
     
   // Send booking data to backend API
-  const [submitStatus, setSubmitStatus] = useState(null);
   async function handleFormSubmit(e) {
     e.preventDefault();
     // Validate required fields
@@ -73,6 +83,7 @@ export default function BookingModal({
       setSubmitStatus('Please fill in all required fields.');
       return;
     }
+    setSubmitting(true);
     setSubmitStatus('Submitting...');
     const bookingData = {
       name,
@@ -100,6 +111,7 @@ export default function BookingModal({
     } catch (err) {
       setSubmitStatus('Network error. Please try again.');
     }
+    setSubmitting(false);
   }
 
   return (
