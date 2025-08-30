@@ -444,7 +444,7 @@ function Step6() {
   // Calendar and time slot picker UI
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
-  const [timezone, setTimezone] = useState('Eastern time - US & Canada');
+  const [timezone, setTimezone] = useState('Central African Time');
   const month = 'July 2024';
   const days = [
     [30, 1, 2, 3, 4, 5, 6],
@@ -454,7 +454,24 @@ function Step6() {
     [28, 29, 30, 31, 1, 2, 3],
   ];
   const availableDays = [16, 17, 19, 22, 23, 24, 25, 30, 31];
-  const timeSlots = ['10:00am', '11:00am', '1:00pm', '2:30pm', '4:00pm'];
+  const timeSlots = ['10:00', '11:00', '13:00', '14:30', '16:00']; // 24h format for clarity
+  // Timezone conversion logic
+  const timeZoneOffsets = {
+    'Central African Time': 2,
+    'Eastern time - US & Canada': -4,
+    'Central time - US & Canada': -5,
+    'Pacific time - US & Canada': -7,
+    'GMT': 0,
+  };
+  function getConvertedTime(time, fromTz, toTz) {
+    // time: 'HH:mm', fromTz/toTz: string
+    const [h, m] = time.split(':').map(Number);
+    const offset = timeZoneOffsets[toTz] - timeZoneOffsets[fromTz];
+    let newH = h + offset;
+    if (newH < 0) newH += 24;
+    if (newH >= 24) newH -= 24;
+    return `${String(newH).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  }
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -472,35 +489,36 @@ function Step6() {
         <div className="grid grid-cols-7 gap-2 mb-2 text-center text-gray-400 text-xs">
           {['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => <div key={d}>{d}</div>)}
         </div>
-        <div className="grid grid-cols-7 gap-2 text-center">
-          {days.flat().map((day, i) => (
-            <button
-              key={i}
-              className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-medium transition-all
-                ${availableDays.includes(day) ? 'bg-blue-100 text-blue-700 hover:bg-blue-300' : 'text-gray-500'}
-                ${selectedDate === day ? 'bg-blue-600 text-white' : ''}`}
-              disabled={!availableDays.includes(day)}
-              onClick={() => setSelectedDate(day)}
-            >
-              {day}
-            </button>
-          ))}
-        </div>
-        <div className="mt-4">
-          <label htmlFor="timezone" className="font-medium text-sm mr-2">Time zone</label>
-          <select
-            id="timezone"
-            className="p-1 rounded bg-gray-100 text-gray-700"
-            value={timezone}
-            onChange={e => setTimezone(e.target.value)}
-            title="Select your time zone"
-          >
-            <option>Eastern time - US & Canada</option>
-            <option>Central time - US & Canada</option>
-            <option>Pacific time - US & Canada</option>
-            <option>GMT</option>
-          </select>
-        </div>
+         <div className="grid grid-cols-7 gap-2 text-center">
+           {days.flat().map((day, i) => (
+             <button
+               key={i}
+               className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-medium transition-all
+                 ${availableDays.includes(day) ? 'bg-orange-100 text-orange-700 hover:bg-orange-300' : 'text-gray-500'}
+                 ${selectedDate === day ? 'bg-orange-600 text-white' : ''}`}
+               disabled={!availableDays.includes(day)}
+               onClick={() => setSelectedDate(day)}
+             >
+               {day}
+             </button>
+           ))}
+         </div>
+         <div className="mt-4">
+           <label htmlFor="timezone" className="font-medium text-sm mr-2">Time zone</label>
+           <select
+             id="timezone"
+             className="p-1 rounded bg-[#1b1b1d] text-orange-500 border border-orange-500"
+             value={timezone}
+             onChange={e => setTimezone(e.target.value)}
+             title="Select your time zone"
+           >
+             <option>Central African Time</option>
+             <option>Eastern time - US & Canada</option>
+             <option>Central time - US & Canada</option>
+             <option>Pacific time - US & Canada</option>
+             <option>GMT</option>
+           </select>
+         </div>
         {/* Contact & Project Info Section */}
         <div className="w-full mt-8">
           <div className="grid md:grid-cols-2 gap-4 mb-4">
@@ -544,29 +562,32 @@ function Step6() {
           />
         </div>
       </div>
-      <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
-        <div className="mb-4 text-lg font-medium">
-          {selectedDate ? `Monday, July ${selectedDate}` : 'Select a date'}
-        </div>
-        <div className="flex flex-col gap-3 w-full max-w-xs">
-          {timeSlots.map(slot => (
-            <div key={slot} className="flex gap-2">
-              <button
-                className={`flex-1 py-2 rounded border text-center font-medium transition-all
-                  ${selectedTime === slot ? 'bg-blue-700 text-white border-blue-700' : 'bg-white text-blue-700 border-blue-300 hover:bg-blue-100'}`}
-                onClick={() => setSelectedTime(slot)}
-              >
-                {slot}
-              </button>
-              {selectedTime === slot && (
-                <button className="px-4 py-2 rounded bg-blue-600 text-white font-semibold shadow" onClick={() => alert(`Confirmed: ${selectedDate} at ${selectedTime}`)}>
-                  Confirm
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
+       <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
+         <div className="mb-4 text-lg font-medium">
+           {selectedDate ? `Monday, July ${selectedDate}` : 'Select a date'}
+         </div>
+         <div className="flex flex-col gap-3 w-full max-w-xs">
+           {timeSlots.map(slot => (
+             <div key={slot} className="flex gap-2">
+               <button
+                 className={`flex-1 py-2 rounded border text-center font-medium transition-all
+                   ${selectedTime === slot ? 'bg-orange-700 text-white border-orange-700' : 'bg-[#1b1b1d] text-orange-500 border-orange-500 hover:bg-orange-100'}`}
+                 onClick={() => setSelectedTime(slot)}
+               >
+                 {slot}
+                 {timezone !== 'Central African Time' && (
+                   <span className="block text-xs text-orange-300 mt-1">{getConvertedTime(slot, 'Central African Time', timezone)} ({timezone})</span>
+                 )}
+               </button>
+               {selectedTime === slot && (
+                 <button className="px-4 py-2 rounded bg-orange-600 text-white font-semibold shadow" onClick={() => alert(`Confirmed: ${selectedDate} at ${selectedTime}`)}>
+                   Confirm
+                 </button>
+               )}
+             </div>
+           ))}
+         </div>
+       </div>
     </div>
   );
 }
