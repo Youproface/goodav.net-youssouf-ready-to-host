@@ -1,4 +1,6 @@
 import heroBackground from '../assets/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.gif';
+import SEO from '@/components/SEO';
+import SchemaMarkup from '@/components/SchemaMarkup';
 
 // Import team member images
 import vincentImg from '../assets/images/all_site_images/About/Team/Vincent.png';
@@ -15,7 +17,46 @@ import dodoImg from '../assets/images/all_site_images/About/Team/dodo.png';
 import gentilImg from '../assets/images/all_site_images/About/Team/gentil.png';
 export default function AboutUs() {
     return (
-      <main className="min-h-screen bg-transparent text-zinc-100">
+      <>
+        <SEO
+          title="About GoodAV - Africa's Premier Audiovisual Agency"
+          description="Learn about GoodAV, Africa's leading audiovisual agency based in Kigali, Rwanda. Discover our mission, team, and story."
+          canonical="https://goodav.net/about-us"
+        />
+        <SchemaMarkup
+          schema={{
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "GoodAV",
+            "url": "https://goodav.net",
+            "logo": "https://goodav.net/image/Assets/logo-fav.png",
+            "description": "Africa's premier audiovisual agency transforming ideas into impactful visual stories. GoodAV empowers African narratives through cinematic production, live streaming, photography, and strategic media coverage.",
+            "sameAs": [
+              "https://www.instagram.com/goodaudiovisual",
+              "https://www.youtube.com/@goodaudiovisuals",
+              "https://www.facebook.com/goodaudiovisuals",
+              "https://www.linkedin.com/company/goodav"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+250788613332",
+              "email": "info@goodav.net",
+              "contactType": "Customer Support",
+              "areaServed": ["Rwanda", "Africa", "International"],
+              "availableLanguage": ["en", "fr"]
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Kigali",
+              "addressCountry": "RW"
+            },
+            "founder": {
+              "@type": "Person",
+              "name": "Youssouf Hakizimana"
+            }
+          }}
+        />
+        <main className="min-h-screen bg-transparent text-zinc-100">
         {/* Hero */}
        <div className="relative mt-10 py-32 px-4 bg-transparent">
         {/* Background Image with Overlay */}
@@ -174,6 +215,7 @@ export default function AboutUs() {
   
      
       </main>
+      </>
     );
   }
   
