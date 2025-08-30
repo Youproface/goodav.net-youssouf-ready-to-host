@@ -485,63 +485,77 @@ export default function BookingModal({
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center 
                 bg-gradient-to-br from-black/70 via-gray-900/60 to-black/70 
-                backdrop-blur-sm h-[100vh]">
-          <div className="bg-[#1b1b1d] w-[90%] max-w-3xl rounded-xl shadow-lg text-white p-6 md:p-8  mx-auto">
+                backdrop-blur-sm min-h-screen p-2 sm:p-4 md:p-6
+                overflow-y-auto">
+          <div className="bg-[#1b1b1d] w-full max-w-4xl rounded-xl shadow-lg text-white 
+                mx-auto my-4 max-h-[95vh] overflow-hidden flex flex-col
+                transform transition-all duration-300 ease-out">
             {/* Close Button */}
-            {/* <button
-              onClick={handleClose}
-              className="absolute top-3 right-3 text-gray-400 hover:text-white text-xl"
-            >
-              ✕
-            </button> */}
             <button
               type="button"
               onClick={onClose}
               aria-label="Close dialog"
-              className="group absolute right-4 top-[50px] -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/10 backdrop-blur-xl ring-2 ring-white/30 hover:bg-white/20 flex items-center justify-center shadow-lg"
+              className="group absolute right-3 top-3 sm:right-4 sm:top-4 z-20 
+                h-10 w-10 sm:h-12 sm:w-12 rounded-full 
+                bg-white/10 backdrop-blur-xl ring-2 ring-white/30 
+                hover:bg-white/20 flex items-center justify-center shadow-lg
+                active:scale-95 transition-transform"
             >
-              <span className="h-8 w-8 rounded-full bg-gradient-to-br from-zinc-100/80 to-white/60 shadow-inner flex items-center justify-center">
-                <svg viewBox="0 0 24 24" className="h-4 w-4 text-zinc-800/80" aria-hidden>
+              <span className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-zinc-100/80 to-white/60 shadow-inner flex items-center justify-center">
+                <svg viewBox="0 0 24 24" className="h-3 w-3 sm:h-4 sm:w-4 text-zinc-800/80" aria-hidden>
                   <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </span>
             </button>
-            {/* Header */}
-            <h2 className="text-lg font-semibold text-orange-400 flex items-center gap-2">
-              Let’s Start Your Project
-            </h2>
 
-            {/* Progress Bar */}
-            <div className="w-full bg-gray-700 h-1 mt-3 rounded">
-              <div
-                className="bg-orange-500 h-1 rounded transition-all duration-300 ease-in-out"
-                style={{ width: `${(step / 8) * 100}%` }} // eslint-disable-line no-inline-styles -- Dynamic width based on current step - inline style necessary for real-time updates
-              />
-            </div>
+            {/* Modal Content */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+              {/* Header */}
+              <h2 className="text-lg sm:text-xl font-semibold text-orange-400 flex items-center gap-2 mb-4">
+                Let’s Start Your Project
+              </h2>
 
-            {/* Step Title */}
-            <p className="mt-4 text-sm font-medium">Step {step} of 8</p>
+              {/* Progress Bar */}
+              <div className="w-full bg-gray-700 h-2 rounded-full mb-4">
+                <div
+                  className="bg-orange-500 h-2 rounded-full transition-all duration-500 ease-out"
+                  style={{ width: `${(step / 8) * 100}%` }}
+                />
+              </div>
 
-            {/* Step Content */}
-            <div className="mt-6">
-              {step === 1 && <Step1 setCanProceed={setCanProceed} />}
-              {step === 2 && <Step2 setCanProceed={setCanProceed} />}
-              {step === 3 && <Step3 setCanProceed={setCanProceed} />}
-              {step === 4 && <Step4 setCanProceed={setCanProceed} />}
-              {step === 5 && <Step5 nextStep={nextStep} />}
-              {step === 6 && <Step6 meetingSoftware={meetingSoftware} setMeetingSoftware={setMeetingSoftware} />}
-              {step === 7 && <Step7 setCanProceed={setCanProceed} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedTime={selectedTime} setSelectedTime={setSelectedTime} timezone={timezone} setTimezone={setTimezone} handleTimeConfirmation={handleTimeConfirmation} confirmationMessage={confirmationMessage} timeSlotConfirmed={timeSlotConfirmed} setTimeSlotConfirmed={setTimeSlotConfirmed} meetingSoftware={meetingSoftware} />}
-              {step === 8 && <Step8 submitStatus={submitStatus} handleFormSubmit={handleFormSubmit} name={name} setName={setName} email={email} setEmail={setEmail} phone={phone} setPhone={setPhone} countryCode={countryCode} setCountryCode={setCountryCode} countryCodes={countryCodes} organization={organization} setOrganization={setOrganization} project={project} setProject={setProject} selectedDate={selectedDate} selectedTime={selectedTime} timezone={timezone} submitting={submitting} meetingSoftware={meetingSoftware} />}
+              {/* Step Title */}
+              <p className="text-xs sm:text-sm font-medium text-gray-300 mb-6">
+                Step {step} of 8
+              </p>
+
+              {/* Step Content */}
+              <div className="mb-8">
+                {step === 1 && <Step1 setCanProceed={setCanProceed} />}
+                {step === 2 && <Step2 setCanProceed={setCanProceed} />}
+                {step === 3 && <Step3 setCanProceed={setCanProceed} />}
+                {step === 4 && <Step4 setCanProceed={setCanProceed} />}
+                {step === 5 && <Step5 nextStep={nextStep} />}
+                {step === 6 && <Step6 meetingSoftware={meetingSoftware} setMeetingSoftware={setMeetingSoftware} />}
+                {step === 7 && <Step7 setCanProceed={setCanProceed} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedTime={selectedTime} setSelectedTime={setSelectedTime} timezone={timezone} setTimezone={setTimezone} handleTimeConfirmation={handleTimeConfirmation} confirmationMessage={confirmationMessage} timeSlotConfirmed={timeSlotConfirmed} setTimeSlotConfirmed={setTimeSlotConfirmed} meetingSoftware={meetingSoftware} />}
+                {step === 8 && <Step8 submitStatus={submitStatus} handleFormSubmit={handleFormSubmit} name={name} setName={setName} email={email} setEmail={setEmail} phone={phone} setPhone={setPhone} countryCode={countryCode} setCountryCode={setCountryCode} countryCodes={countryCodes} organization={organization} setOrganization={setOrganization} project={project} setProject={setProject} selectedDate={selectedDate} selectedTime={selectedTime} timezone={timezone} submitting={submitting} meetingSoftware={meetingSoftware} />}
+              </div>
             </div>
 
             {/* Navigation */}
-            <div className="flex justify-between mt-8">
+            <div className="flex justify-between items-center p-4 sm:p-6 border-t border-gray-700 bg-[#1a1a1c]">
               {step > 1 ? (
                 <button
                   onClick={prevStep}
-                  className="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600"
+                  className="flex items-center gap-2 px-4 py-3 sm:px-6 sm:py-3 
+                    bg-gray-700 hover:bg-gray-600 active:bg-gray-500
+                    rounded-lg text-sm sm:text-base font-medium
+                    transition-all duration-200 active:scale-95
+                    min-h-[44px] touch-manipulation"
                 >
-                  ← Previous
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                  <span className="hidden xs:inline">Previous</span>
                 </button>
               ) : (
                 <div />
@@ -553,14 +567,17 @@ export default function BookingModal({
                     <Tooltip.Trigger asChild>
                       <button
                         onClick={handleFormSubmit}
-                        className={`flex items-center px-6 py-2 rounded-lg text-white font-semibold ${
+                        className={`flex items-center gap-2 px-4 py-3 sm:px-6 sm:py-3 
+                          rounded-lg text-sm sm:text-base font-semibold
+                          transition-all duration-200 active:scale-95
+                          min-h-[44px] touch-manipulation ${
                           submitting || !meetingSoftware
                             ? 'bg-gray-500 cursor-not-allowed'
-                            : 'bg-orange-600 hover:bg-orange-700'
+                            : 'bg-orange-600 hover:bg-orange-700 active:bg-orange-500'
                         }`}
                         disabled={submitting || !meetingSoftware}
                       >
-                        <Calendar className="w-5 h-5 mr-2" />
+                        <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
                         <span>Schedule Consultation</span>
                       </button>
                     </Tooltip.Trigger>
@@ -584,10 +601,20 @@ export default function BookingModal({
                     <Tooltip.Trigger asChild>
                       <button
                         onClick={nextStep}
-                        className={`px-6 py-2 rounded-lg ${(step >= 1 && step <= 4 && !canProceed) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed)) ? 'bg-gray-500 cursor-not-allowed' : 'bg-orange-500 hover:bg-orange-600'}`}
+                        className={`flex items-center gap-2 px-4 py-3 sm:px-6 sm:py-3 
+                          rounded-lg text-sm sm:text-base font-medium
+                          transition-all duration-200 active:scale-95
+                          min-h-[44px] touch-manipulation ${
+                          (step >= 1 && step <= 4 && !canProceed) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed)) 
+                            ? 'bg-gray-500 cursor-not-allowed' 
+                            : 'bg-orange-500 hover:bg-orange-600 active:bg-orange-400'
+                        }`}
                         disabled={(step >= 1 && step <= 4 && !canProceed) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed))}
                       >
-                        Next →
+                        <span className="hidden xs:inline">Next</span>
+                        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
                       </button>
                     </Tooltip.Trigger>
                     {((step >= 1 && step <= 4 && !canProceed) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed))) && (
