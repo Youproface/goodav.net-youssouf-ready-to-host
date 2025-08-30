@@ -29,7 +29,7 @@ const Portfolio = () => {
     </div>
   );
 };
-export default Portfolio;
+            {/* Portfolio content goes here. Add images and markup as needed. */}
         schema={{
           "@context": "https://schema.org",
           "@type": "CreativeWork",
