@@ -1268,24 +1268,6 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
 function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, countryCode, setCountryCode, countryCodes, organization, setOrganization, project, setProject, selectedDate, selectedTime, timezone, submitting, meetingSoftware }) {
   return (
     <div className="space-y-8">
-      {/* Selected Appointment Summary */}
-      {selectedDate && selectedTime && (
-        <div className="p-4 bg-green-900/20 border border-green-500/50 rounded-lg">
-          <h4 className="text-green-400 font-semibold mb-2">Selected Appointment:</h4>
-          <p className="text-green-300">
-            {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })} at {selectedTime} ({timezone})
-          </p>
-          {meetingSoftware && (
-            <p className="text-green-300 mt-1">Meeting Platform: {meetingSoftware}</p>
-          )}
-        </div>
-      )}
-
       {/* Personal Information Section */}
       <div className="w-full">
         <h3 className="text-xl font-semibold mb-4">Personal Information</h3>
