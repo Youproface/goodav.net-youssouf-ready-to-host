@@ -1,7 +1,22 @@
 import heroBackground from '../assets/images/all_site_images/Home/BG/Home_BG.png';
+import SEO from '@/components/SEO';
+import SchemaMarkup from '@/components/SchemaMarkup';
 export default function FAQSection() {
     return (
-      <main className="min-h-screen bg-[#0f1012] text-zinc-100">
+      <>
+        <SEO
+          title="Frequently Asked Questions - GoodAV"
+          description="Find answers to the most common questions about GoodAV’s audiovisual services, production, and support."
+          canonical="https://goodav.net/faq"
+        />
+        <SchemaMarkup
+          schema={{
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [] // Optionally, you can add structured Q&A here
+          }}
+        />
+        <main className="min-h-screen bg-[#0f1012] text-zinc-100">
         {/* Hero */}
         <div className="relative mt-10 py-32 px-4 bg-transparent">
         {/* Background Image with Overlay */}
@@ -151,6 +166,7 @@ export default function FAQSection() {
           </div>
         </section>
       </main>
+      </>
     );
   }
   
