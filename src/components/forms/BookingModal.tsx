@@ -558,9 +558,9 @@ function Step6() {
              day ? (
                <button
                  key={i}
-                 className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-medium transition-all
+                 className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-bold transition-all
                    ${isPastDate(calendarYear, calendarMonth, day) ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-orange-100 text-orange-700 hover:bg-orange-300'}
-                   ${selectedDate && selectedDate.day === day && selectedDate.month === calendarMonth && selectedDate.year === calendarYear ? 'bg-orange-600 text-white' : ''}`}
+                   ${selectedDate && selectedDate.day === day && selectedDate.month === calendarMonth && selectedDate.year === calendarYear ? 'bg-orange-600 text-white ring-4 ring-orange-400 shadow-lg scale-110 z-10' : ''}`}
                  disabled={isPastDate(calendarYear, calendarMonth, day)}
                  onClick={() => setSelectedDate({ day, month: calendarMonth, year: calendarYear })}
                  aria-label={isPastDate(calendarYear, calendarMonth, day) ? 'Past date not selectable' : `Select ${day} ${calendarMonth+1} ${calendarYear}`}
