@@ -116,6 +116,7 @@ const Index = () => {
         <BTSMasterProdcution /> 
         <Excellence/>
       </main>
+      <Footer role="contentinfo" />
     </div>
   );
 };
