@@ -1,6 +1,7 @@
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { Play, Video, Camera, Mic, Users, Trophy, Eye, Handshake } from 'lucide-react';
 import React, { useRef, useState } from 'react';
+import './Hero.css';
 
 // Animated counter component
 interface AnimatedCounterProps {
@@ -57,8 +58,7 @@ const Hero = () => {
     <section className="relative">
       {/* Background Image */}
       <motion.div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBackground})` }}
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
@@ -269,7 +269,7 @@ const Hero = () => {
               }
             }}
           >
-            <div className="flex flex-col sm:flex-row gap-8 px-2 py-2 rounded-2xl" style={{background: 'hsl(var(--card) / 0.15)', border: '1.5px solid rgba(255,255,255,0.08)'}}>
+            <div className="flex flex-col sm:flex-row gap-8 px-2 py-2 rounded-2xl card-bg">
               <motion.button 
                 onClick={()=>navigate('/portfolio')}
                 className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg px-8 py-4 rounded-full shadow-lg transition-all duration-200"
@@ -299,10 +299,10 @@ const Hero = () => {
           <PremiumProjectModal open={open} onClose={() => setOpen(false)} />
           {/* Trust Indicators */}
           <div className="flex flex-col md:flex-row gap-8 justify-center items-center mt-4 mb-2">
-            <div className="flex items-center gap-3 px-6 py-4 rounded-xl" style={{background: 'hsl(var(--card) / 0.15)', border: '1.5px solid rgba(255,255,255,0.08)'}}>
+            <div className="flex items-center gap-3 px-6 py-4 rounded-xl card-bg">
               <span className="text-white font-medium text-base"><span className="font-bold">Trusted by 200+</span> Organizations</span>
             </div>
-            <div className="flex items-center gap-3 px-6 py-4 rounded-xl" style={{background: 'hsl(var(--card) / 0.15)', border: '1.5px solid rgba(255,255,255,0.08)'}}>
+            <div className="flex items-center gap-3 px-6 py-4 rounded-xl card-bg">
               <span className="text-orange-500"><Play className="h-5 w-5" /></span>
               <span className="text-white font-medium text-base"><span className="font-bold">Award-Winning Excellence</span></span>
             </div>
