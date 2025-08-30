@@ -242,8 +242,7 @@ export default function BookingModal({
         </div>
       )}
       {/* Only render 'Other' input if selectedOption is 'Other' and inside Step1's scope */}
-    </>
-  );
+  </>
   );
 }
 
