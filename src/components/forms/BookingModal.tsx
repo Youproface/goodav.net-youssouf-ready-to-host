@@ -115,7 +115,7 @@ export default function BookingModal({
               {step === 1 && <Step1 setCanProceed={setCanProceed} />}
               {step === 2 && <Step2 setCanProceed={setCanProceed} />}
               {step === 3 && <Step3 setCanProceed={setCanProceed} />}
-              {step === 4 && <Step4 />}
+              {step === 4 && <Step4 setCanProceed={setCanProceed} />}
               {step === 5 && <Step5 nextStep={nextStep} />}
               {step === 6 && <Step6 />}
             </div>
@@ -335,8 +335,9 @@ function Step3({ setCanProceed }) {
 /* -------------------------
    STEP 4
 ------------------------- */
-function Step4() {
+function Step4({ setCanProceed }) {
   const [active, setActive] = useState(null);
+  useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
   const options = [
     { label: "Startup Package", desc: "Essential production", icon: DollarSign },
     { label: "Professional Package", desc: "Enhanced production", icon: Star },
