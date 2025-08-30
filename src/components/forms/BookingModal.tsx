@@ -140,7 +140,7 @@ export default function BookingModal({
       const result = await response.json();
 
       if (response.ok && result.success) {
-        setSubmitStatus('✅ Your booking was submitted successfully! We will contact you soon.');
+        setSubmitStatus('<i class="fas fa-check-circle text-green-400"></i> Your booking was submitted successfully! We will contact you soon.');
         // Reset form after successful submission
         setName('');
         setEmail('');
@@ -152,7 +152,7 @@ export default function BookingModal({
         setStep(1);
       } else {
         const errorMessage = result.error || 'Submission failed. Please try again.';
-        setSubmitStatus(`❌ ${errorMessage}`);
+        setSubmitStatus(`<i class="fas fa-times-circle text-red-400"></i> ${errorMessage}`);
       }
     } catch (error) {
       console.error('Submission error:', error);
