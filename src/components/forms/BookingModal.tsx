@@ -1064,6 +1064,14 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
              </div>
            ))}
          </div>
+         
+         {/* Professional Confirmation Message */}
+         {confirmationMessage && (
+           <div className="mt-6 p-4 bg-green-900/20 border border-green-500/50 rounded-lg animate-in slide-in-from-top-2 duration-300">
+             <div className="text-center" dangerouslySetInnerHTML={{__html: confirmationMessage}} />
+           </div>
+         )}
+         
          {/* Feedback and validation comments */}
          {!selectedDate && <div className="text-red-400 mt-4 text-sm">Please select a date to view available times.</div>}
          {selectedDate && !selectedTime && <div className="text-red-400 mt-4 text-sm">Please select a time slot to confirm your booking.</div>}
