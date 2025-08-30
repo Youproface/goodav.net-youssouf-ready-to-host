@@ -30,7 +30,6 @@ const Portfolio = () => {
   );
 };
 
-export default Portfolio;
 import img22 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-27.jpg';
 import img23 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-28.jpg';
 import img24 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-29.jpg';
