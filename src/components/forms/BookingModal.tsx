@@ -41,6 +41,7 @@ export default function BookingModal({
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [timezone, setTimezone] = useState('Africa/Kigali');
+  const [meetingSoftware, setMeetingSoftware] = useState(""); // New state for meeting software
   const [submitStatus, setSubmitStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState(null);
