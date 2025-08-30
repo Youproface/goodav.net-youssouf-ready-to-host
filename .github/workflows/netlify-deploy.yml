@@ -1,4 +1,4 @@
-name: Deploy to Netlify
+name: Deploy to Custom Domains (goodav.net & dev.goodav.net)
 
 on:
   push:
@@ -26,14 +26,14 @@ jobs:
     - name: Build project
       run: npm run build
 
-    - name: Deploy to Netlify (Production)
+    - name: 🚀 Deploy to Production (goodav.net)
       if: github.ref == 'refs/heads/main'
       uses: nwtgck/actions-netlify@v3.0
       with:
         publish-dir: './dist'
         production-branch: main
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        deploy-message: "Production Deploy from GitHub Actions"
+        deploy-message: "🚀 Production Deploy to goodav.net"
         enable-pull-request-comment: false
         enable-commit-comment: true
         overwrites-pull-request-comment: true
@@ -42,14 +42,14 @@ jobs:
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       timeout-minutes: 1
 
-    - name: Deploy to Netlify (Development)
+    - name: 🧪 Deploy to Development (dev.goodav.net)
       if: github.ref == 'refs/heads/develop'
       uses: nwtgck/actions-netlify@v3.0
       with:
         publish-dir: './dist'
         production-branch: main
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        deploy-message: "Development Deploy from GitHub Actions"
+        deploy-message: "🧪 Development Deploy to dev.goodav.net"
         enable-pull-request-comment: false
         enable-commit-comment: true
         overwrites-pull-request-comment: true

@@ -1,6 +1,15 @@
-# 🚀 Dev Environment Setup Guide: dev.goodav.net
+# 🚀 Custom Domain Setup: goodav.net & dev.goodav.net
 
-## Step-by-Step Setup for Testing Environment
+## ✅ Using YOUR Domains Only (No Netlify Subdomains)
+
+**Important**: This setup uses ONLY your custom domains - `goodav.net` and `dev.goodav.net`. We do NOT use Netlify's default `.netlify.app` subdomains.
+
+### Your Custom Domains:
+- **Production**: `goodav.net` (your main domain)
+- **Development**: `dev.goodav.net` (your subdomain)
+- **No Netlify URLs**: No `yoursite.netlify.app` addresses used
+
+## Step-by-Step Custom Domain Setup
 
 ### Phase 1: GoDaddy Subdomain Setup
 
