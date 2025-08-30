@@ -1,4 +1,22 @@
 import { useEffect, useState } from "react";
+import {
+  Video,
+  Camera,
+  Film,
+  Radio,
+  Briefcase,
+  Users,
+  Clock,
+  Calendar,
+  DollarSign,
+  Star,
+  Layers,
+  PenTool,
+  Share2,
+  Settings,
+  User,
+  Building,
+} from "lucide-react";
 // -------------------------
 // STEP 1
 // -------------------------
