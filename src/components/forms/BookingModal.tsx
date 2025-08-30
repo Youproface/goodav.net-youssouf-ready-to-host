@@ -508,8 +508,6 @@ function Step5({ nextStep }: { nextStep: () => void }) {
 ------------------------- */
 function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, organization, setOrganization, project, setProject, selectedDate, setSelectedDate, selectedTime, setSelectedTime, timezone, setTimezone, submitting }) {
   // Calendar and time slot picker UI
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
   // List of time zones (IANA)
   const timeZones = [
     'Africa/Kigali', // Kigali (Central African Time)
@@ -531,7 +529,6 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
     'Pacific/Auckland',
     'UTC',
   ];
-  const [timezone, setTimezone] = useState('Africa/Kigali');
   // Calendar logic: allow selection from today to any future date
   const today = new Date();
   const [calendarMonth, setCalendarMonth] = useState(today.getMonth());
