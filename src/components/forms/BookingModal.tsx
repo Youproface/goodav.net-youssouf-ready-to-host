@@ -17,6 +17,7 @@ import {
   User,
   Building,
 } from "lucide-react"; // install via: npm install lucide-react
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 export default function BookingModal({
   isOpen,
