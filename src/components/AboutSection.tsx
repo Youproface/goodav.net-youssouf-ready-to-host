@@ -37,6 +37,15 @@ export default function AboutUsSection() {
       viewport={{ once: true, margin: "-100px" }}
       variants={containerVariants}
     >
+      {/* Background Image with Overlay */}
+      <div className="absolute inset-0">
+        <img
+          src="/images/Home/BG/Home_BG.png"
+          alt="About GoodAV"
+          className="w-full h-full object-cover opacity-30"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b" />
+      </div>
       {/* Section Tag */}
       <motion.div 
         className="flex justify-center mb-6"
