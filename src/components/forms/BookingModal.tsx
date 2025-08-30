@@ -530,38 +530,38 @@ export default function BookingModal({
                 <div />
               )}
 
-              {step === 6 ? (
+              {step === 7 ? (
                 <Tooltip.Provider>
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
                       <button
                         onClick={handleFormSubmit}
                         className={`flex items-center px-6 py-2 rounded-lg text-white font-semibold ${
-                          submitting || !isFormValid()
+                          submitting || !meetingSoftware
                             ? 'bg-gray-500 cursor-not-allowed'
                             : 'bg-orange-600 hover:bg-orange-700'
                         }`}
-                        disabled={submitting || !isFormValid()}
+                        disabled={submitting || !meetingSoftware}
                       >
                         <Calendar className="w-5 h-5 mr-2" />
                         <span>Schedule Consultation</span>
                       </button>
                     </Tooltip.Trigger>
-                    {(submitting || !isFormValid()) && (
+                    {(submitting || !meetingSoftware) && (
                       <Tooltip.Portal>
                         <Tooltip.Content
                           className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
                           sideOffset={8}
                           side="top"
                         >
-                          {submitting ? 'Submitting your booking...' : 'Please complete all required fields to proceed'}
+                          {submitting ? 'Submitting your booking...' : 'Please select a meeting platform'}
                           <Tooltip.Arrow className="fill-gray-900" />
                         </Tooltip.Content>
                       </Tooltip.Portal>
                     )}
                   </Tooltip.Root>
                 </Tooltip.Provider>
-              ) : step < 6 ? (
+              ) : step < 7 ? (
                 <Tooltip.Provider>
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
