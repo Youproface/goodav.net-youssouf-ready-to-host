@@ -29,6 +29,13 @@ function autoCommit(filePath) {
         return console.error('Git commit error:', err);
       }
       console.log('Committed change:', filePath);
+      // Push after successful commit
+      exec('git push', { cwd: repoPath }, (err, stdout, stderr) => {
+        if (err) {
+          return console.error('Git push error:', err);
+        }
+        console.log('Pushed to remote.');
+      });
     });
   });
 }
