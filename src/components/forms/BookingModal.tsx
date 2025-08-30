@@ -445,15 +445,40 @@ function Step6() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [timezone, setTimezone] = useState('Central African Time');
-  const month = 'July 2024';
-  const days = [
-    [30, 1, 2, 3, 4, 5, 6],
-    [7, 8, 9, 10, 11, 12, 13],
-    [14, 15, 16, 17, 18, 19, 20],
-    [21, 22, 23, 24, 25, 26, 27],
-    [28, 29, 30, 31, 1, 2, 3],
-  ];
-  const availableDays = [16, 17, 19, 22, 23, 24, 25, 30, 31];
+  // Calendar logic: allow selection from today to any future date
+  const today = new Date();
+  const [calendarMonth, setCalendarMonth] = useState(today.getMonth());
+  const [calendarYear, setCalendarYear] = useState(today.getFullYear());
+  // Helper to get days in month
+  function getDaysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate();
+  }
+  // Helper to get first day of week (0=Sun)
+  function getFirstDayOfWeek(year, month) {
+    return new Date(year, month, 1).getDay();
+  }
+  const daysInMonth = getDaysInMonth(calendarYear, calendarMonth);
+  const firstDayOfWeek = getFirstDayOfWeek(calendarYear, calendarMonth);
+  // Build calendar grid
+  const calendarGrid = [];
+  let dayNum = 1;
+  for (let i = 0; i < 6; i++) {
+    const week = [];
+    for (let j = 0; j < 7; j++) {
+      if ((i === 0 && j < firstDayOfWeek) || dayNum > daysInMonth) {
+        week.push(null);
+      } else {
+        week.push(dayNum);
+        dayNum++;
+      }
+    }
+    calendarGrid.push(week);
+  }
+  // Validation: only allow current/future dates
+  function isPastDate(year, month, day) {
+    const d = new Date(year, month, day);
+    return d < today.setHours(0,0,0,0);
+  }
   const timeSlots = ['10:00', '11:00', '13:00', '14:30', '16:00']; // 24h format for clarity
   // Timezone conversion logic
   const timeZoneOffsets = {
@@ -481,26 +506,51 @@ function Step6() {
     <div className="flex flex-col md:flex-row gap-8">
       <div className="w-full md:w-1/2">
         <h3 className="text-xl font-semibold mb-4">Select a Date & Time</h3>
-        <div className="flex items-center justify-between mb-2">
-          <button className="text-lg px-2">&#60;</button>
-          <span className="font-medium">{month}</span>
-          <button className="text-lg px-2">&#62;</button>
-        </div>
-        <div className="grid grid-cols-7 gap-2 mb-2 text-center text-gray-400 text-xs">
-          {['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => <div key={d}>{d}</div>)}
-        </div>
+         {/* Calendar UI: dynamic, only current/future dates selectable */}
+         <div className="flex items-center justify-between mb-2">
+           <button
+             className="text-lg px-2"
+             onClick={() => {
+               if (calendarMonth === 0) {
+                 setCalendarMonth(11);
+                 setCalendarYear(calendarYear - 1);
+               } else {
+                 setCalendarMonth(calendarMonth - 1);
+               }
+             }}
+             disabled={calendarYear === today.getFullYear() && calendarMonth === today.getMonth()}
+           >&#60;</button>
+           <span className="font-medium">{new Date(calendarYear, calendarMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}</span>
+           <button
+             className="text-lg px-2"
+             onClick={() => {
+               if (calendarMonth === 11) {
+                 setCalendarMonth(0);
+                 setCalendarYear(calendarYear + 1);
+               } else {
+                 setCalendarMonth(calendarMonth + 1);
+               }
+             }}
+           >&#62;</button>
+         </div>
+         <div className="grid grid-cols-7 gap-2 mb-2 text-center text-gray-400 text-xs">
+           {['SUN','MON','TUE','WED','THU','FRI','SAT'].map(d => <div key={d}>{d}</div>)}
+         </div>
          <div className="grid grid-cols-7 gap-2 text-center">
-           {days.flat().map((day, i) => (
-             <button
-               key={i}
-               className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-medium transition-all
-                 ${availableDays.includes(day) ? 'bg-orange-100 text-orange-700 hover:bg-orange-300' : 'text-gray-500'}
-                 ${selectedDate === day ? 'bg-orange-600 text-white' : ''}`}
-               disabled={!availableDays.includes(day)}
-               onClick={() => setSelectedDate(day)}
-             >
-               {day}
-             </button>
+           {calendarGrid.flat().map((day, i) => (
+             day ? (
+               <button
+                 key={i}
+                 className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-medium transition-all
+                   ${isPastDate(calendarYear, calendarMonth, day) ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-orange-100 text-orange-700 hover:bg-orange-300'}
+                   ${selectedDate && selectedDate.day === day && selectedDate.month === calendarMonth && selectedDate.year === calendarYear ? 'bg-orange-600 text-white' : ''}`}
+                 disabled={isPastDate(calendarYear, calendarMonth, day)}
+                 onClick={() => setSelectedDate({ day, month: calendarMonth, year: calendarYear })}
+                 aria-label={isPastDate(calendarYear, calendarMonth, day) ? 'Past date not selectable' : `Select ${day} ${calendarMonth+1} ${calendarYear}`}
+               >
+                 {day}
+               </button>
+             ) : <div key={i}></div>
            ))}
          </div>
          <div className="mt-4">
@@ -564,29 +614,35 @@ function Step6() {
       </div>
        <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
          <div className="mb-4 text-lg font-medium">
-           {selectedDate ? `Monday, July ${selectedDate}` : 'Select a date'}
+           {selectedDate ? `${new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()}` : 'Select a date'}
          </div>
          <div className="flex flex-col gap-3 w-full max-w-xs">
+           {/* Time slots: disabled until date selected */}
            {timeSlots.map(slot => (
              <div key={slot} className="flex gap-2">
                <button
                  className={`flex-1 py-2 rounded border text-center font-medium transition-all
-                   ${selectedTime === slot ? 'bg-orange-700 text-white border-orange-700' : 'bg-[#1b1b1d] text-orange-500 border-orange-500 hover:bg-orange-100'}`}
-                 onClick={() => setSelectedTime(slot)}
+                   ${selectedDate ? (selectedTime === slot ? 'bg-orange-700 text-white border-orange-700' : 'bg-[#1b1b1d] text-orange-500 border-orange-500 hover:bg-orange-100') : 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed'}`}
+                 onClick={() => selectedDate && setSelectedTime(slot)}
+                 disabled={!selectedDate}
                >
                  {slot}
-                 {timezone !== 'Central African Time' && (
+                 {timezone !== 'Central African Time' && selectedDate && (
                    <span className="block text-xs text-orange-300 mt-1">{getConvertedTime(slot, 'Central African Time', timezone)} ({timezone})</span>
                  )}
                </button>
-               {selectedTime === slot && (
-                 <button className="px-4 py-2 rounded bg-orange-600 text-white font-semibold shadow" onClick={() => alert(`Confirmed: ${selectedDate} at ${selectedTime}`)}>
+               {selectedTime === slot && selectedDate && (
+                 <button className="px-4 py-2 rounded bg-orange-600 text-white font-semibold shadow" onClick={() => alert(`Confirmed: ${selectedDate.day}/${selectedDate.month+1}/${selectedDate.year} at ${selectedTime}`)}>
                    Confirm
                  </button>
                )}
              </div>
            ))}
          </div>
+         {/* Feedback and validation comments */}
+         {!selectedDate && <div className="text-orange-400 mt-4 text-sm">Please select a date to view available times.</div>}
+         {selectedDate && !selectedTime && <div className="text-orange-400 mt-4 text-sm">Please select a time slot to confirm your booking.</div>}
+         {selectedDate && selectedTime && <div className="text-green-500 mt-4 text-sm">Ready to confirm: {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()} at {selectedTime} ({timezone})</div>}
        </div>
     </div>
   );
