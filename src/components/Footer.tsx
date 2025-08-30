@@ -139,20 +139,18 @@ const Footer = () => {
                 
                 {/* Social Links */}
                 <div className="flex space-x-4 pt-4">
-                  {socialLinks.map((social, index) => {
-                    const IconComponent = social.icon;
-                    return (
-                      <a
-                        target="_blank"
-                        key={index}
-                        href={social.href}
-                        className="w-10 h-10 bg-card border border-border rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-200"
-                        aria-label={social.label}
-                      >
-                        <IconComponent className="h-4 w-4" />
-                      </a>
-                    );
-                  })}
+                  {socialLinks.map(({ icon: Icon, href, label }) => (
+  <a
+    key={label}
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={label}
+    className="inline-block mr-4"
+  >
+    <Icon className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
+  </a>
+))}
                   <a target="_blank" href="https://www.flickr.com/photos/202425883@N07">
                   <img className="w-10 h-10 bg-card border border-border rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-200"  src="https://cdn-icons-png.flaticon.com/512/5968/5968712.png" alt="Flickr" />
                   </a>
