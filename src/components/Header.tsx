@@ -82,6 +82,13 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            <Button
+              onClick={() => setIsBookingOpen(true)}
+              variant="default"
+              className="mt-4 mx-4 bg-gradient-primary"
+            >
+              FREE CONSULTATION
+            </Button>
           </div>
         </div>
       </nav>
