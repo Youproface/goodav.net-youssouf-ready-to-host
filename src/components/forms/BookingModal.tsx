@@ -1357,7 +1357,7 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
                 className={`flex items-start gap-3 p-3 rounded-lg border text-left transition-all duration-200 ${
                   meetingSoftware === option.label
                     ? 'bg-green-500/10 border-green-500 shadow-lg shadow-green-500/10'
-                    : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31]'
+                    : 'bg-[#252529] border-orange-500 hover:bg-[#2f2f31]'
                 }`}
               >
                 <i className={`${option.icon} w-6 h-6 mt-1 ${meetingSoftware === option.label ? 'text-green-400' : 'text-green-400'}`}></i>
