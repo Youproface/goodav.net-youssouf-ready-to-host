@@ -42,6 +42,7 @@ export default function BookingModal({
   const [timezone, setTimezone] = useState('Africa/Kigali');
   const [submitStatus, setSubmitStatus] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [confirmationMessage, setConfirmationMessage] = useState(null);
 
   // Comprehensive list of country codes
   const countryCodes = [
