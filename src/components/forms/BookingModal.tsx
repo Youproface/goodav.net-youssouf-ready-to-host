@@ -455,6 +455,11 @@ function Step6() {
   ];
   const availableDays = [16, 17, 19, 22, 23, 24, 25, 30, 31];
   const timeSlots = ['10:00am', '11:00am', '1:00pm', '2:30pm', '4:00pm'];
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [organization, setOrganization] = useState("");
+  const [project, setProject] = useState("");
   return (
     <div className="flex flex-col md:flex-row gap-8">
       <div className="w-full md:w-1/2">
@@ -495,6 +500,48 @@ function Step6() {
             <option>Pacific time - US & Canada</option>
             <option>GMT</option>
           </select>
+        </div>
+        {/* Contact & Project Info Section */}
+        <div className="w-full mt-8">
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <input
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="Full Name *"
+              className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none w-full text-white placeholder-orange-300"
+            />
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="Email Address *"
+              className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none w-full text-white placeholder-orange-300"
+            />
+          </div>
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <input
+              type="text"
+              value={phone}
+              onChange={e => setPhone(e.target.value)}
+              placeholder="Phone Number"
+              className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none w-full text-white placeholder-orange-300"
+            />
+            <input
+              type="text"
+              value={organization}
+              onChange={e => setOrganization(e.target.value)}
+              placeholder="Organization"
+              className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none w-full text-white placeholder-orange-300"
+            />
+          </div>
+          <textarea
+            value={project}
+            onChange={e => setProject(e.target.value)}
+            placeholder="Tell us more about your project vision..."
+            className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none w-full text-white placeholder-orange-300 mb-4"
+            rows={4}
+          />
         </div>
       </div>
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
