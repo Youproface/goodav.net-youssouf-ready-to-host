@@ -506,7 +506,7 @@ function Step5({ nextStep }: { nextStep: () => void }) {
 /* -------------------------
    STEP 6
 ------------------------- */
-function Step6() {
+function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, organization, setOrganization, project, setProject, selectedDate, setSelectedDate, selectedTime, setSelectedTime, timezone, setTimezone, submitting }) {
   // Calendar and time slot picker UI
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
