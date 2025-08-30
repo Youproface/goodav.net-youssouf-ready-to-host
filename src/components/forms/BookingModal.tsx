@@ -1444,26 +1444,29 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
 ------------------------- */
 function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, countryCode, setCountryCode, countryCodes, organization, setOrganization, project, setProject, selectedDate, selectedTime, timezone, submitting, meetingSoftware }) {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Personal Information Section */}
       <div className="w-full">
-        <h3 className="text-xl font-semibold mb-4">Personal Information</h3>
+        <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6">Personal Information</h3>
 
         {/* Contact Form */}
-        <div className="grid md:grid-cols-2 gap-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
           <div className="relative">
             <input
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder="Full Name *"
-              className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 transition-all duration-200 ${
+              className={`p-3 sm:p-4 rounded-lg bg-[#252529] border focus:outline-none w-full 
+                text-white placeholder-gray-400 transition-all duration-200 text-base
+                min-h-[48px] touch-manipulation ${
                 name.trim() ? 'border-orange-500 shadow-lg shadow-orange-500/20' : 'border-gray-700 focus:border-orange-500'
               }`}
               required
             />
             {name && !name.trim() && (
-              <div className="absolute -bottom-6 left-0 text-orange-400 text-xs font-medium bg-orange-900/20 px-2 py-1 rounded border border-orange-500/50 animate-in slide-in-from-top-1 duration-200">
+              <div className="absolute -bottom-6 left-0 text-orange-400 text-xs font-medium 
+                bg-orange-900/20 px-2 py-1 rounded border border-orange-500/50 animate-in slide-in-from-top-1 duration-200">
                 ⚠️ Full name is required
               </div>
             )}
@@ -1474,14 +1477,17 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="Email Address *"
-              className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 transition-all duration-200 ${
+              className={`p-3 sm:p-4 rounded-lg bg-[#252529] border focus:outline-none w-full 
+                text-white placeholder-gray-400 transition-all duration-200 text-base
+                min-h-[48px] touch-manipulation ${
                 email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-orange-500 shadow-lg shadow-orange-500/20' :
                 email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-red-500' : 'border-gray-700 focus:border-orange-500'
               }`}
               required
             />
             {email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && (
-              <div className="absolute -bottom-6 left-0 text-red-400 text-xs font-medium bg-red-900/20 px-2 py-1 rounded border border-red-500/50 animate-in slide-in-from-top-1 duration-200">
+              <div className="absolute -bottom-6 left-0 text-red-400 text-xs font-medium 
+                bg-red-900/20 px-2 py-1 rounded border border-red-500/50 animate-in slide-in-from-top-1 duration-200">
                 ⚠️ Please enter a valid email address
               </div>
             )}
@@ -1489,32 +1495,37 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
         </div>
 
         {/* Organization field */}
-        <div className="mb-8 relative">
+        <div className="mb-6 sm:mb-8 relative">
           <input
             type="text"
             value={organization}
             onChange={e => setOrganization(e.target.value)}
             placeholder="Organization *"
-            className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 transition-all duration-200 ${
+            className={`p-3 sm:p-4 rounded-lg bg-[#252529] border focus:outline-none w-full 
+              text-white placeholder-gray-400 transition-all duration-200 text-base
+              min-h-[48px] touch-manipulation ${
               organization.trim() ? 'border-orange-500 shadow-lg shadow-orange-500/20' : 'border-gray-700 focus:border-orange-500'
             }`}
             required
           />
           {organization && !organization.trim() && (
-            <div className="absolute -bottom-6 left-0 text-orange-400 text-xs font-medium bg-orange-900/20 px-2 py-1 rounded border border-orange-500/50 animate-in slide-in-from-top-1 duration-200">
+            <div className="absolute -bottom-6 left-0 text-orange-400 text-xs font-medium 
+              bg-orange-900/20 px-2 py-1 rounded border border-orange-500/50 animate-in slide-in-from-top-1 duration-200">
               ⚠️ Organization is required
             </div>
           )}
         </div>
 
         {/* Phone number field */}
-        <div className="mb-8 relative">
-          <label className="block text-sm font-medium text-white-400 mb-2">Phone Number</label>
+        <div className="mb-6 sm:mb-8 relative">
+          <label className="block text-sm font-medium text-gray-300 mb-2">Phone Number</label>
           <div className="flex gap-2">
             <select
               value={countryCode}
               onChange={e => setCountryCode(e.target.value)}
-              className="p-3 rounded bg-[#252529] border border-gray-700 focus:border-orange-500 focus:outline-none text-white min-w-[120px]"
+              className="p-3 sm:p-4 rounded-lg bg-[#252529] border border-gray-700 
+                focus:border-orange-500 focus:outline-none text-white min-w-[120px] 
+                text-sm sm:text-base min-h-[48px] touch-manipulation"
               title="Select country code"
             >
               {countryCodes.map((country, index) => (
@@ -1528,14 +1539,17 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
               value={phone}
               onChange={e => setPhone(e.target.value.replace(/\D/g, ''))} // Only allow digits
               placeholder="123456789"
-              className={`p-3 rounded bg-[#252529] border focus:outline-none flex-1 text-white placeholder-gray-400 transition-all duration-200 ${
+              className={`p-3 sm:p-4 rounded-lg bg-[#252529] border focus:outline-none flex-1 
+                text-white placeholder-gray-400 transition-all duration-200 text-base
+                min-h-[48px] touch-manipulation ${
                 phone && phone.length >= 7 ? 'border-orange-500 shadow-lg shadow-orange-500/20' :
                 phone && phone.length < 7 ? 'border-red-500' : 'border-gray-700 focus:border-orange-500'
               }`}
             />
           </div>
           {phone && phone.length < 7 && (
-            <div className="absolute -bottom-6 left-0 text-red-400 text-xs font-medium bg-red-900/20 px-2 py-1 rounded border border-red-500/50 animate-in slide-in-from-top-1 duration-200 mt-2">
+            <div className="absolute -bottom-6 left-0 text-red-400 text-xs font-medium 
+              bg-red-900/20 px-2 py-1 rounded border border-red-500/50 animate-in slide-in-from-top-1 duration-200 mt-2">
               ⚠️ Please enter a valid phone number (at least 7 digits)
             </div>
           )}
@@ -1545,23 +1559,26 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
           value={project}
           onChange={e => setProject(e.target.value)}
           placeholder="Tell us more about your project vision... *"
-          className={`p-3 rounded bg-[#252529] border focus:outline-none w-full text-white placeholder-gray-400 mb-8 transition-all duration-200 ${
+          className={`p-3 sm:p-4 rounded-lg bg-[#252529] border focus:outline-none w-full 
+            text-white placeholder-gray-400 mb-6 sm:mb-8 transition-all duration-200 
+            text-base min-h-[100px] touch-manipulation ${
             project.trim() ? 'border-orange-500 shadow-lg shadow-orange-500/20' : 'border-gray-700 focus:border-orange-500'
           }`}
           rows={4}
           required
         />
         {project && !project.trim() && (
-          <div className="mb-4 text-orange-400 text-xs font-medium bg-orange-900/20 px-3 py-2 rounded border border-orange-500/50 animate-in slide-in-from-top-1 duration-200">
+          <div className="mb-4 text-orange-400 text-xs font-medium 
+            bg-orange-900/20 px-3 py-2 rounded border border-orange-500/50 animate-in slide-in-from-top-1 duration-200">
             ⚠️ Project description is required
           </div>
         )}
 
         {/* Validation Summary - Show in middle when required fields are missing */}
         {(!name.trim() || !email.trim() || !organization.trim() || !project.trim() || (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) || (phone && phone.length < 7)) && (
-          <div className="mb-6 p-4 bg-orange-900/20 border border-orange-500/50 rounded-lg animate-in slide-in-from-top-2 duration-300">
+          <div className="mb-6 p-3 sm:p-4 bg-orange-900/20 border border-orange-500/50 rounded-lg animate-in slide-in-from-top-2 duration-300">
             <div className="text-center">
-              <h4 className="text-orange-400 font-semibold mb-2">⚠️ Please Complete Required Fields</h4>
+              <h4 className="text-orange-400 font-semibold mb-2 text-sm sm:text-base">⚠️ Please Complete Required Fields</h4>
               <div className="text-orange-300 text-sm space-y-1">
                 {!name.trim() && <p>• Full name is required</p>}
                 {!email.trim() && <p>• Email address is required</p>}
@@ -1577,7 +1594,9 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
 
       {/* Schedule Consultation Button and feedback */}
       <div className="flex flex-col items-center mt-6">
-        {submitStatus && !submitStatus.includes('Your booking was submitted successfully') && <div className="mt-2 text-sm text-center" dangerouslySetInnerHTML={{__html: submitStatus}} />}
+        {submitStatus && !submitStatus.includes('Your booking was submitted successfully') && 
+          <div className="mt-2 text-sm text-center" dangerouslySetInnerHTML={{__html: submitStatus}} />
+        }
       </div>
     </div>
   );
