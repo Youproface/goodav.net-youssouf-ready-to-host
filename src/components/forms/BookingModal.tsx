@@ -234,13 +234,15 @@ export default function BookingModal({
           )}
         </div>
       </div>
+      {/* Only render 'Other' input if selectedOption is 'Other' and inside Step1's scope */}
       {selectedOption === "Other" && (
         <div className="mt-4">
           <label className="block text-sm font-medium text-white-400" htmlFor="other">Please specify your project type:</label>
-          <input type="text" id="other" name="other" className="mt-1 block w-full rounded-md border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500" placeholder="Desribe your project" />
+          <input type="text" id="other" name="other" className="mt-1 block w-full rounded-md border-gray-600 bg-gray-800 px-3 py-2 text-white placeholder-gray-400 focus:border-orange-500 focus:ring-orange-500" placeholder="Describe your project" />
         </div>
       )}
     </>
+  );
   );
 }
 
