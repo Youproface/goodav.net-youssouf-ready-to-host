@@ -949,7 +949,7 @@ function Step5({ nextStep }: { nextStep: () => void }) {
 }
 
 /* -------------------------
-   STEP 7 - Meeting Software Selection
+   STEP 6 - Date, Time, Contact Info & Meeting Software Selection
 ------------------------- */
 function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail, phone, setPhone, countryCode, setCountryCode, countryCodes, organization, setOrganization, project, setProject, selectedDate, setSelectedDate, selectedTime, setSelectedTime, timezone, setTimezone, submitting, handleTimeConfirmation, confirmationMessage, timeSlotConfirmed, setTimeSlotConfirmed, meetingSoftware, setMeetingSoftware }) {
   // Calendar and time slot picker UI
