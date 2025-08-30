@@ -756,7 +756,9 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
               value={organization}
               onChange={e => setOrganization(e.target.value)}
               placeholder="Organization *"
-              className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none w-full text-white placeholder-orange-300"
+              className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none w-full text-white placeholder-orange-300 ${
+                organization.trim() ? 'border-green-500' : 'border-orange-500'
+              }`}
               required
             />
           </div>
