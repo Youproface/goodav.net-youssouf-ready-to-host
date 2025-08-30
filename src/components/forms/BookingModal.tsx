@@ -92,10 +92,10 @@ export default function BookingModal({
       });
       const result = await res.json();
       if (result.success) {
-        setSubmitStatus('Booking submitted successfully!');
+        setSubmitStatus('✅ Your booking was submitted successfully! We will contact you soon.');
         // Optionally reset form fields here
       } else {
-        setSubmitStatus(result.error || 'Submission failed.');
+        setSubmitStatus(`❌ Submission failed. ${result.error ? result.error : 'Please try again or contact support.'}`);
       }
     } catch (err) {
       setSubmitStatus('Network error. Please try again.');
@@ -259,6 +259,17 @@ function Step1({ setCanProceed }) {
             <span>Schedule Consultation</span>
           </button>
           {submitStatus && <div className="mt-2 text-orange-400 text-sm text-center">{submitStatus}</div>}
+          {submitStatus && (
+            <div className="mt-2 text-orange-400 text-sm text-center">
+              {submitStatus}
+              {submitStatus.includes('successfully') && (
+                <div className="mt-1 text-orange-300">Thank you for booking with GoodAV. You will receive a confirmation email soon.</div>
+              )}
+              {submitStatus.includes('failed') && (
+                <div className="mt-1 text-orange-300">If the problem persists, please contact us at form@goodav.net.</div>
+              )}
+            </div>
+          )}
         </div>
       </div>
       {selectedOption === "Other" && (
