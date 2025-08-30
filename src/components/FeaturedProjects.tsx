@@ -376,6 +376,8 @@ export default function FeaturedProjects() {
           >
             <button 
               className="absolute top-4 right-4 text-white hover:text-orange-500 transition-colors"
+              title="Close video"
+              aria-label="Close video"
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedVideo(null);
@@ -417,7 +419,7 @@ function Card({ project, setSelectedVideo }: { project: { id: number; title: str
         loading="lazy"
       />
       <button className="absolute inset-0 flex items-center justify-center">
-        <span className="flex items-center justify-center w-12 h-12 rounded-full bg-orange-600/80 hover:bg-orange-600 transition">
+        <span className="flex items-center justify-center w-12 h-12 rounded-full bg-orange-600/80 hover:bg-orange-600 transition" title="Play project video">
           <Play className="w-6 h-6 text-white" />
         </span>
       </button>
