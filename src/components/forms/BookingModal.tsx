@@ -783,9 +783,9 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
            ))}
          </div>
          {/* Feedback and validation comments */}
-         {!selectedDate && <div className="text-orange-400 mt-4 text-sm">Please select a date to view available times.</div>}
-         {selectedDate && !selectedTime && <div className="text-orange-400 mt-4 text-sm">Please select a time slot to confirm your booking.</div>}
-         {selectedDate && selectedTime && <div className="mt-4 text-sm font-semibold text-orange-300">Ready to confirm: {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()} at {selectedTime} ({timezone})</div>}
+         {!selectedDate && <div className="text-red-400 mt-4 text-sm">Please select a date to view available times.</div>}
+         {selectedDate && !selectedTime && <div className="text-red-400 mt-4 text-sm">Please select a time slot to confirm your booking.</div>}
+         {selectedDate && selectedTime && <div className="mt-4 text-sm font-semibold text-green-400">Ready to confirm: {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()} at {selectedTime} ({timezone})</div>}
        </div>
     </div>
   );
