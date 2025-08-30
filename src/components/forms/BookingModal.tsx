@@ -1367,7 +1367,7 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
         </div>
 
         {/* Phone number field */}
-        <div className="mb-4">
+        <div className="mb-8 relative">
           <label className="block text-sm font-medium text-white-400 mb-2">Phone Number</label>
           <div className="flex gap-2">
             <select
@@ -1387,14 +1387,16 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
               value={phone}
               onChange={e => setPhone(e.target.value.replace(/\D/g, ''))} // Only allow digits
               placeholder="123456789"
-              className={`p-3 rounded bg-[#252529] border focus:outline-none flex-1 text-white placeholder-gray-400 ${
-                phone && phone.length >= 7 ? 'border-orange-500' :
+              className={`p-3 rounded bg-[#252529] border focus:outline-none flex-1 text-white placeholder-gray-400 transition-all duration-200 ${
+                phone && phone.length >= 7 ? 'border-orange-500 shadow-lg shadow-orange-500/20' :
                 phone && phone.length < 7 ? 'border-red-500' : 'border-gray-700 focus:border-orange-500'
               }`}
             />
           </div>
           {phone && phone.length < 7 && (
-            <div className="text-red-400 text-xs mt-1">Please enter a valid phone number (at least 7 digits)</div>
+            <div className="absolute -bottom-6 left-0 text-red-400 text-xs font-medium bg-red-900/20 px-2 py-1 rounded border border-red-500/50 animate-in slide-in-from-top-1 duration-200 mt-2">
+              ⚠️ Please enter a valid phone number (at least 7 digits)
+            </div>
           )}
         </div>
 
