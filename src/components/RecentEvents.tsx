@@ -8,12 +8,12 @@ export default function RecentEvents() {
 
   // NEW: central list of gallery image sources (from your JSX below)
   const galleryImages = [
-  "/images/Home/Events/GOODAV_Event_1.jpg",
-  "/images/Home/Events/GOODAV_Event_2.jpg",
-  "/images/Home/Events/GOODAV_Event_3.jpg",
-  "/images/Home/Events/GOODAV_Event_4.jpg",
-  "/images/Home/Events/GOODAV_Event_5.jpg",
-  "/images/Home/Events/GOODAV_Event_Master.jpg",
+    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_1.jpg",
+    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_2.jpg",
+    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_3.jpg",
+    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_4.jpg",
+    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_5.jpg",
+    "src/assets/images/all_site_images/Home/Events/GOODAV_Event_Master.jpg",
   ];
 
   // NEW: open/close and navigation
@@ -89,61 +89,57 @@ export default function RecentEvents() {
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 
             <ul className="space-y-3">
-      </ul>
-      <h2 className="text-md text-center font-semibold text-zinc-200">Deliveries</h2>
-      <ul className="space-y-3">
-      {[
-        "Full-length recap and highlight videos",
-        "Street-style interviews and cinematic b-roll",
-        "Event photography for internal and external communications",
-        "Fast-turnaround edits to meet real-time content needs",
-      ].map((item) => (
-        <li key={item} className="flex items-start gap-3">
-        <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-orange-500/15 ring-1 ring-white/10">
-          <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="h-3.5 w-3.5 text-orange-400"
-          aria-hidden="true"
-          >
-          <path
-            fillRule="evenodd"
-            d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.01 7.06a1 1 0 0 1-1.423.01L3.29 8.773a1 1 0 1 1 1.418-1.41l3.07 3.09 6.3-6.34a1 1 0 0 1 1.426.176Z"
-            clipRule="evenodd"
-          />
-          </svg>
-        </span>
-        <span className=" text-md leading-6 text-zinc-200">{item}</span>
-        </li>
-      ))}
+            <h2 className="text-md text-center font-semibold text-zinc-200">Deliveries</h2>
+            {[
+                "Full-length recap and highlight videos",
+                "Street-style interviews and cinematic b-roll",
+                "Event photography for internal and external communications",
+                "Fast-turnaround edits to meet real-time content needs",
+            ].map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-orange-500/15 ring-1 ring-white/10">
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="h-3.5 w-3.5 text-orange-400"
+                    aria-hidden="true"
+                    >
+                    <path
+                        fillRule="evenodd"
+                        d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.01 7.06a1 1 0 0 1-1.423.01L3.29 8.773a1 1 0 1 1 1.418-1.41l3.07 3.09 6.3-6.34a1 1 0 0 1 1.426.176Z"
+                        clipRule="evenodd"
+                    />
+                    </svg>
+                </span>
+                <span className=" text-md leading-6 text-zinc-200">{item}</span>
+                </li>
+            ))}
             </ul>
 
 
             <ul className=" space-y-4">
-      </ul>
-      <h2 className="text-sm text-center font-semibold text-zinc-200">Clients</h2>
-      <ul className=" space-y-4">
-      {["Gilead Sciences", "Plus Life Media"].map((client) => (
-        <li key={client} className="flex items-start gap-3">
-        <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-orange-500/15 ring-1 ring-white/10">
-          <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="h-3.5 w-3.5 text-orange-400"
-          aria-hidden="true"
-          >
-          <path
-            fillRule="evenodd"
-            d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.01 7.06a1 1 0 0 1-1.423.01L3.29 8.773a1 1 0 1 1 1.418-1.41l3.07 3.09 6.3-6.34a1 1 0 0 1 1.426.176Z"
-            clipRule="evenodd"
-          />
-          </svg>
-        </span>
-        <span className="text-md leading-6 text-zinc-200">{client}</span>
-        </li>
-      ))}
+            <h2 className="text-sm text-center font-semibold text-zinc-200">Clients</h2>
+            {["Gilead Sciences", "Plus Life Media"].map((client) => (
+                <li key={client} className="flex items-start gap-3">
+                <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-orange-500/15 ring-1 ring-white/10">
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="h-3.5 w-3.5 text-orange-400"
+                    aria-hidden="true"
+                    >
+                    <path
+                        fillRule="evenodd"
+                        d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.01 7.06a1 1 0 0 1-1.423.01L3.29 8.773a1 1 0 1 1 1.418-1.41l3.07 3.09 6.3-6.34a1 1 0 0 1 1.426.176Z"
+                        clipRule="evenodd"
+                    />
+                    </svg>
+                </span>
+                <span className="text-md leading-6 text-zinc-200">{client}</span>
+                </li>
+            ))}
             </ul>
 
             </div>
@@ -243,17 +239,17 @@ export default function RecentEvents() {
                 <GalleryTile
                   index={0}
                   onClick={() => openLightbox(0)}
-                  src="/images/Home/Events/GOODAV_Event_1.jpg"
+                  src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_1.jpg"
                 />
                 <GalleryTile
                   index={1}
                   onClick={() => openLightbox(1)}
-                  src="/images/Home/Events/GOODAV_Event_2.jpg"
+                  src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_2.jpg"
                 />
                 <GalleryTile
                   index={2}
                   onClick={() => openLightbox(2)}
-                  src="/images/Home/Events/GOODAV_Event_3.jpg"
+                  src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_3.jpg"
                 />
               </div>
 
@@ -285,19 +281,19 @@ export default function RecentEvents() {
                 className="col-span-1"
                 index={3}
                 onClick={() => openLightbox(3)}
-                src="/images/Home/Events/GOODAV_Event_4.jpg"
+                src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_4.jpg"
               />
               <GalleryTile
                 className="col-span-1"
                 index={4}
                 onClick={() => openLightbox(4)}
-                src="/images/Home/Events/GOODAV_Event_5.jpg"
+                src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_5.jpg"
               />
               <GalleryTile
                 className="col-span-1"
                 index={5}
                 onClick={() => openLightbox(5)}
-                src="/images/Home/Events/GOODAV_Event_Master.jpg"
+                src="src/assets/images/all_site_images/Home/Events/GOODAV_Event_Master.jpg"
               />
             </div>
 
@@ -313,9 +309,9 @@ export default function RecentEvents() {
               </div>
               <a
                 target="_blank"
-                rel="noopener"
                 href="https://www.flickr.com/photos/202425883@N07/albums/72177720327653270/"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-xs font-semibold text-zinc-900 shadow hover:from-orange-400 hover:to-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60"
+                rel="noopener noreferrer"
               >
                 View Gallery →
               </a>
