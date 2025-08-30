@@ -259,13 +259,13 @@ function Step1({ setCanProceed }) {
             <span>Schedule Consultation</span>
           </button>
           {submitStatus && <div className="mt-2 text-orange-400 text-sm text-center">{submitStatus}</div>}
-          {submitStatus && (
+          {state.submitStatus && (
             <div className="mt-2 text-orange-400 text-sm text-center">
-              {submitStatus}
-              {submitStatus.includes('successfully') && (
+              {state.submitStatus}
+              {state.submitStatus.includes('successfully') && (
                 <div className="mt-1 text-orange-300">Thank you for booking with GoodAV. You will receive a confirmation email soon.</div>
               )}
-              {submitStatus.includes('failed') && (
+              {state.submitStatus.includes('failed') && (
                 <div className="mt-1 text-orange-300">If the problem persists, please contact us at form@goodav.net.</div>
               )}
             </div>
