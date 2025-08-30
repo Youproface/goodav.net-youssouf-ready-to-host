@@ -1135,8 +1135,8 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                 <button
                   key={i}
                   className={`rounded-full h-8 w-8 flex items-center justify-center text-sm font-bold transition-all
-                    ${isPastDate(calendarYear, calendarMonth, day) ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-orange-100 text-orange-700 hover:bg-orange-300'}
-                    ${selectedDate && selectedDate.day === day && selectedDate.month === calendarMonth && selectedDate.year === calendarYear ? 'bg-orange-600 text-white ring-4 ring-orange-400 shadow-lg scale-110 z-10' : ''}`}
+                    ${isPastDate(calendarYear, calendarMonth, day) ? 'bg-gray-800 text-gray-500 cursor-not-allowed' : 'bg-[#252529] text-gray-200 border border-gray-700 hover:bg-[#2f2f31]'}
+                    ${selectedDate && selectedDate.day === day && selectedDate.month === calendarMonth && selectedDate.year === calendarYear ? 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20' : ''}`}
                   disabled={isPastDate(calendarYear, calendarMonth, day)}
                   onClick={() => setSelectedDate({ day, month: calendarMonth, year: calendarYear })}
                   aria-label={isPastDate(calendarYear, calendarMonth, day) ? 'Past date not selectable' : `Select ${day} ${calendarMonth+1} ${calendarYear}`}
