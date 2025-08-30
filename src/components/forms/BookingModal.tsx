@@ -218,69 +218,8 @@ export default function BookingModal({
                 aria-label="Booking progress"
                 title="Booking progress"
               ></div>
-/* -------------------------
-   STEP 6
-function Step6({
-  selectedDate,
-  setSelectedDate,
-  selectedTime,
-  setSelectedTime,
-  timezone,
-  setTimezone,
-  submitStatus,
-  handleFormSubmit
-}) {
-  // List of time zones (IANA)
-  const timeZones = [
-    'Africa/Kigali', // Kigali (Central African Time)
-    'Africa/Maputo',
-    'Africa/Lagos',
-    'Africa/Cairo',
-    'Europe/London',
-    'Europe/Paris',
-    'Europe/Berlin',
-    'America/New_York',
-    'America/Chicago',
-    'America/Denver',
-    'America/Los_Angeles',
-    'Asia/Dubai',
-    'Asia/Kolkata',
-    'Asia/Tokyo',
-    'Asia/Shanghai',
-    'Australia/Sydney',
-    'Pacific/Auckland',
-    'UTC',
-  ];
-  // Calendar logic: allow selection from today to any future date
-  const today = new Date();
-  const [calendarMonth, setCalendarMonth] = useState(today.getMonth());
-  const [calendarYear, setCalendarYear] = useState(today.getFullYear());
-  // Helper to get days in month
-  function getDaysInMonth(year, month) {
-    return new Date(year, month + 1, 0).getDate();
-  }
-  // Helper to get first day of week (0=Sun)
-  function getFirstDayOfWeek(year, month) {
-    return new Date(year, month, 1).getDay();
-  }
-  const daysInMonth = getDaysInMonth(calendarYear, calendarMonth);
-  const firstDayOfWeek = getFirstDayOfWeek(calendarYear, calendarMonth);
-  // Build calendar grid
-  const calendarGrid = [];
-  let dayNum = 1;
-  for (let i = 0; i < 6; i++) {
-    const week = [];
-    for (let j = 0; j < 7; j++) {
-      if ((i === 0 && j < firstDayOfWeek) || dayNum > daysInMonth) {
-        week.push(null);
-      } else {
-        week.push(dayNum);
-        dayNum++;
-      }
-    }
-    calendarGrid.push(week);
-  }
-  // ...existing code...
+// Move all step components above BookingModal
+// ...existing Step1, Step2, Step3, Step4, Step5, Step6 definitions above...
           </button>
           {submitStatus && (
             <div className="mt-2 text-orange-400 text-sm text-center">
