@@ -48,7 +48,7 @@ const BehindTheScenes = () => {
         <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
   <div className="group relative overflow-hidden rounded-xl">
     <img
-      src="src/assets/images/all_site_images/Home/Team/Team_2.png"
+  src="/images/Home/Team/Team_2.png"
       alt="Behind the scenes 1"
       className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-[1.02]"
     />

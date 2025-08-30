@@ -39,7 +39,7 @@ export default function CreativeExcellence() {
         {/* Image Strip */}
         <div className="grid grid-cols-1 md:grid-cols-1 gap-4 mb-10">
           <img
-          src="src/assets/images/all_site_images/Home/Team/Team_3.png"
+          src="/images/Home/Team/Team_3.png"
           alt="Creative team 1"
           className="rounded-lg object-cover w-full h-auto"
           loading="lazy"
