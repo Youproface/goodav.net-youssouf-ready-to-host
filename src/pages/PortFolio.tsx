@@ -1,41 +1,7 @@
-import React, { useState } from 'react';
-import img22 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-27.jpg';
-import img23 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-28.jpg';
-import img24 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-29.jpg';
-import img25 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-30.jpg';
-import img26 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-31.jpg';
-import img27 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-33.jpg';
-import img28 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-34.jpg';
-import img29 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-35.jpg';
-import img30 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-39.jpg';
-import img31 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-40.jpg';
-import img32 from '../assets/images/all_site_images/Portfolio/Videos/Video-img-41.jpg';
 import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
 
 const Portfolio = () => {
-  const [activeFilter, setActiveFilter] = useState('all');
-  // ...all logic and arrays above...
-  return (
-    <div>
-      <SEO
-        title="Portfolio - GoodAV | Award-Winning Audiovisual Projects"
-        description="Explore GoodAV’s portfolio of award-winning audiovisual productions, documentaries, and event coverage across Africa."
-        canonical="https://goodav.net/portfolio"
-      />
-      <div className="min-h-screen bg-black text-white">
-        {/* ...rest of the page content... */}
-      </div>
-    </div>
-  );
-};
-
-
-import SEO from '@/components/SEO';
-import SchemaMarkup from '@/components/SchemaMarkup';
-const Portfolio = () => {
-  const [activeFilter, setActiveFilter] = useState('all');
-  // ...all logic and arrays above...
   return (
     <div>
       <SEO
@@ -58,12 +24,13 @@ const Portfolio = () => {
         }}
       />
       <div className="min-h-screen bg-black text-white">
-        {/* Hero Section */}
-        {/* ...rest of the page content... */}
+        {/* Portfolio content goes here. Add images and markup as needed. */}
       </div>
     </div>
   );
-      <SchemaMarkup
+};
+
+export default Portfolio;
         schema={{
           "@context": "https://schema.org",
           "@type": "CreativeWork",
