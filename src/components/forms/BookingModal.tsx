@@ -504,7 +504,7 @@ export default function BookingModal({
             </div>
 
             {/* Step Title */}
-            <p className="mt-4 text-sm font-medium">Step {step} of 6</p>
+            <p className="mt-4 text-sm font-medium">Step {step} of 7</p>
 
             {/* Step Content */}
             <div className="mt-6">
