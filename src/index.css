@@ -136,3 +136,20 @@ All colors MUST be HSL for proper theming.
     @apply text-4xl md:text-6xl font-black gradient-text;
   }
 }
+
+/* Radix UI Tooltip Styles */
+[data-radix-tooltip-content] {
+  z-index: 9999;
+  animation: tooltip-appear 0.2s ease-out;
+}
+
+@keyframes tooltip-appear {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
