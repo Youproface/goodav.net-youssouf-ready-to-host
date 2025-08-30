@@ -72,10 +72,11 @@ export default function ContactUs() {
                   Book Your Consultation
                 </button>
   
-                <ul className="mt-5 space-y-3 text-sm sm:text-base text-zinc-300"><Bullet>Personalized project consultation & strategy</Bullet>
-                  <Bullet>Timeline & budget discussion</Bullet>
-                  <Bullet>Creative direction & vision guidance</Bullet>
-                  <Bullet>Custom proposal & implementation roadmap</Bullet>
+                <ul className="mt-5 space-y-3 text-sm sm:text-base text-zinc-300">
+                  <li><Bullet>Personalized project consultation & strategy</Bullet></li>
+                  <li><Bullet>Timeline & budget discussion</Bullet></li>
+                  <li><Bullet>Creative direction & vision guidance</Bullet></li>
+                  <li><Bullet>Custom proposal & implementation roadmap</Bullet></li>
                 </ul>
                  {/* Contact blocks */}
               <div className="mt-6 space-y-3 md:space-y-4">
