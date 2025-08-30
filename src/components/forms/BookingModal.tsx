@@ -1,3 +1,27 @@
+import { useEffect, useState } from "react";
+import {
+  Video,
+  Camera,
+  Film,
+  Radio,
+  Briefcase,
+  Users,
+  Clock,
+  Calendar,
+  DollarSign,
+  Star,
+  Layers,
+  PenTool,
+  Share2,
+  Settings,
+  User,
+  Building,
+} from "lucide-react";
+
+// Step components go here (Step1, Step2, Step3, Step4, Step5, Step6)
+// ...existing code for step components...
+
+export default function BookingModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) {
   // Booking form state
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -11,11 +35,6 @@
   const [modalOpen, setModalOpen] = useState(isOpen);
   const [canProceed, setCanProceed] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
-
-import { useEffect, useState } from "react";
-import {
-  // ...existing code...
-  // ...existing code...
 
   const nextStep = () => setStep((s) => Math.min(s + 1, 6));
   const prevStep = () => setStep((s) => Math.max(s - 1, 1));
