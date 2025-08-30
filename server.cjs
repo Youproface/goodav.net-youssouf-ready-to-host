@@ -2,6 +2,7 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
@@ -24,12 +25,12 @@ app.post('/api/bookings', async (req, res) => {
       try {
         // Configure transporter (use your SMTP provider or Gmail for demo)
         let transporter = nodemailer.createTransport({
-          host: 'smtp.goodav.net', // Use your domain SMTP server
-          port: 587,
+          host: process.env.SMTP_HOST || 'smtp.goodav.net',
+          port: process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT) : 587,
           secure: false,
           auth: {
-            user: 'form@goodav.net',
-            pass: 'YOUR_EMAIL_PASSWORD' // Replace with your actual password or use env variable
+            user: process.env.SMTP_USER || 'form@goodav.net',
+            pass: process.env.SMTP_PASS
           }
         });
         // Email content
