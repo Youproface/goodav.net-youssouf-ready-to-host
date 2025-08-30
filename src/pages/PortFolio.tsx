@@ -91,15 +91,6 @@ const Portfolio = () => {
       </div>
     </div>
   );
-    { id: 24, title: "Panel Discussion", category: "events", image: img24, rating: 4.6, year: "2024" },
-    { id: 25, title: "Networking Event", category: "events", image: img25, rating: 4.7, year: "2024" },
-    { id: 26, title: "Award Ceremony", category: "events", image: img26, rating: 4.8, year: "2024" },
-    { id: 27, title: "Project Showcase", category: "corporate", image: img27, rating: 4.5, year: "2023" },
-    { id: 28, title: "Team Photo", category: "corporate", image: img28, rating: 4.4, year: "2023" },
-    { id: 29, title: "Corporate Gathering", category: "corporate", image: img29, rating: 4.6, year: "2023" },
-    { id: 30, title: "Product Demonstration", category: "corporate", image: img30, rating: 4.7, year: "2024" },
-    { id: 31, title: "Client Meeting", category: "corporate", image: img31, rating: 4.5, year: "2024" },
-    { id: 32, title: "Corporate Training", category: "education", image: img32, rating: 4.6, year: "2024" }
   ];
 
   const stats = [
