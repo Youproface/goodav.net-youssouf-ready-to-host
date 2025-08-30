@@ -249,6 +249,17 @@ function Step1({ setCanProceed }) {
         {submitStatus && <div className="mt-2 text-orange-400 text-sm">{submitStatus}</div>}
         {/* Submission feedback */}
         {submitStatus && <div className="mt-2 text-orange-400 text-sm">{submitStatus}</div>}
+        {/* Schedule Consultation Button and feedback */}
+        <div className="flex flex-col items-center mt-6">
+          <button
+            onClick={handleFormSubmit}
+            className="flex items-center px-6 py-2 bg-orange-600 rounded-lg hover:bg-orange-700 text-white font-semibold"
+          >
+            <Calendar className="w-5 h-5 mr-2" />
+            <span>Schedule Consultation</span>
+          </button>
+          {submitStatus && <div className="mt-2 text-orange-400 text-sm text-center">{submitStatus}</div>}
+        </div>
       </div>
       {selectedOption === "Other" && (
         <div className="mt-4">
