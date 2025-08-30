@@ -682,29 +682,52 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
         {/* Contact & Project Info Section */}
         <div className="w-full mt-8">
           <div className="grid md:grid-cols-2 gap-4 mb-4">
-            <input
-              type="text"
-              value={name}
-              onChange={e => setName(e.target.value)}
-              placeholder="Full Name *"
-              className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none w-full text-white placeholder-orange-300"
-            />
-            <input
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="Email Address *"
-              className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none w-full text-white placeholder-orange-300"
-            />
+            <div>
+              <input
+                type="text"
+                value={name}
+                onChange={e => setName(e.target.value)}
+                placeholder="Full Name *"
+                className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none w-full text-white placeholder-orange-300 ${
+                  name.trim() ? 'border-green-500' : 'border-orange-500'
+                }`}
+                required
+              />
+              {name && !name.trim() && <div className="text-red-400 text-xs mt-1">Full name is required</div>}
+            </div>
+            <div>
+              <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="Email Address *"
+                className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none w-full text-white placeholder-orange-300 ${
+                  email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-green-500' :
+                  email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-red-500' : 'border-orange-500'
+                }`}
+                required
+              />
+              {email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && (
+                <div className="text-red-400 text-xs mt-1">Please enter a valid email address</div>
+              )}
+            </div>
           </div>
           <div className="grid md:grid-cols-2 gap-4 mb-4">
-            <input
-              type="text"
-              value={phone}
-              onChange={e => setPhone(e.target.value)}
-              placeholder="Phone Number"
-              className="p-3 rounded bg-[#1b1b1d] border border-orange-500 focus:outline-none w-full text-white placeholder-orange-300"
-            />
+            <div>
+              <input
+                type="text"
+                value={phone}
+                onChange={e => setPhone(e.target.value)}
+                placeholder="Phone Number"
+                className={`p-3 rounded bg-[#1b1b1d] border focus:outline-none w-full text-white placeholder-orange-300 ${
+                  phone && /^\+?[\d\s\-\(\)]{10,}$/.test(phone.replace(/\s/g, '')) ? 'border-green-500' :
+                  phone && !/^\+?[\d\s\-\(\)]{10,}$/.test(phone.replace(/\s/g, '')) ? 'border-red-500' : 'border-orange-500'
+                }`}
+              />
+              {phone && !/^\+?[\d\s\-\(\)]{10,}$/.test(phone.replace(/\s/g, '')) && (
+                <div className="text-red-400 text-xs mt-1">Please enter a valid phone number</div>
+              )}
+            </div>
             <input
               type="text"
               value={organization}
