@@ -333,7 +333,7 @@ export default function BookingModal({
     const bookingData = {
       name: name.trim(),
       email: email.trim(),
-      phone: phone.trim(),
+      phone: phone ? `${countryCode}${phone}` : '',
       organization: organization.trim(),
       project: project.trim(),
       date: selectedDate ? `${selectedDate.year}-${String(selectedDate.month + 1).padStart(2, '0')}-${String(selectedDate.day).padStart(2, '0')}` : '',
