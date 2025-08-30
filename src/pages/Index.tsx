@@ -16,11 +16,89 @@ import Blogs from '@/components/BlogsSection';
 import BTSMasterProdcution from '@/components/BTSMasterProdcution';
 import Excellence from '@/components/Excellence';
 import GlobalImpact from '@/components/GlobalImpact';
+import SEO from '@/components/SEO';
+import SchemaMarkup from '@/components/SchemaMarkup';
 
 const Index = () => {
   return (
     <div className="min-h-screen">
-      {/* <Header /> */}
+      <SEO
+        title="GoodAV - Africa's Premier Audiovisual Agency | Kigali, Rwanda"
+        description="Africa's premier audiovisual agency transforming ideas into impactful visual stories. GoodAV empowers African narratives through cinematic production, live streaming, photography, and strategic media coverage."
+        keywords="audiovisual production Rwanda, video production Kigali, African storytelling, event media coverage, cinematic campaigns, live streaming services, photography for events, NGO storytelling, corporate video production, conference tourism Africa, creative economy Africa, digital media Africa, multilingual video production, documentary filmmaking Rwanda, social media video content, branding through video, testimonials video editing, lighting and sound systems, virtual event production, e-learning video solutions, audiovisual services for NGOs, African creative industries, youth empowerment through media, cultural preservation via film, pan-African media agency, impact storytelling Africa, professional media coverage, YouTube content creation Africa, Instagram reels production, TikTok video strategy Africa, cinematic drone footage Rwanda, visual storytelling for brands, high-quality video editing, media production for development, creative direction Africa, audiovisual innovation Africa"
+        canonical="https://goodav.net/"
+      />
+      <SchemaMarkup
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "GoodAV",
+          "url": "https://goodav.net",
+          "logo": "https://goodav.net/image/Assets/logo-fav.png",
+          "description": "Africa's premier audiovisual agency transforming ideas into impactful visual stories. GoodAV empowers African narratives through cinematic production, live streaming, photography, and strategic media coverage.",
+          "sameAs": [
+            "https://www.instagram.com/goodaudiovisual",
+            "https://www.youtube.com/@goodaudiovisuals",
+            "https://www.facebook.com/goodaudiovisuals",
+            "https://www.linkedin.com/company/goodav"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+250788613332",
+            "email": "info@goodav.net",
+            "contactType": "Customer Support",
+            "areaServed": ["Rwanda", "Africa", "International"],
+            "availableLanguage": ["en", "fr"]
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kigali",
+            "addressCountry": "RW"
+          },
+          "founder": {
+            "@type": "Person",
+            "name": "Youssouf Hakizimana"
+          },
+          "keywords": [
+            "audiovisual production Rwanda",
+            "video production Kigali",
+            "African storytelling",
+            "event media coverage",
+            "cinematic campaigns",
+            "live streaming services",
+            "photography for events",
+            "NGO storytelling",
+            "corporate video production",
+            "conference tourism Africa",
+            "creative economy Africa",
+            "digital media Africa",
+            "multilingual video production",
+            "documentary filmmaking Rwanda",
+            "social media video content",
+            "branding through video",
+            "testimonials video editing",
+            "lighting and sound systems",
+            "virtual event production",
+            "e-learning video solutions",
+            "audiovisual services for NGOs",
+            "African creative industries",
+            "youth empowerment through media",
+            "cultural preservation via film",
+            "pan-African media agency",
+            "impact storytelling Africa",
+            "professional media coverage",
+            "YouTube content creation Africa",
+            "Instagram reels production",
+            "TikTok video strategy Africa",
+            "cinematic drone footage Rwanda",
+            "visual storytelling for brands",
+            "high-quality video editing",
+            "media production for development",
+            "creative direction Africa",
+            "audiovisual innovation Africa"
+          ]
+        }}
+      />
       <main>
         <Hero />
         <PartnersSection />
