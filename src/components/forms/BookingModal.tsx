@@ -78,40 +78,80 @@ export default function BookingModal({
   // Send booking data to backend API
   async function handleFormSubmit(e) {
     e.preventDefault();
-    // Validate required fields
-    if (!name || !email || !selectedDate || !selectedTime) {
-      setSubmitStatus('Please fill in all required fields.');
+
+    // Comprehensive validation
+    const errors = [];
+
+    // Required fields validation
+    if (!name.trim()) errors.push('Full name is required');
+    if (!email.trim()) errors.push('Email address is required');
+    if (!selectedDate) errors.push('Please select a date');
+    if (!selectedTime) errors.push('Please select a time slot');
+
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) errors.push('Please enter a valid email address');
+
+    // Phone validation (optional but if provided, should be valid)
+    if (phone && !/^\+?[\d\s\-\(\)]{10,}$/.test(phone.replace(/\s/g, ''))) {
+      errors.push('Please enter a valid phone number');
+    }
+
+    if (errors.length > 0) {
+      setSubmitStatus(`❌ ${errors.join('. ')}.`);
       return;
     }
+
     setSubmitting(true);
-    setSubmitStatus('Submitting...');
+    setSubmitStatus('Submitting your booking...');
+
     const bookingData = {
-      name,
-      email,
-      phone,
-      organization,
-      project,
-      date: selectedDate ? `${selectedDate.year}-${selectedDate.month+1}-${selectedDate.day}` : '',
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim(),
+      organization: organization.trim(),
+      project: project.trim(),
+      date: selectedDate ? `${selectedDate.year}-${String(selectedDate.month + 1).padStart(2, '0')}-${String(selectedDate.day).padStart(2, '0')}` : '',
       time: selectedTime,
       timezone,
     };
+
     try {
-      const res = await fetch('http://localhost:4000/api/bookings', {
+      const response = await fetch('http://localhost:4000/api/bookings', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(bookingData),
       });
-      const result = await res.json();
-      if (result.success) {
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         setSubmitStatus('✅ Your booking was submitted successfully! We will contact you soon.');
-        // Optionally reset form fields here
+        // Reset form after successful submission
+        setName('');
+        setEmail('');
+        setPhone('');
+        setOrganization('');
+        setProject('');
+        setSelectedDate(null);
+        setSelectedTime('');
+        setStep(1);
       } else {
-        setSubmitStatus(`❌ Submission failed. ${result.error ? result.error : 'Please try again or contact support.'}`);
+        const errorMessage = result.error || 'Submission failed. Please try again.';
+        setSubmitStatus(`❌ ${errorMessage}`);
       }
-    } catch (err) {
-      setSubmitStatus('Network error. Please try again.');
+    } catch (error) {
+      console.error('Submission error:', error);
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        setSubmitStatus('❌ Network error. Please check your connection and try again.');
+      } else {
+        setSubmitStatus('❌ An unexpected error occurred. Please try again or contact support.');
+      }
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
   }
 
   return (
