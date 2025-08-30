@@ -274,8 +274,8 @@ export default function BookingModal({
     if (email && !emailRegex.test(email)) errors.push('Please enter a valid email address');
 
     // Phone validation (optional but if provided, should be valid)
-    if (phone && !/^\+?[\d\s\-\(\)]{10,}$/.test(phone.replace(/\s/g, ''))) {
-      errors.push('Please enter a valid phone number');
+    if (phone && phone.length < 7) {
+      errors.push('Please enter a valid phone number (at least 7 digits)');
     }
 
     return errors;
