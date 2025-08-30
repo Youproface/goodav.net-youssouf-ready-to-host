@@ -514,6 +514,7 @@ export default function BookingModal({
               {step === 4 && <Step4 setCanProceed={setCanProceed} />}
               {step === 5 && <Step5 nextStep={nextStep} />}
               {step === 6 && <Step6 submitStatus={submitStatus} handleFormSubmit={handleFormSubmit} name={name} setName={setName} email={email} setEmail={setEmail} phone={phone} setPhone={setPhone} countryCode={countryCode} setCountryCode={setCountryCode} countryCodes={countryCodes} organization={organization} setOrganization={setOrganization} project={project} setProject={setProject} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedTime={selectedTime} setSelectedTime={setSelectedTime} timezone={timezone} setTimezone={setTimezone} submitting={submitting} handleTimeConfirmation={handleTimeConfirmation} confirmationMessage={confirmationMessage} timeSlotConfirmed={timeSlotConfirmed} setTimeSlotConfirmed={setTimeSlotConfirmed} />}
+              {step === 7 && <Step7 meetingSoftware={meetingSoftware} setMeetingSoftware={setMeetingSoftware} handleFormSubmit={handleFormSubmit} submitting={submitting} />}
             </div>
 
             {/* Navigation */}
