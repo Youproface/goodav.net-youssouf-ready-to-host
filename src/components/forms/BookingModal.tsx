@@ -386,6 +386,7 @@ export default function BookingModal({
       date: selectedDate ? `${selectedDate.year}-${String(selectedDate.month + 1).padStart(2, '0')}-${String(selectedDate.day).padStart(2, '0')}` : '',
       time: selectedTime,
       timezone,
+      meetingSoftware: meetingSoftware || '',
     };
 
     try {
