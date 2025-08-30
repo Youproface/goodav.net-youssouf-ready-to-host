@@ -76,12 +76,6 @@ const Header = () => {
           </div>
         </div>
       </nav>
-
-      {/* Booking Modal */}
-      <BookingModal
-        isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
-      />
     </header>
   );
 };
