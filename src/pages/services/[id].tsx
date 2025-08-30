@@ -52,7 +52,6 @@ const ServiceDetails: React.FC = () => {
         title={`${service.title} | Our Services | GoodAV`}
         description={service.details.heroDescription}
         canonical={`https://goodav.net/services/${service.id}`}
-        meta={[{ name: 'keywords', content: `${service.title}, AV services, GoodAV, professional audio visual, ${service.details.heroTitle}` }]}
       />
       {/* Hero Section */}
       <section className="relative py-20 bg-gradient-to-b from-background to-background/90" aria-labelledby="service-hero-title">
