@@ -1356,7 +1356,7 @@ function Step6({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
                 onClick={() => setMeetingSoftware(option.label)}
                 className={`flex items-start gap-3 p-3 rounded-lg border text-left transition-all duration-200 ${
                   meetingSoftware === option.label
-                    ? 'bg-green-500 border-green-500 shadow-lg shadow-green-500/20'
+                    ? 'bg-green-500/10 border-green-500 shadow-lg shadow-green-500/10'
                     : 'bg-[#252529] border-gray-700 hover:bg-[#2f2f31]'
                 }`}
               >
