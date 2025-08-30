@@ -110,8 +110,7 @@ export default function AboutUs() {
                 <img
                   src="src/assets/images/all_site_images/About/Founder/Youssouf_Hakizimana_CEO_GoodAV.jpg"
                   alt="Founder portrait"
-                  className="w-full h-full object-cover object-top"
-                  style={{ objectPosition: 'center 30%' }}
+                  className="w-full h-full object-cover object-[center_30%]"
                 />
               </div>
               <figcaption className="px-4 py-2 text-center font-bold text-small text-white-400">
