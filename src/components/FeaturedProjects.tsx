@@ -358,7 +358,7 @@ export default function FeaturedProjects() {
           >
             More Projects
           </button>
-            <button className="px-6 py-3 border border-gray-600 hover:border-orange-500 text-gray-300 hover:text-orange-400 font-medium rounded-lg transition" aria-label="Start the project">
+          <button className="px-6 py-3 border border-gray-600 hover:border-orange-500 text-gray-300 hover:text-orange-400 font-medium rounded-lg transition">
             Start The Project →
           </button>
         </div>
@@ -376,8 +376,6 @@ export default function FeaturedProjects() {
           >
             <button 
               className="absolute top-4 right-4 text-white hover:text-orange-500 transition-colors"
-              title="Close video"
-              aria-label="Close video"
               onClick={(e) => {
                 e.stopPropagation();
                 setSelectedVideo(null);
@@ -418,15 +416,16 @@ function Card({ project, setSelectedVideo }: { project: { id: number; title: str
         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
         loading="lazy"
       />
-  <button className="absolute inset-0 flex items-center justify-center" title="Play project video" aria-label="Play project video">
-        <span className="flex items-center justify-center w-12 h-12 rounded-full bg-orange-600/80 hover:bg-orange-600 transition" title="Play project video">
+      <button 
+        className="absolute inset-0 flex items-center justify-center"
+        aria-label={`Play video: ${project.title}`}
+        title={`Play video: ${project.title}`}
+        onClick={() => setSelectedVideo(project.video)}
+      >
+        <span className="flex items-center justify-center w-12 h-12 rounded-full bg-orange-600/80 hover:bg-orange-600 transition">
           <Play className="w-6 h-6 text-white" />
         </span>
       </button>
-      <div 
-        className="absolute inset-0 cursor-pointer"
-        onClick={() => setSelectedVideo(project.video)}
-      />
     </div>
   );
 }
