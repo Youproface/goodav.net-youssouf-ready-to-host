@@ -313,6 +313,7 @@ export default function RecentEvents() {
               </div>
               <a
                 target="_blank"
+                rel="noopener"
                 href="https://www.flickr.com/photos/202425883@N07/albums/72177720327653270/"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-xs font-semibold text-zinc-900 shadow hover:from-orange-400 hover:to-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60"
               >
