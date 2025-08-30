@@ -64,8 +64,42 @@ export default function BookingModal({
       return () => window.removeEventListener("keydown", onKey);
     }, [open, onClose]);
     
-  function handleFormSubmit(e): void {
+  // Send booking data to backend API
+  const [submitStatus, setSubmitStatus] = useState(null);
+  async function handleFormSubmit(e) {
     e.preventDefault();
+    // Validate required fields
+    if (!name || !email || !selectedDate || !selectedTime) {
+      setSubmitStatus('Please fill in all required fields.');
+      return;
+    }
+    setSubmitStatus('Submitting...');
+    const bookingData = {
+      name,
+      email,
+      phone,
+      organization,
+      project,
+      date: selectedDate ? `${selectedDate.year}-${selectedDate.month+1}-${selectedDate.day}` : '',
+      time: selectedTime,
+      timezone,
+    };
+    try {
+      const res = await fetch('http://localhost:4000/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingData),
+      });
+      const result = await res.json();
+      if (result.success) {
+        setSubmitStatus('Booking submitted successfully!');
+        // Optionally reset form fields here
+      } else {
+        setSubmitStatus(result.error || 'Submission failed.');
+      }
+    } catch (err) {
+      setSubmitStatus('Network error. Please try again.');
+    }
   }
 
   return (
@@ -211,6 +245,8 @@ function Step1({ setCanProceed }) {
           </button>
         ))}
 
+        {/* Submission feedback */}
+        {submitStatus && <div className="mt-2 text-orange-400 text-sm">{submitStatus}</div>}
       </div>
       {selectedOption === "Other" && (
         <div className="mt-4">
