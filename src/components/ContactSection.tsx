@@ -1,5 +1,6 @@
 import Map from "./Map";
 import { useState,useRef } from "react";
+import { FaCalendarAlt, FaPhone, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaCheck } from 'react-icons/fa';
 export default function ContactUs() {
 
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -19,9 +20,9 @@ export default function ContactUs() {
         body: data,
       });
       const json = await res.json();
-      setStatus({ ok: res.ok, msg: json.message || (res.ok ? "✅ Your message was sent successfully! We will contact you soon." : "❌ Submission failed. Please try again or contact support.") });
+  setStatus({ ok: res.ok, msg: json.message || (res.ok ? "Your message was sent successfully! We will contact you soon." : "Submission failed. Please try again or contact support.") });
     } catch (err) {
-      setStatus({ ok: false, msg: "❌ Network error. Please try again or contact support." });
+      setStatus({ ok: false, msg: "Network error. Please try again or contact support." });
     } finally {
       setSubmitting(false);
     }
@@ -55,7 +56,7 @@ export default function ContactUs() {
               <div className="mt-6 md:mt-8 rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur p-6 md:p-7 shadow-[0_8px_40px_rgba(0,0,0,0.35)] relative">
                 <div aria-hidden className="pointer-events-none absolute inset-0 rounded-2xl shadow-[inset_0_0_80px_rgba(255,170,80,0.08)]" />
                 <div className="mb-4 flex items-center gap-2 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-orange-300">
-                  <span className="grid h-7 w-7 sm:h-8 sm:w-8 place-items-center rounded-md bg-orange-500/20 ring-1 ring-white/10">🗓</span>
+                  <span className="grid h-7 w-7 sm:h-8 sm:w-8 place-items-center rounded-md bg-orange-500/20 ring-1 ring-white/10"><FaCalendarAlt className="h-4 w-4 text-orange-300"/></span>
                   Schedule a Strategy Call
                 </div>
                 <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
@@ -67,7 +68,7 @@ export default function ContactUs() {
                   className="mt-3 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2.5 text-sm font-semibold text-zinc-900 shadow hover:from-orange-400 hover:to-amber-300"
                 >
                   <span className="grid h-5 w-5 place-items-center rounded bg-orange-700/10 text-zinc-900">
-                  <i className="fa-solid fa-phone"></i>
+                  <FaPhone className="h-4 w-4 text-zinc-900" />
                   </span>
                   Book Your Consultation
                 </button>
@@ -79,11 +80,11 @@ export default function ContactUs() {
                   <li><Bullet>Custom proposal & implementation roadmap</Bullet></li>
                 </ul>
                  {/* Contact blocks */}
-              <div className="mt-6 space-y-3 md:space-y-4">
-                <ContactBlock icon="fa-solid fa-phone" title="+250 788 613 332" sub="Phone" />
-                <ContactBlock icon="fa-solid fa-envelope" title="info@goodav.africa" sub="Email" />
-                <ContactBlock icon="fa-solid fa-location-dot" title="Kigali, Rwanda, Africa" sub="Location" />
-                <ContactBlock icon="fa-solid fa-globe" title="Rwanda, East Africa • International Projects" sub="Service Areas" />
+                <div className="mt-6 space-y-3 md:space-y-4">
+                <ContactBlock icon={<FaPhone/>} title="+250 788 613 332" sub="Phone" />
+                <ContactBlock icon={<FaEnvelope/>} title="info@goodav.africa" sub="Email" />
+                <ContactBlock icon={<FaMapMarkerAlt/>} title="Kigali, Rwanda, Africa" sub="Location" />
+                <ContactBlock icon={<FaArrowRight/>} title="Rwanda, East Africa • International Projects" sub="Service Areas" />
               </div>
               </div>
   
@@ -102,7 +103,7 @@ export default function ContactUs() {
                   Share project details and a reply will arrive within 24 hours.
                 </p> */}
                 <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 my-6 text-sm sm:text-base text-zinc-300">
-                  <span className="flex-shrink-0 grid h-6 w-6 place-items-center rounded-full bg-emerald-500/15 ring-1 ring-white/10 text-emerald-300">✓</span>
+                  <span className="flex-shrink-0 grid h-6 w-6 place-items-center rounded-full bg-emerald-500/15 ring-1 ring-white/10 text-emerald-300"><FaCheck className="w-3 h-3" aria-hidden /></span>
                   <span>A reply will arrive within 24 hours via email.</span>
                 </div>
                 <form onSubmit={handleContactFormSubmit} ref={formRef} className="space-y-6">

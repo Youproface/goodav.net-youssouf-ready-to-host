@@ -2,6 +2,7 @@ import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { FaWhatsapp } from 'react-icons/fa';
 import ContactSection from './ContactSection';
 import BottomCTA from './BottomCTA';
 import LegalModal from './Legal/Legal-modal';
@@ -131,7 +132,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-lg bg-transparent px-6 py-3 font-semibold text-white shadow-md hover:bg-[#1ebe5d] transition-colors"
               >
-              <i className="fab fa-whatsapp "></i>
+              <FaWhatsapp className="h-5 w-5 text-green-400" />
                 Chat with us on WhatsApp
               </a>
                

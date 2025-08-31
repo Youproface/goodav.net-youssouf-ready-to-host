@@ -1,3 +1,5 @@
+import { FaLightbulb, FaCalendarAlt, FaCamera, FaPen, FaImages, FaPlay } from 'react-icons/fa';
+
 export default function Excellence() {
     return (
       <section className="relative bg-[#0e0f10] text-zinc-100">
@@ -22,22 +24,22 @@ export default function Excellence() {
           {/* process cards */}
           <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             <ProcessCard
-              icon="fa-solid fa-lightbulb"
+              icon={<FaLightbulb className="h-5 w-5 text-zinc-900" />}
               title="Concept Development"
               body="Innovative brainstorming and strategic planning of the creative vision with our clients"
             />
             <ProcessCard
-              icon="fa-solid fa-calendar"
+              icon={<FaCalendarAlt className="h-5 w-5 text-zinc-900" />}
               title="Premium Pre‑Production"
               body="Meticulous scheduling, location scouting, and professional equipment preparation"
             />
             <ProcessCard
-              icon="fa-solid fa-camera"
+              icon={<FaCamera className="h-5 w-5 text-zinc-900" />}
               title="Expert Production"
               body="Professional filming and photography with our world‑class expert team"
             />
             <ProcessCard
-              icon="fa-solid fa-pen"
+              icon={<FaPen className="h-5 w-5 text-zinc-900" />}
               title="Luxury Post‑Production"
               body="Master‑level editing, color grading, and premium final delivery"
             />
@@ -62,7 +64,7 @@ export default function Excellence() {
                   href="https://www.flickr.com/photos/202425883@N07/sets/72177720327653270/"
                   className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-3 text-sm font-semibold text-zinc-900 shadow hover:from-orange-400 hover:to-amber-300"
                 >
-                  <span className="grid h-5 w-5 place-items-center rounded bg-orange-700/10 text-zinc-900">▣</span>
+                  <span className="grid h-5 w-5 place-items-center rounded bg-orange-700/10 text-zinc-900"><FaImages className="h-4 w-4"/></span>
                   Explore Full Gallery
                 </a>
   
@@ -70,7 +72,7 @@ export default function Excellence() {
                   href="/portfolio"
                   className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-zinc-200 backdrop-blur hover:bg-white/10"
                 >
-                  <span className="grid h-5 w-5 place-items-center rounded bg-orange-500/20 text-orange-300 ring-1 ring-white/10">▶</span>
+                  <span className="grid h-5 w-5 place-items-center rounded bg-orange-500/20 text-orange-300 ring-1 ring-white/10"><FaPlay className="h-3 w-3"/></span>
                   Watch Our Premium Work
                 </a>
               </div>

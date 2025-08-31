@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BlogPost, blogPosts } from '../data/blog';
+import { FaCalendarAlt, FaClock } from 'react-icons/fa';
 
 export default function BlogsSection() {
     const [activeFilter, setActiveFilter] = useState('All Stories');
@@ -91,7 +92,7 @@ export default function BlogsSection() {
           {/* bottom actions */}
           <div className="mt-6 flex items-center justify-between flex-wrap gap-3">
             <button className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs sm:text-sm md:text-base font-semibold text-zinc-200 backdrop-blur hover:bg-white/10">
-              <span className="text-orange-300">＋</span>
+              <span className="text-orange-300">+</span>
               Show More Stories
             </button>
   
@@ -178,11 +179,11 @@ function StoryCard({ category, image, title, excerpt, date, read, cta, onClick }
           {/* meta */}
           <div className="mt-4 flex items-center justify-between text-[11px] sm:text-sm md:text-base text-zinc-400">
             <span className="inline-flex items-center gap-2">
-              <span className="grid h-4 w-4 place-items-center rounded bg-white/5 text-orange-300 ring-1 ring-white/10"><i className="fa-solid fa-calendar"></i></span>
+              <span className="grid h-4 w-4 place-items-center rounded bg-white/5 text-orange-300 ring-1 ring-white/10"><FaCalendarAlt className="h-3 w-3" /></span>
               {date}
             </span>
             <span className="inline-flex items-center gap-2">
-              <span className="grid h-4 w-4 place-items-center rounded bg-white/5 text-orange-300 ring-1 ring-white/10"><i className="fa-solid fa-clock"></i></span>
+              <span className="grid h-4 w-4 place-items-center rounded bg-white/5 text-orange-300 ring-1 ring-white/10"><FaClock className="h-3 w-3" /></span>
               {read}
             </span>
           </div>

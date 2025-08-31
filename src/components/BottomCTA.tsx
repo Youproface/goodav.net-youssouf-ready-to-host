@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PremiumProjectModal from "./forms/PremiumForm";
+import { FaBolt, FaArrowRight } from 'react-icons/fa';
 
 export default function BottomCTA() {
     const [open, setOpen] = useState(false);
@@ -14,9 +15,8 @@ export default function BottomCTA() {
         <div className="relative mx-auto max-w-5xl px-6 py-16 text-center text-zinc-100">
           {/* badge */}
           <div className="mx-auto w-max rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[1rem] font-semibold uppercase tracking-wider text-orange-300 backdrop-blur shadow">
-            <span className="mr-1">
-              <i className="fa-solid fa-bolt"></i>
-              </span> Ready to start?
+            <span className="mr-1 inline-flex items-center"><FaBolt className="h-4 w-4 text-orange-300" /></span>
+            Ready to start?
           </div>
   
           {/* headline */}
@@ -44,7 +44,7 @@ export default function BottomCTA() {
               className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-3 text-sm font-semibold text-zinc-900 shadow-lg hover:from-orange-400 hover:to-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60 transition"
             >
               <span className="grid h-5 w-5 place-items-center rounded bg-orange-700/10">
-              <i className="fa-solid fa-arrow-right"></i>
+              <FaArrowRight className="h-4 w-4" />
               </span>
               Start the Project
             </button>

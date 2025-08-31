@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaRocket, FaFolderOpen, FaLightbulb, FaVideo, FaCamera, FaFilm, FaMicrophone, FaVolumeUp, FaCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { ServiceType } from '@/data/services';
 
@@ -26,7 +27,7 @@ const BaseServiceDetail: React.FC<BaseServiceDetailProps> = ({ service, children
       {/* Header Navigation */}
       <header className="px-6 py-4 flex justify-between items-center">
         <div className="text-xl font-bold text-white flex items-center">
-          <span className="mr-2">🔴</span> GoodAv
+          <FaCircle className="mr-2 text-red-500" aria-hidden /> GoodAv
         </div>
         <nav className="hidden md:flex space-x-8">
           {['HOMEPAGE', 'PORTFOLIO', 'ABOUT US', 'PARTNERS', 'BLOG', 'CONTACT'].map((item) => (
@@ -74,10 +75,10 @@ const BaseServiceDetail: React.FC<BaseServiceDetailProps> = ({ service, children
           {/* CTA Buttons */}
           <div className="flex flex-wrap justify-center gap-4">
             <button className="bg-orange-500 hover:bg-orange-600 px-8 py-3 rounded-full font-semibold transition-colors">
-              🎬 Start Your Project
+              <FaRocket className="inline mr-2" aria-hidden /> Start Your Project
             </button>
             <button className="border border-gray-600 hover:border-gray-500 px-8 py-3 rounded-full font-semibold transition-colors">
-              📁 View Our Work
+              <FaFolderOpen className="inline mr-2" aria-hidden /> View Our Work
             </button>
           </div>
         </div>
@@ -130,26 +131,26 @@ const BaseServiceDetail: React.FC<BaseServiceDetailProps> = ({ service, children
             <div className="lg:pl-12">
               <div className="space-y-6">
                 {benefits.length > 0 && (
-                  <div className="bg-gray-800 p-6 rounded-lg">
-                    <h4 className="font-semibold text-lg mb-4">💡 Key Benefits</h4>
-                    <div className="space-y-3 text-sm">
-                      {benefits.map((benefit, index) => (
-                        <div key={index} className="flex items-start">
-                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-3 flex-shrink-0"></span>
-                          <span>{benefit}</span>
-                        </div>
-                      ))}
+                    <div className="bg-gray-800 p-6 rounded-lg">
+                      <h4 className="font-semibold text-lg mb-4"><FaLightbulb className="inline mr-2" aria-hidden /> Key Benefits</h4>
+                      <div className="space-y-3 text-sm">
+                        {benefits.map((benefit, index) => (
+                          <div key={index} className="flex items-start">
+                            <FaCircle className="text-orange-500 mr-3 mt-1 flex-shrink-0" aria-hidden />
+                            <span>{benefit}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
                 )}
 
                 {features.length > 0 && (
                   <div className="bg-gray-800 p-6 rounded-lg">
-                    <h4 className="font-semibold text-lg mb-4">✨ What's Included</h4>
+                    <h4 className="font-semibold text-lg mb-4">What's Included</h4>
                     <ul className="space-y-2 text-sm">
                       {features.map((feature, index) => (
                         <li key={index} className="flex items-start">
-                          <span className="text-orange-500 mr-2">•</span>
+                          <FaCircle className="text-orange-500 mr-2" aria-hidden />
                           <span>{feature}</span>
                         </li>
                       ))}
@@ -176,7 +177,14 @@ const BaseServiceDetail: React.FC<BaseServiceDetailProps> = ({ service, children
                 <div key={index} className="bg-gray-900 p-6 rounded-lg hover:bg-gray-800 transition-colors duration-300">
                   <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center mb-4">
                     <span className="text-white text-xl">
-                      {['📹', '📸', '🎥', '🎙️', '🔊', '💡'][index % 6]}
+                      {([
+                        <FaVideo className="w-5 h-5" aria-hidden />, 
+                        <FaCamera className="w-5 h-5" aria-hidden />, 
+                        <FaFilm className="w-5 h-5" aria-hidden />, 
+                        <FaMicrophone className="w-5 h-5" aria-hidden />, 
+                        <FaVolumeUp className="w-5 h-5" aria-hidden />, 
+                        <FaLightbulb className="w-5 h-5" aria-hidden />
+                      ][index % 6])}
                     </span>
                   </div>
                   <h3 className="text-xl font-semibold mb-3">{service.title}</h3>

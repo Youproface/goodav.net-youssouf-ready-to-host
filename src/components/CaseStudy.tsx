@@ -1,4 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
+import { FaCircle, FaSearch, FaCheck, FaLightbulb, FaStar, FaTools, FaVideo, FaCamera, FaHelicopter, FaMusic, FaBolt, FaBoxOpen, FaBullseye, FaFilm, FaMobileAlt, FaArrowLeft, FaFolderOpen, FaRocket, FaComments } from 'react-icons/fa';
 import { CaseStudyData } from '../types/caseStudy';
 
 // Default case study data in case none is passed
@@ -57,7 +58,7 @@ const CaseStudy = () => {
       {/* Header Navigation */}
       <header className="px-6 py-4 flex justify-between items-center border-b border-gray-800">
         <div className="text-xl font-bold text-white flex items-center">
-          <span className="mr-2">🔴</span> GoodAv
+          <FaCircle className="mr-2 text-red-500 w-2 h-2" aria-hidden /> GoodAv
         </div>
         <nav className="hidden md:flex space-x-8">
           {['HOMEPAGE', 'ABOUT', 'PORTFOLIO', 'PARTNERSHIPS', 'BLOG', 'CONTACT'].map((item, index) => (
@@ -97,7 +98,7 @@ const CaseStudy = () => {
         {/* Project Overview */}
         <section className="max-w-6xl mx-auto px-6 py-16">
           <h2 className="text-3xl font-bold mb-8 flex items-center">
-            <span className="text-orange-500 mr-3">🔍</span> Project Overview
+            <FaSearch className="text-orange-500 mr-3" aria-hidden /> Project Overview
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
@@ -128,7 +129,7 @@ const CaseStudy = () => {
               <ul className="space-y-3">
                 {caseStudy.content.impact.split('.').filter(Boolean).map((point, index) => (
                   <li key={index} className="flex items-start">
-                    <span className="text-orange-500 mr-2">✓</span>
+                    <FaCheck className="text-orange-500 mr-2 mt-1" aria-hidden />
                     <span>{point.trim()}.</span>
                   </li>
                 ))}
@@ -143,7 +144,7 @@ const CaseStudy = () => {
             <div className="grid md:grid-cols-2 gap-12">
               <div>
                 <h3 className="text-2xl font-bold mb-6 flex items-center">
-                  <span className="text-orange-500 mr-3">💡</span> The Challenge
+                  <FaLightbulb className="text-orange-500 mr-3" aria-hidden /> The Challenge
                 </h3>
                 <p className="text-gray-300">
                   {caseStudy.content.challenge}
@@ -151,7 +152,7 @@ const CaseStudy = () => {
               </div>
               <div>
                 <h3 className="text-2xl font-bold mb-6 flex items-center">
-                  <span className="text-orange-500 mr-3">✨</span> Our Solution
+                  <FaStar className="text-orange-500 mr-3" aria-hidden /> Our Solution
                 </h3>
                 <p className="text-gray-300">
                   {caseStudy.content.solution}
@@ -164,30 +165,30 @@ const CaseStudy = () => {
         {/* Scope of Work Section */}
         <section className="mb-12">
           <h3 className="text-2xl font-bold mb-8 flex items-center">
-            <span className="text-orange-500 mr-3">🔧</span>Scope of Work
+            <FaTools className="text-orange-500 mr-3" aria-hidden />Scope of Work
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Video Production */}
             <div>
               <h4 className="font-semibold mb-4 text-orange-500 flex items-center">
-                <span className="mr-2">🎥</span>Video Production
+                <FaVideo className="mr-2" aria-hidden />Video Production
               </h4>
               <div className="space-y-2 text-sm text-gray-300">
                 <div className="flex items-center">
-                  <span className="text-green-400 mr-2">✓</span>
+                  <FaCheck className="text-green-400 mr-2 mt-1" aria-hidden />
                   Conference highlights and interviews
                 </div>
                 <div className="flex items-center">
-                  <span className="text-green-400 mr-2">✓</span>
+                  <FaCheck className="text-green-400 mr-2 mt-1" aria-hidden />
                   Gilead booth footage
                 </div>
                 <div className="flex items-center">
-                  <span className="text-green-400 mr-2">✓</span>
+                  <FaCheck className="text-green-400 mr-2 mt-1" aria-hidden />
                   Symposium sessions
                 </div>
                 <div className="flex items-center">
-                  <span className="text-green-400 mr-2">✓</span>
+                  <FaCheck className="text-green-400 mr-2 mt-1" aria-hidden />
                   Street-style interview series
                 </div>
               </div>
@@ -196,7 +197,7 @@ const CaseStudy = () => {
             {/* Photography */}
             <div>
               <h4 className="font-semibold mb-4 text-orange-500 flex items-center">
-                <span className="mr-2">📸</span>Photography
+                <FaCamera className="mr-2" aria-hidden />Photography
               </h4>
               <div className="space-y-2 text-sm text-gray-300">
                 <div className="flex items-center">
@@ -221,7 +222,7 @@ const CaseStudy = () => {
             {/* Drone Footage */}
             <div>
               <h4 className="font-semibold mb-4 text-orange-500 flex items-center">
-                <span className="mr-2">🚁</span>Drone Footage
+                <FaHelicopter className="mr-2" aria-hidden />Drone Footage
               </h4>
               <p className="text-sm text-gray-300">
                 Aerial visuals capturing Kigali venues including Kimihurura, Kanyirya Hill, Mulamba, and the city center.
@@ -231,7 +232,7 @@ const CaseStudy = () => {
             {/* Sound Recording */}
             <div>
               <h4 className="font-semibold mb-4 text-orange-500 flex items-center">
-                <span className="mr-2">🎵</span>Sound Recording
+                <FaMusic className="mr-2" aria-hidden />Sound Recording
               </h4>
               <p className="text-sm text-gray-300">
                 Clear audio capture for panel discussions, interviews, and voiceover elements.
@@ -241,7 +242,7 @@ const CaseStudy = () => {
             {/* Quick-Turn Editing */}
             <div className="md:col-span-2">
               <h4 className="font-semibold mb-4 text-orange-500 flex items-center">
-                <span className="mr-2">⚡</span>Quick-Turn Editing
+                <FaBolt className="mr-2" aria-hidden />Quick-Turn Editing
               </h4>
               <p className="text-sm text-gray-300">
                 Same-day delivery of edited content for use during the conference and on broadcast platforms.
@@ -253,27 +254,27 @@ const CaseStudy = () => {
         {/* Deliverables Section */}
         <section className="mb-12">
           <h3 className="text-2xl font-bold mb-6 flex items-center">
-            <span className="text-orange-500 mr-3">📦</span>Deliverables
+            <FaBoxOpen className="text-orange-500 mr-3" aria-hidden />Deliverables
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div className="flex items-center">
-                <span className="text-orange-500 mr-3">●</span>
+                <FaCircle className="text-orange-500 mr-3" aria-hidden />
                 <span className="text-sm">3 Highlight Videos (Recaps & Cutdowns)</span>
               </div>
               <div className="flex items-center">
-                <span className="text-orange-500 mr-3">●</span>
+                <FaCircle className="text-orange-500 mr-3" aria-hidden />
                 <span className="text-sm">100+ High-Res Edited Photos</span>
               </div>
             </div>
             <div className="space-y-4">
               <div className="flex items-center">
-                <span className="text-orange-500 mr-3">●</span>
+                <FaCircle className="text-orange-500 mr-3" aria-hidden />
                 <span className="text-sm">2 "Street Style" Interview Films</span>
               </div>
               <div className="flex items-center">
-                <span className="text-orange-500 mr-3">●</span>
+                <FaCircle className="text-orange-500 mr-3" aria-hidden />
                 <span className="text-sm">Full Access to Raw Footage & Drone Assets</span>
               </div>
             </div>
@@ -295,21 +296,21 @@ const CaseStudy = () => {
         {/* What Made It Unique Section */}
         <section className="mb-12">
           <h3 className="text-2xl font-bold mb-6 flex items-center">
-            <span className="text-orange-500 mr-3">⭐</span>What Made It Unique
+            <FaStar className="text-orange-500 mr-3" aria-hidden />What Made It Unique
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-300">
             <div className="space-y-4">
               <div className="flex items-start">
-                <span className="text-orange-500 mr-3 mt-1">🎯</span>
+                <FaBullseye className="text-orange-500 mr-3 mt-1" aria-hidden />
                 <span>Local expertise combined with global production standards</span>
               </div>
               <div className="flex items-start">
-                <span className="text-orange-500 mr-3 mt-1">🎬</span>
+                <FaFilm className="text-orange-500 mr-3 mt-1" aria-hidden />
                 <span>Filming across five high-traffic Kigali locations</span>
               </div>
               <div className="flex items-start">
-                <span className="text-orange-500 mr-3 mt-1">📱</span>
+                <FaMobileAlt className="text-orange-500 mr-3 mt-1" aria-hidden />
                 <span>Daily WhatsApp updates for international creative teams</span>
               </div>
             </div>
@@ -331,7 +332,7 @@ const CaseStudy = () => {
         {/* Testimonials Section */}
         <section className="mb-12">
           <h3 className="text-2xl font-bold mb-8 flex items-center">
-            <span className="text-orange-500 mr-3">💬</span>What Our Partners Said
+            <FaComments className="text-orange-500 mr-3" aria-hidden />What Our Partners Said
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

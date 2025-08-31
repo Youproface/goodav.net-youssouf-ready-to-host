@@ -2,6 +2,7 @@ import BTSMasterProduction from '@/components/BTSMasterProdcution';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SEO from '@/components/SEO';
+import { FaTrophy, FaPlay, FaFilm, FaGlobe, FaBolt, FaLock, FaClipboardList } from 'react-icons/fa';
 import SchemaMarkup from '@/components/SchemaMarkup';
 
 export default function Partners() {
@@ -50,7 +51,10 @@ export default function Partners() {
       <div className="flex flex-wrap justify-center gap-4 mb-12">
         {[1, 2, 3].map((num) => (
           <div key={num} className="bg-gray-800 h-16 w-32 rounded-md flex items-center justify-center text-gray-400 text-xs">
-            🏆 Recent Award Recognition
+            <div className="flex items-center gap-2">
+              <FaTrophy className="text-2xl text-orange-400" aria-hidden />
+              <span>Recent Award Recognition</span>
+            </div>
           </div>
         ))}
       </div>
@@ -190,31 +194,31 @@ export default function Partners() {
             {/* Strategic Alliances */}
             <div className="bg-gray-900 p-8 rounded-lg">
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-6">
-                <span className="text-2xl">🤝</span>
+                  <FaFilm className="text-2xl text-white" aria-hidden />
               </div>
               <h3 className="text-2xl font-bold text-white mb-4">Strategic Alliances</h3>
               <p className="text-gray-300 mb-6">
-                Long-term partnerships for ongoing audiovisual needs across multiple projects and regions.
+                  <FaGlobe className="text-2xl text-white" aria-hidden />
               </p>
             </div>
             {/* Project-Based Engagements */}
-            <div className="bg-gray-900 p-8 rounded-lg">
+                  <FaBolt className="text-2xl text-white" aria-hidden />
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-6">
                 <span className="text-2xl">📋</span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">Project-Based Engagements</h3>
+                  <FaLock className="text-2xl text-white" aria-hidden />
               <p className="text-gray-300 mb-6">
                 Dedicated support for specific events, documentaries, or campaigns with full-service coverage.
               </p>
-            </div>
+                  <FaGlobe className="text-2xl text-white" aria-hidden />
             {/* Retainer / Ongoing AV Coverage */}
             <div className="bg-gray-900 p-8 rounded-lg">
               <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mb-6">
-                <span className="text-2xl">📅</span>
+                  <FaClipboardList className="text-2xl text-white" aria-hidden />
               </div>
               <h3 className="text-2xl font-bold text-white mb-4">Retainer / Ongoing AV Coverage</h3>
               <p className="text-gray-300 mb-6">
-                Monthly or quarterly service agreements for consistent audiovisual support and rapid deployment.
+                  <FaPlay className="text-2xl text-white" aria-hidden />
               </p>
             </div>
             {/* Compliance & Permits */}
@@ -436,7 +440,7 @@ export default function Partners() {
       {/* Ready to Collaborate Section */}
       <section className="bg-gray-800 px-6 py-16 mb-10 text-center">
         <div className="max-w-4xl mx-auto">
-          <h3 className="text-3xl md:text-4xl font-bold mb-6 text-white">🎬 READY TO FILM IN RWANDA?</h3>
+          <h3 className="text-3xl md:text-4xl font-bold mb-6 text-white"><FaPlay className="inline mr-3" aria-hidden /> READY TO FILM IN RWANDA?</h3>
           <p className="text-gray-300 text-xl md:text-2xl mb-10">Let's collaborate on your next production - cinematic, compliant, and globally ready.</p>
           <div className="flex flex-wrap justify-center gap-4 mb-6">
             <button className="bg-orange-500 hover:bg-orange-600 py-3 px-6 rounded-md font-semibold text-sm transition-colors">

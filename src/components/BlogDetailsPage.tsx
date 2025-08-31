@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { BlogPost } from '../data/blog';
 import { Facebook, Twitter } from 'lucide-react';
+import { FaWhatsapp, FaDownload } from 'react-icons/fa';
 
 interface SidebarLinkProps {
   href: string;
@@ -117,8 +118,10 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
               <a
                 href="/Download/Company_Profile/Company_Profile.pdf"
                 className="mt-3 inline-flex items-center gap-2 rounded bg-white/10 px-3 py-2 text-xs font-semibold text-orange-300 ring-1 ring-white/10 hover:bg-white/15"
+                rel="noopener"
               >
-                ⬇ Download PDF
+                <FaDownload className="h-4 w-4" />
+                <span>Download PDF</span>
               </a>
             </div>
           </aside>

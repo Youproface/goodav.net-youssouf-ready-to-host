@@ -52,11 +52,11 @@ export default function PremiumProjectModal({ open, onClose }: Props) {
     setSubmitStatus(null);
     // Simulate API call (replace with real API logic)
     try {
-      await new Promise(res => setTimeout(res, 1200));
-      // Simulate success
-      setSubmitStatus('✅ Your project request was submitted successfully! We will contact you soon.');
+            await new Promise(res => setTimeout(res, 1200));
+            // Simulate success
+            setSubmitStatus('Your project request was submitted successfully! We will contact you soon.');
     } catch (err) {
-      setSubmitStatus('❌ Submission failed. Please try again or contact support.');
+            setSubmitStatus('Submission failed. Please try again or contact support.');
     }
     setSubmitting(false);
   }

@@ -1,4 +1,5 @@
 import { Expand } from "lucide-react";
+import { FaPlay, FaTimes, FaCamera, FaVideo, FaPhotoVideo } from 'react-icons/fa';
 import { useState, useEffect, useCallback } from "react";
 
 export default function RecentEvents() {
@@ -221,7 +222,7 @@ export default function RecentEvents() {
             {/* text card “Behind the Scenes” */}
             <div className="rounded-2xl bg-white/5 ring-1 ring-white/10 backdrop-blur p-5">
               <div className="mb-2 flex items-center gap-2 text-orange-300">
-                <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-orange-400/20">🎬</span>
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-orange-400/20"><FaCamera className="h-4 w-4" aria-hidden /></span>
                 <h3 className="text-lg font-extrabold text-zinc-100">
                   Behind the Scenes
                 </h3>
@@ -265,9 +266,9 @@ export default function RecentEvents() {
                   className="group absolute inset-0 grid place-items-center"
                   aria-label="Play highlights"
                 >
-                  <span className="grid place-items-center h-14 w-14 rounded-full bg-white/90 text-orange-600 transition group-hover:bg-white">
-                    ▶
-                  </span>
+                    <span className="grid place-items-center h-14 w-14 rounded-full bg-white/90 text-orange-600 transition group-hover:bg-white">
+                      <FaPlay className="h-6 w-6" aria-hidden />
+                    </span>
                 </button>
                 <div className="absolute left-4 bottom-3">
                   <div className="rounded bg-black/60 px-3 py-1 text-[11px] text-white">
@@ -343,11 +344,11 @@ export default function RecentEvents() {
       {isOpen && (
         <div className="fixed inset-0 z-50">
           {/* backdrop click to close */}
-          <button
-            className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-            aria-label="Close"
-            onClick={closeLightbox}
-          />
+            <button
+              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+              aria-label="Close"
+              onClick={closeLightbox}
+            />
           {/* viewer */}
           <div className="relative z-10 flex h-full w-full items-center justify-center p-4">
             <img
@@ -361,21 +362,16 @@ export default function RecentEvents() {
               className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white ring-1 ring-white/30 backdrop-blur hover:bg-white/25"
               aria-label="Close"
             >
-              ✕
-            </button>
-            <button
-              onClick={prevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white ring-1 ring-white/30 backdrop-blur hover:bg-white/25"
-              aria-label="Previous image"
-            >
-              ‹
+              <FaTimes aria-hidden />
             </button>
             <button
               onClick={nextImage}
               className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white ring-1 ring-white/30 backdrop-blur hover:bg-white/25"
               aria-label="Next image"
             >
-              ›
+              <span aria-hidden>
+                
+              </span>
             </button>
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded bg-black/60 px-3 py-1 text-[11px] text-white">
               {currentIndex + 1} / {galleryImages.length}
