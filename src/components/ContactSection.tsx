@@ -1,5 +1,6 @@
 import Map from "./Map";
 import { useState, useRef } from "react";
+import BookingModal from './forms/BookingModal';
 import { FaCalendarAlt, FaPhone, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaCheck } from 'react-icons/fa';
 
 export default function ContactUs() {
@@ -70,8 +71,10 @@ export default function ContactUs() {
     }
   };
 
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   return (
-    <section className="relative bg-[#0e0f10] text-zinc-100">
+    <section id="contact" className="relative bg-[#0e0f10] text-zinc-100">
         {/* soft background glows */}
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute left-4 top-10 h-72 w-72 rounded-full bg-orange-500/10 blur-3xl" />
@@ -108,6 +111,7 @@ export default function ContactUs() {
   
                 <button
                   type="button"
+                  onClick={() => setIsBookingOpen(true)}
                   className="mt-3 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2.5 text-sm font-semibold text-zinc-900 shadow hover:from-orange-400 hover:to-amber-300"
                 >
                   <span className="grid h-5 w-5 place-items-center rounded bg-orange-700/10 text-zinc-900">
@@ -204,6 +208,8 @@ export default function ContactUs() {
         </div>
 
         {window.location.pathname === '/contact' && <Map/>}
+  {/* Booking modal for consultation booking triggered from this section */}
+  <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
       </section>
     );
   }

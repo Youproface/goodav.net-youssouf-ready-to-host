@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>New Booking Notification</title>
+    <style>
+      body { font-family: Arial, Helvetica, sans-serif; background:#f6f7fb; color:#0f172a; margin:0; padding:20px }
+      .card { background: #ffffff; border-radius:8px; padding:20px; max-width:680px; margin:0 auto; box-shadow:0 8px 30px rgba(15,23,42,0.06)}
+      .brand { display:flex; align-items:center; gap:12px; margin-bottom:12px }
+      .logo { width:48px; height:48px; border-radius:6px; background:#0ea5a4; display:inline-block }
+      h1 { font-size:18px; margin:0 0 8px 0; color:#0f172a }
+  .muted { color:#b45309; font-size:13px }
+      table { width:100%; border-collapse:collapse; margin-top:12px }
+      td { padding:8px 6px; border-bottom:1px solid #eef2f7 }
+      td.label { width:160px; color:#64748b; font-weight:600 }
+      .cta { display:inline-block; margin-top:14px; padding:10px 14px; background:#0ea5a4; color:white; border-radius:6px; text-decoration:none }
+      .footer { margin-top:18px; font-size:12px; color:#94a3b8 }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <strong>GoodAV</strong>
+          <div class="muted">New booking received</div>
+        </div>
+      </div>
+      <h1>Booking #{{id}} — {{service}}</h1>
+      <div class="muted">Submitted by {{name}} ({{email}})</div>
+
+      <table>
+        <tr><td class="label">Project / Service</td><td>{{service}}</td></tr>
+        <tr><td class="label">Organization</td><td>{{organization}}</td></tr>
+        <tr><td class="label">Date</td><td>{{date}}</td></tr>
+        <tr><td class="label">Time</td><td>{{time}} ({{timezone}})</td></tr>
+        <tr><td class="label">Meeting Platform</td><td>{{location}}</td></tr>
+        <tr><td class="label">Phone</td><td>{{phone}}</td></tr>
+        <tr><td class="label">Notes</td><td>{{notes}}</td></tr>
+      </table>
+
+      <a class="cta" href="{{site_url}}/admin/submissions/{{id}}">Open submission</a>
+
+      <div class="footer">This is an automated notification. Reply to {{from_email}} to contact the booking system.</div>
+    </div>
+  </body>
+</html>

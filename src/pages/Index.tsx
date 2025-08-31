@@ -4,7 +4,6 @@ const Hero = lazy(() => import('@/components/Hero'));
 const PartnersSection = lazy(() => import('@/components/PartnersSection'));
 const ServicesSection = lazy(() => import('@/components/ServicesSection'));
 const MissionSection = lazy(() => import('@/components/MissionSection'));
-const Footer = lazy(() => import('@/components/Footer'));
 const AboutUs = lazy(() => import('../components/AboutSection'));
 const OurJourney = lazy(() => import('@/components/OurJourney'));
 const FeaturedProjects = lazy(() => import('@/components/FeaturedProjects'));
@@ -118,7 +117,7 @@ const Index = () => {
           <BTSMasterProdcution />
           <Excellence />
         </main>
-        <Footer />
+  {/* Footer is rendered globally in App.tsx; remove local Footer to avoid duplicate rendering */}
       </Suspense>
     </div>
   );

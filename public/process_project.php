@@ -122,8 +122,34 @@ try {
 
     $insertId = $pdo->lastInsertId();
 
+    // record into central submissions DB
+    try {
+        $subDb = new PDO('sqlite:' . __DIR__ . DIRECTORY_SEPARATOR . 'submissions.db');
+        $subDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $subDb->exec("CREATE TABLE IF NOT EXISTS submissions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            source TEXT,
+            payload TEXT,
+            email TEXT,
+            name TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )");
+        $payloadJson = json_encode($data);
+        $sstmt = $subDb->prepare("INSERT INTO submissions (source, payload, email, name) VALUES (:source, :payload, :email, :name)");
+        $sstmt->execute([':source' => 'project', ':payload' => $payloadJson, ':email' => $email, ':name' => $name]);
+    } catch (Exception $e) {
+        // non-fatal
+    }
+
     // Attempt to forward via email
-    $adminEmail = getenv('PROJECT_ADMIN_EMAIL') ?: (getenv('BOOKING_ADMIN_EMAIL') ?: 'admin@example.com');
+    // Support comma-separated admin addresses and ADMIN_FORWARD_EMAIL forwarding
+    $adminEmailRaw = getenv('PROJECT_ADMIN_EMAIL') ?: (getenv('BOOKING_ADMIN_EMAIL') ?: 'admin@example.com');
+    $adminForward = getenv('ADMIN_FORWARD_EMAIL') ?: '';
+    $adminEmails = array_filter(array_map('trim', explode(',', $adminEmailRaw)));
+    if ($adminForward) $adminEmails[] = $adminForward;
+    $adminEmails[] = getenv('INQUIRIES_FROM_EMAIL') ?: 'info@goodav.net';
+    $adminEmails = array_values(array_unique(array_filter($adminEmails)));
+    $mainAdmin = !empty($adminEmails) ? $adminEmails[0] : (getenv('INQUIRIES_FROM_EMAIL') ?: 'info@goodav.net');
     $fromEmail = getenv('PROJECT_FROM_EMAIL') ?: (getenv('BOOKING_FROM_EMAIL') ?: 'noreply@example.com');
 
     $subject = "New Project Request (#" . $insertId . ")";
@@ -143,8 +169,8 @@ try {
     if (file_exists($templatePath)) {
         $htmlBody = file_get_contents($templatePath);
         $siteUrl = getenv('SITE_URL') ?: 'https://goodav.net';
-        $logoUrl = getenv('BRAND_LOGO_URL') ?: ($siteUrl . '/favicon.ico');
-        $supportEmail = getenv('PROJECT_ADMIN_EMAIL') ?: $adminEmail;
+        $brandLogoUrl = getenv('BRAND_LOGO_URL') ?: ($siteUrl . '/favicon.ico');
+        $supportEmail = getenv('PROJECT_ADMIN_EMAIL') ?: $mainAdmin;
         $fromEmailRaw = getenv('PROJECT_FROM_EMAIL') ?: $fromEmail;
 
         $replacements = [
@@ -158,7 +184,7 @@ try {
             '{{support_email}}' => $supportEmail,
             '{{from_email}}' => $fromEmailRaw,
             '{{site_url}}' => $siteUrl,
-            '{{logo_url}}' => $logoUrl,
+            '{{logo_url}}' => $brandLogoUrl,
         ];
         $htmlBody = strtr($htmlBody, $replacements);
     }
@@ -184,6 +210,8 @@ try {
         $smtpSecure = getenv('SMTP_SECURE') ?: 'tls';
     }
 
+    $envelopeSender = $smtpUser ?: $fromEmail;
+
     if ($smtpHost && class_exists('\PHPMailer\PHPMailer\PHPMailer')) {
         // Send admin notification
         try {
@@ -197,18 +225,55 @@ try {
             $adminMailer->Port = (int)$smtpPort;
 
             $adminMailer->setFrom($fromEmail, 'Project Requests');
-            $adminMailer->addAddress($adminEmail);
-            $adminMailer->addReplyTo($email);
+            if (!empty($envelopeSender)) $adminMailer->Sender = $envelopeSender;
+            foreach ($adminEmails as $addr) {
+                if (filter_var($addr, FILTER_VALIDATE_EMAIL)) {
+                    $adminMailer->addAddress($addr);
+                }
+            }
+            $adminMailer->addReplyTo($mainAdmin);
+            if (!empty($adminForward) && filter_var($adminForward, FILTER_VALIDATE_EMAIL)) {
+                $adminMailer->addBCC($adminForward);
+            }
 
-            $adminMailer->Subject = $subject;
-            if ($htmlBody) {
+            // use admin template when available
+            $adminTemplate = __DIR__ . '/../server_emails/admin_project.html';
+            if (!file_exists($adminTemplate)) $adminTemplate = __DIR__ . '/emails/admin_project.html';
+            if (file_exists($adminTemplate)) {
+                $admHtml = file_get_contents($adminTemplate);
+                if (class_exists('\TijsVerkoyen\CssToInlineStyles\CssToInlineStyles')) {
+                    try {
+                        $inliner = new \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles();
+                        $admHtml = $inliner->convert($admHtml);
+                    } catch (Exception $e) {
+                        // ignore
+                    }
+                }
+                $admRepl = [
+                    '{{id}}' => $insertId,
+                    '{{name}}' => htmlspecialchars($name, ENT_QUOTES),
+                    '{{email}}' => htmlspecialchars($email, ENT_QUOTES),
+                    '{{project_type}}' => htmlspecialchars($projectType, ENT_QUOTES),
+                    '{{organization}}' => htmlspecialchars($organization, ENT_QUOTES),
+                    '{{budget}}' => htmlspecialchars($budget, ENT_QUOTES),
+                    '{{timeline}}' => htmlspecialchars($timeline, ENT_QUOTES),
+                    '{{description}}' => nl2br(htmlspecialchars($description, ENT_QUOTES)),
+                    '{{site_url}}' => getenv('SITE_URL') ?: '',
+                    '{{from_email}}' => $fromEmail,
+                    '{{logo_url}}' => getenv('BRAND_LOGO_URL') ?: (getenv('SITE_URL') ? rtrim(getenv('SITE_URL'), '/') . '/favicon.ico' : ''),
+                ];
                 $adminMailer->isHTML(true);
-                $adminMailer->Body = $htmlBody;
+                $adminMailer->Body = strtr($admHtml, $admRepl);
                 $adminMailer->AltBody = $plain;
+                try { $adminMailer->addCustomHeader('List-Unsubscribe', '<mailto:' . ($mainAdmin ?: $fromEmail) . '>'); } catch (Exception $e) {}
+                try { $adminMailer->addCustomHeader('X-Entity-Ref-ID', 'project-' . $insertId); } catch (Exception $e) {}
+                try { $adminMailer->addCustomHeader('Feedback-ID', 'goodav.net:project:' . $insertId); } catch (Exception $e) {}
+                try { $adminMailer->MessageID = '<' . bin2hex(random_bytes(8)) . '@' . (getenv('EMAIL_DOMAIN') ?: 'goodav.net') . '>'; } catch (Exception $e) {}
             } else {
                 $adminMailer->Body = $plain;
                 $adminMailer->AltBody = $plain;
             }
+            $adminMailer->Subject = $subject;
             $adminMailer->send();
             $adminMailSent = true;
         } catch (Exception $e) {
@@ -228,11 +293,20 @@ try {
             $clientMailer->Port = (int)$smtpPort;
 
             $clientMailer->setFrom($fromEmail, 'GoodAV');
+            if (!empty($envelopeSender)) $clientMailer->Sender = $envelopeSender;
             $clientMailer->addAddress($email);
-            $clientMailer->addReplyTo($adminEmail);
+            $clientMailer->addReplyTo($mainAdmin);
 
             $clientMailer->Subject = "Thanks — we received your request (#" . $insertId . ")";
             if ($htmlBody) {
+                if (class_exists('\TijsVerkoyen\CssToInlineStyles\CssToInlineStyles')) {
+                    try {
+                        $inliner = new \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles();
+                        $htmlBody = $inliner->convert($htmlBody);
+                    } catch (Exception $e) {
+                        // ignore
+                    }
+                }
                 $clientMailer->isHTML(true);
                 $clientMailer->Body = $htmlBody;
                 $clientMailer->AltBody = $plain;
@@ -240,25 +314,32 @@ try {
                 $clientMailer->Body = $plain;
                 $clientMailer->AltBody = $plain;
             }
+            try { $clientMailer->addCustomHeader('X-Entity-Ref-ID', 'project-client-' . $insertId); } catch (Exception $e) {}
+            try { $clientMailer->addCustomHeader('Feedback-ID', 'goodav.net:project:client:' . $insertId); } catch (Exception $e) {}
+            try { $clientMailer->MessageID = '<' . bin2hex(random_bytes(8)) . '@' . (getenv('EMAIL_DOMAIN') ?: 'goodav.net') . '>'; } catch (Exception $e) {}
             $clientMailer->send();
             $clientMailSent = true;
         } catch (Exception $e) {
             $mailWarnings[] = 'PHPMailer client error: ' . $e->getMessage();
             $clientMailSent = false;
         }
-    } else {
-        // Fallback to mail() for admin
+        } else {
+        // Fallback to mail() for admin. Add Bcc header for forward if present.
+        $bccHeader = '';
+        if (!empty($adminForward) && filter_var($adminForward, FILTER_VALIDATE_EMAIL)) {
+            $bccHeader = "Bcc: $adminForward\r\n";
+        }
         $headersAdmin = "From: $fromEmail\r\n" .
                         "Reply-To: $email\r\n" .
+                        $bccHeader .
                         "Content-Type: text/plain; charset=utf-8\r\n";
         try {
-            $adminSent = @mail($adminEmail, $subject, $plain, $headersAdmin);
-            if ($adminSent) {
-                $adminMailSent = true;
-            } else {
-                $mailWarnings[] = 'mail() admin send failed or no MTA configured';
-                $adminMailSent = false;
+            foreach ($adminEmails as $addr) {
+                if (!filter_var($addr, FILTER_VALIDATE_EMAIL)) continue;
+                $adminSent = @mail($addr, $subject, $plain, $headersAdmin);
+                if ($adminSent) $adminMailSent = true;
             }
+            if (!$adminMailSent) { $mailWarnings[] = 'mail() admin send failed or no MTA configured'; $adminMailSent = false; }
         } catch (Exception $e) {
             $mailWarnings[] = 'mail() admin exception: ' . $e->getMessage();
             $adminMailSent = false;
@@ -267,7 +348,7 @@ try {
         // Fallback to mail() for client confirmation
         $clientSubject = "Thanks — we received your request (#" . $insertId . ")";
         $headersClient = "From: $fromEmail\r\n" .
-                         "Reply-To: $adminEmail\r\n" .
+                         "Reply-To: " . (!empty($adminEmails[0]) ? $adminEmails[0] : $fromEmail) . "\r\n" .
                          "Content-Type: text/plain; charset=utf-8\r\n";
         try {
             $clientSent = @mail($email, $clientSubject, $plain, $headersClient);

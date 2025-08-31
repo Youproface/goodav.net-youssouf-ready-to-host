@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import * as Dialog from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
 import { FaCheckCircle, FaTimesCircle, FaExclamationTriangle, FaCircle } from 'react-icons/fa';
@@ -250,6 +251,17 @@ export default function ProjectStartingModal({ open, onClose }: Props) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
+
+  // Reset submit / popup state when the dialog opens so previous results don't persist
+  useEffect(() => {
+    if (open) {
+      setSubmitStatus(null);
+      setShowPopup(false);
+      setPopupType(null);
+      setPopupMessage('');
+      setPopupDetails('');
+    }
+  }, [open]);
 
   // Basic focus trap to the dialog when opened
   useEffect(() => {
@@ -541,11 +553,10 @@ export default function ProjectStartingModal({ open, onClose }: Props) {
               </button>
             </div>
 
-            {/* Inline submit status */}
-            {submitStatus && (
+            {/* Inline submit status: show only non-success messages (success uses the popup) */}
+            {submitStatus && !submitStatus.includes('successfully') && (
               <div className="mt-3 text-orange-400 text-sm text-center">
                 {submitStatus}
-                {submitStatus.includes('successfully') && (<div className="mt-1 text-orange-300">Thank you — you will receive a confirmation email shortly.</div>)}
                 {submitStatus.includes('failed') && (<div className="mt-1 text-orange-300">If the problem persists, contact us at form@goodav.net</div>)}
               </div>
             )}
@@ -562,8 +573,8 @@ export default function ProjectStartingModal({ open, onClose }: Props) {
 // Success / Error popup (global to this component)
 function Popup({ show, type, message, details, onClose }: { show: boolean; type: 'success' | 'error' | 'warning' | null; message: string; details?: string; onClose: () => void }) {
   if (!show || !type) return null;
-  return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+  const popup = (
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
       <div className="bg-[#1b1b1d] w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700 p-4 sm:p-6 relative">
         <button onClick={onClose} aria-label="Close popup" className="absolute top-3 right-3 text-gray-400 hover:text-white"> <FaTimesCircle className="w-5 h-5" /> </button>
         <div className="flex justify-center mb-4">
@@ -587,6 +598,13 @@ function Popup({ show, type, message, details, onClose }: { show: boolean; type:
       </div>
     </div>
   );
+
+  try {
+    return createPortal(popup, document.body);
+  } catch (e) {
+    // Fallback to inline render if portal is not available (safeguard for SSR/test envs)
+    return popup;
+  }
 }
 
 // Note: Popup is intentionally not exported to avoid fast-refresh warnings when files export non-components.

@@ -4,11 +4,11 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logo from '../assets/images/all_site_images/Assets/logo.png';
 import { Link } from "react-router-dom";
-import BookingModal from "./forms/BookingModal";
+import ConsultationModal from "./forms/ConsultationModal";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isConsultationOpen, setIsConsultationOpen] = useState(false);
 
   const navigation = [
     { name: "HOMEPAGE", href: "/" },
@@ -45,7 +45,7 @@ const Header = () => {
           {/* CTA Button & Mobile Menu */}
           <div className="flex items-center space-x-4">
             <Button
-              onClick={() => setIsBookingOpen(true)}
+              onClick={() => setIsConsultationOpen(true)}
               variant="default"
               className="hidden md:inline-flex bg-gradient-primary hover:shadow-glow"
             >
@@ -83,7 +83,7 @@ const Header = () => {
               </Link>
             ))}
             <Button
-              onClick={() => setIsBookingOpen(true)}
+              onClick={() => setIsConsultationOpen(true)}
               variant="default"
               className="mt-4 mx-4 bg-gradient-primary"
             >
@@ -93,10 +93,10 @@ const Header = () => {
         </div>
       </nav>
 
-      {/* Booking Modal */}
-      <BookingModal
-        isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
+      {/* Consultation Modal */}
+      <ConsultationModal
+        isOpen={isConsultationOpen}
+        onClose={() => setIsConsultationOpen(false)}
       />
     </header>
   );

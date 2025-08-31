@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from 'react-dom';
 import {
   Video,
   Camera,
@@ -324,8 +325,8 @@ export default function BookingModal({
     return () => window.removeEventListener("keydown", onKey);
   }, [modalOpen, onClose]);
 
-  // Handle time slot confirmation
-  const handleTimeConfirmation = () => {
+  // Handle time slot confirmation - accept optional user note
+  const handleTimeConfirmation = (note?: string) => {
     const formattedDate = new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
@@ -347,6 +348,9 @@ export default function BookingModal({
           <strong>{selectedTime}</strong>
         </div>
         <div className="text-xs text-gray-400">({timezone})</div>
+        {note && (
+          <div className="mt-2 text-sm text-gray-300">Note: <em className="text-gray-200">{note}</em></div>
+        )}
       </div>
     );
     setConfirmationMessage(message as any);
@@ -404,6 +408,7 @@ export default function BookingModal({
       time: selectedTime,
       timezone,
       meetingSoftware: meetingSoftware || '',
+  bookingType: 'booking',
     };
 
     try {
@@ -534,7 +539,7 @@ export default function BookingModal({
             <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
               {/* Header */}
               <h2 className="text-lg sm:text-xl font-semibold text-orange-400 flex items-center gap-2 mb-4">
-                Let’s Start Your Project
+                Why are you booking?
               </h2>
 
               {/* Progress Bar */}
@@ -556,7 +561,7 @@ export default function BookingModal({
                 {step === 2 && <Step2 setCanProceed={setCanProceed} />}
                 {step === 3 && <Step3 setCanProceed={setCanProceed} />}
                 {step === 4 && <Step4 setCanProceed={setCanProceed} />}
-                {step === 5 && <Step5 nextStep={nextStep} />}
+                {step === 5 && <Step5 nextStep={nextStep} setCanProceed={setCanProceed} />}
                 {step === 6 && <Step6 meetingSoftware={meetingSoftware} setMeetingSoftware={setMeetingSoftware} />}
                 {step === 7 && <Step7 setCanProceed={setCanProceed} selectedDate={selectedDate} setSelectedDate={setSelectedDate} selectedTime={selectedTime} setSelectedTime={setSelectedTime} timezone={timezone} setTimezone={setTimezone} handleTimeConfirmation={handleTimeConfirmation} confirmationMessage={confirmationMessage} timeSlotConfirmed={timeSlotConfirmed} setTimeSlotConfirmed={setTimeSlotConfirmed} meetingSoftware={meetingSoftware} />}
                 {step === 8 && <Step8 submitStatus={submitStatus} handleFormSubmit={handleFormSubmit} name={name} setName={setName} email={email} setEmail={setEmail} phone={phone} setPhone={setPhone} countryCode={countryCode} setCountryCode={setCountryCode} countryCodes={countryCodes} organization={organization} setOrganization={setOrganization} project={project} setProject={setProject} selectedDate={selectedDate} selectedTime={selectedTime} timezone={timezone} submitting={submitting} meetingSoftware={meetingSoftware} />}
@@ -600,7 +605,7 @@ export default function BookingModal({
                         disabled={submitting || !meetingSoftware}
                       >
                         <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
-                        <span>Schedule Consultation</span>
+                        <span>Book your call</span>
                       </button>
                     </Tooltip.Trigger>
                     {(submitting || !meetingSoftware) && (
@@ -627,11 +632,11 @@ export default function BookingModal({
                           rounded-lg text-sm sm:text-base font-medium
                           transition-all duration-200 active:scale-95
                           min-h-[44px] touch-manipulation ${
-                          (step >= 1 && step <= 4 && !canProceed) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed)) 
+                          (step >= 1 && step <= 5 && !canProceed) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed)) 
                             ? 'bg-gray-500 cursor-not-allowed' 
                             : 'bg-orange-500 hover:bg-orange-600 active:bg-orange-400'
                         }`}
-                        disabled={(step >= 1 && step <= 4 && !canProceed) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed))}
+                        disabled={(step >= 1 && step <= 5 && !canProceed) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed))}
                       >
                         <span className="hidden xs:inline">Next</span>
                         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -639,7 +644,7 @@ export default function BookingModal({
                         </svg>
                       </button>
                     </Tooltip.Trigger>
-                    {((step >= 1 && step <= 4 && !canProceed) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed))) && (
+                    {((step >= 1 && step <= 5 && !canProceed) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed))) && (
                       <Tooltip.Portal>
                         <Tooltip.Content
                           className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
@@ -661,9 +666,9 @@ export default function BookingModal({
         </div>
       )}
 
-      {/* Success/Error Popup */}
-      {showPopup && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+      {/* Success/Error Popup rendered via portal to avoid transform stacking issues */}
+      {showPopup && createPortal(
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <div className="bg-[#1b1b1d] w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700 
             p-4 sm:p-6 relative popup-enter transform translate-y-0 max-h-[90vh] overflow-y-auto">
             {/* Close Button */}
@@ -736,7 +741,8 @@ export default function BookingModal({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
@@ -1010,7 +1016,7 @@ function Step4({ setCanProceed }) {
 /* -------------------------
   STEP 5 (Service selection - can always proceed)
 ------------------------- */
-function Step5({ nextStep }: { nextStep: () => void }) {
+function Step5({ nextStep, setCanProceed }: { nextStep: () => void; setCanProceed?: (v: boolean) => void }) {
   const [selected, setSelected] = useState<number[]>([]);
 
   const options = [
@@ -1025,6 +1031,11 @@ function Step5({ nextStep }: { nextStep: () => void }) {
       prev.includes(i) ? prev.filter((item) => item !== i) : [...prev, i]
     );
   };
+
+  // inform parent whether user selected anything (controls Next button enabled state)
+  useEffect(() => {
+    if (typeof setCanProceed === 'function') setCanProceed(selected.length > 0);
+  }, [selected, setCanProceed]);
 
   return (
      <>
@@ -1230,6 +1241,9 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
     return targetDateStr;
   }
 
+  // Local note for the selected time (user can add an optional note before confirming)
+  const [selectedNote, setSelectedNote] = useState('');
+
   // Step 7: canProceed is true only if date and time are selected AND confirmed
   useEffect(() => { setCanProceed(selectedDate && selectedTime && timeSlotConfirmed); }, [selectedDate, selectedTime, timeSlotConfirmed, setCanProceed]);
 
@@ -1349,14 +1363,29 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
             {selectedDate ? `${new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString()}` : 'Select a date first'}
           </div>
 
+          {/* Hint for time slot confirmation */}
+          <div className="mb-3 text-xs text-orange-300">Click the Confirm button next to a selected time slot to lock it in; selecting a slot only marks it as chosen until you confirm.</div>
+
+          {/* Optional note so users can add a short message before confirming */}
+          <div className="mb-4">
+            <label htmlFor="selected-note" className="text-sm text-gray-400 block mb-2">Add a short note (optional)</label>
+            <input
+              id="selected-note"
+              value={selectedNote}
+              onChange={e => setSelectedNote(e.target.value)}
+              placeholder="e.g. I prefer a morning slot or need a translator"
+              className="w-full p-2 rounded bg-[#252529] text-white border border-gray-700 focus:border-orange-500"
+            />
+          </div>
+
           <div className="flex flex-col gap-3 w-full max-w-xs">
             {/* Time slots: disabled until date selected, locked when confirmed */}
-            {timeSlots.map(slot => (
+                {timeSlots.map(slot => (
               <div key={slot} className="flex gap-2">
                 <Tooltip.Provider>
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
-                      <button
+                        <button
                         className={`flex-1 py-3 sm:py-4 px-3 rounded border text-center font-medium 
                           transition-all active:scale-95 touch-manipulation min-h-[44px]
                           ${!selectedDate ? 'bg-gray-800 text-gray-500 border-gray-700 cursor-not-allowed' :
@@ -1369,6 +1398,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                           }
                         }}
                         disabled={!selectedDate || timeSlotConfirmed}
+                        title={(!selectedDate ? 'Select a date first' : timeSlotConfirmed ? 'Time slot confirmed - cannot change' : `Select ${slot}`)}
                       >
                         <div className="text-sm sm:text-base">{slot}</div>
                         {/* Show converted time if timezone is not Africa/Kigali */}
@@ -1404,7 +1434,8 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                           className="px-3 py-3 sm:px-4 sm:py-4 rounded font-semibold shadow transition-colors 
                             bg-orange-600 text-white hover:bg-orange-700 active:bg-orange-500
                             min-h-[44px] touch-manipulation active:scale-95"
-                          onClick={handleTimeConfirmation}
+                          onClick={() => handleTimeConfirmation(selectedNote)}
+                          title="Confirm this time slot"
                         >
                           <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -1423,6 +1454,10 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                       </Tooltip.Portal>
                     </Tooltip.Root>
                   </Tooltip.Provider>
+                )}
+                {/* Live comment preview shown while a slot is selected but not yet confirmed */}
+                {selectedTime === slot && selectedDate && !timeSlotConfirmed && selectedNote && (
+                  <div className="ml-2 mt-1 text-xs text-gray-300">Live note: <em className="text-gray-200">{selectedNote}</em></div>
                 )}
                 {selectedTime === slot && selectedDate && timeSlotConfirmed && (
                   <div className="px-3 py-3 sm:px-4 sm:py-4 rounded font-semibold bg-orange-600 text-white opacity-75 min-h-[44px] flex items-center justify-center">
