@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PremiumProjectModal from "./forms/PremiumForm";
+import ProjectStartingModal from "./forms/ProjectStartingModal";
 import { FaBolt, FaArrowRight } from 'react-icons/fa';
 
 export default function BottomCTA() {
@@ -38,7 +38,7 @@ export default function BottomCTA() {
   
           {/* primary button */}
           <div className="mt-7">
-            <PremiumProjectModal open={open} onClose={() => setOpen(false)} />
+            <ProjectStartingModal open={open} onClose={() => setOpen(false)} />
             <button
               onClick={() => setOpen(true)}
               className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-3 text-sm font-semibold text-zinc-900 shadow-lg hover:from-orange-400 hover:to-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60 transition"

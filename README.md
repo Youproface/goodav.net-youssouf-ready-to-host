@@ -36,6 +36,19 @@ npm install
 # Start development server
 npm run dev
 
+### SMTP and email debug
+
+If you want to test email sending locally using Gmail, set these values in `.env`:
+
+- `SMTP_HOST=smtp.gmail.com`
+- `SMTP_PORT=587`
+- `SMTP_USER=your.full@gmail.com`
+- `SMTP_PASS=<16-char Google App Password>`
+
+Make sure 2-Step Verification is enabled for the account and that you generated an App Password (16 characters). After updating `.env`, restart the PHP server so it picks up the new values.
+
+If you need to enable SMTP debugging to `/tmp/php-smtp.log` temporarily, set `ENABLE_SMTP_DEBUG=1` in `.env`. Keep this off in normal use.
+
 # Build for production
 npm run build
 

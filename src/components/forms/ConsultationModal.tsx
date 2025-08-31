@@ -1636,7 +1636,7 @@ function Step8({ submitStatus, handleFormSubmit, name, setName, email, setEmail,
         )}
       </div>
 
-      {/* Book Your Consultation Button and feedback */}
+      {/* Schedule Consultation Button and feedback */}
       <div className="flex flex-col items-center mt-6">
         {/* Hidden honeypot field (should remain empty) */}
         <input type="hidden" name="hp_field" id="hp_field" value="" />

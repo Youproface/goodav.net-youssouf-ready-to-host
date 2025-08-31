@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thanks for contacting GoodAV</title>
+</head>
+<body style="font-family:Arial,Helvetica,sans-serif;background:#f6f6f6;padding:24px;">
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" role="presentation" style="background:#ffffff;border-radius:8px;overflow:hidden;">
+          <tr style="background:#0f1724;color:#fff;font-weight:700;">
+            <td style="padding:20px 24px;display:flex;align-items:center;gap:12px;">
+              <img src="{{logo_url}}" alt="logo" width="28" style="border-radius:4px;" />
+              <div style="font-size:18px;">GoodAV</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px;">
+              <h1 style="font-size:20px;margin:0 0 12px 0;color:#111;">Thanks for contacting GoodAV</h1>
+              <p style="margin:0 0 16px 0;color:#444;">Hi {{firstName}} {{lastName}},</p>
+              <p style="margin:0 0 12px 0;color:#444;">We received your message and will respond shortly. Summary:</p>
+              <table cellpadding="0" cellspacing="0" role="presentation" style="width:100%;border-collapse:collapse;margin-top:12px">
+                <tr><td style="padding:8px;border-top:1px solid #eee;font-weight:600;width:120px;color:#333;">Subject</td><td style="padding:8px;border-top:1px solid #eee;color:#333;">{{subject}}</td></tr>
+                <tr><td style="padding:8px;border-top:1px solid #eee;font-weight:600;color:#333;">Message</td><td style="padding:8px;border-top:1px solid #eee;color:#333;">{{message}}</td></tr>
+                <tr><td style="padding:8px;border-top:1px solid #eee;font-weight:600;color:#333;">Reference</td><td style="padding:8px;border-top:1px solid #eee;color:#333;">#{{id}}</td></tr>
+              </table>
+              <p style="margin:16px 0 0 0;color:#444;">If you need urgent help, email <a href="mailto:{{support_email}}">{{support_email}}</a>.</p>
+            </td>
+          </tr>
+          <tr style="background:#fafafa;color:#666;font-size:12px;">
+            <td style="padding:12px 24px;text-align:center;">GoodAV • Kigali, Rwanda</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

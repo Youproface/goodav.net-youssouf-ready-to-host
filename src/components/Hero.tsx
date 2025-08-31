@@ -50,7 +50,7 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
 };
 import heroBackground from '../assets/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.gif';
 import { useNavigate } from 'react-router-dom';
-import PremiumProjectModal from './forms/PremiumForm';
+import ProjectStartingModal from './forms/ProjectStartingModal';
 const Hero = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -296,7 +296,7 @@ const Hero = () => {
               </motion.button>
             </div>
           </motion.div>
-          <PremiumProjectModal open={open} onClose={() => setOpen(false)} />
+          <ProjectStartingModal open={open} onClose={() => setOpen(false)} />
           {/* Trust Indicators */}
           <div className="flex flex-col md:flex-row gap-8 justify-center items-center mt-4 mb-2">
             <div className="flex items-center gap-3 px-6 py-4 rounded-xl card-bg">

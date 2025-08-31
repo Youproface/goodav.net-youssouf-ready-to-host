@@ -1,1 +1,8 @@
 node_modules
+
+# Local environment and runtime files
+.env
+public/*.db
+/tmp/php-smtp.log
+/vendor/
+node_modules/

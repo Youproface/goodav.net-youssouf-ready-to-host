@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GoodAV — Request received</title>
+    <!-- Preheader (shows in inbox preview) -->
+    <meta name="description" content="Thanks — we received your project request. Our team will reply within 1–2 business days." />
+    <style>
+      /* Basic responsive resets for email clients */
+      body { margin: 0; padding: 0; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; background: #f4f6fb; }
+      table { border-spacing: 0; }
+      img { border: 0; display: block; }
+      a { color: #0b67ff; text-decoration: none; }
+      .wrapper { width: 100%; table-layout: fixed; background-color: #f4f6fb; padding: 20px 0; }
+      .main { background: #ffffff; margin: 0 auto; width: 100%; max-width: 680px; border-radius: 6px; overflow: hidden; border: 1px solid #e6eef8; }
+      .header { background: #0b67ff; padding: 18px; color: #ffffff; }
+      .brand { font-family: Inter, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif; display:flex; gap:12px; align-items:center; }
+      .brand h1 { margin: 0; font-size: 18px; font-weight:600; }
+      .content { padding: 20px; color: #0f1724; font-family: Inter, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif; line-height: 1.45; }
+      .btn { background: #0b67ff; color: #fff; padding: 10px 14px; border-radius: 6px; display:inline-block; }
+      .meta { background: #f7fbff; border-top: 1px solid #eef6ff; padding: 12px 20px; color:#475569; font-size:13px; }
+      .muted { color: #6b7280; }
+      .small { font-size:12px; color:#94a3b8; }
+      /* Stack on mobile */
+      @media screen and (max-width: 480px) {
+        .content { padding: 16px; }
+      }
+    </style>
+  </head>
+  <body>
+    <center class="wrapper">
+      <table class="main" role="presentation" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="header">
+            <table role="presentation" width="100%"><tr><td>
+              <div class="brand">
+                <img alt="GoodAV" src="{{logo_url}}" width="40" height="40" style="border-radius:6px;background:#fff;padding:4px;" />
+                <div>
+                  <h1>GoodAV</h1>
+                  <div class="small">Professional AV production &amp; services</div>
+                </div>
+              </div>
+            </td></tr></table>
+          </td>
+        </tr>
+        <tr>
+          <td class="content">
+            <p class="muted">Hi {{name}},</p>
+            <h2 style="margin-top:4px;margin-bottom:6px">Thanks — we received your project request</h2>
+            <p style="margin-top:0;margin-bottom:12px">We’ve received your request for <strong>{{project_type}}</strong>. Our team will review it and reply within 1–2 business days.</p>
+
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:8px;margin-bottom:12px;">
+              <tr>
+                <td style="vertical-align:top;padding-right:12px;min-width:120px;font-weight:600;">Summary</td>
+                <td style="vertical-align:top">
+                  <div style="font-size:14px;margin-bottom:6px"><strong>Organization:</strong> {{organization}}</div>
+                  <div style="font-size:14px;margin-bottom:6px"><strong>Budget:</strong> {{budget}}</div>
+                  <div style="font-size:14px;margin-bottom:6px"><strong>Timeline:</strong> {{timeline}}</div>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:0 0 12px 0"><strong>Your message</strong></p>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:12px;border-radius:6px;color:#0f1724;">
+              <tr><td style="font-size:14px;">{{description}}</td></tr>
+            </table>
+
+            <p style="margin-top:14px">If you need to update your request or attach files, reply to this message or contact us at <a href="mailto:{{support_email}}">{{support_email}}</a>.</p>
+
+            <p style="margin-top:16px"><a class="btn" href="{{site_url}}">View our services</a></p>
+          </td>
+        </tr>
+        <tr>
+          <td class="meta">
+            <div>Reference ID: <strong>#{{id}}</strong></div>
+            <div class="small">This message was sent from a notification-only address. Replies to <code>{{from_email}}</code> may not be monitored.</div>
+          </td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>
