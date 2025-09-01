@@ -59,6 +59,9 @@ const Header = () => {
               size="sm"
               className="lg:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-controls="mobile-menu"
+              aria-expanded={isMenuOpen}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>
@@ -67,6 +70,7 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         <div
+          id="mobile-menu"
           className={cn(
             "lg:hidden overflow-hidden transition-all duration-300",
             isMenuOpen ? "max-h-[800px] opacity-100 mt-4" : "max-h-0 opacity-0"
