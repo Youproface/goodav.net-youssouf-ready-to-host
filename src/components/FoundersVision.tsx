@@ -1,14 +1,14 @@
+
 import React from "react";
 import { motion } from "framer-motion";
 import { Rocket, Target, Lightbulb, Award, Calendar } from "lucide-react";
 
-/** Types */
-type StoryItem = {
+interface StoryItem {
   year: string;
   title: string;
   description: string;
   images?: string[];
-};
+}
 
 const founderStory: StoryItem[] = [
   {
@@ -39,9 +39,9 @@ const founderStory: StoryItem[] = [
     description:
       "Established GoodAV with the mission to showcase Africa's rich heritage while empowering clients to amplify their unique stories.",
     images: [
-  "/images/all_site_images/Home/TIMELINE/2019-GoodAV Founded-1.jpg",
-  "/images/all_site_images/Home/TIMELINE/2019-GoodAV Founded-2.jpg",
-  "/images/all_site_images/Home/TIMELINE/2019-GoodAV Founded-3.jpg",
+      "/images/all_site_images/Home/TIMELINE/2019-GoodAV Founded-1.jpg",
+      "/images/all_site_images/Home/TIMELINE/2019-GoodAV Founded-2.jpg",
+      "/images/all_site_images/Home/TIMELINE/2019-GoodAV Founded-3.jpg",
     ],
   },
   {
