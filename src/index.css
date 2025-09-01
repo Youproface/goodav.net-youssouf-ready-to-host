@@ -117,10 +117,13 @@ All colors MUST be HSL for proper theming.
 
   .glass-card {
     @apply backdrop-blur-md bg-card/50 border border-border/50;
+    will-change: transform;
   }
 
   .hover-lift {
     @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
+    will-change: transform;
+    transform: translateZ(0); /* Force hardware acceleration */
   }
 
   .animate-float {

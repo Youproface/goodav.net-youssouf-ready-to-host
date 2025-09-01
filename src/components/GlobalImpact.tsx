@@ -1,14 +1,84 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion, Variants } from 'framer-motion';
+import { Award, Globe, Users, Calendar, Trophy, Handshake, Lightbulb, Heart, LucideIcon } from 'lucide-react';
+
+interface ImpactStat {
+  icon: LucideIcon;
+  mainText: string;
+  subTextBold: string;
+  subTextItalic: string;
+  ariaLabel: string;
+}
+
+interface Achievement {
+  icon: LucideIcon;
+  text: string;
+  ariaLabel: string;
+}
 
 const GlobalImpact: React.FC = () => {
+  // Memoize data for performance
+  const impactStats: ImpactStat[] = useMemo(() => [
+    {
+      icon: Award,
+      mainText: '500+',
+      subTextBold: 'PROJECTS DELIVERED',
+      subTextItalic: 'Award-winning productions',
+      ariaLabel: 'Over 500 successful projects delivered'
+    },
+    {
+      icon: Globe,
+      mainText: '15+',
+      subTextBold: 'AFRICAN COUNTRIES',
+      subTextItalic: 'Continental presence',
+      ariaLabel: 'Presence in over 15 African countries'
+    },
+    {
+      icon: Users,
+      mainText: '20+',
+      subTextBold: 'PARTNERS',
+      subTextItalic: 'Global audience impact',
+      ariaLabel: 'Over 20 strategic partners worldwide'
+    },
+    {
+      icon: Calendar,
+      mainText: '10+',
+      subTextBold: 'YEARS OF EXCELLENCE',
+      subTextItalic: 'Excellence guaranteed',
+      ariaLabel: 'Over 10 years of excellence in the industry'
+    }
+  ], []);
+
+  const achievements: Achievement[] = useMemo(() => [
+    {
+      icon: Trophy,
+      text: 'INDUSTRY RECOGNITION',
+      ariaLabel: 'Industry recognition and awards'
+    },
+    {
+      icon: Handshake,
+      text: 'STRATEGIC PARTNERSHIPS',
+      ariaLabel: 'Strategic partnerships with global organizations'
+    },
+    {
+      icon: Lightbulb,
+      text: 'INNOVATION LEADERSHIP',
+      ariaLabel: 'Leadership in audiovisual innovation'
+    },
+    {
+      icon: Heart,
+      text: 'COMMUNITY IMPACT',
+      ariaLabel: 'Positive impact on African communities'
+    }
+  ], []);
+
   const container: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: 0.08,
+        delayChildren: 0.15,
       },
     },
   };
@@ -19,8 +89,8 @@ const GlobalImpact: React.FC = () => {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.6,
-        ease: [0.22, 1, 0.36, 1]
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     },
   };
@@ -29,43 +99,49 @@ const GlobalImpact: React.FC = () => {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { duration: 0.8 }
+      transition: { duration: 0.6 }
     },
   };
 
   return (
-    <motion.div 
-      className="bg-gray-900 rounded-3xl p-8 max-w-7xl mx-auto text-center text-white font-sans border border-orange-700/30"
+    <motion.section
+      className="bg-gradient-to-b from-background via-muted/30 to-background rounded-3xl p-8 max-w-7xl mx-auto font-sans border border-primary/20"
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-100px" }}
       variants={fadeIn}
+      aria-labelledby="impact-heading"
+      role="region"
     >
+      {/* Skip Link for Accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50 focus:outline-none focus:ring-2 focus:ring-primary/50"
+      >
+        Skip to main content
+      </a>
+
       {/* Badge and Heading Section */}
-      <motion.div 
+      <motion.div
         className="mb-8"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <span className="inline-flex items-center gap-2 bg-orange-500 text-white font-bold rounded-full px-6 py-3 text-sm uppercase tracking-wide shadow-lg">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
-          </svg>
+        <span
+          className="inline-flex items-center gap-2 bg-gradient-primary text-primary-foreground font-bold rounded-full px-6 py-3 text-sm uppercase tracking-wide shadow-glow"
+          role="banner"
+          aria-label="Measurable Impact section badge"
+        >
+          <Award className="w-5 h-5" aria-hidden="true" />
           MEASURABLE IMPACT
         </span>
       </motion.div>
 
-      <motion.h2 
-        className="text-4xl font-extrabold text-orange-500 mb-6 tracking-wide"
+      <motion.h2
+        id="impact-heading"
+        className="text-4xl md:text-5xl font-extrabold gradient-text mb-6 tracking-wide"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -73,157 +149,136 @@ const GlobalImpact: React.FC = () => {
       >
         Numbers that tell our story of growth and excellence
       </motion.h2>
-      
-      <motion.p 
-        className="text-gray-300 max-w-4xl mx-auto mb-12 text-lg leading-relaxed"
+
+      <motion.p
+        className="text-muted-foreground max-w-4xl mx-auto mb-12 text-lg leading-relaxed"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.3 }}
       >
-        Transforming Africa's story through measurable excellence across continents, creating powerful narratives that 
+        Transforming Africa's story through measurable excellence across continents, creating powerful narratives that
         inspire change and celebrate African innovation on the world stage.
       </motion.p>
 
       {/* Stats Grid */}
-      <motion.div 
+      <motion.div
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"
         variants={container}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
+        role="region"
+        aria-labelledby="impact-heading"
       >
-        {[
-          {
-            icon: (
-              <div className="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-            ),
-            mainText: '500+',
-            subTextBold: 'PROJECTS DELIVERED',
-            subTextItalic: 'Award-winning productions'
-          },
-          {
-            icon: (
-              <div className="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-            ),
-            mainText: '5+',
-            subTextBold: 'AFRICAN COUNTRIES',
-            subTextItalic: 'Continental presence'
-          },
-          {
-            icon: (
-              <div className="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-            ),
-            mainText: '20+',
-            subTextBold: 'PARTNERS',
-            subTextItalic: 'Global audience impact'
-          },
-          {
-            icon: (
-              <div className="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                  <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                </svg>
-              </div>
-            ),
-            mainText: '10+',
-            subTextBold: 'YEARS OF EXCELLENCE',
-            subTextItalic: 'Excellence guaranteed'
-          }
-        ].map(({ icon, mainText, subTextBold, subTextItalic }, idx) => (
-          <motion.div 
-            key={idx} 
-            className="bg-gray-800/40 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/30 hover:border-orange-500/50 transition-all duration-300"
+        {impactStats.map(({ icon: Icon, mainText, subTextBold, subTextItalic, ariaLabel }, idx) => (
+          <motion.div
+            key={idx}
+            className="glass-card rounded-2xl p-8 hover-lift group"
             variants={item}
-            whileHover={{ 
+            whileHover={{
               y: -5,
               boxShadow: '0 10px 25px -5px rgba(249, 115, 22, 0.3)',
               transition: { duration: 0.2 }
             }}
+            role="article"
+            aria-label={ariaLabel}
+            tabIndex={0}
           >
-            {icon}
-            <div className="text-4xl font-extrabold text-orange-500 mb-3">
+            <div className="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-glow transition-all duration-300">
+              <Icon className="w-8 h-8 text-primary-foreground" aria-hidden="true" />
+            </div>
+            <div className="text-4xl font-extrabold gradient-text mb-3" aria-hidden="true">
               {mainText}
             </div>
-            <div className="uppercase font-bold text-orange-400 text-sm mb-2 tracking-wider">
+            <div className="uppercase font-bold text-primary text-sm mb-2 tracking-wider">
               {subTextBold}
             </div>
-            <div className="italic text-gray-400 text-sm">{subTextItalic}</div>
+            <div className="italic text-muted-foreground text-sm">{subTextItalic}</div>
           </motion.div>
         ))}
       </motion.div>
 
       {/* Bottom Achievement Buttons */}
-      <motion.div 
+      <motion.div
         className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto"
         variants={container}
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
+        role="region"
+        aria-label="Achievement highlights"
       >
-        {[
-          { 
-            icon: (
-              <svg className="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M5.166 2.621v.858c-1.035.148-2.059.33-3.071.543a.75.75 0 00-.584.859 6.753 6.753 0 006.138 5.6 6.73 6.73 0 002.743 1.346A6.707 6.707 0 019.279 15H8.54c-1.036 0-1.875.84-1.875 1.875V19.5h-.75a2.25 2.25 0 00-2.25 2.25c0 .414.336.75.75.75h15a.75.75 0 00.75-.75 2.25 2.25 0 00-2.25-2.25H16.5v-2.625c0-1.036-.84-1.875-1.875-1.875h-.739a6.706 6.706 0 01-1.112-3.173 6.73 6.73 0 002.743-1.347 6.753 6.753 0 006.139-5.6.75.75 0 00-.585-.858 47.077 47.077 0 00-3.07-.543V2.62a.75.75 0 00-.658-.744 49.22 49.22 0 00-6.093-.377c-2.063 0-4.096.128-6.093.377a.75.75 0 00-.657.744z" />
-              </svg>
-            ),
-            text: 'INDUSTRY RECOGNITION' 
-          },
-          { 
-            icon: (
-              <svg className="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M7.5 3.375c0-1.036.84-1.875 1.875-1.875h.375a3.75 3.75 0 013.75 3.75v1.875C13.5 8.161 14.34 9 15.375 9h1.875A3.75 3.75 0 0121 12.75v3.375C21 17.16 20.16 18 19.125 18h-9.75A1.875 1.875 0 017.5 16.125V3.375z" />
-              </svg>
-            ),
-            text: 'STRATEGIC PARTNERSHIPS' 
-          },
-          { 
-            icon: (
-              <svg className="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 9a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V15a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V9z" />
-              </svg>
-            ),
-            text: 'INNOVATION LEADERSHIP' 
-          },
-          { 
-            icon: (
-              <svg className="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-              </svg>
-            ),
-            text: 'COMMUNITY IMPACT' 
-          }
-        ].map(({ icon, text }, idx) => (
+        {achievements.map(({ icon: Icon, text, ariaLabel }, idx) => (
           <motion.button
             key={idx}
-            className="bg-gray-800/30 backdrop-blur-sm rounded-xl py-4 px-6 text-sm font-bold uppercase tracking-wide border border-gray-700/30 hover:bg-orange-600 hover:border-orange-500 transition-all duration-300 flex items-center justify-center gap-2"
+            className="glass-card rounded-xl py-4 px-6 text-sm font-bold uppercase tracking-wide hover-lift group transition-all duration-300 flex items-center justify-center gap-2"
             variants={item}
-            whileHover={{ 
-              scale: 1.05,
+            whileHover={{
+              scale: 1.02,
               transition: { duration: 0.2 }
             }}
-            whileTap={{ scale: 0.95 }}
+            whileTap={{ scale: 0.98 }}
+            aria-label={ariaLabel}
+            tabIndex={0}
           >
-            {icon}
-            <span className="text-white">{text}</span>
+            <Icon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
+            <span className="text-foreground group-hover:text-primary transition-colors">{text}</span>
           </motion.button>
         ))}
       </motion.div>
-    </motion.div>
+
+      {/* Structured Data for SEO - WebPage Schema for Impact Section */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Measurable Impact - Our Achievements & Statistics",
+            "description": "Discover GoodAV's measurable impact with 500+ projects across 15+ African countries, showcasing our growth and excellence in audiovisual production",
+            "url": "https://goodav.net#impact",
+            "mainEntity": {
+              "@type": "ItemList",
+              "name": "Key Performance Indicators",
+              "description": "Statistical achievements and measurable impact metrics",
+              "numberOfItems": 4,
+              "itemListElement": [
+                {
+                  "@type": "PropertyValue",
+                  "name": "Projects Delivered",
+                  "value": "500+",
+                  "description": "Award-winning audiovisual productions completed"
+                },
+                {
+                  "@type": "PropertyValue",
+                  "name": "African Countries",
+                  "value": "15+",
+                  "description": "Continental presence across Africa"
+                },
+                {
+                  "@type": "PropertyValue",
+                  "name": "Strategic Partners",
+                  "value": "20+",
+                  "description": "Global partnerships and collaborations"
+                },
+                {
+                  "@type": "PropertyValue",
+                  "name": "Years of Excellence",
+                  "value": "10+",
+                  "description": "Years of industry excellence and innovation"
+                }
+              ]
+            },
+            "isPartOf": {
+              "@type": "WebSite",
+              "name": "GoodAV",
+              "url": "https://goodav.net"
+            }
+          })
+        }}
+      />
+    </motion.section>
   );
 };
 

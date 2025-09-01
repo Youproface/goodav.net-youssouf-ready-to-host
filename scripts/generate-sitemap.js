@@ -1,6 +1,12 @@
 // Dynamic sitemap generator for GoodAV
-const { SitemapStream, streamToPromise } = require('sitemap');
-const { createWriteStream } = require('fs');
+import { SitemapStream, streamToPromise } from 'sitemap';
+import { createWriteStream } from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const routes = [
   '/',
   '/about-us',
@@ -35,15 +41,22 @@ const routes = [
 ];
 
 const sitemap = new SitemapStream({ hostname: 'https://goodav.net' });
-const writeStream = createWriteStream('./sitemap.xml');
+const writeStream = createWriteStream(join(__dirname, '../sitemap.xml'));
 
 routes.forEach(route => {
-  sitemap.write({ url: route, changefreq: 'weekly', priority: 0.8 });
+  sitemap.write({
+    url: route,
+    changefreq: 'weekly',
+    priority: route === '/' ? 1.0 : 0.8,
+    lastmod: new Date().toISOString()
+  });
 });
 
 sitemap.end();
 streamToPromise(sitemap).then(sm => {
   writeStream.write(sm.toString());
   writeStream.end();
-  console.log('Sitemap generated at sitemap.xml');
+  console.log('✅ Sitemap generated successfully at sitemap.xml');
+}).catch(err => {
+  console.error('❌ Error generating sitemap:', err);
 });

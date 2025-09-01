@@ -1,6 +1,6 @@
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { Play, Video, Camera, Mic, Users, Trophy, Eye, Handshake } from 'lucide-react';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import './Hero.css';
 
 // Animated counter component
@@ -53,21 +53,54 @@ import { useNavigate } from 'react-router-dom';
 import ProjectStartingModal from './forms/ProjectStartingModal';
 const Hero = () => {
   const [open, setOpen] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const navigate = useNavigate();
+  
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  // Preload background image for better performance
+  useEffect(() => {
+    const img = new Image();
+    img.src = heroBackground;
+    img.onload = () => setImageLoaded(true);
+  }, []);
+  
   return (
-    <section className="relative">
+    <>
+      {/* Skip Link for Accessibility */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-orange-500 text-white px-4 py-2 rounded-md z-50 focus:outline-none focus:ring-2 focus:ring-orange-300"
+      >
+        Skip to main content
+      </a>
+      
+      <section 
+        className="relative" 
+        role="banner" 
+        aria-labelledby="hero-heading"
+      >
       {/* Background Image */}
       <motion.div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg"
-        initial={{ opacity: 0 }}
+        initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
+        transition={prefersReducedMotion ? { duration: 0 } : { duration: 1 }}
       >
+        <img 
+          src={heroBackground} 
+          alt="Dynamic video production background showcasing African creativity and global excellence at Goodav AV Agency" 
+          className={`w-full h-full object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+          loading="eager"
+          decoding="async"
+          onLoad={() => setImageLoaded(true)}
+        />
         <motion.div 
           className="absolute inset-0 bg-gradient-hero"
-          initial={{ opacity: 0 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
+          transition={prefersReducedMotion ? { duration: 0 } : { duration: 1, delay: 0.5 }}
         />
       </motion.div>
 
@@ -75,9 +108,17 @@ const Hero = () => {
       <div className="relative z-10 container mx-auto px-4 py-20 text-center">
         <motion.div 
           className="max-w-5xl mx-auto"
-          initial="hidden"
+          initial={prefersReducedMotion ? "show" : "hidden"}
           animate="show"
-          variants={{
+          variants={prefersReducedMotion ? {
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0,
+                delayChildren: 0
+              }
+            }
+          } : {
             hidden: {},
             show: {
               transition: {
@@ -129,7 +170,6 @@ const Hero = () => {
             </div>
           </motion.div>
 
-          {/* Tagline */}
           <motion.div 
             className="mb-8"
             variants={{
@@ -143,7 +183,7 @@ const Hero = () => {
               }
             }}
           >
-            <h2 className="text-2xl md:text-4xl font-bold mb-4">
+            <h1 id="hero-heading" className="text-2xl md:text-4xl font-bold mb-4">
               <motion.span 
                 className="gradient-text inline-block mr-2"
                 variants={{
@@ -172,7 +212,7 @@ const Hero = () => {
                   show: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.3 } }
                 }}
               >Impactful</motion.span>
-            </h2>
+            </h1>
             <motion.h2 
               className="text-2xl md:text-4xl font-bold mb-6"
               variants={{
@@ -224,10 +264,10 @@ const Hero = () => {
             }}
           >
             {[
-              { icon: <Video className="h-8 w-8 text-primary mb-2" />, text: 'Documentaries' },
-              { icon: <Users className="h-8 w-8 text-primary mb-2" />, text: 'Live Events' },
-              { icon: <Camera className="h-8 w-8 text-primary mb-2" />, text: 'Corporate Films' },
-              { icon: <Mic className="h-8 w-8 text-primary mb-2" />, text: 'International' }
+              { icon: <Video className="h-8 w-8 text-primary mb-2" aria-hidden="true" />, text: 'Documentaries', ariaLabel: 'Documentary film production services' },
+              { icon: <Users className="h-8 w-8 text-primary mb-2" aria-hidden="true" />, text: 'Live Events', ariaLabel: 'Live event video production services' },
+              { icon: <Camera className="h-8 w-8 text-primary mb-2" aria-hidden="true" />, text: 'Corporate Films', ariaLabel: 'Corporate video production services' },
+              { icon: <Mic className="h-8 w-8 text-primary mb-2" aria-hidden="true" />, text: 'International', ariaLabel: 'International video production services' }
             ].map((item, index) => (
               <motion.div
                 key={index}
@@ -248,6 +288,8 @@ const Hero = () => {
                   scale: 1.03,
                   transition: { duration: 0.2 }
                 }}
+                role="article"
+                aria-label={item.ariaLabel}
               >
                 {item.icon}
                 <span className="text-sm font-medium">{item.text}</span>
@@ -278,8 +320,10 @@ const Hero = () => {
                   boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
                 }}
                 whileTap={{ scale: 0.98 }}
+                aria-label="View our portfolio of video production work"
+                role="button"
               >
-                <Play className="h-5 w-5" />
+                <Play className="h-5 w-5" aria-hidden="true" />
                 Experience Our Portfolio
               </motion.button>
               <motion.button 
@@ -290,8 +334,10 @@ const Hero = () => {
                   boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
                 }}
                 whileTap={{ scale: 0.98 }}
+                aria-label="Start your video production project with Goodav"
+                role="button"
               >
-                <Video className="h-5 w-5" />
+                <Video className="h-5 w-5" aria-hidden="true" />
                 Start Your Journey
               </motion.button>
             </div>
@@ -311,7 +357,7 @@ const Hero = () => {
       </div>
 
       {/* Stats Section */}
-      <div className="relative py-16 bg-gradient-to-b from-black/80 to-black/90">
+      <section id="main-content" className="relative py-16 bg-gradient-to-b from-black/80 to-black/90" aria-labelledby="stats-heading">
         <div className="container mx-auto px-4">
           {/* Stats Tagline */}
           <motion.div 
@@ -319,9 +365,9 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6 }}
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+            <h2 id="stats-heading" className="text-2xl md:text-3xl font-bold text-white mb-4">
               Our Impact Speaks Volumes
             </h2>
             <p className="text-orange-300 max-w-2xl mx-auto">
@@ -331,10 +377,19 @@ const Hero = () => {
           
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"
-            initial="hidden"
+            initial={prefersReducedMotion ? "show" : "hidden"}
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
-            variants={{
+            variants={prefersReducedMotion ? {
+              hidden: { opacity: 1 },
+              show: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0,
+                  delayChildren: 0
+                }
+              }
+            } : {
               hidden: { opacity: 0 },
               show: {
                 opacity: 1,
@@ -392,8 +447,9 @@ const Hero = () => {
             ))}
           </motion.div>
         </div>
-      </div>
+      </section>
     </section>
+    </>
   );
 };
 

@@ -704,7 +704,7 @@ export default function ConsultationModal({
 
       {showPopup && createPortal(
         <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="bg-[#1b1d] w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700 
+          <div className="bg-[#1b1b1d] w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700 
             p-4 sm:p-6 relative popup-enter transform translate-y-0 max-h-[90vh] overflow-y-auto"
             role="alertdialog"
             aria-labelledby="popup-title"
@@ -722,13 +722,13 @@ export default function ConsultationModal({
 
             <div className="flex justify-center mb-4">
               {popupType === 'success' ? (
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-orange-500/20 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#252529] rounded-full flex items-center justify-center">
                   <svg className="w-6 h-6 sm:w-8 sm:h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
               ) : popupType === 'warning' ? (
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-orange-500/20 rounded-full flex items-center justify-center">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#252529] rounded-full flex items-center justify-center">
                   <svg className="w-6 h-6 sm:w-8 sm:h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
                   </svg>
