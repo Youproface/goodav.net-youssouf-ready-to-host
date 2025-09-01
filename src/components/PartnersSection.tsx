@@ -13,10 +13,10 @@ const PartnersSection = () => {
   const partners = partnerLogos;
 
   const partnershipStats = [
-    { number: "150+", label: "Partners", icon: <Users className="h-6 w-6" /> },
-    { number: "25+", label: "Countries", icon: <Globe className="h-6 w-6" /> },
+    { number: "20+", label: "Partners", icon: <Users className="h-6 w-6" /> },
+    { number: "5+", label: "Countries", icon: <Globe className="h-6 w-6" /> },
     { number: "500+", label: "Projects", icon: <Briefcase className="h-6 w-6" /> },
-    { number: "10+", label: "Years", icon: <Award className="h-6 w-6" /> }
+    { number: "10+", label: "Years of Excellence", icon: <Award className="h-6 w-6" /> }
   ];
 
   return (

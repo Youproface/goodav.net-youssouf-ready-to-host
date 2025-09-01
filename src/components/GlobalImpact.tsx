@@ -60,7 +60,7 @@ const GlobalImpact: React.FC = () => {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
           </svg>
-          GLOBAL IMPACT
+          MEASURABLE IMPACT
         </span>
       </motion.div>
 
@@ -71,7 +71,7 @@ const GlobalImpact: React.FC = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
-        TRANSFORMING AFRICA&apos;S STORY
+        Numbers that tell our story of growth and excellence
       </motion.h2>
       
       <motion.p 
@@ -81,7 +81,7 @@ const GlobalImpact: React.FC = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.3 }}
       >
-        Measurable excellence across continents, creating powerful narratives that 
+        Transforming Africa's story through measurable excellence across continents, creating powerful narratives that 
         inspire change and celebrate African innovation on the world stage.
       </motion.p>
 
@@ -140,7 +140,7 @@ const GlobalImpact: React.FC = () => {
               </div>
             ),
             mainText: '10+',
-            subTextBold: 'YEARS',
+            subTextBold: 'YEARS OF EXCELLENCE',
             subTextItalic: 'Excellence guaranteed'
           }
         ].map(({ icon, mainText, subTextBold, subTextItalic }, idx) => (
