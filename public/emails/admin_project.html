@@ -2,42 +2,71 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>New Project Request</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Project Notification — GoodAV</title>
     <style>
-      body { font-family: Arial, Helvetica, sans-serif; background:#f6f7fb; color:#0f172a; margin:0; padding:20px }
-      .card { background: #fff; border-radius:8px; padding:20px; max-width:700px; margin:0 auto; box-shadow:0 8px 30px rgba(15,23,42,0.06)}
-      .brand { display:flex; align-items:center; gap:12px; margin-bottom:12px }
-      .logo { width:48px; height:48px; border-radius:6px; background:#0ea5a4; display:inline-block }
-      h1 { font-size:18px; margin:0 0 8px 0; color:#0f172a }
-  .muted { color:#b45309; font-size:13px }
-      table { width:100%; border-collapse:collapse; margin-top:12px }
-      td { padding:8px 6px; border-bottom:1px solid #eef2f7 }
-      td.label { width:160px; color:#64748b; font-weight:600 }
-      .cta { display:inline-block; margin-top:14px; padding:10px 14px; background:#0ea5a4; color:white; border-radius:6px; text-decoration:none }
-      .footer { margin-top:18px; font-size:12px; color:#94a3b8 }
+      body { margin:0; padding:0; background:#fff7ed; font-family: Arial, Helvetica, sans-serif; }
+      .container { max-width:600px; margin:32px auto; background:#fff; border-radius:10px; box-shadow:0 2px 12px #0001; border:1px solid #fff1e6; }
+      .header { background:#fb923c; color:#fff; text-align:center; padding:24px 0 16px 0; border-radius:10px 10px 0 0; }
+      .logo { display:inline-block; vertical-align:middle; margin-bottom:8px; }
+  .logo { display:inline-block; width:56px; height:56px; vertical-align:middle; margin-bottom:8px; }
+      .brand-title { font-size:22px; font-weight:700; margin:0; }
+      .brand-desc { font-size:15px; color:#fff8; margin-bottom:0; }
+      .content { padding:24px 24px 0 24px; color:#0f172a; }
+      .details { background:#fff7ed; padding:12px; border-radius:6px; margin:16px 0; }
+  .footer { background:#fff7ed; color:#92400e; font-size:13px; padding:18px 24px; text-align:center; border-radius:0 0 10px 10px; }
+  .social { margin-bottom:10px; }
+  .social-links { margin-bottom:8px; }
+  .social-links a { color:#b45309; text-decoration:none; margin:0 8px; }
+      a { color:#b45309; }
     </style>
   </head>
   <body>
-    <div class="card">
-      <div class="brand">
-        <div class="logo"></div>
-        <div>
-          <strong>GoodAV</strong>
-          <div class="muted">New project request</div>
-        </div>
+    <div class="container">
+      <div class="header">
+        <span class="logo">
+          <svg id="goodav-bimi.svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.2 387.4" width="56" height="56">
+            <defs>
+              <style>
+                .cls-1{fill:#f6953a;}.cls-1,.cls-2,.cls-3,.cls-4,.cls-5{stroke-width:0px;}.cls-2{fill:#010101;}.cls-3{fill:#fff;}.cls-4{fill:#41964c;}.cls-5{fill:#f04f44;}
+              </style>
+            </defs>
+            <ellipse class="cls-2" cx="195.1" cy="193.7" rx="195.1" ry="193.7"/>
+            <path class="cls-5" d="M198,27.7c31.5,0,57.1,26.2,57.1,58.4,0,32.1-25.8,58.1-57.4,58-31.3-.1-56.8-26.2-56.8-58.1,0-32.2,25.6-58.3,57.2-58.3Z"/>
+            <path class="cls-3" d="M140.8,193.8c0,32.1-25.7,58.1-57.2,58.1-31.5,0-57.1-26.2-57-58.3,0-32.1,25.7-58.1,57.2-58.1,31.5,0,57,26.2,57,58.3Z"/>
+            <path class="cls-1" d="M246.4,193.2c.2-32.1,26.1-58,57.7-57.7,31.4.2,56.8,26.7,56.5,59-.2,31.8-26.1,57.6-57.5,57.5-31.5-.1-56.9-26.5-56.8-58.7Z"/>
+            <path class="cls-4" d="M140.8,304.4c0-32,25.9-58,57.6-57.9,31.4.1,56.8,26.5,56.7,58.8-.2,31.7-25.9,57.7-57.3,57.6-31.5,0-57-26.3-56.9-58.5Z"/>
+          </svg>
+        </span>
+        <div class="brand-title">GoodAV</div>
+        <div class="brand-desc">Professional AV production & services</div>
       </div>
-      <h1>Project Request #{{id}}</h1>
-      <div class="muted">Submitted by {{name}} ({{email}})</div>
-      <table>
-        <tr><td class="label">Project Type</td><td>{{project_type}}</td></tr>
-        <tr><td class="label">Organization</td><td>{{organization}}</td></tr>
-        <tr><td class="label">Budget</td><td>{{budget}}</td></tr>
-        <tr><td class="label">Timeline</td><td>{{timeline}}</td></tr>
-        <tr><td class="label">Description</td><td>{{description}}</td></tr>
-      </table>
-      <a class="cta" href="{{site_url}}/admin/submissions/{{id}}">Open submission</a>
-      <div class="footer">This is an automated notification. Reply to {{from_email}} to contact the submissions system.</div>
+      <div class="content">
+        <h2>New Project Notification</h2>
+        <div class="details">
+          <div><strong>Project Type:</strong> {{project_type}}</div>
+          <div><strong>Organization:</strong> {{organization}}</div>
+          <div><strong>Budget:</strong> {{budget}}</div>
+          <div><strong>Timeline:</strong> {{timeline}}</div>
+          <div><strong>Description:</strong> {{description}}</div>
+        </div>
+        <div class="footer">
+          <div class="social">
+            Connect:
+            <a href="https://www.youtube.com/@goodaudiovisuals" target="_blank" rel="noopener">YouTube</a>
+            <a href="https://www.instagram.com/goodaudiovisual" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://x.com/AudiovisualGood" target="_blank" rel="noopener">X</a>
+            <a href="https://www.linkedin.com/company/goodav" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://www.facebook.com/goodaudiovisuals" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://www.flickr.com/photos/202425883@N07" target="_blank" rel="noopener">Flickr</a>
+          </div>
+          <strong>Important Notice:</strong> You are receiving this message because you interacted with our website (<a href="https://goodav.net">goodav.net</a>). If you did not initiate this request, please ignore and delete this email immediately. To report any suspicious activity, contact <a href="mailto:report@goodav.net">report@goodav.net</a> for immediate support.<br>
+          For assistance, reach out to <a href="mailto:support@goodav.net">support@goodav.net</a>.<br>
+          If you interacted with us, please review our <a href="https://goodav.net/privacy">Privacy Policy</a> for details about your privacy, or contact <a href="mailto:privacy@goodav.net">privacy@goodav.net</a> for further information.<br>
+          GoodAV &bull; Kigali, Rwanda &bull; Reference: #{{id}}
+        </div>
+        <p>If you need to contact the system, reply to {{from_email}}.</p>
+      </div>
     </div>
   </body>
 </html>

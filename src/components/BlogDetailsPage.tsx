@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import heroBackground from '../assets/images/all_site_images/Home/BG/Home_BG.png';
+const heroBackground = '/images/all_site_images/Home/BG/Home_BG.png';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';

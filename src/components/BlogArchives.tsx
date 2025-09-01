@@ -1,4 +1,4 @@
-import heroBackground from '../assets/images/all_site_images/Home/BG/Home_BG.png';
+const heroBackground = '/images/all_site_images/Home/BG/Home_BG.png';
 import BlogsSection from './BlogsSection';
 import { blogPosts, BlogPost } from '@/data/blog';
 import { useState, useMemo } from 'react';

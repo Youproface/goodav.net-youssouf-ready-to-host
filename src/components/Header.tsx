@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import logo from '../assets/images/all_site_images/Assets/logo.png';
+// Use public path for logo
+const logo = '/images/all_site_images/Assets/logo-full-color.svg';
 import { Link } from "react-router-dom";
 import ConsultationModal from "./forms/ConsultationModal";
 

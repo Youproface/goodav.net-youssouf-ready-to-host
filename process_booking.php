@@ -1,4 +1,9 @@
 <?php
+// Load .env variables using vlucas/phpdotenv
+require_once __DIR__ . '/vendor/autoload.php';
+use Dotenv\Dotenv;
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -97,136 +102,88 @@ try {
     exit();
 }
 
-// Send email notification via separate email forwarder service
+// Send email notification using PHPMailer and SMTP from .env
+require_once __DIR__ . '/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require_once __DIR__ . '/vendor/phpmailer/phpmailer/src/SMTP.php';
+require_once __DIR__ . '/vendor/phpmailer/phpmailer/src/Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+function get_env($key, $default = null) {
+    if (getenv($key) !== false) {
+        return getenv($key);
+    }
+    if (isset($_ENV[$key])) {
+        return $_ENV[$key];
+    }
+    return $default;
+}
+
 $email_result = ['success' => false, 'error' => 'Email service not available'];
-
 try {
-    // Prepare data for email forwarder
-    $email_data = [
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'phone' => $data['phone'] ?? '',
-        'organization' => $data['organization'],
-        'project' => $data['project'],
-        'date' => $data['date'],
-        'time' => $data['time'],
-        'timezone' => $data['timezone'],
-        'booking_id' => $booking_id
+    // 1. Send confirmation to client only
+    $clientMail = new PHPMailer(true);
+    $clientMail->isSMTP();
+    $clientMail->Host = get_env('SMTP_ICLOUD1_HOST');
+    $clientMail->Port = get_env('SMTP_ICLOUD1_PORT');
+    $clientMail->SMTPAuth = true;
+    $clientMail->Username = get_env('SMTP_ICLOUD1_USER');
+    $clientMail->Password = get_env('SMTP_ICLOUD1_PASS');
+    $clientMail->SMTPSecure = get_env('SMTP_ICLOUD1_SECURE', 'tls');
+    $clientMail->setFrom(get_env('BOOKING_FROM_EMAIL', 'noreply@goodav.net'), 'GoodAV Booking');
+    $clientMail->addAddress($data['email'], $data['name']);
+    $clientMail->isHTML(true);
+    $clientMail->Subject = 'Your booking is confirmed — GoodAV';
+    $clientMail->Body = "<html><body style='font-family:Arial,sans-serif;background:#fff7ed;'><div style='max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #fff1e6;'><div style='background:#fb923c;color:#fff;padding:16px 20px;'><h1 style='margin:0;font-size:20px;color:#fff;font-weight:700;'>GoodAV</h1><div style='color:#fff8; font-size:15px'>Professional AV production &amp; services</div></div><div style='padding:20px;color:#0f172a;line-height:1.5;'><p style='color:#b45309;font-size:16px;text-align:center;'>Hi {$data['name']},</p><h2 style='text-align:center;'>Your booking is confirmed</h2><p style='color:#b45309;font-size:16px;text-align:center;'>Thanks for booking with GoodAV. Below are the details of your appointment.</p><div style='background:#fff7ed;padding:12px;border-radius:6px;color:#0f172a;max-width:400px;margin:0 auto;'><div><strong>Service</strong>: {$data['project']}</div><div><strong>Date</strong>: {$data['date']}</div><div><strong>Time</strong>: {$data['time']}</div><div><strong>Organization</strong>: {$data['organization']}</div></div><p style='color:#b45309;margin-top:18px;font-size:15px;text-align:center;'>If you need to reschedule or cancel, reply to this email or contact <a href='mailto:support@goodav.net'>support@goodav.net</a>.</p></div><div style='background:#fff7ed;color:#92400e;font-size:13px;padding:12px 20px;text-align:center;'><strong>Important Notice:</strong> You are receiving this message because you interacted with our website (<a href='https://goodav.net'>goodav.net</a>). If you did not initiate this request, please ignore and delete this email immediately. To report any suspicious activity, contact <a href='mailto:report@goodav.net'>report@goodav.net</a> for immediate support.<br>For assistance, reach out to <a href='mailto:support@goodav.net'>support@goodav.net</a>.<br>If you interacted with us, please review our <a href='https://goodav.net/privacy'>Privacy Policy</a> for details about your privacy, or contact <a href='mailto:privacy@goodav.net'>privacy@goodav.net</a> for further information.<br>GoodAV &bull; Kigali, Rwanda &bull; Reference: #{$booking_id}</div></div></body></html>";
+    if (get_env('ENABLE_SMTP_DEBUG', '0') === '1') {
+        $clientMail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $clientMail->Debugoutput = function($str, $level) {
+            file_put_contents('/tmp/php-smtp.log', $str . "\n", FILE_APPEND);
+        };
+    }
+    $clientMail->send();
+
+    // 2. Send notification to admin only
+    $adminMail = new PHPMailer(true);
+    $adminMail->isSMTP();
+    $adminMail->Host = get_env('SMTP_ICLOUD1_HOST');
+    $adminMail->Port = get_env('SMTP_ICLOUD1_PORT');
+    $adminMail->SMTPAuth = true;
+    $adminMail->Username = get_env('SMTP_ICLOUD1_USER');
+    $adminMail->Password = get_env('SMTP_ICLOUD1_PASS');
+    $adminMail->SMTPSecure = get_env('SMTP_ICLOUD1_SECURE', 'tls');
+    $adminMail->setFrom(get_env('BOOKING_FROM_EMAIL', 'noreply@goodav.net'), 'GoodAV Booking');
+    $adminEmails = explode(',', get_env('BOOKING_ADMIN_EMAIL', 'booking@goodav.net'));
+    foreach ($adminEmails as $adminEmail) {
+        $adminMail->addAddress(trim($adminEmail));
+    }
+    $forwardEmail = get_env('ADMIN_FORWARD_EMAIL');
+    if ($forwardEmail) {
+        $adminMail->addAddress($forwardEmail);
+    }
+    $adminMail->isHTML(true);
+    $adminMail->Subject = "New Booking: {$data['name']} ({$data['email']})";
+    $adminMail->Body = "<html><body style='font-family:Arial,sans-serif;background:#fff7ed;'><div style='max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #fff1e6;'><div style='background:#ff6b35;color:#fff;padding:16px 20px;'><h1 style='margin:0;font-size:20px;color:#fff;font-weight:700;'>GoodAV</h1><div style='color:#fff8; font-size:15px'>Professional AV production &amp; services</div></div><div style='padding:20px;color:#0f172a;line-height:1.5;'><h2 style='text-align:center;'>New Booking Received</h2><p style='color:#b45309;font-size:16px;text-align:center;'>A new booking has been submitted by <strong>{$data['name']}</strong>.</p><div style='background:#fff7ed;padding:12px;border-radius:6px;color:#0f172a;max-width:400px;margin:0 auto;'><div><strong>Name</strong>: {$data['name']}</div><div><strong>Email</strong>: {$data['email']}</div><div><strong>Phone</strong>: " . ($data['phone'] ?? 'Not provided') . "</div><div><strong>Organization</strong>: {$data['organization']}</div><div><strong>Project</strong>: {$data['project']}</div><div><strong>Date</strong>: {$data['date']}</div><div><strong>Time</strong>: {$data['time']}</div><div><strong>Timezone</strong>: {$data['timezone']}</div><div><strong>Booking ID</strong>: {$booking_id}</div></div></div><div style='background:#fff7ed;color:#92400e;font-size:13px;padding:12px 20px;text-align:center;'><strong>Important Notice:</strong> This is an automated notification for admin only. For support, contact <a href='mailto:support@goodav.net'>support@goodav.net</a>.<br>GoodAV &bull; Kigali, Rwanda &bull; Reference: #{$booking_id}</div></div></body></html>";
+    if (get_env('ENABLE_SMTP_DEBUG', '0') === '1') {
+        $adminMail->SMTPDebug = SMTP::DEBUG_SERVER;
+        $adminMail->Debugoutput = function($str, $level) {
+            file_put_contents('/tmp/php-smtp.log', $str . "\n", FILE_APPEND);
+        };
+    }
+    $adminMail->send();
+
+    $email_result = [
+        'success' => true,
+        'message' => 'Client and admin emails sent successfully via iCloud SMTP'
     ];
-
-    // Include and call email forwarder directly (avoiding HTTP request to self)
-    $email_forwarder_result = sendEmailNotification($email_data);
-    $email_result = $email_forwarder_result;
-
 } catch (Exception $e) {
     $email_result = [
         'success' => false,
-        'error' => 'Email forwarding failed: ' . $e->getMessage()
+        'error' => 'Email sending failed: ' . $e->getMessage()
     ];
-    error_log('Email forwarding error: ' . $e->getMessage());
-}
-
-// Email forwarder function
-function sendEmailNotification($data) {
-    try {
-        // Email configuration - Update these with your actual settings
-        $to = 'test@goodav.net'; // Test email for MailHog
-        $subject = 'New Booking Submission - GoodAV';
-
-        // Create HTML email content
-        $message = "
-        <html>
-        <head>
-            <title>New Booking Request</title>
-            <style>
-                body { font-family: Arial, sans-serif; }
-                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                .header { background: #ff6b35; color: white; padding: 20px; text-align: center; }
-                .content { background: #f9f9f9; padding: 20px; }
-                .field { margin: 10px 0; }
-                .label { font-weight: bold; color: #333; }
-                .value { color: #666; }
-            </style>
-        </head>
-        <body>
-            <div class='container'>
-                <div class='header'>
-                    <h2>🎉 New Booking Request</h2>
-                    <p>GoodAV Contact Form Submission</p>
-                </div>
-                <div class='content'>
-                    <div class='field'>
-                        <span class='label'>Name:</span>
-                        <span class='value'>{$data['name']}</span>
-                    </div>
-                    <div class='field'>
-                        <span class='label'>Email:</span>
-                        <span class='value'>{$data['email']}</span>
-                    </div>
-                    <div class='field'>
-                        <span class='label'>Phone:</span>
-                        <span class='value'>" . ($data['phone'] ?? 'Not provided') . "</span>
-                    </div>
-                    <div class='field'>
-                        <span class='label'>Organization:</span>
-                        <span class='value'>{$data['organization']}</span>
-                    </div>
-                    <div class='field'>
-                        <span class='label'>Project:</span>
-                        <span class='value'>{$data['project']}</span>
-                    </div>
-                    <div class='field'>
-                        <span class='label'>Preferred Date:</span>
-                        <span class='value'>{$data['date']}</span>
-                    </div>
-                    <div class='field'>
-                        <span class='label'>Preferred Time:</span>
-                        <span class='value'>{$data['time']}</span>
-                    </div>
-                    <div class='field'>
-                        <span class='label'>Timezone:</span>
-                        <span class='value'>{$data['timezone']}</span>
-                    </div>
-                    <div class='field'>
-                        <span class='label'>Booking ID:</span>
-                        <span class='value'>{$data['booking_id']}</span>
-                    </div>
-                </div>
-            </div>
-        </body>
-        </html>
-        ";
-
-        // Email headers for MailHog
-        $headers = "MIME-Version: 1.0" . "\r\n";
-        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= "From: GoodAV Contact Form <noreply@goodav.net>" . "\r\n";
-        $headers .= "Reply-To: {$data['email']}" . "\r\n";
-
-        // Send email using SMTP (MailHog)
-        ini_set('SMTP', 'localhost');
-        ini_set('smtp_port', '1025');
-
-        $email_sent = mail($to, $subject, $message, $headers);
-
-        if ($email_sent) {
-            return [
-                'success' => true,
-                'message' => 'Email sent successfully to MailHog'
-            ];
-        } else {
-            return [
-                'success' => false,
-                'error' => 'PHP mail function failed - check MailHog is running'
-            ];
-        }
-
-    } catch (Exception $e) {
-        return [
-            'success' => false,
-            'error' => 'Email sending failed: ' . $e->getMessage()
-        ];
-    }
+    error_log('Email sending error: ' . $e->getMessage());
 }
 
 // Return response

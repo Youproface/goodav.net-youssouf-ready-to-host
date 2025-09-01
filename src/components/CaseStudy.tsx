@@ -13,7 +13,7 @@ const defaultCaseStudy: CaseStudyData = {
     solution: 'Solution content goes here...',
     impact: 'Impact content goes here...',
   },
-  image: '/src/assets/images/placeholder.svg',
+  image: '/images/all_site_images/placeholder.svg',
   date: '2025',
   client: 'Client Name',
   category: 'Category',

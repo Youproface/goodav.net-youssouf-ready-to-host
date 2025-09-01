@@ -368,12 +368,17 @@ export default function BookingModal({
     setShowPopup(true);
   };
 
-  // Close popup
+  // Close popup with modal logic
   const closePopup = () => {
     setShowPopup(false);
     setPopupType(null);
     setPopupMessage('');
     setPopupDetails('');
+    if (popupType === 'success') {
+      handleClose(); // Close modal on success
+    } else if (popupType === 'error') {
+      setStep(8); // Return to last step on error
+    }
   };
 
   // Send booking data to backend API
@@ -545,7 +550,7 @@ export default function BookingModal({
               {/* Progress Bar */}
               <div className="w-full bg-gray-700 h-2 rounded-full mb-4 overflow-hidden">
                 <div
-                  className="bg-orange-500 h-full rounded-full transition-all duration-500 ease-out"
+                          className="bg-orange-500 h-full rounded-full transition-all duration-500 ease-out booking-progress-bar"
                   style={{ width: `${(step / 8) * 100}%` } as any}
                 />
               </div>
@@ -644,14 +649,26 @@ export default function BookingModal({
                         </svg>
                       </button>
                     </Tooltip.Trigger>
-                    {((step >= 1 && step <= 5 && !canProceed) || (step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed))) && (
+                    {((step >= 1 && step <= 5 && !canProceed)) && (
                       <Tooltip.Portal>
                         <Tooltip.Content
                           className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
                           sideOffset={8}
                           side="top"
                         >
-                          {step >= 1 && step <= 4 ? 'Please make a selection to continue' : 'Please select a date, time, and confirm your selection to continue'}
+                          {'Please make a selection to continue'}
+                          <Tooltip.Arrow className="fill-gray-900" />
+                        </Tooltip.Content>
+                      </Tooltip.Portal>
+                    )}
+                    {(step === 7 && (!selectedDate || !selectedTime || !timeSlotConfirmed)) && (
+                      <Tooltip.Portal>
+                        <Tooltip.Content
+                          className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
+                          sideOffset={8}
+                          side="top"
+                        >
+                          {'Please select a date, time, and confirm your selection to continue'}
                           <Tooltip.Arrow className="fill-gray-900" />
                         </Tooltip.Content>
                       </Tooltip.Portal>
@@ -1277,6 +1294,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
           <div className="flex items-center justify-between mb-3 sm:mb-4">
             <button
               className="text-lg sm:text-xl px-3 py-2 sm:px-4 sm:px-3 touch-manipulation active:scale-95"
+              aria-label="Go to previous month"
               onClick={() => {
                 if (calendarMonth === 0) {
                   setCalendarMonth(11);
@@ -1296,6 +1314,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
             </span>
             <button
               className="text-lg sm:text-xl px-3 py-2 sm:px-4 sm:px-3 touch-manipulation active:scale-95"
+              aria-label="Go to next month"
               onClick={() => {
                 if (calendarMonth === 11) {
                   setCalendarMonth(0);

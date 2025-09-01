@@ -5,7 +5,7 @@ import { Handshake, Users, Globe, Briefcase, Award } from 'lucide-react';
 // Import partner logos
 const partnerLogos = Array.from({ length: 31 }, (_, i) => ({
   id: i + 1,
-  logo: `/src/assets/images/all_site_images/Home/Partners/All/partner-logo-${i + 1}.${i + 1 === 20 ? 'png' : 'jpg'}`,
+  logo: `/images/all_site_images/Home/Partners/All/partner-logo-${i + 1}.${i + 1 === 20 ? 'png' : 'jpg'}`,
   alt: `Partner Logo ${i + 1}`
 }));
 

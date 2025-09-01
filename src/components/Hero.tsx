@@ -48,7 +48,7 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     </motion.span>
   );
 };
-import heroBackground from '../assets/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.gif';
+const heroBackground = '/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.gif';
 import { useNavigate } from 'react-router-dom';
 import ProjectStartingModal from './forms/ProjectStartingModal';
 const Hero = () => {

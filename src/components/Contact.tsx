@@ -1,4 +1,4 @@
-import heroBackground from '../assets/images/all_site_images/Home/BG/Home_BG.png';
+const heroBackground = '/images/all_site_images/Home/BG/Home_BG.png';
 export default function Contact() {
     return (
       <main className="bg-[#0f1012] text-zinc-100">

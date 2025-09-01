@@ -1,20 +1,20 @@
-import heroBackground from '../assets/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.gif';
+const heroBackground = '/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.gif';
 import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
 
 // Import team member images
-import vincentImg from '../assets/images/all_site_images/About/Team/Vincent.png';
-import josueImg from '../assets/images/all_site_images/About/Team/Josue.png';
-import marieImg from '../assets/images/all_site_images/About/Team/Marie.png';
-import adelineImg from '../assets/images/all_site_images/About/Team/Adeline.png';
-import claudineImg from '../assets/images/all_site_images/About/Team/Claudine.png';
-import emmyImg from '../assets/images/all_site_images/About/Team/Emmy.png';
-import etienneImg from '../assets/images/all_site_images/About/Team/Etienne.png';
-import mediatriceImg from '../assets/images/all_site_images/About/Team/Mediatrice.png';
-import ngaboImg from '../assets/images/all_site_images/About/Team/Ngabo.png';
-import richmondImg from '../assets/images/all_site_images/About/Team/Richmond.png';
-import dodoImg from '../assets/images/all_site_images/About/Team/dodo.png';
-import gentilImg from '../assets/images/all_site_images/About/Team/gentil.png';
+const vincentImg = '/images/all_site_images/About/Team/Vincent.png';
+const josueImg = '/images/all_site_images/About/Team/Josue.png';
+const marieImg = '/images/all_site_images/About/Team/Marie.png';
+const adelineImg = '/images/all_site_images/About/Team/Adeline.png';
+const claudineImg = '/images/all_site_images/About/Team/Claudine.png';
+const emmyImg = '/images/all_site_images/About/Team/Emmy.png';
+const etienneImg = '/images/all_site_images/About/Team/Etienne.png';
+const mediatriceImg = '/images/all_site_images/About/Team/Mediatrice.png';
+const ngaboImg = '/images/all_site_images/About/Team/Ngabo.png';
+const richmondImg = '/images/all_site_images/About/Team/Richmond.png';
+const dodoImg = '/images/all_site_images/About/Team/dodo.png';
+const gentilImg = '/images/all_site_images/About/Team/gentil.png';
 export default function AboutUs() {
     return (
       <>
@@ -29,7 +29,7 @@ export default function AboutUs() {
             "@type": "Organization",
             "name": "GoodAV",
             "url": "https://goodav.net",
-            "logo": "/src/assets/images/Assets/logo-fav.png",
+            "logo": "/images/all_site_images/Assets/logo-fav.png",
             "description": "Africa's premier audiovisual agency transforming ideas into impactful visual stories. GoodAV empowers African narratives through cinematic production, live streaming, photography, and strategic media coverage.",
             "sameAs": [
               "https://www.instagram.com/goodaudiovisual",
@@ -108,7 +108,7 @@ export default function AboutUs() {
             <figure className="mt-5 overflow-hidden rounded-2xl ring-1 ring-white/10">
               <div className="relative w-full h-[500px] overflow-hidden">
                 <img
-                  src="src/assets/images/all_site_images/About/Founder/Youssouf_Hakizimana_CEO_GoodAV.jpg"
+                  src="/images/all_site_images/Home/founder/Founder&CEO.jpeg"
                   alt="Founder portrait"
                   className="w-full h-full object-cover object-[center_30%]"
                 />

@@ -17,8 +17,8 @@ const founderStory: StoryItem[] = [
     description:
       "Started with a powerful belief: every story deserves to be told with authenticity, impact, and precision.",
     images: [
-      "src/assets/TIMELINE/2010-The Beginning-1.jpg",
-      "src/assets/TIMELINE/2010-The-Beginning-2.jpg",
+  "/images/all_site_images/Home/TIMELINE/2010-The Beginning-1.jpg",
+  "/images/all_site_images/Home/TIMELINE/2010-The-Beginning-2.jpg",
     ],
   },
   {
@@ -27,10 +27,10 @@ const founderStory: StoryItem[] = [
     description:
       "Developed mastery across video production, photography, live streaming, and audio creation throughout Rwanda and East Africa.",
     images: [
-      "src/assets/TIMELINE/2015-Building-Expertise-1.jpg",
-      "src/assets/TIMELINE/2015-Building-Expertise-2.jpg",
-      "src/assets/TIMELINE/2015-Building-Expertise-3.jpg",
-      "src/assets/TIMELINE/2015-Building-Expertise-4.jpg",
+  "/images/all_site_images/Home/TIMELINE/2015-Building-Expertise-1.jpg",
+  "/images/all_site_images/Home/TIMELINE/2015-Building-Expertise-2.jpg",
+  "/images/all_site_images/Home/TIMELINE/2015-Building-Expertise-3.jpg",
+  "/images/all_site_images/Home/TIMELINE/2015-Building-Expertise-4.jpg",
     ],
   },
   {
@@ -39,9 +39,9 @@ const founderStory: StoryItem[] = [
     description:
       "Established GoodAV with the mission to showcase Africa's rich heritage while empowering clients to amplify their unique stories.",
     images: [
-      "src/assets/TIMELINE/2019-GoodAV Founded-1.jpg",
-      "src/assets/TIMELINE/2019-GoodAV Founded-2.jpg",
-      "src/assets/TIMELINE/2019-GoodAV Founded-3.jpg",
+  "/images/all_site_images/Home/TIMELINE/2019-GoodAV Founded-1.jpg",
+  "/images/all_site_images/Home/TIMELINE/2019-GoodAV Founded-2.jpg",
+  "/images/all_site_images/Home/TIMELINE/2019-GoodAV Founded-3.jpg",
     ],
   },
   {
@@ -50,12 +50,12 @@ const founderStory: StoryItem[] = [
     description:
       "Recognized as Rwanda's premier audiovisual agency, creating content that inspires and transforms communities across Africa.",
     images: [
-      "src/assets/TIMELINE/2025-Leading-the-Industry-1.jpg",
-      "src/assets/TIMELINE/2025-Leading-the-Industry-2.jpg",
-      "src/assets/TIMELINE/2025-Leading-the-Industry-3.jpg",
-      "src/assets/TIMELINE/2025-Leading-the-Industry-4.jpg",
-      "src/assets/TIMELINE/2025-Leading-the-Industry-5.jpg",
-      "src/assets/TIMELINE/2025-Leading-the-Industry-6.webp",
+  "/images/all_site_images/Home/TIMELINE/2025-Leading-the-Industry-1.jpg",
+  "/images/all_site_images/Home/TIMELINE/2025-Leading-the-Industry-2.jpg",
+  "/images/all_site_images/Home/TIMELINE/2025-Leading-the-Industry-3.jpg",
+  "/images/all_site_images/Home/TIMELINE/2025-Leading-the-Industry-4.jpg",
+  "/images/all_site_images/Home/TIMELINE/2025-Leading-the-Industry-5.jpg",
+  "/images/all_site_images/Home/TIMELINE/2025-Leading-the-Industry-6.webp",
     ],
   },
 ];
@@ -123,7 +123,7 @@ export default function FoundersVision() {
               {/* Avatar / Image placeholder */}
               <div className="relative h-24 w-24 md:h-28 md:w-28 lg:h-32 lg:w-32 rounded-full overflow-hidden">
                 <img
-                  src="/src/assets/founder/Founder&CEO.jpeg"
+                  src="/images/all_site_images/Home/founder/Founder&CEO.jpeg"
                   alt="Founder"
                   className="object-cover"
                 />

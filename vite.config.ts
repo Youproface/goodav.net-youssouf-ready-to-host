@@ -51,5 +51,10 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: true,
     port: 5174,
+    proxy: {
+      '/process_booking.php': 'http://localhost:8000',
+      '/process_project.php': 'http://localhost:8000',
+      '/process_contact.php': 'http://localhost:8000',
+    },
   },
 }));
