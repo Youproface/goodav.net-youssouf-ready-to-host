@@ -87,9 +87,8 @@ export default function FoundersVision() {
           className="text-center"
         >
           <motion.div variants={itemVariants} className="mb-4 flex justify-center">
-            <span className="px-4 py-1 rounded-full border border-orange-500 text-xs md:text-sm lg:text-base uppercase tracking-wider text-orange-400 font-medium">
-              Founder's Story
-            </span>
+            "/images/all_site_images/Home/TIMELINE/2010-The Beginning-1.jpg",
+            "/images/all_site_images/Home/TIMELINE/2010-The-Beginning-2.jpg",
           </motion.div>
           <motion.h2
             variants={itemVariants}
