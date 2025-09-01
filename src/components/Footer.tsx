@@ -71,7 +71,7 @@ const Footer = () => {
                   Where African creativity meets global excellence.
                 </p>
                 <div className="space-y-3">
-                  <span className="text-sm">+250 788 613 332</span>
+                  {/* Removed standalone phone number as requested */}
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center text-muted-foreground">
@@ -152,17 +152,6 @@ const Footer = () => {
                         <Icon className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
                       </a>
                     ))}
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const el = document.getElementById('contact');
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        else window.location.hash = '#contact';
-                      }}
-                      className="inline-flex items-center gap-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white px-5 py-3 font-semibold"
-                    >
-                      Contact Us
-                    </button>
                   </div>
                 </div>
               </div>
