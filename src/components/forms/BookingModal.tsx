@@ -518,11 +518,18 @@ export default function BookingModal({
   return (
     <>
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center 
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center 
                 bg-gradient-to-br from-black/70 via-gray-900/60 to-black/70 
                 backdrop-blur-sm min-h-screen p-2 sm:p-4 md:p-6
-                overflow-y-auto">
-          <div className="bg-[#1b1b1d] w-full max-w-4xl rounded-xl shadow-lg text-white 
+                overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="dialog-title"
+          aria-describedby="dialog-description"
+        >
+          <div 
+            className="bg-[#1b1b1d] w-full max-w-4xl rounded-xl shadow-lg text-white 
                 mx-auto my-4 max-h-[95vh] overflow-hidden flex flex-col
                 transform transition-all duration-300 ease-out">
             {/* Close Button */}
@@ -544,9 +551,10 @@ export default function BookingModal({
             {/* Modal Content */}
             <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
               {/* Header */}
-              <h2 className="text-lg sm:text-xl font-semibold text-orange-400 flex items-center gap-2 mb-4">
+              <h2 id="dialog-title" className="text-lg sm:text-xl font-semibold text-orange-400 flex items-center gap-2 mb-4">
                 Why are you booking?
               </h2>
+              <p id="dialog-description" className="sr-only">A multi-step form to book a consultation. Please fill out all the steps to complete your booking.</p>
 
               {/* Progress Bar */}
               <div className="w-full bg-gray-700 h-2 rounded-full mb-4 overflow-hidden">
@@ -688,7 +696,11 @@ export default function BookingModal({
       {showPopup && createPortal(
         <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <div className="bg-[#1b1b1d] w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700 
-            p-4 sm:p-6 relative popup-enter transform translate-y-0 max-h-[90vh] overflow-y-auto">
+            p-4 sm:p-6 relative popup-enter transform translate-y-0 max-h-[90vh] overflow-y-auto"
+            role="alertdialog"
+            aria-labelledby="popup-title"
+            aria-describedby="popup-description"
+          >
             {/* Close Button */}
             <button
               onClick={closePopup}
@@ -724,7 +736,7 @@ export default function BookingModal({
             </div>
 
             {/* Title */}
-            <h3 className={`text-lg sm:text-xl font-semibold text-center mb-2 ${
+            <h3 id="popup-title" className={`text-lg sm:text-xl font-semibold text-center mb-2 ${
               popupType === 'success' ? 'text-orange-400' :
               popupType === 'warning' ? 'text-orange-400' : 'text-red-400'
             }`}>
@@ -733,7 +745,7 @@ export default function BookingModal({
 
             {/* Details */}
             {popupDetails && (
-              <div className="text-gray-300 text-center text-sm leading-relaxed mb-4">
+              <div id="popup-description" className="text-gray-300 text-center text-sm leading-relaxed mb-4">
                 <details className="mx-auto max-w-[28rem] text-left">
                   <summary className="cursor-pointer text-sm text-orange-300">Details</summary>
                   <pre className="whitespace-pre-wrap text-xs text-gray-300 mt-2 p-2 bg-[#141414] rounded">{popupDetails}</pre>
