@@ -420,7 +420,8 @@ export default function BookingModal({
     };
 
     try {
-  const response = await fetch('/process_booking.php', {
+      const apiBase = import.meta.env.VITE_API_BASE_URL || '';
+      const response = await fetch(`${apiBase}/process_booking.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -554,7 +555,7 @@ export default function BookingModal({
               <div className="w-full bg-gray-700 h-2 rounded-full mb-4 overflow-hidden">
                 <div
                   className="bg-orange-500 h-full rounded-full transition-all duration-500 ease-out booking-progress-bar"
-                  style={{ width: `${(step / 8) * 100}%` }}
+                  data-progress={step}
                   aria-label={`Progress: Step ${step} of 8`}
                 />
               </div>

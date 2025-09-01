@@ -40,3 +40,13 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Progress bar width for BookingModal and ConsultationModal */
+.booking-progress-bar[data-progress="1"] { width: 12.5%; }
+.booking-progress-bar[data-progress="2"] { width: 25%; }
+.booking-progress-bar[data-progress="3"] { width: 37.5%; }
+.booking-progress-bar[data-progress="4"] { width: 50%; }
+.booking-progress-bar[data-progress="5"] { width: 62.5%; }
+.booking-progress-bar[data-progress="6"] { width: 75%; }
+.booking-progress-bar[data-progress="7"] { width: 87.5%; }
+.booking-progress-bar[data-progress="8"] { width: 100%; }

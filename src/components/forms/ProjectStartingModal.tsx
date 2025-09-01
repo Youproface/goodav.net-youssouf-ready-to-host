@@ -1,87 +1,67 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-// ...existing code...
 import { FaCheckCircle, FaTimesCircle, FaExclamationTriangle, FaSearch } from 'react-icons/fa';
-// Comprehensive country code list (copied from BookingModal)
-const countryCodes = [
-  { code: '+1', name: 'United States/Canada' },
-  { code: '+44', name: 'United Kingdom' },
-  { code: '+33', name: 'France' },
-  { code: '+49', name: 'Germany' },
-  { code: '+91', name: 'India' },
-  { code: '+81', name: 'Japan' },
-  { code: '+61', name: 'Australia' },
-  { code: '+86', name: 'China' },
-  { code: '+39', name: 'Italy' },
-  { code: '+7', name: 'Russia' },
-  { code: '+34', name: 'Spain' },
-  { code: '+250', name: 'Rwanda' },
-  { code: '+254', name: 'Kenya' },
-  { code: '+27', name: 'South Africa' },
-  { code: '+20', name: 'Egypt' },
-  { code: '+213', name: 'Algeria' },
-  { code: '+212', name: 'Morocco' },
-  { code: '+55', name: 'Brazil' },
-  { code: '+52', name: 'Mexico' },
-  { code: '+234', name: 'Nigeria' },
-  { code: '+82', name: 'South Korea' },
-  { code: '+62', name: 'Indonesia' },
-  { code: '+60', name: 'Malaysia' },
-  { code: '+65', name: 'Singapore' },
-  { code: '+971', name: 'UAE' },
-  { code: '+90', name: 'Turkey' },
-  { code: '+358', name: 'Finland' },
-  { code: '+46', name: 'Sweden' },
-  { code: '+47', name: 'Norway' },
-  { code: '+48', name: 'Poland' },
-  { code: '+41', name: 'Switzerland' },
-  { code: '+43', name: 'Austria' },
-  { code: '+31', name: 'Netherlands' },
-  { code: '+32', name: 'Belgium' },
-  { code: '+420', name: 'Czech Republic' },
-  { code: '+421', name: 'Slovakia' },
-  { code: '+36', name: 'Hungary' },
-  { code: '+40', name: 'Romania' },
-  { code: '+30', name: 'Greece' },
-  { code: '+353', name: 'Ireland' },
-  { code: '+380', name: 'Ukraine' },
-  { code: '+375', name: 'Belarus' },
-  { code: '+372', name: 'Estonia' },
-  { code: '+371', name: 'Latvia' },
-  { code: '+370', name: 'Lithuania' },
-  { code: '+994', name: 'Azerbaijan' },
-  { code: '+995', name: 'Georgia' },
-  { code: '+998', name: 'Uzbekistan' },
-  { code: '+84', name: 'Vietnam' },
-  { code: '+66', name: 'Thailand' },
-  { code: '+63', name: 'Philippines' },
-  { code: '+92', name: 'Pakistan' },
-  { code: '+880', name: 'Bangladesh' },
-  { code: '+977', name: 'Nepal' },
-  { code: '+94', name: 'Sri Lanka' },
-  { code: '+960', name: 'Maldives' },
-  { code: '+964', name: 'Iraq' },
-  { code: '+98', name: 'Iran' },
-  { code: '+972', name: 'Israel' },
-  { code: '+961', name: 'Lebanon' },
-  { code: '+962', name: 'Jordan' },
-  { code: '+963', name: 'Syria' },
-  { code: '+965', name: 'Kuwait' },
-  { code: '+968', name: 'Oman' },
-  { code: '+974', name: 'Qatar' },
-  { code: '+973', name: 'Bahrain' },
-  { code: '+966', name: 'Saudi Arabia' },
-  { code: '+967', name: 'Yemen' },
-  { code: '+970', name: 'Palestine' },
-  { code: '+975', name: 'Bhutan' },
-  { code: '+976', name: 'Mongolia' },
-  { code: '+992', name: 'Tajikistan' },
-  { code: '+993', name: 'Turkmenistan' },
-  { code: '+996', name: 'Kyrgyzstan' },
-  // ...add more as needed for full global coverage...
-];
+import { createPortal } from 'react-dom';
+import countryCodes from '../../data/countryCodes.json';
 
 export default function ProjectStartingModal({ open, onClose }) {
+  // --- Validation ---
+  function validateForm() {
+    if (!name.trim()) {
+      showNotificationPopup('error', 'Full Name is required');
+      return false;
+    }
+    if (!email.trim() || !/^\S+@\S+\.\S+$/.test(email)) {
+      showNotificationPopup('error', 'A valid Email Address is required');
+      return false;
+    }
+    if (!phone.trim() || phone.length < 7) {
+      showNotificationPopup('error', 'A valid Phone Number (at least 7 digits) is required');
+      return false;
+    }
+    if (!organization.trim()) {
+      showNotificationPopup('error', 'Company / Organization is required');
+      return false;
+    }
+    if (!projectType.trim()) {
+      showNotificationPopup('error', 'Project Type is required');
+      return false;
+    }
+    if (!budget.trim()) {
+      showNotificationPopup('error', 'Estimated Budget is required');
+      return false;
+    }
+    if (!timeline.trim() || timeline === 'When do you need this completed?') {
+      showNotificationPopup('error', 'Project Timeline is required');
+      return false;
+    }
+    if (!description.trim()) {
+      showNotificationPopup('error', 'Project Description is required');
+      return false;
+    }
+    if (!consent) {
+      showNotificationPopup('error', 'You must agree to be contacted about this project');
+      return false;
+    }
+    return true;
+  }
+  // --- Feedback Popup Logic ---
+  function showNotificationPopup(type, message, details = '') {
+    setPopupType(type);
+    setPopupMessage(message);
+    setPopupDetails(details);
+    setShowPopup(true);
+  }
+
+  function closePopup() {
+    setShowPopup(false);
+    setPopupType(null);
+    setPopupMessage('');
+    setPopupDetails('');
+    if (popupType === 'success') {
+      onClose(); // Close modal on success
+    }
+  }
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -112,59 +92,22 @@ export default function ProjectStartingModal({ open, onClose }) {
   }, [open]);
 
   // --- Validation ---
-  function validateForm() {
-    const errors = [];
-    if (!name.trim()) errors.push('Full name is required');
-    if (!email.trim()) errors.push('Email address is required');
-    if (!organization.trim()) errors.push('Organization is required');
-    if (!projectType.trim()) errors.push('Project type is required');
-    if (!description.trim()) errors.push('Project description is required');
-    // Email format validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (email && !emailRegex.test(email)) errors.push('Please enter a valid email address');
-    // Phone validation (optional but if provided, should be valid)
-    if (phone && phone.length < 7) {
-      errors.push('Please enter a valid phone number (at least 7 digits)');
-    }
-  if (!consent) errors.push('You must agree to be contacted and accept our privacy policy');
-  return errors;
-  }
-
-  // --- Feedback Popup ---
-  function showNotificationPopup(type, message, details = '') {
-    setPopupType(type);
-    setPopupMessage(message);
-    setPopupDetails(details);
-    setShowPopup(true);
-  }
-
-  function closePopup() {
-    setShowPopup(false);
-    setPopupType(null);
-    setPopupMessage('');
-    setPopupDetails('');
-    if (popupType === 'success') {
-      onClose(); // Close modal on success
-    }
-  }
+  // --- Validation ---
 
   // --- Backend Integration ---
   async function handleSubmit(e) {
     e.preventDefault();
-    const errors = validateForm();
-    if (errors.length > 0) {
-      setSubmitStatus(errors.join('. '));
-      showNotificationPopup('error', 'Please Complete Required Fields', errors.join('. '));
-      return;
-    }
+    if (submitting) return; // Prevent multiple submissions
+    if (!validateForm()) return;
     setSubmitting(true);
-    setSubmitStatus('Submitting your project...');
+    setSubmitStatus('Submitting your project request...');
     const projectData = {
-      name: name.trim(),
-      email: email.trim(),
-      phone: phone ? `${countryCode}${phone}` : '',
-      organization: organization.trim(),
-      projectType: projectType.trim(),
+      name,
+      email,
+      phone,
+      countryCode,
+      organization,
+      projectType,
       budget,
       timeline,
       description: description.trim(),
@@ -172,7 +115,8 @@ export default function ProjectStartingModal({ open, onClose }) {
       type: 'project',
     };
     try {
-      const response = await fetch('/process_project.php', {
+      const apiBase = import.meta.env.VITE_API_BASE_URL || '';
+      const response = await fetch(`${apiBase}/process_project.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(projectData),
@@ -241,10 +185,14 @@ export default function ProjectStartingModal({ open, onClose }) {
   // --- Modal UI ---
   return (
     <>
-      <Dialog.Root open={open} onOpenChange={isOpen => !isOpen && onClose()}>
+      <Dialog.Root open={open} onOpenChange={isOpen => {
+        // Prevent closing modal when popup is open
+        if (showPopup) return;
+        if (!isOpen) onClose();
+      }}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm" />
-          <Dialog.Content ref={dialogRef} className="fixed left-1/2 top-1/2 z-50 w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/15 bg-white/5 shadow-xl backdrop-blur-xl p-0" aria-modal="true" role="dialog">
+          <Dialog.Overlay className={`fixed inset-0 bg-black/60 backdrop-blur-sm${showPopup ? ' pointer-events-none' : ''}`} />
+          <Dialog.Content ref={dialogRef} className={`fixed left-1/2 top-1/2 z-50 w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/15 bg-white/5 shadow-xl backdrop-blur-xl p-0${showPopup ? ' pointer-events-none' : ''}`} aria-modal="true" role="dialog">
             <div className="h-2 rounded-t-2xl bg-gradient-to-r from-orange-400/40 via-white/10 to-indigo-400/40" />
             <button type="button" onClick={onClose} aria-label="Close dialog" className="group absolute right-4 top-[50px] -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/10 backdrop-blur-xl ring-2 ring-white/30 hover:bg-white/20 flex items-center justify-center shadow-lg">
               <span className="h-8 w-8 rounded-full bg-gradient-to-br from-zinc-100/80 to-white/60 shadow-inner flex items-center justify-center">
@@ -287,8 +235,7 @@ export default function ProjectStartingModal({ open, onClose }) {
                       aria-label="Country Code"
                       value={countryCode}
                       onChange={e => setCountryCode(e.target.value)}
-                      className="h-10 w-32 rounded-lg border border-white/15 bg-white/5 px-2 text-base outline-none transition focus:border-orange-300/40 focus:bg-white/10 overflow-y-auto"
-                      style={{ maxHeight: '40vh' }}
+                      className="h-10 w-32 rounded-lg border border-white/15 bg-white/5 px-2 text-base outline-none transition focus:border-orange-300/40 focus:bg-white/10 overflow-y-auto max-h-[40vh]"
                     >
                       {countryCodes.map((c, i) => (
                         <option key={`${c.code}-${i}`} value={c.code}>{c.code} {c.name}</option>
@@ -367,7 +314,7 @@ export default function ProjectStartingModal({ open, onClose }) {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-      {/* Feedback Popup */}
+  {/* Feedback Popup: This overlay uses z-[99999] to ensure it always appears above the modal. If you change modal z-index, update this accordingly. */}
       <Popup
         show={showPopup}
         type={popupType}
@@ -381,10 +328,37 @@ export default function ProjectStartingModal({ open, onClose }) {
 
 function Popup({ show, type, message, details, onClose }) {
   if (!show || !type) return null;
-  // Immediate close logic, centered popup, unified with BookingModal
-  return (
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-      <div className="bg-[#1b1b1d] w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700 p-4 sm:p-6 relative">
+  // Trap focus and prevent background interaction
+  useEffect(() => {
+    if (!show) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+      }
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    document.body.style.overflow = show ? 'hidden' : '';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [show, onClose]);
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 pointer-events-auto"
+      aria-modal="true"
+      role="dialog"
+      tabIndex={-1}
+      style={{ outline: 'none' }}
+    >
+      <div
+        className="bg-[#1b1b1d] w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700 p-4 sm:p-6 relative"
+        tabIndex={0}
+      >
         <button onClick={onClose} aria-label="Close popup" className="absolute top-3 right-3 text-gray-400 hover:text-white"> <FaTimesCircle className="w-5 h-5" /> </button>
         <div className="flex justify-center mb-4">
           {type === 'success' ? (
@@ -411,6 +385,7 @@ function Popup({ show, type, message, details, onClose }) {
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

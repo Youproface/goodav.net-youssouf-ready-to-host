@@ -112,6 +112,14 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 function get_env($key, $default = null) {
+// Helper to load and fill template
+function load_and_fill_template($template_path, $data) {
+    $template = file_get_contents($template_path);
+    foreach ($data as $key => $value) {
+        $template = str_replace('{{' . $key . '}}', htmlspecialchars($value), $template);
+    }
+    return $template;
+}
     if (getenv($key) !== false) {
         return getenv($key);
     }
@@ -123,7 +131,7 @@ function get_env($key, $default = null) {
 
 $email_result = ['success' => false, 'error' => 'Email service not available'];
 try {
-    // 1. Send confirmation to client only
+    // 1. Send confirmation to client using template
     $clientMail = new PHPMailer(true);
     $clientMail->isSMTP();
     $clientMail->Host = get_env('SMTP_ICLOUD1_HOST');
@@ -136,7 +144,19 @@ try {
     $clientMail->addAddress($data['email'], $data['name']);
     $clientMail->isHTML(true);
     $clientMail->Subject = 'Your booking is confirmed — GoodAV';
-    $clientMail->Body = "<html><body style='font-family:Arial,sans-serif;background:#fff7ed;'><div style='max-width:600px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;border:1px solid #fff1e6;'><div style='background:#fb923c;color:#fff;padding:16px 20px;'><h1 style='margin:0;font-size:20px;color:#fff;font-weight:700;'>GoodAV</h1><div style='color:#fff8; font-size:15px'>Professional AV production &amp; services</div></div><div style='padding:20px;color:#0f172a;line-height:1.5;'><p style='color:#b45309;font-size:16px;text-align:center;'>Hi {$data['name']},</p><h2 style='text-align:center;'>Your booking is confirmed</h2><p style='color:#b45309;font-size:16px;text-align:center;'>Thanks for booking with GoodAV. Below are the details of your appointment.</p><div style='background:#fff7ed;padding:12px;border-radius:6px;color:#0f172a;max-width:400px;margin:0 auto;'><div><strong>Service</strong>: {$data['project']}</div><div><strong>Date</strong>: {$data['date']}</div><div><strong>Time</strong>: {$data['time']}</div><div><strong>Organization</strong>: {$data['organization']}</div></div><p style='color:#b45309;margin-top:18px;font-size:15px;text-align:center;'>If you need to reschedule or cancel, reply to this email or contact <a href='mailto:support@goodav.net'>support@goodav.net</a>.</p></div><div style='background:#fff7ed;color:#92400e;font-size:13px;padding:12px 20px;text-align:center;'><strong>Important Notice:</strong> You are receiving this message because you interacted with our website (<a href='https://goodav.net'>goodav.net</a>). If you did not initiate this request, please ignore and delete this email immediately. To report any suspicious activity, contact <a href='mailto:report@goodav.net'>report@goodav.net</a> for immediate support.<br>For assistance, reach out to <a href='mailto:support@goodav.net'>support@goodav.net</a>.<br>If you interacted with us, please review our <a href='https://goodav.net/privacy'>Privacy Policy</a> for details about your privacy, or contact <a href='mailto:privacy@goodav.net'>privacy@goodav.net</a> for further information.<br>GoodAV &bull; Kigali, Rwanda &bull; Reference: #{$booking_id}</div></div></body></html>";
+    $templateData = [
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'phone' => $data['phone'] ?? '',
+        'organization' => $data['organization'],
+        'project' => $data['project'],
+        'date' => $data['date'],
+        'time' => $data['time'],
+        'timezone' => $data['timezone'],
+        'booking_id' => $booking_id,
+        'support_email' => get_env('SUPPORT_EMAIL', 'support@goodav.net'),
+    ];
+    $clientMail->Body = load_and_fill_template(__DIR__ . '/public/emails/booking_confirmation.html', $templateData);
     if (get_env('ENABLE_SMTP_DEBUG', '0') === '1') {
         $clientMail->SMTPDebug = SMTP::DEBUG_SERVER;
         $clientMail->Debugoutput = function($str, $level) {

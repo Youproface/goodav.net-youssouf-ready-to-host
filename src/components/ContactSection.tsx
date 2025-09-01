@@ -1,5 +1,6 @@
 import Map from "./Map";
 import { useState, useRef } from "react";
+import { createPortal } from 'react-dom';
 import BookingModal from './forms/BookingModal';
 import { FaCalendarAlt, FaPhone, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaCheck } from 'react-icons/fa';
 
@@ -8,6 +9,9 @@ export default function ContactUs() {
   const formRef = useRef<HTMLFormElement | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<{ ok: boolean; msg: string } | null>(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupType, setPopupType] = useState<'success' | 'error' | null>(null);
+  const [popupMessage, setPopupMessage] = useState('');
 
   // controlled fields
   const [firstName, setFirstName] = useState("");
@@ -35,7 +39,9 @@ export default function ContactUs() {
     const v = validate();
     setErrors(v);
     if (v.length > 0) {
-      // focus first error field optionally
+      setPopupType('error');
+      setPopupMessage('Please fix the errors in the form.');
+      setShowPopup(true);
       return;
     }
 
@@ -50,7 +56,8 @@ export default function ContactUs() {
         hp_field: hpField || ''
       };
 
-      const res = await fetch('/process_contact.php', {
+      const apiBase = import.meta.env.VITE_API_BASE_URL || '';
+      const res = await fetch(`${apiBase}/process_contact.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -58,14 +65,22 @@ export default function ContactUs() {
       const json = await res.json().catch(() => null);
       if (res.ok && json && json.success) {
         setStatus({ ok: true, msg: 'Message sent — thank you! We will reply shortly.' });
-        // clear form
+        setPopupType('success');
+        setPopupMessage('Message sent — thank you! We will reply shortly.');
+        setShowPopup(true);
         setFirstName(''); setLastName(''); setEmail(''); setSubject(''); setMessage(''); setHpField('');
       } else {
         const msg = json && (json.error || json.message) ? (json.error || json.message) : 'Submission failed. Please try again or contact support.';
         setStatus({ ok: false, msg });
+        setPopupType('error');
+        setPopupMessage(msg);
+        setShowPopup(true);
       }
     } catch (err) {
       setStatus({ ok: false, msg: 'Network error. Please try again or contact support.' });
+      setPopupType('error');
+      setPopupMessage('Network error. Please try again or contact support.');
+      setShowPopup(true);
     } finally {
       setSubmitting(false);
     }
@@ -199,6 +214,31 @@ export default function ContactUs() {
                     <div role="status" aria-live="polite" className="mt-2 text-orange-400 text-sm text-center">
                       {status && status.msg}
                     </div>
+      {/* Feedback Popup Modal */}
+      {showPopup && createPortal(
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="rounded-2xl bg-white/95 shadow-xl p-8 max-w-sm w-full text-center border border-orange-200">
+            <div className="mb-4">
+              {popupType === 'success' ? (
+                <span className="inline-flex items-center justify-center rounded-full bg-emerald-100 p-3"><FaCheck className="text-emerald-500 w-6 h-6" /></span>
+              ) : (
+                <span className="inline-flex items-center justify-center rounded-full bg-red-100 p-3"><FaEnvelope className="text-red-500 w-6 h-6" /></span>
+              )}
+            </div>
+            <div className="text-lg font-semibold mb-2 text-zinc-900">{popupType === 'success' ? 'Success' : 'Error'}</div>
+            <div className="text-sm text-zinc-700 mb-4">{popupMessage}</div>
+            <button
+              type="button"
+              onClick={() => setShowPopup(false)}
+              className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-6 py-2 text-sm font-semibold text-zinc-900 shadow hover:from-orange-400 hover:to-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60 transition-all duration-200"
+              aria-label="Close feedback popup"
+            >
+              Close
+            </button>
+          </div>
+        </div>,
+        document.body
+      )}
 
                   </div>
                 </form>
