@@ -5,6 +5,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import Index from "./pages/Index";
+import PrivacyPage from "./pages/Privacy";
+import TermsPage from "./pages/Terms";
+import CookiePolicyPage from "./pages/CookiePolicy";
 import NotFound from "./pages/NotFound";
 import BlogDetailsPage from "./components/BlogDetailsPage";
 import { services } from "./data/services";
@@ -83,6 +86,9 @@ const App = () => (
             <Route path="/blog" element={<BlogArchive />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/case-study/:slug" element={<CaseStudy />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/cookie-policy" element={<CookiePolicyPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

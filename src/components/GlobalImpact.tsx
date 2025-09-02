@@ -35,7 +35,7 @@ const GlobalImpact: React.FC = () => {
     },
     {
       icon: Users,
-      mainText: '20+',
+  mainText: '50+',
       subTextBold: 'PARTNERS',
       subTextItalic: 'Global audience impact',
       ariaLabel: 'Over 20 strategic partners worldwide'
@@ -259,7 +259,7 @@ const GlobalImpact: React.FC = () => {
                 {
                   "@type": "PropertyValue",
                   "name": "Strategic Partners",
-                  "value": "20+",
+                  "value": "50+",
                   "description": "Global partnerships and collaborations"
                 },
                 {

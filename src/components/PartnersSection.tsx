@@ -44,7 +44,7 @@ const PartnersSection = () => {
   
   const partnershipStats = React.useMemo(() => [
     { 
-      number: "20+", 
+  number: "50+", 
       label: "Partners", 
       icon: <Users className="h-6 w-6" aria-hidden="true" />, 
       ariaLabel: "Over 20 strategic partners",
@@ -501,7 +501,7 @@ const PartnersSection = () => {
               "@type": "ItemList",
               "name": "Strategic Partners",
               "description": "Trusted partnerships with global organizations and African enterprises",
-              "numberOfItems": "20+",
+              "numberOfItems": "50+",
               "itemListElement": [
                 {
                   "@type": "Offer",

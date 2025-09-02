@@ -88,7 +88,7 @@ const OurJourney: React.FC = () => {
     },
     {
       icon: Users,
-      value: "20+",
+  value: "50+",
       title: "Partners",
       desc: "Long-term partnerships",
       ariaLabel: "Over 20 long-term strategic partners"
@@ -511,7 +511,7 @@ const OurJourney: React.FC = () => {
                 "@type": "Continent",
                 "name": "Africa"
               },
-              "numberOfEmployees": "20+",
+              "numberOfEmployees": "50+",
               "knowsAbout": [
                 "Audiovisual Production",
                 "African Storytelling",

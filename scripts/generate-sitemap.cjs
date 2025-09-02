@@ -1,11 +1,7 @@
 // Dynamic sitemap generator for GoodAV
-import { SitemapStream, streamToPromise } from 'sitemap';
-import { createWriteStream } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const { SitemapStream, streamToPromise } = require('sitemap');
+const { createWriteStream } = require('fs');
+const { dirname, join } = require('path');
 
 const routes = [
   '/',
@@ -35,8 +31,8 @@ const routes = [
   '/blog/audiovisual-solutions-for-african-education',
   '/blog/top-5-video-production-companies-rwanda',
   // Legal Pages
-  '/privacy-policy',
-  '/terms-of-service',
+  '/privacy',
+  '/terms',
   '/cookie-policy',
 ];
 

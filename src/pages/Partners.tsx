@@ -90,7 +90,7 @@ export default function Partners() {
             </div>
             <div className="flex gap-8">
               <div className="text-center">
-                <p className="text-3xl font-bold text-orange-500">20+</p>
+                <p className="text-3xl font-bold text-orange-500">50+</p>
                 <p className="text-xs text-gray-400 uppercase">Global Partners</p>
               </div>
               <div className="text-center">
