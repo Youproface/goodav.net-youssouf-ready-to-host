@@ -35,7 +35,7 @@ At GoodAV, we believe every story deserves a platform. Our work involves providi
 ## The Future of Africa's Creative Economy
 As Africa's creative economy continues to grow, audiovisuals will remain a cornerstone of its success. The continent's ability to tell authentic stories, coupled with increasing global demand, positions Africa as a leader in the creative industry. At GoodAV, we're proud to be part of this journey. By providing the tools, expertise, and platforms needed to succeed, we ensure that Africa's stories are heard, seen, and celebrated around the world.`,
     category: "Creative Economy",
-    image: "/src/assets/images/all_site_images/Blog/musicians-and-producer-working-on-track.jpg",
+  image: "/images/all_site_images/Blog/musicians-and-producer-working-on-track.jpg",
     date: "March 15, 2024",
     readTime: "5 min read",
     slug: "africa-creative-industries-booming"
@@ -66,7 +66,7 @@ While the opportunities are vast, challenges such as limited funding, infrastruc
 ## The Future of Audiovisuals in Africa
 The next decade will witness Africa shaping the future of audiovisual innovation globally. As more investment flows into the creative sector and African stories gain international recognition, the continent will continue to influence trends in storytelling, production, and content consumption..`,
     category: "Innovation",
-    image: "/src/assets/images/all_site_images/Blog/confident-experienced-smart-female-Africa.jpg",
+  image: "/images/all_site_images/Blog/confident-experienced-smart-female-Africa.jpg",
     date: "April 2, 2024",
     readTime: "4 min read",
     slug: "future-digital-storytelling-africa"
@@ -134,7 +134,7 @@ As the audiovisual industry continues to grow, it’s clear that the future of A
 
 `,
     category: "Events",
-    image: "/src/assets/images/all_site_images/Blog/One_Africa_Leaders_Groupe_pictures_Launch.jpg",
+  image: "/images/all_site_images/Blog/One_Africa_Leaders_Groupe_pictures_Launch.jpg",
     date: "March 25, 2024",
     readTime: "6 min read",
     slug: "audiovisual-transforming-african-events"
@@ -163,7 +163,7 @@ One success story is our work with a tech startup in Kigali, Rwanda, where we cr
 ## Why African Entrepreneurs Must Invest in Audiovisuals
 With 82% of all online traffic expected to be video-based by 2025, investing in audiovisuals isn’t optional—it’s essential. Entrepreneurs who embrace this trend will stand out in a crowded marketplace.`,
     category: "Entrepreneurship",
-    image: "/src/assets/images/all_site_images/Blog/Goodav_in_Action.jpg",
+  image: "/images/all_site_images/Blog/Goodav_in_Action.jpg",
     date: "March 2024",
     readTime: "5 min read",
     slug: "goodav-supports-african-entrepreneurs"
@@ -235,8 +235,8 @@ Example:
 
 Farm Africa: Through videos, this NGO showcases how small-scale farmers across Africa are adopting innovative agricultural practices to combat climate change and improve food security. These stories inspire others and attract funding for scalable solutions.
 By sharing these positive stories, NGOs not only gain support but also reshape perceptions of Africa as a continent full of potential and opportunity.`,
-    category: "NGOs & Social Impact",
-    image: "/src/assets/images/all_site_images/Blog/roup-of-african-farmers-have-fun-in-the-fields.jpg",
+  category: "NGO Impact",
+  image: "/images/all_site_images/Blog/roup-of-african-farmers-have-fun-in-the-fields.jpg",
     date: "March 2024",
     readTime: "5 min read",
     slug: "audiovisual-storytelling-african-ngos"
@@ -290,7 +290,7 @@ At GoodAV, we’re committed to staying at the forefront of these advancements, 
 ## Conclusion
 Rural Africa is a treasure trove of untold stories, and audiovisual technology is the key to unlocking its potential. By bridging the gap between tradition and modernity, GoodAV is empowering communities to share their narratives, preserve their heritage, and create a brighter future. Every story matters. Every voice counts. And with the right tools and support, rural Africa’s stories can inspire the world.`,
     category: "Culture & Heritage",
-    image: "/src/assets/images/all_site_images/Blog/Goodav_Rural_Team_in_action.jpg",
+  image: "/images/all_site_images/Blog/Goodav_Rural_Team_in_action.jpg",
     date: "March 2024",
     readTime: "4 min read",
     slug: "unlocking-rural-africas-stories"
@@ -529,7 +529,7 @@ Africa's diverse and dynamic landscape offers a wealth of opportunities for conf
 ## GoodAV's Impact
 GoodAV has been instrumental in advancing the audiovisual industry in Africa, providing state-of-the-art solutions for conferences and events. By leveraging cutting-edge technology and a deep understanding of African contexts, GoodAV ensures high-quality production and seamless execution of events. our commitment to cultural authenticity and innovation makes us a valuable partner in the conference tourism sector, helping to showcase Africa's rich narratives and vibrant cultures to a global audience.`,
     category: "Tourism & MICE",
-    image: "/src/assets/images/all_site_images/Blog/Top 10 African Countries for Conference Tourism- A Comprehensive Guide.jpg",
+  image: "/images/all_site_images/Blog/Top 10 African Countries for Conference Tourism- A Comprehensive Guide.jpg",
     date: "March 2024",
     readTime: "6 min read",
     slug: "conference-tourism-in-africa"
@@ -582,7 +582,7 @@ Focus on Impact: Prioritize investments that have a positive social and cultural
 ## Conclusion
 Africa's audiovisual future is bright, with immense opportunities for investors to make a meaningful impact. By embracing best practices, learning from past experiences, and supporting innovative initiatives like GoodAV, investors can play a pivotal role in shaping the continent's digital narrative. The time to invest in Africa's audiovisual industry is now, and the potential for growth and success is limitless.`,
     category: "Investment",
-    image: "/src/assets/images/all_site_images/Blog/Africa’s_Audiovisual_Future_Opportunities.jpg",
+  image: "/images/all_site_images/Blog/Africa’s_Audiovisual_Future_Opportunities.jpg",
     date: "March 2024",
     readTime: "5 min read",
     slug: "africa-audiovisual-investment-opportunities"
@@ -633,7 +633,7 @@ We understand the importance of cultural sensitivity in event storytelling. Our 
 ## Conclusion
 Storytelling is a powerful tool that can transform any event into a memorable experience. Audiovisuals amplify this power by engaging the senses, creating emotional connections, and enhancing clarity and understanding. At GoodAV, we are committed to helping our clients harness the power of audiovisuals to tell compelling stories that resonate with their audience. Whether it's a product launch, cultural celebration, or conference, our innovative solutions and expertise in event storytelling ensure that every event is a success.`,
     category: "Events",
-    image: "/src/assets/images/all_site_images/Blog/Enhancing_Event_Storytelling.jpg",
+  image: "/images/all_site_images/Blog/Enhancing_Event_Storytelling.jpg",
     date: "March 2024",
     readTime: "4 min read",
     slug: "enhancing-event-storytelling"
@@ -670,7 +670,7 @@ Bridging the Digital Divide: We are committed to bridging the digital divide by 
 ## Conclusion
 The future of African education lies in the effective integration of e-learning and high-quality audiovisual content. As the demand for online learning continues to grow, it is essential to invest in the tools and resources that will make education engaging, accessible, and effective. At GoodAV, we are dedicated to supporting this transformation by providing innovative audiovisual solutions that bridge the digital divide and empower African students to achieve their full potential.`,
     category: "Education & E-Learning",
-    image: "/src/assets/images/all_site_images/Blog/The Future of African Education.jpg",
+  image: "/images/all_site_images/Blog/The Future of African Education.jpg",
     date: "March 2024",
     readTime: "6 min read",
     slug: "african-education-e-learning-solutions"
@@ -724,7 +724,7 @@ Proven Track Record: With over 200 successful projects and 28 satisfied clients,
 4. Digitec Studios Rwanda: Known for wedding live streaming and event photography
 5. Artistic Eye: Known for sports and weeding photography`,
     category: "Video Production",
-    image: "/src/assets/images/all_site_images/Blog/Rwanda's_Premier_Video Production_&_Photography_Agency.jpg",
+  image: "/images/all_site_images/Blog/Rwanda's_Premier_Video Production_&_Photography_Agency.jpg",
     date: "March 2024",
     readTime: "5 min read",
     slug: "top-video-production-companies-rwanda",

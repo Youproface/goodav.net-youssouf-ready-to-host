@@ -1,449 +1,522 @@
-import { Expand } from "lucide-react";
-import { FaPlay, FaTimes, FaCamera, FaVideo, FaPhotoVideo } from 'react-icons/fa';
-import { useState, useEffect, useCallback } from "react";
+import { FaPlay, FaTimes } from 'react-icons/fa';
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+
+// SEO and Performance: Memoize expensive computations
+const useMemoizedVideos = (videos) => {
+  return useMemo(() => videos, [videos]);
+};
 
 export default function RecentEvents() {
-  // NEW: lightbox state
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // NEW: central list of gallery image sources (from your JSX below)
-  const galleryImages = [
-  "/images/all_site_images/Home/Events/GOODAV_Event_1.jpg",
-  "/images/all_site_images/Home/Events/GOODAV_Event_2.jpg",
-  "/images/all_site_images/Home/Events/GOODAV_Event_3.jpg",
-  "/images/all_site_images/Home/Events/GOODAV_Event_4.jpg",
-  "/images/all_site_images/Home/Events/GOODAV_Event_5.jpg",
-  "/images/all_site_images/Home/Events/GOODAV_Event_Master.jpg",
+  const [playVideo, setPlayVideo] = useState<string | null>(null);
+  
+  const verticalVideos = [
+    {
+      id: "wpYU4WelU0Y",
+      title: "IAS 2025 Day 1 Recap",
+      client: "Plus Life Media",
+    },
+    {
+      id: "CsdRr8Fvt2g",
+      title: "Women Leading the Way: Innovation in the Fight Against HIV | #IAS2025",
+      client: "Gilead Sciences",
+    },
+    {
+      id: "HgPGMQuZMn0",
+      title: "Why Partnership is Key to Ending the HIV Epidemic | Linda-Gail Bekker",
+      client: "Gilead Sciences",
+    },
+    {
+      id: "Ge26tZmJRQ0",
+      title: "IAS 2025 Mid Conference Recap",
+      client: "Plus Life Media",
+    },
+    {
+      id: "uWzSA73tp9k",
+      title: "IAS 2025 DAY 3 RECAP",
+      client: "Plus Life Media",
+    },
   ];
 
-  // NEW: open/close and navigation
-  const openLightbox = useCallback((i) => {
+  const mainVideoId = "bPJlc3r6Mrw";
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const reelRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [playingInline, setPlayingInline] = useState<string | null>(null);
+  const [imageLoading, setImageLoading] = useState(true);
+  // Performance: Memoize gallery images with error handling
+  const galleryImages = useMemo(() => [
+    "/images/all_site_images/Home/Events/GOODAV_Event_1.jpg?v=" + Date.now(),
+    "/images/all_site_images/Home/Events/GOODAV_Event_2.jpg?v=" + Date.now(),
+    "/images/all_site_images/Home/Events/GOODAV_Event_3.jpg?v=" + Date.now(),
+    "/images/all_site_images/Home/Events/GOODAV_Event_4.jpg?v=" + Date.now(),
+    "/images/all_site_images/Home/Events/GOODAV_Event_5.jpg?v=" + Date.now(),
+    "/images/all_site_images/Home/Events/GOODAV_Event_Master.jpg?v=" + Date.now(),
+  ], []);
+
+  // Debug: Check if images are loading
+  const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
+
+  // Performance: Debounce hover state for better UX
+  const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = useCallback(() => {
+    if (hoverTimeout) clearTimeout(hoverTimeout);
+    setIsHovered(true);
+  }, [hoverTimeout]);
+
+  const handleMouseLeave = useCallback(() => {
+    const timeout = setTimeout(() => setIsHovered(false), 100);
+    setHoverTimeout(timeout);
+  }, []);
+
+  // Performance: Cleanup timeout
+  useEffect(() => {
+    return () => {
+      if (hoverTimeout) clearTimeout(hoverTimeout);
+    };
+  }, [hoverTimeout]);
+
+  const openLightbox = useCallback((i: number) => {
     setCurrentIndex(i);
+    setImageLoading(true);
     setIsOpen(true);
   }, []);
-  const closeLightbox = useCallback(() => setIsOpen(false), []);
-  const nextImage = useCallback(
-    () => setCurrentIndex((i) => (i + 1) % galleryImages.length),
-    [galleryImages.length]
-  );
-  const prevImage = useCallback(
-    () => setCurrentIndex((i) => (i - 1 + galleryImages.length) % galleryImages.length),
-    [galleryImages.length]
-  );
 
-  // NEW: keyboard support when open
+  const closeLightbox = useCallback(() => setIsOpen(false), []);
+
+  const nextImage = useCallback(() => {
+    setImageLoading(true);
+    setCurrentIndex((i) => (i + 1) % galleryImages.length);
+  }, [galleryImages.length]);
+
+  const prevImage = useCallback(() => {
+    setImageLoading(true);
+    setCurrentIndex((i) => (i - 1 + galleryImages.length) % galleryImages.length);
+  }, [galleryImages.length]);
+
   useEffect(() => {
     if (!isOpen) return;
-    const onKey = (e) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowRight") nextImage();
-      if (e.key === "ArrowLeft") prevImage();
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        nextImage();
+      }
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prevImage();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [isOpen, closeLightbox, nextImage, prevImage]);
 
-  return (
-    <section className="relative px-6 py-12 md:py-16">
-      {/* background glow accents */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -top-10 left-8 h-56 w-56 rounded-full bg-orange-500/10 blur-3xl" />
-        <div className="absolute bottom-0 right-10 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl" />
-      </div>
+    // Ultra-smooth auto-scroll for horizontal video reel (infinite loop)
+  useEffect(() => {
+    const scrollInterval = setInterval(() => {
+      if (!isHovered && !playingInline && reelRef.current) {
+        const container = reelRef.current;
+        const scrollAmount = window.innerWidth >= 768 ? 280 : window.innerWidth >= 640 ? 240 : 200; // Optimized scroll amounts
 
-      <div className="relative mx-auto max-w-6xl">
-        {/* badge */}
-        <div className="mx-auto w-max rounded-full border border-white/10 bg-white/5 px-3 py-1 text-md font-semibold uppercase tracking-wider text-orange-300/90 backdrop-blur">
-          Recent Event
+        // Check if we're near the end to create seamless loop
+        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 30) {
+          // Instantly jump to start for seamless loop (no animation for the jump)
+          container.scrollLeft = 0;
+        } else {
+          // Ultra-smooth scroll with optimized easing
+          const startScroll = container.scrollLeft;
+          const targetScroll = startScroll + scrollAmount;
+          const duration = 1800; // Faster but smoother animation
+          const startTime = performance.now();
+
+          const animateScroll = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Smoother easing function - easeOutQuart for better feel
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const currentScroll = startScroll + (scrollAmount * easeOutQuart);
+
+            container.scrollLeft = currentScroll;
+
+            if (progress < 1) {
+              requestAnimationFrame(animateScroll);
+            }
+          };
+
+          requestAnimationFrame(animateScroll);
+        }
+      }
+    }, 3500); // Auto-scroll every 3.5 seconds for better pacing
+
+    return () => clearInterval(scrollInterval);
+  }, [isHovered, playingInline]);
+
+  return (
+    <section 
+      id="recent-event-section" 
+      className="relative px-6 py-16 md:py-24 bg-zinc-900 text-zinc-100 overflow-hidden"
+      itemScope 
+      itemType="https://schema.org/CreativeWork"
+      aria-labelledby="portfolio-title"
+    >
+      {/* SEO: Structured Data for Portfolio */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CreativeWork",
+          "name": "Featured Projects Portfolio",
+          "description": "Professional video production portfolio showcasing event coverage, corporate videos, and creative projects",
+          "creator": {
+            "@type": "Organization",
+            "name": "Goodav Media",
+            "url": "https://goodav.net"
+          },
+          "genre": ["Video Production", "Event Coverage", "Corporate Videos"],
+          "hasPart": verticalVideos.map(video => ({
+            "@type": "VideoObject",
+            "name": video.title,
+            "description": `Video production for ${video.client}`,
+            "thumbnailUrl": `https://img.youtube.com/vi/${video.id}/hqdefault.jpg`,
+            "url": `https://www.youtube.com/watch?v=${video.id}`
+          }))
+        })}
+      </script>
+
+      <div className="r-container mx-auto max-w-7xl">
+        {/* Background Effects */}
+        <div className="recent-event-bg pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="absolute -top-20 -left-20 h-80 w-80 rounded-full bg-orange-500/10 blur-3xl animate-pulse" />
+          <div className="absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-3xl animate-pulse [animation-delay:2s]" />
         </div>
 
-        {/* title */}
-        <header className="mt-4 text-center">
-          <h1 className="text-3xl font-extrabold tracking-tight text-zinc-100">
-            IAS 2025
-          </h1>
-          <p className="mt-1  text-md text-zinc-300">
-            The 13th IAS Conference on HIV Science
+        {/* Event Header */}
+        <header className="event-header text-center relative z-10 mb-12 md:mb-16">
+          <div className="event-badge mx-auto w-max rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-semibold uppercase tracking-widest text-orange-300/90 backdrop-blur-sm flex items-center gap-2" role="banner">
+            <i className="fas fa-clock" aria-hidden="true"></i>
+            <span>Recent Projects</span>
+          </div>
+          <h2 id="portfolio-title" className="event-title text-4xl md:text-6xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-zinc-100 to-zinc-400 mt-4">
+            Our Latest Work
+          </h2>
+          <p className="event-subtitle text-lg md:text-xl text-zinc-400 mt-2 max-w-3xl mx-auto">
+            Explore our latest video productions and creative projects that bring stories to life.
           </p>
         </header>
 
-        {/* grid */}
-        <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-12">
-          {/* left column text card */}
-          <article className="md:col-span-6 rounded-2xl bg-white/5 ring-1 ring-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.25)] backdrop-blur p-5">
-            <p className="text-xl leading-7 text-zinc-200">
-               GoodAV had the <span className="font-bold text-orange-400">honor of covering </span> 
-              the 13th IAS Conference on HIV Science (IAS 2025),
-               held in <span className="font-bold text-orange-400">Kigali</span>. Partnering with Baniamor Bnys, Global Sciences, and Pulsà Life Media, 
-               our team provided <span className="font-bold text-orange-400">comprehensive production services</span> including video, photography, drone footage, 
-               and live stream across key locations in Kigali over multiple days with the main venue at Kigali 
-               Convention Centre.
-            </p>
-            <p className="mt-3 text-xl leading-7 text-zinc-200">
-            Our work supported both internal and public-facing storytelling,
-             with deliverables ranging from <span className="font-bold text-orange-400">cinematic recap videos</span> and street-style interviews to high-resolution photography for social media and LinkedIn. 
-            Selected content was also used by Plus Life Media for <span className="font-bold text-orange-400">global advocacy</span>, including broadcast segments aired on ABC News
-            </p>
-
-            {/* deliveries + clients */}
-            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                
-            <h2 className="text-md text-center font-semibold text-zinc-200">Deliveries</h2>
-            <ul className="space-y-3">
-            {[
-                "Full-length recap and highlight videos",
-                "Street-style interviews and cinematic b-roll",
-                "Event photography for internal and external communications",
-                "Fast-turnaround edits to meet real-time content needs",
-            ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-orange-500/15 ring-1 ring-white/10">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="h-3.5 w-3.5 text-orange-400"
-                    aria-hidden="true"
-                    >
-                    <path
-                        fillRule="evenodd"
-                        d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.01 7.06a1 1 0 0 1-1.423.01L3.29 8.773a1 1 0 1 1 1.418-1.41l3.07 3.09 6.3-6.34a1 1 0 0 1 1.426.176Z"
-                        clipRule="evenodd"
-                    />
-                    </svg>
-                </span>
-                <span className=" text-md leading-6 text-zinc-200">{item}</span>
-                </li>
-            ))}
-            </ul>
-
-
-            <h2 className="text-sm text-center font-semibold text-zinc-200">Clients</h2>
-            <ul className=" space-y-4">
-            {["Gilead Sciences", "Plus Life Media"].map((client) => (
-                <li key={client} className="flex items-start gap-3">
-                <span className="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-orange-500/15 ring-1 ring-white/10">
-                    <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="h-3.5 w-3.5 text-orange-400"
-                    aria-hidden="true"
-                    >
-                    <path
-                        fillRule="evenodd"
-                        d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.01 7.06a1 1 0 0 1-1.423.01L3.29 8.773a1 1 0 1 1 1.418-1.41l3.07 3.09 6.3-6.34a1 1 0 0 1 1.426.176Z"
-                        clipRule="evenodd"
-                    />
-                    </svg>
-                </span>
-                <span className="text-md leading-6 text-zinc-200">{client}</span>
-                </li>
-            ))}
-            </ul>
-
-            </div>
-
-            {/* note */}
-            <div className="relative mt-4 rounded-2xl bg-white/5 ring-1 ring-white/10 backdrop-blur px-5 py-4 shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
-  {/* left accent rail */}
-  <span
-    aria-hidden
-    className="pointer-events-none absolute left-0 top-0 h-full w-[3px] rounded-l-2xl bg-gradient-to-b from-orange-400 via-amber-400 to-orange-500"
-  />
-  {/* subtle glow along the rail */}
-  <span
-    aria-hidden
-    className="pointer-events-none absolute -left-2 top-1/2 h-16 w-10 -translate-y-1/2 rounded-full bg-orange-500/20 blur-xl"
-  />
-
-  {/* opening quote mark */}
-  <span className="absolute left-4 top-2 select-none text-4xl leading-none text-orange-300/60">“</span>
-
-  {/* content */}
-  <blockquote className="pl-2">
-    <p className="text-sm sm:text-base font-semibold text-zinc-100">
-      We’re proud to have contributed to showcasing Rwanda’s vibrant presence on
-      the global health stage through this impactful collaboration.
-    </p>
-  </blockquote>
-
-  {/* soft vignette to match reference depth */}
-  <span
-    aria-hidden
-    className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/5 [box-shadow:inset_0_0_40px_rgba(0,0,0,0.25)]"
-  />
-</div>
-
-            {/* services inset for extra space */}
-            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <MiniServiceCard
-                icon="🎥"
-                title="Professional Videos"
-                body="Cinematic coverage and highlights"
-            />
-            <MiniServiceCard
-                icon="📷"
-                title="Photography"
-                body="High‑resolution event documentation"
-            />
-            <MiniServiceCard
-                icon="📡"
-                title="Live Coverage"
-                body="Real‑time content delivery"
-            />
-            </div>
-
-          </article>
-
-          {/* right column media stack */}
-          <div className="md:col-span-6 flex flex-col gap-5">
-            {/* hero image with caption panel */}
-            <div className="rounded-2xl overflow-hidden ring-1 ring-white/10 bg-white/5 backdrop-blur shadow-[0_8px_30px_rgb(0,0,0,0.25)]">
-              <div className="relative aspect-[16/9]">
-                <img
-                  src="/images/all_site_images/Home/Events/GOODAV_Event_Master.jpg"
-                  alt="IAS 2025 stage and crew"
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                <div className="absolute left-4 bottom-3">
-                  <h3 className="text-lg font-extrabold text-white drop-shadow">
-                    Behind the Scenes
-                  </h3>
-                  <p className="text-xs text-zinc-200">
-                    Select moments from multi-day coverage
-                  </p>
+        {/* Main Content Area */}
+        <div className="space-y-16 md:space-y-24">
+          
+          {/* Part 1: Main Video & Description */}
+          <article className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" itemScope itemType="https://schema.org/VideoObject">
+            <div className="main-video-container relative">
+              {playingInline === mainVideoId ? (
+                <div className="video-player relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-orange-500/10 ring-1 ring-white/10">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${mainVideoId}?autoplay=1`}
+                    title="Featured Project Video: IAS 2025 Shape the future of the HIV response"
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                    className="w-full h-full"
+                    loading="lazy"
+                  />
+                  <button
+                    className="absolute top-2 right-2 text-white text-2xl bg-black/60 rounded-full p-2 hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
+                    onClick={() => setPlayingInline(null)}
+                    aria-label="Stop video playback"
+                    type="button"
+                  >
+                    <FaTimes />
+                  </button>
                 </div>
+              ) : (
+                <div className="video-thumbnail relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-orange-500/10 ring-1 ring-white/10">
+                  <img
+                    src={`https://img.youtube.com/vi/${mainVideoId}/maxresdefault.jpg`}
+                    alt="Featured Project Video Thumbnail: IAS 2025 Shape the future of the HIV response"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    onError={(e) => {
+                      console.log(`Main video thumbnail failed for ${mainVideoId}`);
+                      // Fallback to lower quality
+                      e.currentTarget.src = `https://img.youtube.com/vi/${mainVideoId}/hqdefault.jpg`;
+                    }}
+                  />
+                  <button
+                    className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/60 focus:bg-black/60 transition-all duration-300 rounded-2xl group focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    onClick={() => setPlayingInline(mainVideoId)}
+                    aria-label="Play video: IAS 2025 Shape the future of the HIV response"
+                    type="button"
+                  >
+                    <div className="p-4 rounded-full bg-white/10 backdrop-blur-sm ring-1 ring-white/20 group-hover:scale-110 group-focus:scale-110 transition-transform">
+                      <FaPlay className="text-white text-4xl" aria-hidden="true" />
+                    </div>
+                  </button>
+                </div>
+              )}
+              <div className="mt-4 text-center">
+                <h3 className="font-bold text-zinc-100 text-xl" itemProp="name">IAS 2025: Shape the future of the HIV response</h3>
               </div>
             </div>
-
-            {/* text card “Behind the Scenes” */}
-            <div className="rounded-2xl bg-white/5 ring-1 ring-white/10 backdrop-blur p-5">
-              <div className="mb-2 flex items-center gap-2 text-orange-300">
-                <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-orange-400/20"><FaCamera className="h-4 w-4" aria-hidden /></span>
-                <h3 className="text-lg font-extrabold text-zinc-100">
-                  Behind the Scenes
-                </h3>
-              </div>
-              <p className="text-sm leading-6 text-zinc-300">
-                A few handpicked photos from the event. Visit our Flickr gallery for more BTS moments and extended highlights.
+            <div className="event-details space-y-6">
+              <p className="text-lg md:text-xl leading-relaxed text-zinc-300" itemProp="description">
+                Discover our <span className="text-orange-400 font-semibold">video production services</span> we have provided in recent IAS 2025 Event in Kigali, Rwanda. From corporate videos to event coverage, we bring your vision to life with cinematic quality.
               </p>
-            </div>
-
-            {/* media grid */}
-            <div className="grid grid-cols-3 gap-4">
-              {/* gallery row */}
-              <div className="col-span-3 grid grid-cols-3 gap-4">
-                {/* pass index and click handler */}
-                <GalleryTile
-                  index={0}
-                  onClick={() => openLightbox(0)}
-                  src="/images/all_site_images/Home/Events/GOODAV_Event_1.jpg"
-                />
-                <GalleryTile
-                  index={1}
-                  onClick={() => openLightbox(1)}
-                  src="/images/all_site_images/Home/Events/GOODAV_Event_2.jpg"
-                />
-                <GalleryTile
-                  index={2}
-                  onClick={() => openLightbox(2)}
-                  src="/images/all_site_images/Home/Events/GOODAV_Event_3.jpg"
-                />
-              </div>
-
-              {/* video highlight */}
-              <div className="col-span-3 opacity-50 rounded-2xl overflow-hidden bg-white/5 ring-1 ring-white/10 backdrop-blur relative">
-                <img
-                  src="/images/all_site_images/Home/Events/GOODAV_Event_Master.jpg"
-                  alt="IAS 2025 conference highlights"
-                  className="aspect-[16/9] w-full object-cover"
-                />
-                <button
-                  type="button"
-                  className="group absolute inset-0 grid place-items-center"
-                  aria-label="Play highlights"
-                >
-                    <span className="grid place-items-center h-14 w-14 rounded-full bg-white/90 text-orange-600 transition group-hover:bg-white">
-                      <FaPlay className="h-6 w-6" aria-hidden />
-                    </span>
-                </button>
-                <div className="absolute left-4 bottom-3">
-                  <div className="rounded bg-black/60 px-3 py-1 text-[11px] text-white">
-                    IAS 2025 Conference Highlights
+              <div className="clients-deliveries space-y-4">
+                <div>
+                  <h4 className="font-bold text-zinc-100 mb-2 flex items-center gap-2">
+                    <i className="fas fa-video text-orange-400" aria-hidden="true"></i>
+                    <span>Services</span>
+                  </h4>
+                  <div className="flex flex-wrap gap-2" role="list" aria-label="Services offered">
+                    <span className="px-3 py-1 text-sm rounded-full bg-white/5 text-zinc-300 ring-1 ring-white/10" role="listitem">Event Coverage</span>
+                    <span className="px-3 py-1 text-sm rounded-full bg-white/5 text-zinc-300 ring-1 ring-white/10" role="listitem">Corporate Videos</span>
+                    <span className="px-3 py-1 text-sm rounded-full bg-white/5 text-zinc-300 ring-1 ring-white/10" role="listitem">Documentary</span>
+                    <span className="px-3 py-1 text-sm rounded-full bg-white/5 text-zinc-300 ring-1 ring-white/10" role="listitem">Live Streaming</span>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-bold text-zinc-100 mb-2 flex items-center gap-2">
+                    <i className="fas fa-users text-orange-400" aria-hidden="true"></i>
+                    <span>Clients</span>
+                  </h4>
+                  <div className="flex flex-wrap gap-2" role="list" aria-label="Client portfolio">
+                    <span className="px-3 py-1 text-sm rounded-full bg-white/5 text-zinc-300 ring-1 ring-white/10" role="listitem">Gilead Sciences</span>
+                    <span className="px-3 py-1 text-sm rounded-full bg-white/5 text-zinc-300 ring-1 ring-white/10" role="listitem">Plus Life Media</span>
+                    <span className="px-3 py-1 text-sm rounded-full bg-white/5 text-zinc-300 ring-1 ring-white/10" role="listitem">Various Brands</span>
                   </div>
                 </div>
               </div>
-
-              {/* more gallery */}
-              <GalleryTile
-                className="col-span-1"
-                index={3}
-                onClick={() => openLightbox(3)}
-                src="/images/all_site_images/Home/Events/GOODAV_Event_4.jpg"
-              />
-              <GalleryTile
-                className="col-span-1"
-                index={4}
-                onClick={() => openLightbox(4)}
-                src="/images/all_site_images/Home/Events/GOODAV_Event_5.jpg"
-              />
-              <GalleryTile
-                className="col-span-1"
-                index={5}
-                onClick={() => openLightbox(5)}
-                src="/images/all_site_images/Home/Events/GOODAV_Event_Master.jpg"
-              />
             </div>
+          </article>
 
-            {/* CTA card */}
-            <div className="rounded-2xl bg-white/5 ring-1 ring-white/10 backdrop-blur p-5 flex items-center justify-between">
-              <div>
-                <h4 className="text-sm font-extrabold text-zinc-100">
-                  View More
-                </h4>
-                <p className="text-xs text-zinc-300">
-                  Explore the complete gallery on Flickr
-                </p>
+          {/* Part 2: Vertical Video Showcase */}
+          <section className="vertical-video-showcase animate-fade-in" aria-labelledby="project-highlights-title">
+            <h3 id="project-highlights-title" className="text-3xl font-bold tracking-tight text-zinc-100 mb-6 text-center lg:text-left animate-slide-up">Project Highlights</h3>
+            <div
+              ref={reelRef}
+              className="flex gap-3 sm:gap-4 md:gap-6 overflow-x-auto pb-4 px-4 sm:px-6 scrollbar-hide scroll-smooth smooth-scroll-container"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              role="region"
+              aria-label="Video portfolio carousel"
+              tabIndex={0}
+            >
+              {verticalVideos.map((video, index) => (
+                <article
+                  key={video.id}
+                  className={`video-card flex-shrink-0 w-[200px] sm:w-[240px] md:w-[280px] group hover:scale-105 transition-all duration-500 ease-out animate-fade-in animate-delay-${index}`}
+                  itemScope
+                  itemType="https://schema.org/VideoObject"
+                >
+                  {playingInline === video.id ? (
+                    <div className="video-player relative w-[200px] sm:w-[240px] md:w-[280px] h-[300px] sm:h-[360px] md:h-[400px] lg:h-[498px] rounded-2xl overflow-hidden shadow-lg ring-1 ring-white/10">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${video.id}?autoplay=1`}
+                        title={video.title}
+                        allow="autoplay; encrypted-media"
+                        allowFullScreen
+                        className="w-full h-full"
+                        loading="lazy"
+                      />
+                      <button
+                        className="absolute top-2 right-2 text-white text-2xl bg-black/60 rounded-full p-2 hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPlayingInline(null);
+                        }}
+                        aria-label="Stop video playback"
+                        type="button"
+                      >
+                        <FaTimes />
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      className="thumbnail relative w-[200px] sm:w-[240px] md:w-[280px] h-[300px] sm:h-[360px] md:h-[400px] lg:h-[498px] rounded-2xl overflow-hidden shadow-lg cursor-pointer ring-1 ring-white/10 group-hover:ring-orange-400 transition-all focus:outline-none focus:ring-2 focus:ring-orange-400 block w-full h-full p-0 border-0 bg-transparent"
+                      onClick={() => setPlayingInline(video.id)}
+                      aria-label={`Play video: ${video.title}`}
+                      type="button"
+                    >
+                      <img
+                        src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
+                        alt={`${video.title} video thumbnail`}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        itemProp="thumbnailUrl"
+                        onError={(e) => {
+                          console.log(`YouTube thumbnail failed for ${video.id}`);
+                          // Fallback to a placeholder or different quality
+                          e.currentTarget.src = `https://img.youtube.com/vi/${video.id}/default.jpg`;
+                        }}
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <FaPlay className="text-white text-5xl" aria-hidden="true" />
+                      </div>
+                    </button>
+                  )}
+                  <div className="mt-3">
+                    <h4 className="font-semibold text-zinc-100 truncate" itemProp="name">{video.title}</h4>
+                    <p className="text-sm text-zinc-400" itemProp="creator">{video.client}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* Part 3: Stats & Gallery */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <section className="stats-and-closing space-y-8" aria-labelledby="project-impact-title">
+              <h3 id="project-impact-title" className="text-3xl font-bold tracking-tight text-zinc-100">Project Impact</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6" role="region" aria-label="Project statistics">
+                <article className="stat-card rounded-xl bg-white/5 ring-1 ring-white/10 p-6 shadow-lg flex flex-col items-start" itemScope itemType="https://schema.org/PropertyValue">
+                  <div className="stat-icon mb-3 text-orange-400 text-4xl" aria-hidden="true"><i className="fas fa-video"></i></div>
+                  <div className="stat-title text-2xl font-bold text-zinc-100" itemProp="value">10+</div>
+                  <div className="stat-description text-zinc-300" itemProp="name">Professional Videos Delivered</div>
+                </article>
+                <article className="stat-card rounded-xl bg-white/5 ring-1 ring-white/10 p-6 shadow-lg flex flex-col items-start" itemScope itemType="https://schema.org/PropertyValue">
+                  <div className="stat-icon mb-3 text-orange-400 text-4xl" aria-hidden="true"><i className="fas fa-camera"></i></div>
+                  <div className="stat-title text-2xl font-bold text-zinc-100" itemProp="value">500+</div>
+                  <div className="stat-description text-zinc-300" itemProp="name">High-Res Photos Captured</div>
+                </article>
               </div>
-              <a
-                target="_blank"
-                href="https://www.flickr.com/photos/202425883@N07/albums/72177720327653270/"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-xs font-semibold text-zinc-900 shadow hover:from-orange-400 hover:to-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/60"
-                rel="noopener noreferrer"
-              >
-                View Gallery →
-              </a>
-            </div>
+              <blockquote className="event-closing text-lg font-medium text-zinc-300 border-l-4 border-orange-400 pl-6">
+                Ready to bring your story to life? Let's create something amazing together.
+              </blockquote>
+            </section>
+            <section className="bts-gallery" aria-labelledby="gallery-title">
+              <h3 id="gallery-title" className="text-3xl font-bold tracking-tight text-zinc-100 mb-6">Project Gallery</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4" role="region" aria-label="Project photo gallery">
+                {galleryImages.slice(0, 5).map((img, i) => (
+                  <button
+                    key={i}
+                    className="bts-image-item relative group cursor-pointer focus:outline-none focus:ring-2 focus:ring-orange-400 rounded-xl overflow-hidden"
+                    onClick={() => openLightbox(i)}
+                    aria-label={`View full size image ${i + 1} of ${galleryImages.length}`}
+                    type="button"
+                  >
+                    <img
+                      alt={`Behind the scenes project image ${i + 1}`}
+                      src={img}
+                      className="rounded-xl w-full h-full object-cover aspect-square"
+                      loading="lazy"
+                      onError={() => {
+                        console.log(`Failed to load image: ${img}`);
+                        setImageErrors(prev => new Set([...prev, i]));
+                      }}
+                      onLoad={() => {
+                        console.log(`Successfully loaded image: ${img}`);
+                        setImageErrors(prev => {
+                          const newSet = new Set(prev);
+                          newSet.delete(i);
+                          return newSet;
+                        });
+                      }}
+                    />
+                    {imageErrors.has(i) && (
+                      <div className="absolute inset-0 bg-zinc-800 rounded-xl flex items-center justify-center">
+                        <div className="text-center text-zinc-400">
+                          <i className="fas fa-image text-2xl mb-2"></i>
+                          <p className="text-sm">Image not found</p>
+                        </div>
+                      </div>
+                    )}
+                    <div className="bts-image-overlay absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition bg-black/50 rounded-xl">
+                      <i className="fas fa-expand-alt text-white text-3xl" aria-hidden="true"></i>
+                    </div>
+                  </button>
+                ))}
+                <a 
+                  href="https://flic.kr/s/aHBqjCn4wo" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="more-images-card rounded-xl bg-white/5 ring-1 ring-white/10 backdrop-blur p-4 flex flex-col items-center justify-center h-full text-center hover:bg-white/10 hover:ring-orange-400 focus:ring-orange-400 focus:outline-none transition-all group"
+                  aria-label="View full project gallery on Flickr (opens in new tab)"
+                >
+                  <i className="fab fa-flickr text-orange-400 text-4xl mb-2 group-hover:scale-110 transition-transform" aria-hidden="true"></i>
+                  <h6 className="font-bold text-zinc-100">View Full Gallery</h6>
+                  <p className="text-sm text-zinc-300">on Flickr</p>
+                </a>
+              </div>
+            </section>
           </div>
         </div>
 
-        {/* service icons row */}
-        {/* <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <ServiceCard
-            icon="🎞"
-            title="Professional Videos"
-            body="Cinematic coverage and highlights"
-          />
-          <ServiceCard
-            icon="📷"
-            title="Photography"
-            body="High‑resolution event documentation"
-          />
-          <ServiceCard
-            icon="📡"
-            title="Live Coverage"
-            body="Real‑time content delivery"
-          />
-        </div> */}
+        {/* Lightbox Modal */}
+        {isOpen && (
+          <div 
+            className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 backdrop-blur-sm" 
+            onClick={closeLightbox}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="lightbox-title"
+            aria-describedby="lightbox-description"
+          >
+            <div id="lightbox-title" className="sr-only">Image Gallery Lightbox</div>
+            <div id="lightbox-description" className="sr-only">View project images in full size. Use arrow keys to navigate, Escape to close.</div>
+            
+            <button 
+              className="absolute top-4 right-4 text-white text-3xl z-20 bg-black/50 rounded-full p-2 hover:bg-black/70 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all" 
+              onClick={closeLightbox} 
+              aria-label="Close gallery lightbox"
+              type="button"
+            >
+              <FaTimes />
+            </button>
+            
+            <button 
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl z-20 bg-black/60 hover:bg-orange-500/80 active:bg-orange-600/90 rounded-full p-3 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all duration-200 shadow-lg group" 
+              onClick={(e) => {
+                e.stopPropagation();
+                prevImage();
+              }}
+              aria-label="View previous image"
+              type="button"
+            >
+              <span className="group-hover:text-zinc-900 transition-colors duration-200">&#10094;</span>
+            </button>
+            
+            <button 
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl z-20 bg-black/60 hover:bg-orange-500/80 active:bg-orange-600/90 rounded-full p-3 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all duration-200 shadow-lg group" 
+              onClick={(e) => {
+                e.stopPropagation();
+                nextImage();
+              }}
+              aria-label="View next image"
+              type="button"
+            >
+              <span className="group-hover:text-zinc-900 transition-colors duration-200">&#10095;</span>
+            </button>
+            
+            <div className="relative max-w-4xl max-h-[90vh] p-4" onClick={(e) => e.stopPropagation()}>
+              {imageLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-lg">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-400"></div>
+                </div>
+              )}
+              <img 
+                src={galleryImages[currentIndex]} 
+                alt={`Project gallery image ${currentIndex + 1} of ${galleryImages.length}`} 
+                className={`max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-all duration-500 ease-in-out transform hover:scale-105 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
+                loading="lazy"
+                key={currentIndex} // Force re-render for transition
+                onLoad={() => {
+                  console.log(`Lightbox image loaded: ${galleryImages[currentIndex]}`);
+                  setImageLoading(false);
+                }}
+                onError={() => {
+                  console.log(`Lightbox image failed to load: ${galleryImages[currentIndex]}`);
+                  setImageLoading(false);
+                }}
+              />
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+                {currentIndex + 1} / {galleryImages.length}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-
-      {/* NEW: Lightbox modal, appended at the end so it doesn't affect your layout */}
-      {isOpen && (
-        <div className="fixed inset-0 z-50">
-          {/* backdrop click to close */}
-            <button
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-              aria-label="Close"
-              onClick={closeLightbox}
-            />
-          {/* viewer */}
-          <div className="relative z-10 flex h-full w-full items-center justify-center p-4">
-            <img
-              src={galleryImages[currentIndex]}
-              alt={galleryImages[currentIndex] ?? ""}
-              className="max-h-[90vh] max-w-[90vw] rounded-lg shadow-2xl"
-            />
-            {/* controls */}
-            <button
-              onClick={closeLightbox}
-              className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white ring-1 ring-white/30 backdrop-blur hover:bg-white/25"
-              aria-label="Close"
-            >
-              <FaTimes aria-hidden />
-            </button>
-            <button
-              onClick={nextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white ring-1 ring-white/30 backdrop-blur hover:bg-white/25"
-              aria-label="Next image"
-            >
-              <span aria-hidden>
-                
-              </span>
-            </button>
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded bg-black/60 px-3 py-1 text-[11px] text-white">
-              {currentIndex + 1} / {galleryImages.length}
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
-
-/* helper subcomponents (unchanged in appearance) */
-function ServiceCard({ icon, title, body }) {
-  return (
-    <div className="group rounded-xl bg-white/5 ring-1 ring-white/10 backdrop-blur p-4 shadow hover:shadow-lg transition-shadow">
-      <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500/15 text-lg">
-        {icon}
-      </div>
-      <h3 className="text-xs font-extrabold tracking-wide text-zinc-100">
-        {title}
-      </h3>
-      <p className="mt-1 text-[12px] text-zinc-300">{body}</p>
-    </div>
-  );
-}
-
-// UPDATED: adds optional onClick and index, but keeps your original structure and styling
-function GalleryTile({ src, className = '', onClick, index }) {
-    return (
-      <button
-        type="button"
-        onClick={onClick}
-        aria-label={index !== undefined ? `Open image ${index + 1}` : 'Open image'}
-        className={`group relative overflow-hidden rounded-xl ring-1 ring-white/10 bg-white/5 backdrop-blur ${className}`}
-      >
-        <img
-          src={src}
-          alt="recent"
-          className="aspect-[4/3] w-full object-cover transition duration-300 group-hover:scale-[1.03]"
-        />
-  
-        {/* subtle hover veil */}
-        <span className="pointer-events-none absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/15" />
-  
-        {/* expand icon button */}
-        <span
-          className="absolute right-2 top-2 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 text-white/95 ring-1 ring-white/30 backdrop-blur
-                     opacity-0 translate-y-1 transition-all duration-200 group-hover:opacity-100 group-hover:translate-y-0"
-          aria-hidden="true"
-        >
-          {/* “expand” SVG (arrows out) */}
-          <Expand />
-        </span>
-      </button>
-    );
-  }
-  
-function MiniServiceCard({ icon, title, body }) {
-    return (
-      <div className="relative rounded-2xl bg-white/5 ring-1 ring-white/10 backdrop-blur p-5 text-center shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
-        {/* subtle glow halo */}
-        <div className="pointer-events-none absolute -top-2 left-1/2 -translate-x-1/2 h-10 w-10 rounded-full bg-orange-500/15 blur-md" />
-        <div className="mx-auto mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-orange-500/15 text-lg text-orange-300 ring-1 ring-white/10">
-          {icon}
-        </div>
-        <h4 className="text-base font-extrabold text-zinc-100">
-          {title}
-        </h4>
-        <p className="mt-2 text-[12px] leading-5 text-zinc-300 italic">
-          {body}
-        </p>
-      </div>
-    );
-  }
-  

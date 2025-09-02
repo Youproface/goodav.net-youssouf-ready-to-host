@@ -175,12 +175,66 @@ All colors MUST be HSL for proper theming.
   animation: popup-appear 0.3s ease-out;
 }
 
-/* Progress bar width for BookingModal and ConsultationModal */
-.booking-progress-bar[data-progress="1"] { width: 12.5%; }
-.booking-progress-bar[data-progress="2"] { width: 25%; }
-.booking-progress-bar[data-progress="3"] { width: 37.5%; }
-.booking-progress-bar[data-progress="4"] { width: 50%; }
-.booking-progress-bar[data-progress="5"] { width: 62.5%; }
-.booking-progress-bar[data-progress="6"] { width: 75%; }
-.booking-progress-bar[data-progress="7"] { width: 87.5%; }
-.booking-progress-bar[data-progress="8"] { width: 100%; }
+/* Scrollbar Utilities */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Smooth scrolling for all elements */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Performance optimizations for smooth animations */
+.video-card {
+  will-change: transform;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+.testimonial-card {
+  will-change: transform, box-shadow;
+  transform: translateZ(0); /* Force hardware acceleration */
+  backface-visibility: hidden; /* Prevent flickering */
+}
+
+/* Optimize scrolling container */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Trustpilot widget optimization */
+.trustpilot-widget {
+  will-change: auto;
+}
+
+/* Responsive typography improvements */
+@media (max-width: 640px) {
+  .testimonial-quote {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .testimonial-quote {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 769px) {
+  .testimonial-quote {
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+}
+
+.smooth-scroll-container {
+  will-change: scroll-position;
+  transform: translateZ(0); /* Force hardware acceleration */
+}

@@ -5,31 +5,16 @@ import { BlogPost, blogPosts } from '../data/blog';
 import { FaCalendarAlt, FaClock } from 'react-icons/fa';
 
 export default function BlogsSection() {
-    const [activeFilter, setActiveFilter] = useState('All Stories');
     const navigate = useNavigate();
     
-    const filters = [
-      'All Stories',
-      'Creative Economy',
-      'Innovation',
-      'Events',
-      'Entrepreneurship',
-      'NGO Impact',
-      'Tourism',
-      'Industry Guide'
-    ];
-    
-    const filteredPosts = blogPosts.slice(0, 3).filter((post) => {
-      if (activeFilter === 'All Stories') return true;
-      return post.category === activeFilter;
-    });
+    const filteredPosts = blogPosts.slice(0, 3);
     
     const handleBlogClick = (post: BlogPost) => {
       navigate(`/blog/${post.slug}`, { state: { post } });
     };
     
     return (
-      <motion.section className="relative bg-[#0e0f10] text-zinc-100" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+      <motion.section className="relative bg-[#0e0f10] text-zinc-100" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} aria-labelledby="our-stories-heading">
         {/* soft background glows */}
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute left-10 top-0 h-80 w-80 rounded-full bg-orange-500/10 blur-3xl" />
@@ -44,41 +29,29 @@ export default function BlogsSection() {
   
           {/* heading */}
           <header className="mt-4 text-center">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">Our Stories</h2>
+            <h2 id="our-stories-heading" className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">Our Stories</h2>
             <p className="mx-auto mt-2 max-w-3xl text-sm sm:text-base md:text-lg sm:text-xl md:text-2xl text-zinc-300">
               Discover impactful stories, groundbreaking documentaries, and transformative projects from Rwanda and across Africa. Dive into the world of visual storytelling powered by GoodAV and see how narratives come to life.
             </p>
           </header>
   
-          {/* filters */}
-          <div className="mt-6 flex flex-wrap items-center gap-2 justify-center">
-            {filters.map((filter) => (
-              <FilterChip 
-                key={filter}
-                active={activeFilter === filter}
-                onClick={() => setActiveFilter(filter)}
-              >
-                {filter}
-              </FilterChip>
-            ))}
-          </div>
-  
           {/* cards */}
-          <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" aria-label="Story cards">
             {filteredPosts.map((post) => (
-              <StoryCard
-                key={post.id}
-                onClick={() => handleBlogClick(post)}
-                category={post.category}
-                image={post.image}
-                title={post.title}
-                excerpt={post.excerpt}
-                date={post.date}
-                read={post.readTime}
-                cta="Read More"
-              />
+              <li key={post.id} className="contents">
+                <StoryCard
+                  onClick={() => handleBlogClick(post)}
+                  category={post.category}
+                  image={post.image}
+                  title={post.title}
+                  excerpt={post.excerpt}
+                  date={post.date}
+                  read={post.readTime}
+                  cta="Read More"
+                />
+              </li>
             ))}
-            {/* <StoryCard
+            {/* <li className="contents"><StoryCard
               category="Events"
               image="/images/stories/events.jpg"
               title="From conferences to cultural festivals, cutting‑edge audiovisual technology is transforming African events."
@@ -86,19 +59,14 @@ export default function BlogsSection() {
               date="March 6, 2024"
               read="6 min read"
               cta="Explore: Event Transformations"
-            /> */}
-          </div>
+            /></li> */}
+          </ul>
   
           {/* bottom actions */}
-          <div className="mt-6 flex items-center justify-between flex-wrap gap-3">
-            <button className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs sm:text-sm md:text-base font-semibold text-zinc-200 backdrop-blur hover:bg-white/10">
-              <span className="text-orange-300">+</span>
-              Show More Stories
-            </button>
-  
+          <div className="mt-6 flex items-center justify-center">
             <a
-              href="#"
-              className="mx-auto md:mx-0 inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/10 px-5 py-3 text-[11px] sm:text-sm md:text-base font-semibold uppercase tracking-wide text-orange-300 backdrop-blur hover:bg-white/10"
+              href="/blog"
+              className="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/10 px-5 py-3 text-[11px] sm:text-sm md:text-base font-semibold uppercase tracking-wide text-orange-300 backdrop-blur hover:bg-white/10"
             >
               <span className="grid h-5 w-5 place-items-center rounded bg-orange-500/20 text-orange-300 ring-1 ring-white/10">▣</span>
               Explore All Stories
@@ -150,13 +118,13 @@ export default function BlogsSection() {
 
 function StoryCard({ category, image, title, excerpt, date, read, cta, onClick }: StoryCardProps) {
     return (
-      <article 
-      className="group rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur shadow-[0_8px_30px_rgba(0,0,0,0.25)] overflow-hidden cursor-pointer hover:ring-white/20 transition-all duration-300"
-      onClick={onClick}
-    >
+  <article
+        className="group rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur shadow-[0_8px_30px_rgba(0,0,0,0.25)] overflow-hidden hover:ring-white/20 transition-all duration-300 focus-within:ring-white/30"
+        
+      >
         {/* image with category ribbon */}
         <div className="relative">
-          <img src={image} alt="category" className="h-44 w-full object-cover" />
+          <img src={image} alt={`${category} story image`} className="h-44 w-full object-cover" loading="lazy" />
           {/* category badge with small underline bar */}
           <div className="absolute left-3 top-3">
             <span className="inline-flex items-center gap-2 rounded-full bg-black/60 px-2.5 py-1 text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wide text-orange-200 ring-1 ring-white/10">
@@ -168,7 +136,7 @@ function StoryCard({ category, image, title, excerpt, date, read, cta, onClick }
         </div>
   
         {/* body */}
-        <div className="p-4">
+  <div className="p-4">
           <h3 className="line-clamp-2 text-[13px] sm:text-sm md:text-base font-semibold text-zinc-100">
             {title}
           </h3>
@@ -189,11 +157,14 @@ function StoryCard({ category, image, title, excerpt, date, read, cta, onClick }
           </div>
   
           {/* CTA pill */}
-          <button className="mt-4 w-full rounded-lg bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-[12px] sm:text-sm md:text-base font-semibold text-zinc-900 shadow hover:from-orange-400 hover:to-amber-300">
+          <button
+            className="mt-4 w-full rounded-lg bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-[12px] sm:text-sm md:text-base font-semibold text-zinc-900 shadow hover:from-orange-400 hover:to-amber-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+            onClick={onClick}
+            aria-label={`${cta}: ${title}`}
+          >
             {cta} →
           </button>
         </div>
       </article>
     );
   }
-  
