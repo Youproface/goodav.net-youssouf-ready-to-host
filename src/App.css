@@ -33,6 +33,23 @@
   }
 }
 
+/* Branded loading spinner for overlays: use the same 'spin' keyframes as Tailwind so it matches animate-spin */
+.loading-spin {
+  /* use Tailwind's spin keyframes name to match other components and force 2s duration */
+  animation: spin 2s linear infinite !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-spin { animation: none !important; }
+}
+
+/* Ensure SVG rotates around its center and animates smoothly */
+.loading-spin, .animate-spin {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform;
+}
+
 .card {
   padding: 2em;
 }
@@ -42,14 +59,14 @@
 }
 
 /* Progress bar width for BookingModal and ConsultationModal */
-.booking-progress-bar[data-progress="1"] { width: 12.5%; }
-.booking-progress-bar[data-progress="2"] { width: 25%; }
-.booking-progress-bar[data-progress="3"] { width: 37.5%; }
-.booking-progress-bar[data-progress="4"] { width: 50%; }
-.booking-progress-bar[data-progress="5"] { width: 62.5%; }
-.booking-progress-bar[data-progress="6"] { width: 75%; }
-.booking-progress-bar[data-progress="7"] { width: 87.5%; }
-.booking-progress-bar[data-progress="8"] { width: 100%; }
+.booking-progress-bar[data-progress="1"] { width: 12.5% !important; }
+.booking-progress-bar[data-progress="2"] { width: 25% !important; }
+.booking-progress-bar[data-progress="3"] { width: 37.5% !important; }
+.booking-progress-bar[data-progress="4"] { width: 50% !important; }
+.booking-progress-bar[data-progress="5"] { width: 62.5% !important; }
+.booking-progress-bar[data-progress="6"] { width: 75% !important; }
+.booking-progress-bar[data-progress="7"] { width: 87.5% !important; }
+.booking-progress-bar[data-progress="8"] { width: 100% !important; }
 
 /* Utility classes for scrollbar hiding */
 .scrollbar-hide {

@@ -14,9 +14,12 @@ const Testimonials = lazy(() => import('@/components/Testimonials'));
 const Blogs = lazy(() => import('@/components/BlogsSection'));
 const BTSMasterProdcution = lazy(() => import('@/components/BTSMasterProdcution'));
 const Excellence = lazy(() => import('@/components/Excellence'));
+const BottomCTA = lazy(() => import('@/components/BottomCTA'));
+const ContactSection = lazy(() => import('@/components/ContactSection'));
 const GlobalImpact = lazy(() => import('@/components/GlobalImpact'));
 import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
+import Loading from '@/components/Loading';
 
 const Index = () => {
   return (
@@ -98,8 +101,7 @@ const Index = () => {
           ]
         }}
       />
-      <Suspense fallback={<div className="text-center py-20">Loading...</div>}>
-        <Header />
+      <Suspense fallback={<Loading />}>
         <main>
           <Hero />
           <PartnersSection />
@@ -116,8 +118,9 @@ const Index = () => {
           <Blogs />
           <BTSMasterProdcution />
           <Excellence />
+          <BottomCTA />
+          <ContactSection />
         </main>
-  {/* Footer is rendered globally in App.tsx; remove local Footer to avoid duplicate rendering */}
       </Suspense>
     </div>
   );

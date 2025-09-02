@@ -1,10 +1,12 @@
 import React from "react";
+import { useReducedMotion } from 'framer-motion';
 
 // Subcomponents
 function KPI({ value, label }: { value: string; label: string }) {
+  const shouldReduce = typeof window !== 'undefined' ? window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
   return (
     <div
-      className="group rounded-2xl border border-white/10 bg-white/5 px-6 py-6 text-center shadow-lg backdrop-blur transition-all duration-300 hover:bg-white/10 hover:border-orange-500/30 hover:shadow-orange-500/10 hover:scale-105"
+      className={`group rounded-2xl border border-white/10 bg-white/5 px-6 py-6 text-center shadow-lg backdrop-blur transition-colors duration-200 ${shouldReduce ? '' : 'hover:scale-105 hover:bg-white/10 hover:border-orange-500/30 hover:shadow-orange-500/10'}`}
       itemScope
       itemType="https://schema.org/PropertyValue"
     >
@@ -63,13 +65,11 @@ function Testimonial({
 
   return (
     <figure
-  className={`testimonial-card relative h-full flex flex-col rounded-3xl bg-white/5 ${paddingClasses[size]} ring-1 ring-white/10 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.25)] transition-all duration-500 hover:shadow-[0_25px_50px_rgba(0,0,0,0.4)] hover:scale-[1.03] hover:ring-orange-500/30 ${
-        featured
-          ? "border-2 border-orange-500/30 shadow-orange-500/20 bg-gradient-to-br from-orange-500/5 via-white/5 to-zinc-900/50"
-          : "hover:bg-white/10"
-      } ${sizeClasses[size]}`}
+      className={`testimonial-card relative h-full flex flex-col rounded-3xl bg-white/5 ${paddingClasses[size]} ring-1 ring-white/10 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.25)] ${sizeClasses[size]}`}
       itemScope
       itemType="https://schema.org/Review"
+      tabIndex={0}
+      aria-label={`Testimonial by ${name}. ${quote.slice(0, 120)}${quote.length > 120 ? '…' : ''}`}
     >
       {featured && (
         <div
@@ -96,8 +96,7 @@ function Testimonial({
 
       <div
         className="mb-6 flex items-center justify-center gap-1"
-        role="img"
-        aria-label={`Rating: ${stars} out of 5 stars`}
+        aria-hidden="true"
       >
         {Array.from({ length: stars }).map((_, i) => (
           <svg
@@ -112,12 +111,7 @@ function Testimonial({
         ))}
       </div>
 
-      <div
-        itemProp="reviewRating"
-        itemScope
-        itemType="https://schema.org/Rating"
-        className="sr-only"
-      >
+      <div itemProp="reviewRating" itemScope itemType="https://schema.org/Rating" className="sr-only">
         <span itemProp="ratingValue">{stars}</span>
         <span itemProp="bestRating">5</span>
       </div>
@@ -135,7 +129,7 @@ function Testimonial({
         itemScope
         itemType="https://schema.org/Person"
       >
-  <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 text-white text-xl font-bold shadow-md ring-1 ring-white/10">
+        <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 text-white text-xl font-bold shadow-md ring-1 ring-white/10" aria-hidden="true">
           {initials}
         </span>
         <span className="font-bold text-orange-400" itemProp="name">
@@ -149,6 +143,8 @@ function Testimonial({
 }
 
 export default function Testimonials() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section
       className="relative bg-[#0e0f10] text-zinc-100 py-16 md:py-24"
@@ -156,7 +152,7 @@ export default function Testimonials() {
       itemScope
       itemType="https://schema.org/Review"
     >
-      <script type="application/ld+json">
+      <script type="application/ld+json" aria-hidden="true">
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
@@ -181,14 +177,14 @@ export default function Testimonials() {
         >
           See what our clients say about working with GoodAV's professional audiovisual services
         </h2>
-        <p className="mx-auto mt-4 max-w-3xl text-lg text-zinc-300 leading-relaxed">
+    <p className="mx-auto mt-4 max-w-3xl text-lg text-zinc-300 leading-relaxed">
           Ready to work with Africa's premier AV agency?
           <a href="#contact" className="block mt-2 font-bold text-orange-400 hover:text-orange-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded" onClick={(e) => {
             const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const target = document.getElementById('contact');
             if (target) {
               e.preventDefault();
-              target.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior: (reduceMotion || prefersReduced) ? 'auto' : 'smooth', block: 'start' });
               // Move focus for accessibility after scrolling
               (target as HTMLElement).setAttribute('tabindex', '-1');
               (target as HTMLElement).focus({ preventScroll: true });
@@ -254,9 +250,9 @@ export default function Testimonials() {
           </div>
         </div>
 
-        {/* Four-up row below */}
-        <div className="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
-          <div data-aos="fade-up" data-aos-delay="200" className="flex h-full">
+  {/* Four-up row below */}
+  <div className="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
+            <div data-aos="fade-up" data-aos-delay="200" className="flex h-full" aria-hidden={reduceMotion ? 'true' : 'false'}>
             <Testimonial
               stars={5}
               quote="Their video and photography redefined our brand. The team is reliable, innovative, and simply outstanding."
@@ -266,7 +262,7 @@ export default function Testimonials() {
               org="CIMERWA PLC"
             />
           </div>
-          <div data-aos="fade-up" data-aos-delay="250" className="flex h-full">
+            <div data-aos="fade-up" data-aos-delay="250" className="flex h-full" aria-hidden={reduceMotion ? 'true' : 'false'}>
             <Testimonial
               stars={5}
               quote="Our live-streamed event was flawless—zero frame drops and crystal-clear quality. GoodAV delivered beyond expectations."
@@ -276,7 +272,7 @@ export default function Testimonials() {
               org="Founder and CEO"
             />
           </div>
-          <div data-aos="fade-up" data-aos-delay="300" className="flex h-full">
+            <div data-aos="fade-up" data-aos-delay="300" className="flex h-full" aria-hidden={reduceMotion ? 'true' : 'false'}>
             <Testimonial
               stars={5}
               quote="The voiceovers and audio work were exceptional. They understood our vision and executed it brilliantly."
@@ -286,7 +282,7 @@ export default function Testimonials() {
               org="SOS Children's Villages"
             />
           </div>
-          <div data-aos="fade-up" data-aos-delay="350" className="flex h-full">
+            <div data-aos="fade-up" data-aos-delay="350" className="flex h-full" aria-hidden={reduceMotion ? 'true' : 'false'}>
             <Testimonial
               stars={5}
               quote="The final film was exactly what we envisioned—clear, moving, and professional. GoodAV delivered with both technical expertise and cultural sensitivity."
@@ -299,12 +295,12 @@ export default function Testimonials() {
         </div>
       </div>
 
-    <div className="mt-16 flex justify-center" role="region" aria-label="Customer reviews on Trustpilot">
+  <div className="mt-16 flex justify-center" role="region" aria-label="Customer reviews on Trustpilot">
         <a
           href="https://www.trustpilot.com/review/goodav.net"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-4 text-lg font-bold text-white shadow-lg ring-2 ring-orange-500/30 transition hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-orange-500/40"
+      className={`inline-block rounded-full bg-gradient-to-r from-orange-500 to-amber-500 px-8 py-4 text-lg font-bold text-white shadow-lg ring-2 ring-orange-500/30 transition ${reduceMotion ? '' : 'hover:scale-105 hover:shadow-xl'} focus:outline-none focus:ring-4 focus:ring-orange-500/40`}
       aria-label="View GoodAV reviews on Trustpilot (opens in a new tab)"
         >
           <span className="inline-flex items-center gap-2">

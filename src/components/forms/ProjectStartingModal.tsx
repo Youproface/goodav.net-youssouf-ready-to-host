@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { FaCheckCircle, FaTimesCircle, FaExclamationTriangle, FaSearch } from 'react-icons/fa';
+import { FaCheckCircle, FaTimesCircle, FaExclamationTriangle, FaSearch, FaSpinner, FaRocket, FaUser, FaEnvelope, FaPhone, FaBuilding, FaProjectDiagram, FaDollarSign, FaCalendarAlt, FaFileAlt, FaShieldAlt } from 'react-icons/fa';
 import { createPortal } from 'react-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import countryCodes from '../../data/countryCodes.json';
 
 export default function ProjectStartingModal({ open, onClose }) {
@@ -185,57 +186,196 @@ export default function ProjectStartingModal({ open, onClose }) {
   // --- Modal UI ---
   return (
     <>
+      {submitting && typeof window !== 'undefined' && createPortal(
+        <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-black/80 backdrop-blur-lg">
+          <div className="mb-6">
+            {/* Branded Loading Animation */}
+            <svg id="goodav-bimi.svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.2 387.4" className="w-32 h-auto animate-spin" style={{ animationDuration: '2s', animationTimingFunction: 'linear', animationIterationCount: 'infinite' }}>
+              <defs>
+                <style>
+                  {`.cls-1{fill:#f6953a;}.cls-1,.cls-2,.cls-3,.cls-4,.cls-5{stroke-width:0px;}.cls-2{fill:#010101;}.cls-3{fill:#fff;}.cls-4{fill:#41964c;}.cls-5{fill:#f04f44;}`}
+                </style>
+              </defs>
+              <ellipse className="cls-2" cx="195.1" cy="193.7" rx="195.1" ry="193.7"/>
+              <path className="cls-5" d="M198,27.7c31.5,0,57.1,26.2,57.1,58.4,0,32.1-25.8,58.1-57.4,58-31.3-.1-56.8-26.2-56.8-58.1,0-32.2,25.6-58.3,57.2-58.3Z"/>
+              <path className="cls-3" d="M140.8,193.8c0,32.1-25.7,58.1-57.2,58.1-31.5,0-57.1-26.2-57-58.3,0-32.1,25.7-58.1,57.2-58.1,31.5,0,57,26.2,57,58.3Z"/>
+              <path className="cls-1" d="M246.4,193.2c.2-32.1,26.1-58,57.7-57.7,31.4.2,56.8,26.7,56.5,59-.2,31.8-26.1,57.6-57.5,57.5-31.5-.1-56.9-26.5-56.8-58.7Z"/>
+              <path className="cls-4" d="M140.8,304.4c0-32,25.9-58,57.6-57.9,31.4.1,56.8,26.5,56.7,58.8-.2,31.7-25.9,57.7-57.3,57.6-31.5,0-57-26.3-56.9-58.5Z"/>
+            </svg>
+          </div>
+          <div className="text-white text-xl font-semibold drop-shadow-lg animate-pulse mt-2">Please wait while we submit your project...</div>
+        </div>,
+        document.body
+      )}
       <Dialog.Root open={open} onOpenChange={isOpen => {
         // Prevent closing modal when popup is open
         if (showPopup) return;
         if (!isOpen) onClose();
       }}>
         <Dialog.Portal>
-          <Dialog.Overlay className={`fixed inset-0 bg-black/60 backdrop-blur-sm${showPopup ? ' pointer-events-none' : ''}`} />
-          <Dialog.Content ref={dialogRef} className={`fixed left-1/2 top-1/2 z-50 w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-white/15 bg-white/5 shadow-xl backdrop-blur-xl p-0${showPopup ? ' pointer-events-none' : ''}`} aria-modal="true" role="dialog">
-            <div className="h-2 rounded-t-2xl bg-gradient-to-r from-orange-400/40 via-white/10 to-indigo-400/40" />
-            <button type="button" onClick={onClose} aria-label="Close dialog" className="group absolute right-4 top-[50px] -translate-y-1/2 z-20 h-12 w-12 rounded-full bg-white/10 backdrop-blur-xl ring-2 ring-white/30 hover:bg-white/20 flex items-center justify-center shadow-lg">
-              <span className="h-8 w-8 rounded-full bg-gradient-to-br from-zinc-100/80 to-white/60 shadow-inner flex items-center justify-center">
-                <svg viewBox="0 0 24 24" className="h-4 w-4 text-zinc-800/80" aria-hidden>
-                  <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                </svg>
-              </span>
-            </button>
-            <header className="px-6 pt-6 sm:px-8">
-              <div className="flex items-center gap-3 text-orange-300/90">
-                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-orange-400/20 ring-1 ring-orange-300/30">
-                  <span className="h-2 w-2 rounded-full bg-orange-300" />
-                </span>
-                <h1 className="text-xl font-semibold">Start Your Project</h1>
-              </div>
-              <div className="mt-4">
-                <h2 className="text-lg font-semibold">Transform Your Vision Into Reality</h2>
-              </div>
-            </header>
-            {/* Project Form */}
-            <form onSubmit={handleSubmit} className="grid gap-6 p-6 sm:p-8" aria-labelledby="project-starting-title">
+          <Dialog.Overlay className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300${showPopup ? ' pointer-events-none' : ''}`} />
+          <Dialog.Content
+            ref={dialogRef}
+            className={`fixed left-1/2 top-1/2 z-50 w-full max-w-5xl -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/15 bg-gradient-to-br from-white/8 to-white/4 shadow-2xl backdrop-blur-xl p-0 overflow-hidden${showPopup ? ' pointer-events-none' : ''}`}
+            aria-modal="true"
+            role="dialog"
+            itemScope
+            itemType="https://schema.org/ContactPage"
+          >
+            {/* SEO Structured Data */}
+            <script type="application/ld+json">
+              {JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "ContactPage",
+                "name": "Start Your Audiovisual Project - GoodAV",
+                "description": "Begin your professional audiovisual production project with comprehensive form submission and expert consultation.",
+                "url": "https://goodav.net/contact",
+                "mainEntity": {
+                  "@type": "Organization",
+                  "name": "GoodAV",
+                  "contactPoint": {
+                    "@type": "ContactPoint",
+                    "contactType": "Project Inquiry",
+                    "availableLanguage": "English"
+                  }
+                }
+              })}
+            </script>
+
+            {/* Enhanced Header with Animation */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="relative"
+            >
+              <div className="h-3 rounded-t-3xl bg-gradient-to-r from-orange-400/40 via-amber-400/30 to-orange-500/40" />
+              <div className="absolute inset-0 rounded-t-3xl bg-gradient-to-r from-orange-500/10 via-transparent to-amber-400/10" />
+
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Close dialog"
+                className="group absolute right-6 top-6 z-20 h-12 w-12 rounded-full bg-white/10 backdrop-blur-xl ring-2 ring-white/30 hover:bg-white/20 flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-105"
+              >
+                <motion.span
+                  className="h-8 w-8 rounded-full bg-gradient-to-br from-zinc-100/80 to-white/60 shadow-inner flex items-center justify-center"
+                  whileHover={{ rotate: 90 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4 text-zinc-800/80" aria-hidden>
+                    <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                </motion.span>
+              </button>
+
+              <header className="px-8 pt-8 pb-6">
+                <motion.div
+                  className="flex items-center gap-4 text-orange-300/90 mb-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                  <motion.span
+                    className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-orange-400/20 ring-2 ring-orange-300/30"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <FaRocket className="h-3 w-3 text-orange-300" />
+                  </motion.span>
+                  <h1 className="text-2xl font-bold">Start Your Project</h1>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  <h2 className="text-xl font-semibold text-white/90 mb-2">Transform Your Vision Into Reality</h2>
+                  <p className="text-white/70 text-sm leading-relaxed">
+                    Fill out the form below and our team will contact you within 24 hours to discuss your project requirements and provide a customized solution.
+                  </p>
+                </motion.div>
+              </header>
+            </motion.div>
+            {/* Enhanced Project Form */}
+            <motion.form
+              onSubmit={handleSubmit}
+              className="grid gap-6 p-8"
+              aria-labelledby="project-starting-title"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
               <input type="hidden" name="hp_field" value="" />
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+              <motion.div
+                className="grid grid-cols-1 gap-6 md:grid-cols-2"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
                 {/* Full Name */}
-                <div className="flex flex-col">
-                  <label className="mb-1 text-sm font-medium" htmlFor="project-name">Full Name <span className="text-orange-300">*</span></label>
-                  <input id="project-name" value={name} onChange={e => setName(e.target.value)} type="text" placeholder="Your name" className="h-11 rounded-lg border border-white/15 bg-white/5 px-3 text-sm placeholder:text-white/40 outline-none transition focus:border-orange-300/40 focus:bg-white/10" required aria-required="true" />
-                </div>
+                <motion.div
+                  className="flex flex-col group"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <label className="mb-2 text-sm font-medium flex items-center gap-2" htmlFor="project-name">
+                    <FaUser className="h-4 w-4 text-orange-400" />
+                    Full Name <span className="text-orange-300">*</span>
+                  </label>
+                  <input
+                    id="project-name"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    type="text"
+                    placeholder="Your full name"
+                    className="h-12 rounded-xl border border-white/15 bg-white/5 px-4 text-sm placeholder:text-white/40 outline-none transition-all duration-200 focus:border-orange-300/50 focus:bg-white/10 focus:ring-2 focus:ring-orange-300/20 hover:border-white/20"
+                    required
+                    aria-required="true"
+                  />
+                </motion.div>
+
                 {/* Email Address */}
-                <div className="flex flex-col">
-                  <label className="mb-1 text-sm font-medium" htmlFor="project-email">Email Address <span className="text-orange-300">*</span></label>
-                  <input id="project-email" value={email} onChange={e => setEmail(e.target.value)} type="email" placeholder="you@email.com" className="h-11 rounded-lg border border-white/15 bg-white/5 px-3 text-sm placeholder:text-white/40 outline-none transition focus:border-orange-300/40 focus:bg-white/10" required aria-required="true" />
-                </div>
+                <motion.div
+                  className="flex flex-col group"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <label className="mb-2 text-sm font-medium flex items-center gap-2" htmlFor="project-email">
+                    <FaEnvelope className="h-4 w-4 text-orange-400" />
+                    Email Address <span className="text-orange-300">*</span>
+                  </label>
+                  <input
+                    id="project-email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    type="email"
+                    placeholder="you@email.com"
+                    className="h-12 rounded-xl border border-white/15 bg-white/5 px-4 text-sm placeholder:text-white/40 outline-none transition-all duration-200 focus:border-orange-300/50 focus:bg-white/10 focus:ring-2 focus:ring-orange-300/20 hover:border-white/20"
+                    required
+                    aria-required="true"
+                  />
+                </motion.div>
+
                 {/* Phone Number (Country Code + Phone) */}
-                <div className="flex flex-col">
-                  <label className="mb-1 text-sm font-medium" htmlFor="project-phone">Phone Number <span className="text-orange-300">*</span></label>
-                  <div className="flex gap-2 items-center">
+                <motion.div
+                  className="flex flex-col group"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <label className="mb-2 text-sm font-medium flex items-center gap-2" htmlFor="project-phone">
+                    <FaPhone className="h-4 w-4 text-orange-400" />
+                    Phone Number <span className="text-orange-300">*</span>
+                  </label>
+                  <div className="flex gap-3 items-center">
                     <select
                       id="project-country-code"
                       aria-label="Country Code"
                       value={countryCode}
                       onChange={e => setCountryCode(e.target.value)}
-                      className="h-10 w-32 rounded-lg border border-white/15 bg-white/5 px-2 text-base outline-none transition focus:border-orange-300/40 focus:bg-white/10 overflow-y-auto max-h-[40vh]"
+                      className="h-12 w-32 rounded-xl border border-white/15 bg-white/5 px-3 text-sm outline-none transition-all duration-200 focus:border-orange-300/50 focus:bg-white/10 focus:ring-2 focus:ring-orange-300/20 hover:border-white/20"
                     >
                       {countryCodes.map((c, i) => (
                         <option key={`${c.code}-${i}`} value={c.code}>{c.code} {c.name}</option>
@@ -247,70 +387,243 @@ export default function ProjectStartingModal({ open, onClose }) {
                       onChange={e => setPhone(e.target.value.replace(/\D/g, ''))}
                       type="tel"
                       placeholder="123456789"
-                      className="h-10 flex-1 rounded-lg border border-white/15 bg-white/5 px-3 text-base placeholder:text-white/40 outline-none transition focus:border-orange-300/40 focus:bg-white/10"
+                      className="h-12 flex-1 rounded-xl border border-white/15 bg-white/5 px-4 text-sm placeholder:text-white/40 outline-none transition-all duration-200 focus:border-orange-300/50 focus:bg-white/10 focus:ring-2 focus:ring-orange-300/20 hover:border-white/20"
                       aria-label="Phone Number"
                       inputMode="numeric"
                       pattern="[0-9]*"
+                      required
                     />
                   </div>
-                  {phone && phone.length < 7 && (<span className="text-red-400 text-xs mt-1 flex items-center gap-1"><FaExclamationTriangle className="w-3 h-3" />Please enter at least 7 digits</span>)}
-                </div>
+                  {phone && phone.length < 7 && (
+                    <motion.span
+                      className="text-red-400 text-xs mt-2 flex items-center gap-2"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                    >
+                      <FaExclamationTriangle className="w-3 h-3" />
+                      Please enter at least 7 digits
+                    </motion.span>
+                  )}
+                </motion.div>
+
                 {/* Organization */}
-                <div className="flex flex-col">
-                  <label className="mb-1 text-sm font-medium" htmlFor="project-organization">Company / Organization <span className="text-orange-300">*</span></label>
-                  <input id="project-organization" value={organization} onChange={e => setOrganization(e.target.value)} type="text" placeholder="Organization name" className="h-11 rounded-lg border border-white/15 bg-white/5 px-3 text-sm placeholder:text-white/40 outline-none transition focus:border-orange-300/40 focus:bg-white/10" required aria-required="true" />
-                </div>
+                <motion.div
+                  className="flex flex-col group"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <label className="mb-2 text-sm font-medium flex items-center gap-2" htmlFor="project-organization">
+                    <FaBuilding className="h-4 w-4 text-orange-400" />
+                    Company / Organization <span className="text-orange-300">*</span>
+                  </label>
+                  <input
+                    id="project-organization"
+                    value={organization}
+                    onChange={e => setOrganization(e.target.value)}
+                    type="text"
+                    placeholder="Organization name"
+                    className="h-12 rounded-xl border border-white/15 bg-white/5 px-4 text-sm placeholder:text-white/40 outline-none transition-all duration-200 focus:border-orange-300/50 focus:bg-white/10 focus:ring-2 focus:ring-orange-300/20 hover:border-white/20"
+                    required
+                    aria-required="true"
+                  />
+                </motion.div>
+
                 {/* Project Type */}
-                <div className="col-span-1 md:col-span-2">
-                  <label className="mb-1 text-sm font-medium" htmlFor="project-type">Project Type <span className="text-orange-300">*</span></label>
-                  <select id="project-type" aria-label="Project Type" value={projectType} onChange={e => setProjectType(e.target.value)} required className="h-11 rounded-lg border border-white/15 bg-white/5 px-3 text-sm outline-none transition focus:border-orange-300/40 focus:bg-white/10 w-full" aria-required="true">
+                <motion.div
+                  className="col-span-1 md:col-span-2 group"
+                  whileHover={{ scale: 1.01 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <label className="mb-2 text-sm font-medium flex items-center gap-2" htmlFor="project-type">
+                    <FaProjectDiagram className="h-4 w-4 text-orange-400" />
+                    Project Type <span className="text-orange-300">*</span>
+                  </label>
+                  <select
+                    id="project-type"
+                    aria-label="Project Type"
+                    value={projectType}
+                    onChange={e => setProjectType(e.target.value)}
+                    required
+                    className="h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm outline-none transition-all duration-200 focus:border-orange-300/50 focus:bg-white/10 focus:ring-2 focus:ring-orange-300/20 hover:border-white/20"
+                    aria-required="true"
+                  >
                     <option value="">Select your project type...</option>
                     {['Commercial','Documentary','Music Video','Event Coverage','Corporate Film','Other'].map(o => <option key={o} value={o}>{o}</option>)}
                   </select>
-                </div>
+                </motion.div>
+
                 {/* Budget */}
-                <div>
-                  <label className="mb-1 text-sm font-medium" htmlFor="project-budget">Estimated Budget</label>
-                  <select id="project-budget" aria-label="Estimated Budget" value={budget} onChange={e => setBudget(e.target.value)} className="h-11 rounded-lg border border-white/15 bg-white/5 px-3 text-sm outline-none transition focus:border-orange-300/40 focus:bg-white/10 w-full">
+                <motion.div
+                  className="group"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <label className="mb-2 text-sm font-medium flex items-center gap-2" htmlFor="project-budget">
+                    <FaDollarSign className="h-4 w-4 text-orange-400" />
+                    Estimated Budget
+                  </label>
+                  <select
+                    id="project-budget"
+                    aria-label="Estimated Budget"
+                    value={budget}
+                    onChange={e => setBudget(e.target.value)}
+                    className="h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm outline-none transition-all duration-200 focus:border-orange-300/50 focus:bg-white/10 focus:ring-2 focus:ring-orange-300/20 hover:border-white/20"
+                  >
                     {['Under $5,000','$5,000 – $10,000','$10,000 – $25,000','$25,000 – $50,000','$50,000+'].map(b => <option key={b}>{b}</option>)}
                   </select>
-                </div>
+                </motion.div>
+
                 {/* Timeline */}
-                <div>
-                  <label className="mb-1 text-sm font-medium" htmlFor="project-timeline">Project Timeline</label>
-                  <select id="project-timeline" aria-label="Project Timeline" value={timeline} onChange={e => setTimeline(e.target.value)} className="h-11 rounded-lg border border-white/15 bg-white/5 px-3 text-sm outline-none transition focus:border-orange-300/40 focus:bg-white/10 w-full">
+                <motion.div
+                  className="group"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <label className="mb-2 text-sm font-medium flex items-center gap-2" htmlFor="project-timeline">
+                    <FaCalendarAlt className="h-4 w-4 text-orange-400" />
+                    Project Timeline
+                  </label>
+                  <select
+                    id="project-timeline"
+                    aria-label="Project Timeline"
+                    value={timeline}
+                    onChange={e => setTimeline(e.target.value)}
+                    className="h-12 w-full rounded-xl border border-white/15 bg-white/5 px-4 text-sm outline-none transition-all duration-200 focus:border-orange-300/50 focus:bg-white/10 focus:ring-2 focus:ring-orange-300/20 hover:border-white/20"
+                  >
                     {['When do you need this completed?','ASAP','Within 1 month','2-3 months','3-6 months','6+ months','Timeline is flexible'].map(t => <option key={t}>{t}</option>)}
                   </select>
-                </div>
+                </motion.div>
+
                 {/* Description */}
-                <div className="col-span-1 md:col-span-2">
-                  <label className="mb-1 text-sm font-medium" htmlFor="project-description">Project Description <span className="text-orange-300">*</span></label>
-                  <textarea id="project-description" value={description} onChange={e => setDescription(e.target.value)} rows={6} placeholder="Tell us about your vision, goals, and any specific requirements..." className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm placeholder:text-white/40 outline-none transition focus:border-orange-300/40 focus:bg-white/10 w-full" required aria-required="true" />
-                </div>
-                {/* Consent Checkbox */}
-                <div className="col-span-1 md:col-span-2">
-                  <label className="flex items-start gap-3 text-sm" htmlFor="project-consent">
-                    <input id="project-consent" type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} className="mt-0.5 h-4 w-4 rounded border-white/20 bg-white/5 text-orange-400 focus:ring-0" />
-                    <span className="text-white/80">I agree to be contacted about this project and understand that GoodAV will handle my information according to their privacy policy.</span>
+                <motion.div
+                  className="col-span-1 md:col-span-2 group"
+                  whileHover={{ scale: 1.01 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <label className="mb-2 text-sm font-medium flex items-center gap-2" htmlFor="project-description">
+                    <FaFileAlt className="h-4 w-4 text-orange-400" />
+                    Project Description <span className="text-orange-300">*</span>
                   </label>
-                </div>
-              </div>
-              {/* Submit & Feedback */}
-              <div className="mt-2 flex flex-col items-center justify-end gap-3">
-                <div className="w-full flex justify-end gap-3">
-                  <button type="button" onClick={onClose} className="h-11 rounded-lg border border-white/15 bg-transparent px-4 text-sm text-white/90 transition hover:bg-white/10" aria-label="Cancel and close">Not Now</button>
-                  <button type="submit" className="group inline-flex h-11 items-center gap-2 rounded-lg bg-gradient-to-r from-orange-400 to-orange-500 px-4 text-sm font-medium text-black shadow-[0_6px_20px_-6px_rgba(255,140,0,0.6)] transition hover:brightness-105 focus:outline-none" disabled={submitting} aria-label="Send Project Request">
-                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-black/10">
-                      <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-black/80" aria-hidden>
-                        <path d="M2 21l20-9L2 3v6l14 3L2 15v6z" />
-                      </svg>
+                  <textarea
+                    id="project-description"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                    rows={6}
+                    placeholder="Tell us about your vision, goals, and any specific requirements..."
+                    className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm placeholder:text-white/40 outline-none transition-all duration-200 focus:border-orange-300/50 focus:bg-white/10 focus:ring-2 focus:ring-orange-300/20 hover:border-white/20 resize-none"
+                    required
+                    aria-required="true"
+                  />
+                </motion.div>
+
+                {/* Consent Checkbox */}
+                <motion.div
+                  className="col-span-1 md:col-span-2"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.6 }}
+                >
+                  <label className="flex items-start gap-3 text-sm group cursor-pointer" htmlFor="project-consent">
+                    <input
+                      id="project-consent"
+                      type="checkbox"
+                      checked={consent}
+                      onChange={e => setConsent(e.target.checked)}
+                      className="mt-1 h-4 w-4 rounded border-white/20 bg-white/5 text-orange-400 focus:ring-0 focus:ring-orange-300/50 transition-all duration-200"
+                    />
+                    <span className="text-white/80 leading-relaxed flex items-center gap-2">
+                      <FaShieldAlt className="h-4 w-4 text-orange-400/70" />
+                      I agree to be contacted about this project and understand that GoodAV will handle my information according to their privacy policy.
                     </span>
-                    {submitting ? 'Submitting...' : 'Send Project Request'}
-                  </button>
+                  </label>
+                </motion.div>
+              </motion.div>
+              {/* Submit & Feedback */}
+              <motion.div
+                className="mt-4 flex flex-col items-center justify-end gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.7 }}
+              >
+                <div className="w-full flex justify-end gap-4">
+                  <motion.button
+                    type="button"
+                    onClick={onClose}
+                    className="h-12 rounded-xl border border-white/15 bg-transparent px-6 text-sm text-white/90 transition-all duration-200 hover:bg-white/10 hover:border-white/20"
+                    aria-label="Cancel and close"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Not Now
+                  </motion.button>
+                  <motion.button
+                    type="submit"
+                    className="group relative inline-flex h-12 items-center gap-3 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-6 text-sm font-bold text-black shadow-2xl hover:shadow-orange-500/25 transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-400/50 overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={submitting}
+                    aria-label="Send Project Request"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {/* Button glow effect */}
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0 rounded-xl bg-gradient-to-r from-orange-400 to-amber-300 opacity-0 group-hover:opacity-20 transition-opacity duration-200"
+                    />
+
+                    {submitting ? (
+                      <motion.div
+                        className="flex items-center gap-2"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                      >
+                        <FaSpinner className="h-4 w-4 animate-spin" />
+                        <span>Submitting...</span>
+                      </motion.div>
+                    ) : (
+                      <>
+                        <motion.span
+                          className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-black/10"
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                        >
+                          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-black/80" aria-hidden>
+                            <path d="M2 21l20-9L2 3v6l14 3L2 15v6z" />
+                          </svg>
+                        </motion.span>
+                        <span className="relative z-10">Send Project Request</span>
+
+                        {/* Animated sparkles */}
+                        <motion.div
+                          className="absolute inset-0 pointer-events-none"
+                          initial={{ opacity: 0 }}
+                          whileHover={{ opacity: 1 }}
+                        >
+                          {[...Array(3)].map((_, i) => (
+                            <motion.div
+                              key={i}
+                              className="absolute w-1 h-1 bg-white rounded-full"
+                              style={{
+                                left: `${30 + i * 20}%`,
+                                top: `${20 + (i % 2) * 60}%`
+                              }}
+                              animate={{
+                                scale: [0, 1, 0],
+                                opacity: [0, 1, 0]
+                              }}
+                              transition={{
+                                duration: 1.5,
+                                repeat: Infinity,
+                                delay: i * 0.2
+                              }}
+                            />
+                          ))}
+                        </motion.div>
+                      </>
+                    )}
+                  </motion.button>
                 </div>
-                  {/* Feedback message removed */}
-              </div>
-            </form>
+              </motion.div>
+            </motion.form>
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
@@ -328,6 +641,7 @@ export default function ProjectStartingModal({ open, onClose }) {
 
 function Popup({ show, type, message, details, onClose }) {
   if (!show || !type) return null;
+
   // Trap focus and prevent background interaction
   useEffect(() => {
     if (!show) return;
@@ -348,44 +662,140 @@ function Popup({ show, type, message, details, onClose }) {
   }, [show, onClose]);
 
   return createPortal(
-    <div
-      className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 pointer-events-auto"
-      aria-modal="true"
-      role="dialog"
-      tabIndex={-1}
-      style={{ outline: 'none' }}
-    >
-      <div
-        className="bg-[#1b1b1d] w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700 p-4 sm:p-6 relative"
-        tabIndex={0}
-      >
-        <button onClick={onClose} aria-label="Close popup" className="absolute top-3 right-3 text-gray-400 hover:text-white"> <FaTimesCircle className="w-5 h-5" /> </button>
-        <div className="flex justify-center mb-4">
-          {type === 'success' ? (
-            <div className="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center"><FaCheckCircle className="text-orange-400 w-6 h-6" /></div>
-          ) : type === 'warning' ? (
-            <div className="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center"><FaExclamationTriangle className="text-orange-400 w-6 h-6" /></div>
-          ) : (
-            <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center"><FaTimesCircle className="text-red-400 w-6 h-6" /></div>
-          )}
-        </div>
-        <h3 className={`text-lg text-center font-semibold mb-2 ${type === 'success' ? 'text-orange-400' : type === 'warning' ? 'text-orange-400' : 'text-red-400'}`}>{message}</h3>
-        {details && (
-          <div className="text-gray-300 text-sm text-center mb-4">
-            <details className="mx-auto max-w-[28rem] text-left"><summary className="cursor-pointer text-sm text-orange-300">Details</summary><pre className="whitespace-pre-wrap text-xs text-gray-300 mt-2 p-2 bg-[#141414] rounded">{details}</pre></details>
-          </div>
-        )}
-        <div className="flex justify-center">
-          <button 
-            onClick={onClose} 
-            aria-label={type === 'success' ? 'Continue and close modal' : type === 'warning' ? 'Acknowledge warning' : 'Try again'}
-            className={`px-6 py-3 rounded-lg font-medium ${type === 'success' ? 'bg-orange-600 hover:bg-orange-700 text-white' : type === 'warning' ? 'bg-orange-600 hover:bg-orange-700 text-white' : 'bg-red-600 hover:bg-red-700 text-white'}`}
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 pointer-events-auto outline-none"
+          aria-modal="true"
+          role="dialog"
+          tabIndex={-1}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            className="bg-gradient-to-br from-gray-900 to-gray-800 w-full max-w-md mx-auto rounded-2xl shadow-2xl border border-gray-700 p-6 sm:p-8 relative overflow-hidden"
+            initial={{ scale: 0.8, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.8, opacity: 0, y: 20 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            tabIndex={0}
           >
-            {type === 'success' ? 'Continue' : type === 'warning' ? 'Understood' : 'Try Again'}
-          </button>
-        </div>
-      </div>
-    </div>,
+            {/* Background glow effect */}
+            <div
+              aria-hidden="true"
+              className={`absolute inset-0 rounded-2xl ${
+                type === 'success' ? 'bg-orange-500/10' :
+                type === 'warning' ? 'bg-orange-500/10' :
+                'bg-red-500/10'
+              }`}
+            />
+
+            <motion.button
+              onClick={onClose}
+              aria-label="Close popup"
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors duration-200 z-10"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <FaTimesCircle className="w-5 h-5" />
+            </motion.button>
+
+            <motion.div
+              className="flex justify-center mb-6 relative z-10"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+            >
+              {type === 'success' ? (
+                <motion.div
+                  className="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center ring-4 ring-orange-400/20"
+                  animate={{ rotate: [0, 10, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <FaCheckCircle className="text-orange-400 w-8 h-8" />
+                </motion.div>
+              ) : type === 'warning' ? (
+                <motion.div
+                  className="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center ring-4 ring-orange-400/20"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <FaExclamationTriangle className="text-orange-400 w-8 h-8" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center ring-4 ring-red-400/20"
+                  animate={{ x: [-2, 2, -2] }}
+                  transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <FaTimesCircle className="text-red-400 w-8 h-8" />
+                </motion.div>
+              )}
+            </motion.div>
+
+            <motion.h3
+              className={`text-xl text-center font-bold mb-3 relative z-10 ${
+                type === 'success' ? 'text-orange-400' :
+                type === 'warning' ? 'text-orange-400' :
+                'text-red-400'
+              }`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.3 }}
+            >
+              {message}
+            </motion.h3>
+
+            {details && (
+              <motion.div
+                className="text-gray-300 text-sm text-center mb-6 relative z-10"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.4 }}
+              >
+                <details className="mx-auto max-w-[28rem] text-left">
+                  <summary className="cursor-pointer text-sm text-orange-300 hover:text-orange-200 transition-colors duration-200">
+                    View Details
+                  </summary>
+                  <pre className="whitespace-pre-wrap text-xs text-gray-300 mt-3 p-3 bg-gray-800/50 rounded-lg border border-gray-700 overflow-auto max-h-32">
+                    {details}
+                  </pre>
+                </details>
+              </motion.div>
+            )}
+
+            <motion.div
+              className="flex justify-center relative z-10"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.5 }}
+            >
+              <motion.button
+                onClick={onClose}
+                aria-label={
+                  type === 'success' ? 'Continue and close modal' :
+                  type === 'warning' ? 'Acknowledge warning' :
+                  'Try again'
+                }
+                className={`px-8 py-3 rounded-xl font-bold transition-all duration-200 ${
+                  type === 'success'
+                    ? 'bg-gradient-to-r from-orange-500 to-amber-400 text-black hover:from-orange-400 hover:to-amber-300 shadow-lg hover:shadow-orange-500/25'
+                    : type === 'warning'
+                    ? 'bg-gradient-to-r from-orange-500 to-amber-400 text-black hover:from-orange-400 hover:to-amber-300 shadow-lg hover:shadow-orange-500/25'
+                    : 'bg-gradient-to-r from-red-500 to-red-400 text-white hover:from-red-400 hover:to-red-300 shadow-lg hover:shadow-red-500/25'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {type === 'success' ? 'Continue' : type === 'warning' ? 'Understood' : 'Try Again'}
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
     document.body
   );
 }

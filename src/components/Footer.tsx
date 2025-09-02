@@ -42,11 +42,13 @@ const Footer = () => {
 
   const location = useLocation();
   const isServicePage = location.pathname.startsWith('/services');
+  const isContactPage = location.pathname === '/contact' || location.pathname.startsWith('/contact');
+  const isHomePage = location.pathname === '/';
 
   return (
     <footer className="bg-gradient-section border-t border-border" role="contentinfo">
       <div>
-        {!isServicePage && (
+  {!isServicePage && !isContactPage && !isHomePage && (
           <>
             <ContactSection />
             <BottomCTA />
@@ -76,7 +78,7 @@ const Footer = () => {
                 <div className="space-y-3">
                   <div className="flex items-center text-muted-foreground">
                     <Mail className="h-4 w-4 mr-3 text-primary" />
-                    <span className="text-sm">info@goodav.africa</span>
+                    <span className="text-sm">info@goodav.net</span>
                   </div>
                   <div className="flex items-center text-muted-foreground">
                     <Phone className="h-4 w-4 mr-3 text-primary" />
@@ -132,9 +134,9 @@ const Footer = () => {
                       href="https://wa.me/+250788613332"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg bg-transparent px-6 py-3 font-semibold text-white shadow-md hover:bg-[#1ebe5d] transition-colors"
+                      className="inline-flex items-center gap-2 rounded-lg bg-transparent px-6 py-3 font-semibold text-white shadow-md hover:bg-orange-400 transition-colors group"
                     >
-                      <FaWhatsapp className="h-5 w-5 text-green-400" />
+                      <FaWhatsapp className="h-5 w-5 text-orange-400 group-hover:text-white transition-colors duration-200" />
                       Chat with us on WhatsApp
                     </a>
                   </div>

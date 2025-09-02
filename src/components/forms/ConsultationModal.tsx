@@ -523,6 +523,27 @@ export default function ConsultationModal({
 
   return (
     <>
+      {submitting && typeof window !== 'undefined' && createPortal(
+        <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-black/80 backdrop-blur-lg">
+          <div className="mb-6">
+            {/* Branded Loading Animation */}
+            <svg id="goodav-bimi.svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.2 387.4" className="w-32 h-auto animate-spin" style={{ animationDuration: '2s', animationTimingFunction: 'linear', animationIterationCount: 'infinite' }}>
+              <defs>
+                <style>
+                  {`.cls-1{fill:#f6953a;}.cls-1,.cls-2,.cls-3,.cls-4,.cls-5{stroke-width:0px;}.cls-2{fill:#010101;}.cls-3{fill:#fff;}.cls-4{fill:#41964c;}.cls-5{fill:#f04f44;}`}
+                </style>
+              </defs>
+              <ellipse className="cls-2" cx="195.1" cy="193.7" rx="195.1" ry="193.7"/>
+              <path className="cls-5" d="M198,27.7c31.5,0,57.1,26.2,57.1,58.4,0,32.1-25.8,58.1-57.4,58-31.3-.1-56.8-26.2-56.8-58.1,0-32.2,25.6-58.3,57.2-58.3Z"/>
+              <path className="cls-3" d="M140.8,193.8c0,32.1-25.7,58.1-57.2,58.1-31.5,0-57.1-26.2-57-58.3,0-32.1,25.7-58.1,57.2-58.1,31.5,0,57,26.2,57,58.3Z"/>
+              <path className="cls-1" d="M246.4,193.2c.2-32.1,26.1-58,57.7-57.7,31.4.2,56.8,26.7,56.5,59-.2,31.8-26.1,57.6-57.5,57.5-31.5-.1-56.9-26.5-56.8-58.7Z"/>
+              <path className="cls-4" d="M140.8,304.4c0-32,25.9-58,57.6-57.9,31.4.1,56.8,26.5,56.7,58.8-.2,31.7-25.9,57.7-57.3,57.6-31.5,0-57-26.3-56.9-58.5Z"/>
+            </svg>
+          </div>
+          <div className="text-white text-xl font-semibold drop-shadow-lg animate-pulse mt-2">Please wait while we submit your consultation...</div>
+        </div>,
+        document.body
+      )}
       {modalOpen && createPortal(
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center 
@@ -567,9 +588,9 @@ export default function ConsultationModal({
               <div className="w-full bg-gray-700 h-2 rounded-full mb-4 overflow-hidden">
                 <div
                   className="bg-orange-500 h-full rounded-full transition-all duration-500 ease-out booking-progress-bar"
-                  data-progress={step}
+                  style={{ width: `${(step / 8) * 100}%` }}
                   aria-label={`Progress: Step ${step} of 8`}
-                />
+                ></div>
               </div>
 
               {/* Step Title */}
@@ -1277,11 +1298,75 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
   // Local note for the selected time (user can add an optional note before confirming)
   const [selectedNote, setSelectedNote] = useState('');
 
+  // Confirmation popup state
+  const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
+  const [pendingConfirmation, setPendingConfirmation] = useState(null);
+
   // Step 7: canProceed is true only if date and time are selected AND confirmed
   useEffect(() => { setCanProceed(selectedDate && selectedTime && timeSlotConfirmed); }, [selectedDate, selectedTime, timeSlotConfirmed, setCanProceed]);
 
+  // Handle confirmation popup
+  const handleConfirmClick = (slot, note) => {
+    setPendingConfirmation({ slot, note });
+    setShowConfirmationPopup(true);
+  };
+
+  const handleConfirmYes = () => {
+    if (pendingConfirmation) {
+      handleTimeConfirmation(pendingConfirmation.note);
+      setPendingConfirmation(null);
+      setShowConfirmationPopup(false);
+    }
+  };
+
+  const handleConfirmNo = () => {
+    setPendingConfirmation(null);
+    setShowConfirmationPopup(false);
+    setSelectedTime(null); // Clear the selected time when user cancels
+  };
+
   return (
     <div className="space-y-6 sm:space-y-8">
+      {/* Confirmation Popup */}
+      {showConfirmationPopup && pendingConfirmation && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[10001] p-4">
+          <div className="bg-[#1a1a1a] border border-gray-700 rounded-lg p-6 max-w-md w-full mx-4 shadow-2xl">
+            <h3 className="text-lg font-semibold text-white mb-4 text-center">Confirm Your Appointment</h3>
+            <div className="space-y-3 mb-6">
+              <p className="text-gray-300 text-sm">Are you sure you want to save this appointment?</p>
+              <div className="bg-orange-900/20 border border-orange-500/50 rounded-lg p-4">
+                <h4 className="text-orange-400 font-semibold mb-2 text-sm">Selected Appointment:</h4>
+                <p className="text-orange-300 text-sm">
+                  {new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })} at {selectedTime} ({timezone})
+                </p>
+                {meetingSoftware && (
+                  <p className="text-orange-300 mt-1 text-sm">Meeting Platform: {meetingSoftware}</p>
+                )}
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={handleConfirmNo}
+                className="flex-1 px-4 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors font-medium"
+              >
+                No, go back to date and time to adjust
+              </button>
+              <button
+                onClick={handleConfirmYes}
+                className="flex-1 px-4 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors font-medium"
+              >
+                Yes, I am sure
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Selected Appointment Summary - Show only when confirmed */}
       {selectedDate && selectedTime && timeSlotConfirmed && (
         <div className="p-3 sm:p-4 bg-orange-900/20 border border-orange-500/50 rounded-lg">
@@ -1399,7 +1484,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
           </div>
 
           {/* Hint for time slot confirmation */}
-          <div className="mb-3 text-xs text-orange-300">Click the Confirm button next to a selected time slot to lock it in; selecting a slot only marks it as chosen until you confirm.</div>
+          <div className="mb-3 text-xs text-orange-300">Click on a time slot to select it and confirm your appointment.</div>
 
           {/* Optional note so users can add a short message before confirming */}
           <div className="mb-4">
@@ -1430,6 +1515,8 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                         onClick={() => {
                           if (selectedDate && !timeSlotConfirmed) {
                             setSelectedTime(slot);
+                            // Immediately show confirmation popup when time is selected
+                            handleConfirmClick(slot, selectedNote);
                           }
                         }}
                         disabled={!selectedDate || timeSlotConfirmed}
@@ -1461,35 +1548,6 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
                     )}
                   </Tooltip.Root>
                 </Tooltip.Provider>
-                {selectedTime === slot && selectedDate && !timeSlotConfirmed && (
-                  <Tooltip.Provider>
-                    <Tooltip.Root>
-                      <Tooltip.Trigger asChild>
-                        <button
-                          className="px-3 py-3 sm:px-4 sm:py-4 rounded font-semibold shadow transition-colors 
-                            bg-orange-600 text-white hover:bg-orange-700 active:bg-orange-500
-                            min-h-[44px] touch-manipulation active:scale-95"
-                          onClick={() => handleTimeConfirmation(selectedNote)}
-                          title="Confirm this time slot"
-                        >
-                          <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                        </button>
-                      </Tooltip.Trigger>
-                      <Tooltip.Portal>
-                        <Tooltip.Content
-                          className="bg-gray-900 text-white px-4 py-3 rounded-lg text-sm shadow-2xl border-2 border-gray-600 max-w-xs z-[10001]"
-                          sideOffset={8}
-                          side="top"
-                        >
-                          Confirm this time slot
-                          <Tooltip.Arrow className="fill-gray-900" />
-                        </Tooltip.Content>
-                      </Tooltip.Portal>
-                    </Tooltip.Root>
-                  </Tooltip.Provider>
-                )}
                 {/* Live comment preview shown while a slot is selected but not yet confirmed */}
                 {selectedTime === slot && selectedDate && !timeSlotConfirmed && selectedNote && (
                   <div className="ml-2 mt-1 text-xs text-gray-300">Live note: <em className="text-gray-200">{selectedNote}</em></div>
