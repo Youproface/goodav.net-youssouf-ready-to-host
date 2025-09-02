@@ -181,7 +181,7 @@ export default function ContactUs() {
         document.body
       )}
         {/* soft background glows */}
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute left-4 top-10 h-72 w-72 rounded-full bg-orange-500/10 blur-3xl" />
           <div className="absolute right-6 bottom-8 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl" />
         </div>
@@ -205,7 +205,7 @@ export default function ContactUs() {
   
               {/* Strategy call card */}
               <div className="mt-6 md:mt-8 rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur p-6 md:p-7 shadow-[0_8px_40px_rgba(0,0,0,0.35)] relative">
-                <div aria-hidden className="pointer-events-none absolute inset-0 rounded-2xl shadow-[inset_0_0_80px_rgba(255,170,80,0.08)]" />
+                <div aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-2xl shadow-[inset_0_0_80px_rgba(255,170,80,0.08)]" />
                 <div className="mb-4 flex items-center gap-2 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-orange-300">
                   <span className="grid h-7 w-7 sm:h-8 sm:w-8 place-items-center rounded-md bg-orange-500/20 ring-1 ring-white/10"><FaCalendarAlt className="h-4 w-4 text-orange-300"/></span>
                   Schedule a Strategy Call
@@ -225,11 +225,16 @@ export default function ContactUs() {
                   Book Your Consultation
                 </button>
   
+                {/* render list items from an array to ensure ul contains only <li> children */}
                 <ul className="mt-5 space-y-3 text-sm sm:text-base text-zinc-300">
-                  <Bullet>Personalized project consultation & strategy</Bullet>
-                  <Bullet>Timeline & budget discussion</Bullet>
-                  <Bullet>Creative direction & vision guidance</Bullet>
-                  <Bullet>Custom proposal & implementation roadmap</Bullet>
+                  {[
+                    'Personalized project consultation & strategy',
+                    'Timeline & budget discussion',
+                    'Creative direction & vision guidance',
+                    'Custom proposal & implementation roadmap',
+                  ].map((txt, i) => (
+                    <Bullet key={i}>{txt}</Bullet>
+                  ))}
                 </ul>
                  {/* Contact blocks */}
                 <div className="mt-6 space-y-3 md:space-y-4">
@@ -271,17 +276,31 @@ export default function ContactUs() {
 
                   <div>
                     <Label>Tell us about your project, timeline, and creative vision…</Label>
-                    <textarea
-                      name="message"
-                      rows={5}
-                      value={message}
-                      onChange={(e) => updateFieldAndValidate('message', e.target.value, setMessage)}
-                      ref={messageRef}
-                      className="mt-2 w-full rounded-xl bg-white/[0.06] px-4 py-3 text-sm sm:text-base text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60"
-                      placeholder="Describe the goals, audience, deliverables, and any references"
-                      aria-required="true"
-                      aria-invalid={!!fieldErrors.message}
-                    />
+                    {fieldErrors.message ? (
+                      <textarea
+                        name="message"
+                        rows={5}
+                        value={message}
+                        onChange={(e) => updateFieldAndValidate('message', e.target.value, setMessage)}
+                        ref={messageRef}
+                        className="mt-2 w-full rounded-xl bg-white/[0.06] px-4 py-3 text-sm sm:text-base text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60"
+                        placeholder="Describe the goals, audience, deliverables, and any references"
+                        aria-required="true"
+                        aria-invalid="true"
+                      />
+                    ) : (
+                      <textarea
+                        name="message"
+                        rows={5}
+                        value={message}
+                        onChange={(e) => updateFieldAndValidate('message', e.target.value, setMessage)}
+                        ref={messageRef}
+                        className="mt-2 w-full rounded-xl bg-white/[0.06] px-4 py-3 text-sm sm:text-base text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60"
+                        placeholder="Describe the goals, audience, deliverables, and any references"
+                        aria-required="true"
+                        aria-invalid="false"
+                      />
+                    )}
                   </div>
 
                   {errors.length > 0 && (
@@ -362,16 +381,29 @@ export default function ContactUs() {
     return (
       <div>
         <Label>{label}</Label>
-        <input
-          type={type}
-          name={name}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          ref={inputRef}
-      className={`mt-2 w-full rounded-xl bg-white/[0.06] px-3 py-2 text-sm text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60 ${errorMsg ? 'border border-red-500/70' : ''}`}
-      placeholder={label.replace("*", "")}
-      aria-invalid={!!errorMsg}
-        />
+        {errorMsg ? (
+          <input
+            type={type}
+            name={name}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            ref={inputRef}
+            className={`mt-2 w-full rounded-xl bg-white/[0.06] px-3 py-2 text-sm text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60 ${'border border-red-500/70'}`}
+            placeholder={label.replace("*", "")}
+            aria-invalid="true"
+          />
+        ) : (
+          <input
+            type={type}
+            name={name}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            ref={inputRef}
+            className={`mt-2 w-full rounded-xl bg-white/[0.06] px-3 py-2 text-sm text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60`}
+            placeholder={label.replace("*", "")}
+            aria-invalid="false"
+          />
+        )}
         {errorMsg && <div className="text-xs text-red-400 mt-1">{errorMsg}</div>}
       </div>
     );
@@ -380,7 +412,7 @@ export default function ContactUs() {
   function Bullet({ children }: { children: React.ReactNode }) {
     return (
       <li className="flex items-start gap-2">
-        <span className="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-orange-500/15 text-orange-300 ring-1 ring-white/10">✓</span>
+        <span className="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-orange-500/15 text-orange-300 ring-1 ring-white/10" aria-hidden="true">✓</span>
         <span>{children}</span>
       </li>
     );

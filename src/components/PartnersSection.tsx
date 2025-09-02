@@ -38,47 +38,11 @@ const partnerLogos = [
 ];
 
 const PartnersSection = () => {
-  const partners = partnerLogos;
+  const partners = React.useMemo(() => partnerLogos, []);
   const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set());
   const [isHovered, setIsHovered] = useState(false);
   
-  // Debug: Log when component mounts
-  useEffect(() => {
-    console.log('PartnersSection mounted, stats:', partnershipStats.length);
-    
-    // Fallback: Ensure stats are visible after 2 seconds if viewport detection fails
-    const fallbackTimer = setTimeout(() => {
-      console.log('Fallback: Ensuring stats visibility');
-    }, 2000);
-    
-    return () => clearTimeout(fallbackTimer);
-  }, []);
-
-  // Check for reduced motion preference
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  
-  // Preload critical partner images
-  useEffect(() => {
-    const preloadImages = async () => {
-      const criticalPartners = partners.slice(0, 8); // Preload first 8 images
-      const promises = criticalPartners.map((partner) => {
-        return new Promise<void>((resolve) => {
-          const img = new Image();
-          img.src = partner.logo;
-          img.onload = () => {
-            setImagesLoaded(prev => new Set([...prev, partner.id]));
-            resolve();
-          };
-          img.onerror = () => resolve(); // Continue even if image fails
-        });
-      });
-      await Promise.all(promises);
-    };
-    
-    preloadImages();
-  }, []);
-
-  const partnershipStats = [
+  const partnershipStats = React.useMemo(() => [
     { 
       number: "20+", 
       label: "Partners", 
@@ -107,7 +71,45 @@ const PartnersSection = () => {
       ariaLabel: "10+ years of excellence in partnerships",
       description: "Proven track record of success"
     }
-  ];
+  ], []);
+  
+  // Debug: Log when component mounts
+  useEffect(() => {
+    console.log('PartnersSection mounted, stats:', partnershipStats.length);
+
+    // Fallback: Ensure stats are visible after 2 seconds if viewport detection fails
+    const fallbackTimer = setTimeout(() => {
+      console.log('Fallback: Ensuring stats visibility');
+    }, 2000);
+
+    return () => clearTimeout(fallbackTimer);
+  }, [partnershipStats.length]);
+
+  // Check for reduced motion preference
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  // Preload critical partner images
+  useEffect(() => {
+    const preloadImages = async () => {
+      const criticalPartners = partners.slice(0, 8); // Preload first 8 images
+      const promises = criticalPartners.map((partner) => {
+        return new Promise<void>((resolve) => {
+          const img = new Image();
+          img.src = partner.logo;
+          img.onload = () => {
+            setImagesLoaded(prev => new Set([...prev, partner.id]));
+            resolve();
+          };
+          img.onerror = () => resolve(); // Continue even if image fails
+        });
+      });
+      await Promise.all(promises);
+    };
+    
+    preloadImages();
+  }, [partners]);
+
+  
 
   return (
     <section 

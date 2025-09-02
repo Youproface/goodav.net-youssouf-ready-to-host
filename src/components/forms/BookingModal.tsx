@@ -333,7 +333,7 @@ export default function BookingModal({
       month: 'long',
       day: 'numeric'
     });
-    const message = (
+  const message: React.ReactNode = (
       <div className="space-y-1 text-center">
         <div className="flex items-center justify-center gap-2">
           <FaCheckCircle className="text-green-400 text-xl" />
@@ -353,7 +353,7 @@ export default function BookingModal({
         )}
       </div>
     );
-    setConfirmationMessage(message as any);
+  setConfirmationMessage(message);
     setTimeSlotConfirmed(true);
     
     // Auto-hide the message after 5 seconds
@@ -430,7 +430,7 @@ export default function BookingModal({
 
       if (response.ok && result.success) {
         // Build a user-facing success message (may include warnings)
-  let userMessage = 'Your booking was submitted successfully! We will contact you soon.';
+  const userMessage = 'Your booking was submitted successfully! We will contact you soon.';
         if (result.warning) {
           setSubmitStatus(`Booking saved but with warnings: ${result.warning}`);
         } else {

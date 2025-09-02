@@ -92,36 +92,37 @@ const SEO: React.FC<SEOProps> = ({
   const [seoData, setSeoData] = useState<SEOData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Real production site configuration
-  const siteConfig = {
-    url: "https://goodav.net",
-    name: "GoodAV",
-    locale: "en_US",
-    twitter: "@goodav_official",
-    facebook: "goodaudiovisuals",
-    instagram: "goodaudiovisual",
-    linkedin: "company/goodav",
-    youtube: "@goodaudiovisuals",
-    gaId: "G-Y5G4TT0ZHW", // Real Google Analytics ID
-    gtmId: "G-J5MG2TV0P3", // Real GTM ID
-    clarityId: "ph88826n5d", // Real Microsoft Clarity ID
-    adSenseId: "ca-pub-3053738298648945", // Real AdSense ID
-    logo: "/images/all_site_images/Assets/logo-full-color.svg"
-  };
 
-  // Default SEO configuration using real production data
-  const defaultSEO: SEOPageData = {
-    title: "GoodAV: Event and Documentary Video Production, Photography Services in Rwanda and Africa",
-    description: "GoodAV: Professional audiovisual services in Rwanda and Africa. Video production, live streaming, photography, and more.",
-    keywords: "GoodAV, video production Rwanda, Africa live streaming, professional photography Rwanda, documentary production Africa",
-    ogImage: "/images/all_site_images/Assets/logo-full-color.svg",
-    canonicalUrl: "/",
-    type: "website",
-    priority: "1.0",
-    changefreq: "weekly"
-  };
+// Module-level real production site configuration (stable reference)
+const SITE_CONFIG = {
+  url: "https://goodav.net",
+  name: "GoodAV",
+  locale: "en_US",
+  twitter: "@goodav_official",
+  facebook: "goodaudiovisuals",
+  instagram: "goodaudiovisual",
+  linkedin: "company/goodav",
+  youtube: "@goodaudiovisuals",
+  gaId: "G-Y5G4TT0ZHW",
+  gtmId: "G-J5MG2TV0P3",
+  clarityId: "ph88826n5d",
+  adSenseId: "ca-pub-3053738298648945",
+  logo: "/images/all_site_images/Assets/logo-full-color.svg",
+}
 
-  const [pageSEO, setPageSEO] = useState<SEOPageData>(defaultSEO);
+// Module-level default SEO configuration (stable reference)
+const DEFAULT_SEO: SEOPageData = {
+  title: "GoodAV: Event and Documentary Video Production, Photography Services in Rwanda and Africa",
+  description: "GoodAV: Professional audiovisual services in Rwanda and Africa. Video production, live streaming, photography, and more.",
+  keywords: "GoodAV, video production Rwanda, Africa live streaming, professional photography Rwanda, documentary production Africa",
+  ogImage: "/images/all_site_images/Assets/logo-full-color.svg",
+  canonicalUrl: "/",
+  type: "website",
+  priority: "1.0",
+  changefreq: "weekly",
+}
+
+  const [pageSEO, setPageSEO] = useState<SEOPageData>(DEFAULT_SEO);
 
   // Advanced page detection with slug and category support
   const getPageKey = useMemo(() => {
@@ -150,7 +151,7 @@ const SEO: React.FC<SEOProps> = ({
 
   // Generate intelligent SEO defaults based on pathname
   const generateIntelligentDefaults = useMemo(() => (path: string): SEOPageData => {
-    const base = { ...defaultSEO };
+  const base = { ...DEFAULT_SEO };
 
     if (path.startsWith('/about')) {
       return {
@@ -203,7 +204,7 @@ const SEO: React.FC<SEOProps> = ({
     }
 
     return base;
-  }, [defaultSEO]);
+  }, [DEFAULT_SEO]);
 
   // Fetch SEO data from JSON file (optional - falls back to intelligent defaults)
   useEffect(() => {
@@ -218,7 +219,7 @@ const SEO: React.FC<SEOProps> = ({
         const data: SEOData = await response.json();
         setSeoData(data);
 
-        const pageData = data[getPageKey] || data['default'] || defaultSEO;
+  const pageData = data[getPageKey] || data['default'] || DEFAULT_SEO;
         setPageSEO(pageData);
 
       } catch (error) {
@@ -232,7 +233,7 @@ const SEO: React.FC<SEOProps> = ({
     };
 
     fetchSEOData();
-  }, [pathname, getPageKey, defaultSEO, generateIntelligentDefaults]);
+  }, [pathname, getPageKey, generateIntelligentDefaults, DEFAULT_SEO]);
 
   // Merge props with page-specific data
   const finalData = useMemo(() => {
@@ -241,15 +242,15 @@ const SEO: React.FC<SEOProps> = ({
       description: description || pageSEO.description,
       keywords: keywords || pageSEO.keywords,
       image: image || pageSEO.ogImage,
-      canonical: canonical || `${siteConfig.url}${pageSEO.canonicalUrl === '/' ? '' : pageSEO.canonicalUrl || pathname}`,
+  canonical: canonical || `${SITE_CONFIG.url}${pageSEO.canonicalUrl === '/' ? '' : pageSEO.canonicalUrl || pathname}`,
       schema: schema || pageSEO.schema,
       type: type || pageSEO.type || 'website'
     };
-  }, [title, description, keywords, image, canonical, schema, type, pageSEO, pathname, siteConfig.url]);
+  }, [title, description, keywords, image, canonical, schema, type, pageSEO, pathname, SITE_CONFIG]);
 
   // Robots meta content
   const robotsContent = useMemo(() => {
-    let robots = [];
+    const robots = [];
 
     if (noindex) robots.push('noindex');
     else robots.push('index');
@@ -351,7 +352,7 @@ const SEO: React.FC<SEOProps> = ({
           },
           "headline": finalData.title,
           "description": finalData.description,
-          "image": `${siteConfig.url}${finalData.image}`,
+          "image": `${SITE_CONFIG.url}${finalData.image}`,
           "author": {
             "@type": "Organization",
             "name": "GoodAV"
@@ -361,7 +362,7 @@ const SEO: React.FC<SEOProps> = ({
             "name": "GoodAV",
             "logo": {
               "@type": "ImageObject",
-              "url": `${siteConfig.url}${siteConfig.logo}`
+              "url": `${SITE_CONFIG.url}${SITE_CONFIG.logo}`
             }
           },
           "datePublished": article.publishedTime || "2024-03-15",
@@ -409,7 +410,7 @@ const SEO: React.FC<SEOProps> = ({
           },
           "dateCreated": "2025-01-01",
           "url": finalData.canonical,
-          "image": `${siteConfig.url}${finalData.image}`
+          "image": `${SITE_CONFIG.url}${finalData.image}`
         };
         baseSchemas.push(creativeWorkSchema);
       }
@@ -421,7 +422,7 @@ const SEO: React.FC<SEOProps> = ({
           "@type": "VideoObject",
           "name": finalData.title,
           "description": finalData.description,
-          "thumbnailUrl": video.thumbnailUrl || `${siteConfig.url}${finalData.image}`,
+          "thumbnailUrl": video.thumbnailUrl || `${SITE_CONFIG.url}${finalData.image}`,
           "uploadDate": "2025-01-01T00:00:00Z",
           "duration": `PT${Math.floor((video.duration || 0) / 60)}M${(video.duration || 0) % 60}S`,
           "contentUrl": video.url,
@@ -436,7 +437,7 @@ const SEO: React.FC<SEOProps> = ({
             "name": "GoodAV",
             "logo": {
               "@type": "ImageObject",
-              "url": `${siteConfig.url}${siteConfig.logo}`
+              "url": `${SITE_CONFIG.url}${SITE_CONFIG.logo}`
             }
           },
           "author": {
@@ -463,18 +464,18 @@ const SEO: React.FC<SEOProps> = ({
       console.warn('Error generating structured data:', error);
       return {};
     }
-  }, [type, article, pathname, video, schema, finalData, siteConfig]);
+  }, [type, article, pathname, video, schema, finalData, SITE_CONFIG]);
 
   // Generate rich Open Graph tags using real data
   const generateOpenGraphTags = useMemo(() => (
     <>
       <meta property="og:title" content={finalData.title} />
       <meta property="og:description" content={finalData.description} />
-      <meta property="og:image" content={finalData.image ? `${siteConfig.url}${finalData.image}` : `${siteConfig.url}${siteConfig.logo}`} />
+  <meta property="og:image" content={finalData.image ? `${SITE_CONFIG.url}${finalData.image}` : `${SITE_CONFIG.url}${SITE_CONFIG.logo}`} />
       <meta property="og:url" content={finalData.canonical} />
       <meta property="og:type" content={finalData.type} />
-      <meta property="og:site_name" content={siteConfig.name} />
-      <meta property="og:locale" content={siteConfig.locale} />
+  <meta property="og:site_name" content={SITE_CONFIG.name} />
+  <meta property="og:locale" content={SITE_CONFIG.locale} />
 
       {/* Additional Open Graph tags for articles */}
       {type === 'article' && article && (
@@ -499,7 +500,7 @@ const SEO: React.FC<SEOProps> = ({
         </>
       )}
     </>
-  ), [finalData, siteConfig, type, article, video]);
+  ), [finalData, type, article, video, SITE_CONFIG]);
 
   // Generate Twitter Card tags using real data
   const generateTwitterTags = useMemo(() => (
@@ -508,60 +509,60 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="twitter:url" content={finalData.canonical} />
       <meta property="twitter:title" content={finalData.title} />
       <meta property="twitter:description" content={finalData.description} />
-      {finalData.image && <meta property="twitter:image" content={`${siteConfig.url}${finalData.image}`} />}
+  {finalData.image && <meta property="twitter:image" content={`${SITE_CONFIG.url}${finalData.image}`} />}
     </>
-  ), [finalData, siteConfig]);
+  ), [finalData, SITE_CONFIG]);
 
   // Generate Analytics scripts using real production IDs
   const generateAnalyticsScripts = useMemo(() => (
     <>
       {/* Google Analytics 4 - Real Production ID */}
-      {siteConfig.gaId && (
+  {SITE_CONFIG.gaId && (
         <>
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.gaId}`}></script>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${SITE_CONFIG.gaId}`}></script>
           <script>
             {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-              gtag('config', '${siteConfig.gaId}');
+              gtag('config', '${SITE_CONFIG.gaId}');
             `}
           </script>
         </>
       )}
 
       {/* Google Tag Manager - Real Production ID */}
-      {siteConfig.gtmId && (
+  {SITE_CONFIG.gtmId && (
         <script>
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=1;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${siteConfig.gtmId}');
+            })(window,document,'script','dataLayer','${SITE_CONFIG.gtmId}');
           `}
         </script>
       )}
 
       {/* Microsoft Clarity - Real Production ID */}
-      {siteConfig.clarityId && (
+  {SITE_CONFIG.clarityId && (
         <script>
           {`
             (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "${siteConfig.clarityId}");
+            })(window, document, "clarity", "script", "${SITE_CONFIG.clarityId}");
           `}
         </script>
       )}
 
       {/* Google AdSense - Real Production ID */}
-      {siteConfig.adSenseId && (
-        <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adSenseId}`} crossOrigin="anonymous"></script>
+  {SITE_CONFIG.adSenseId && (
+  <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE_CONFIG.adSenseId}`} crossOrigin="anonymous"></script>
       )}
     </>
-  ), [siteConfig]);
+  ), [SITE_CONFIG]);
 
   if (loading) {
     return null; // Don't render anything while loading
@@ -631,7 +632,7 @@ const SEO: React.FC<SEOProps> = ({
       {alternateLanguages?.map((lang, index) => (
         <link key={index} rel="alternate" hrefLang={lang.hreflang} href={lang.href} />
       ))}
-      <link rel="alternate" hrefLang="x-default" href={siteConfig.url} />
+  <link rel="alternate" hrefLang="x-default" href={SITE_CONFIG.url} />
 
       {/* Breadcrumb Navigation for SEO */}
       {breadcrumbs && breadcrumbs.length > 0 && (
@@ -643,7 +644,7 @@ const SEO: React.FC<SEOProps> = ({
               "@type": "ListItem",
               "position": index + 1,
               "name": crumb.name,
-              "item": `${siteConfig.url}${crumb.url}`
+              "item": `${SITE_CONFIG.url}${crumb.url}`
             }))
           }, null, 2)}
         </script>

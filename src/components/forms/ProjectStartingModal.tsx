@@ -124,7 +124,7 @@ export default function ProjectStartingModal({ open, onClose }) {
       });
       const result = await response.json();
       if (response.ok && result.success) {
-        let userMessage = 'Your project request was sent successfully! We will contact you soon.';
+        const userMessage = 'Your project request was sent successfully! We will contact you soon.';
         setSubmitStatus(userMessage);
         setTimeout(() => setSubmitStatus(''), 6000);
         setName('');
@@ -639,13 +639,19 @@ export default function ProjectStartingModal({ open, onClose }) {
   );
 }
 
-function Popup({ show, type, message, details, onClose }) {
-  if (!show || !type) return null;
+type PopupProps = {
+  show: boolean;
+  type: string | null;
+  message: string;
+  details?: string;
+  onClose: () => void;
+}
 
+function Popup({ show, type, message, details, onClose }: PopupProps) {
   // Trap focus and prevent background interaction
   useEffect(() => {
     if (!show) return;
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Tab') {
         e.preventDefault();
       }
@@ -660,6 +666,8 @@ function Popup({ show, type, message, details, onClose }) {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [show, onClose]);
+
+  if (!show || !type) return null;
 
   return createPortal(
     <AnimatePresence>

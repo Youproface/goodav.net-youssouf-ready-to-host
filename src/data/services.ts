@@ -1,10 +1,11 @@
 import { Video, Camera, Radio, Mic, Speaker, Lightbulb } from 'lucide-react';
+import React from 'react';
 
 export interface ServiceType {
   id: string;
   title: string;
   description: string;
-  icon: any;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   features: string[];
   details: {
     heroTitle: string;
