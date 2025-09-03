@@ -302,7 +302,7 @@ export default function ContactUs() {
                       className="mt-2 w-full rounded-xl bg-white/[0.06] px-4 py-3 text-sm sm:text-base text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60"
                       placeholder="Describe the goals, audience, deliverables, and any references"
                       aria-required="true"
-                      aria-invalid={!!fieldErrors.message}
+                      aria-invalid={fieldErrors.message ? "true" : "false"}
                     />
                   </div>
 
