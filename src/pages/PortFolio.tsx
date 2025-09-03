@@ -493,6 +493,14 @@ export default function PortFolio() {
         {/* Main video player only shown when a video is selected */}
         {selectedVideo && (
           <article className="sticky top-16 z-40 bg-[#0f1012] pb-8" ref={playerRef} aria-label="Selected video preview" role="region">
+            {/* Close button for video preview */}
+            <button
+              className="absolute top-4 right-4 z-50 w-10 h-10 flex items-center justify-center rounded-full bg-black/70 hover:bg-primary text-white text-2xl font-bold shadow-lg focus:outline-none"
+              onClick={() => { setSelectedVideo(null); setIsPlaying(false); }}
+              aria-label="Close video preview"
+            >
+              &times;
+            </button>
             <div className="relative w-full max-w-3xl mx-auto aspect-video mb-4 rounded-lg overflow-hidden glass-card shadow-glow border-2 border-primary/30">
               {!isPlaying ? (
                 <>
