@@ -223,7 +223,6 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelect
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 will-change-transform"
           loading="lazy"
           decoding="async"
-          fetchPriority="low"
         />
       </picture>
 
@@ -894,11 +893,11 @@ const FeaturedProjects: React.FC = () => {
                   "genre": project.category,
                   "inLanguage": "en",
                   "keywords": [
-                    project.category.toLowerCase(),
+                    String(project.category).toLowerCase(),
                     "audiovisual production",
                     "video production Rwanda",
                     "African storytelling",
-                    project.client?.toLowerCase()
+                    project.client ? String(project.client).toLowerCase() : ""
                   ].filter(Boolean).join(", "),
                   "producer": {
                     "@type": "Organization",

@@ -355,29 +355,6 @@ const Hero = () => {
           </div>
         </motion.div>
       </div>
-
-      {/* Stats Section */}
-      <section id="main-content" className="relative py-16 bg-gradient-to-b from-black/80 to-black/90" aria-labelledby="stats-heading">
-        <div className="container mx-auto px-4">
-          {/* Stats Tagline */}
-          <motion.div 
-            className="text-center mb-10"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6 }}
-          >
-            <h2 id="stats-heading" className="text-2xl md:text-3xl font-bold text-white mb-4">
-              Our Impact Speaks Volumes
-            </h2>
-            <p className="text-orange-300 max-w-2xl mx-auto">
-              Numbers that tell our story of excellence
-            </p>
-          </motion.div>
-          
-          {/* Removed home service stats section (6 Core Services, 15+ Countries, 200+ Projects) as requested */}
-        </div>
-      </section>
     </section>
     </>
   );

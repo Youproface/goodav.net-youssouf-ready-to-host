@@ -125,29 +125,7 @@ const ServicesSection = () => {
             that bring your vision to life with African authenticity and global standards.
           </motion.p>
 
-          {/* Service Stats */}
-          <motion.div 
-            className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mb-16"
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-          >
-            {serviceStats.map((stat, index) => (
-              <motion.div 
-                key={index} 
-                className="text-center"
-                variants={statItem(index)}
-              >
-                <div className="text-3xl md:text-4xl lg:text-5xl font-black gradient-text mb-1">
-                  {stat.number}
-                </div>
-                <div className="text-base lg:text-lg text-muted-foreground font-medium">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+          {/* Service Stats Removed as requested */}
         </motion.div>
 
         {/* Services Grid */}

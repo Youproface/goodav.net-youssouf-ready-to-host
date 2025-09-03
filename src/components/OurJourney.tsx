@@ -30,10 +30,6 @@ interface HighlightItem {
 }
 
 const OurJourney: React.FC = () => {
-  const [play, setPlay] = useState(false);
-  const videoId = "e8DZQifSpcY";
-
-  // Memoize data for performance
   const timelineItems: TimelineItem[] = useMemo(() => [
     {
       year: "2019",
@@ -89,7 +85,7 @@ const OurJourney: React.FC = () => {
     },
     {
       icon: Users,
-  value: "50+",
+      value: "50+",
       title: "Partners",
       desc: "Long-term partnerships",
       ariaLabel: "Over 20 long-term strategic partners"
@@ -109,6 +105,11 @@ const OurJourney: React.FC = () => {
       ariaLabel: "Over 10 years of industry experience"
     }
   ], []);
+  const [play, setPlay] = useState(false);
+  const videoId = "e8DZQifSpcY";
+
+  // Memoize data for performance
+  // ...existing code...
 
   const highlights: HighlightItem[] = useMemo(() => [
     {
@@ -165,138 +166,141 @@ const OurJourney: React.FC = () => {
   };
 
   return (
-    <motion.section
-      className="relative bg-gradient-to-b from-background via-muted/30 to-background text-foreground py-16 px-6 md:px-12 lg:px-20"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={containerVariants}
-      aria-labelledby="journey-heading"
-      role="region"
-    >
-      {/* Skip Link for Accessibility */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50 focus:outline-none focus:ring-2 focus:ring-primary/50"
+    <>
+      {/* Our Journey Section */}
+      <motion.section
+        className="relative bg-gradient-to-b from-background via-muted/30 to-background text-foreground py-16 px-6 md:px-12 lg:px-20"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={containerVariants}
+        aria-labelledby="journey-heading"
+        role="region"
       >
-        Skip to main content
-      </a>
+        {/* Skip Link for Accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50 focus:outline-none focus:ring-2 focus:ring-primary/50"
+        >
+          Skip to main content
+        </a>
 
-      <motion.div
-        className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12"
-        variants={itemVariants}
-      >
-        {/* Left Content */}
-        <motion.div variants={itemVariants}>
-          {/* Section Tag */}
-          <motion.div
-            className="flex items-center gap-2 mb-4"
-            variants={itemVariants}
-          >
-            <span
-              className="flex items-center gap-2 bg-gradient-primary text-primary-foreground px-5 py-2 rounded-full text-sm font-medium shadow-glow"
-              role="banner"
-              aria-label="Our Journey section badge"
+        <motion.div
+          className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12"
+          variants={itemVariants}
+        >
+          {/* Left Content */}
+          <motion.div variants={itemVariants}>
+            {/* Section Tag */}
+            <motion.div
+              className="flex items-center gap-2 mb-4"
+              variants={itemVariants}
             >
-              <BookOpen className="w-4 h-4" aria-hidden="true" /> OUR JOURNEY
-            </span>
+              <span
+                className="flex items-center gap-2 bg-gradient-primary text-primary-foreground px-5 py-2 rounded-full text-sm font-medium shadow-glow"
+                role="banner"
+                aria-label="Our Journey section badge"
+              >
+                <BookOpen className="w-4 h-4" aria-hidden="true" /> OUR JOURNEY
+              </span>
+            </motion.div>
+
+            {/* Heading */}
+            <motion.h2
+              id="journey-heading"
+              className="text-3xl md:text-4xl font-bold mb-4 gradient-text"
+              variants={itemVariants}
+            >
+              From Vision to Continental Impact
+            </motion.h2>
+
+            {/* Paragraph */}
+            <motion.p
+              className="text-muted-foreground mb-4"
+              variants={itemVariants}
+            >
+              <span className="text-primary font-semibold">GOODAV</span> emerged
+              from a revolutionary vision: to elevate African storytelling to global
+              standards while preserving cultural authenticity. Founded by passionate
+              creators who understood the power of visual narrative, we've transformed
+              from a local production house into Africa's most trusted audiovisual
+              partner.
+            </motion.p>
+
+            <motion.p
+              className="text-muted-foreground"
+              variants={itemVariants}
+            >
+              Our evolution spans documenting grassroots communities to capturing
+              international conferences, producing award-winning documentaries, and
+              pioneering live streaming technologies across the continent—always with
+              African authenticity at our core.
+            </motion.p>
+
+            {/* Timeline */}
+            <motion.div
+              className="flex flex-wrap gap-4 mt-8"
+              variants={containerVariants}
+              role="region"
+              aria-label="Company timeline milestones"
+            >
+              {timelineItems.map(({ year, title, description }, idx) => (
+                <motion.div
+                  key={idx}
+                  className="glass-card rounded-lg px-5 py-4 text-center hover-lift group transition-all duration-300"
+                  variants={cardVariants}
+                  whileHover={{
+                    scale: 1.02,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  role="article"
+                  aria-label={`Milestone ${year}: ${title}`}
+                  tabIndex={0}
+                >
+                  <h3 className="text-primary text-xl font-bold group-hover:scale-110 transition-transform duration-300">
+                    {year}
+                  </h3>
+                  <p className="text-foreground font-semibold text-sm mb-1">{title}</p>
+                  <p className="text-muted-foreground text-xs">{description}</p>
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
 
-          {/* Heading */}
-          <motion.h2
-            id="journey-heading"
-            className="text-3xl md:text-4xl font-bold mb-4 gradient-text"
-            variants={itemVariants}
-          >
-            From Vision to Continental Impact
-          </motion.h2>
-
-          {/* Paragraph */}
-          <motion.p
-            className="text-muted-foreground mb-4"
-            variants={itemVariants}
-          >
-            <span className="text-primary font-semibold">GOODAV</span> emerged
-            from a revolutionary vision: to elevate African storytelling to global
-            standards while preserving cultural authenticity. Founded by passionate
-            creators who understood the power of visual narrative, we've transformed
-            from a local production house into Africa's most trusted audiovisual
-            partner.
-          </motion.p>
-
-          <motion.p
-            className="text-muted-foreground"
-            variants={itemVariants}
-          >
-            Our evolution spans documenting grassroots communities to capturing
-            international conferences, producing award-winning documentaries, and
-            pioneering live streaming technologies across the continent—always with
-            African authenticity at our core.
-          </motion.p>
-
-          {/* Timeline */}
+          {/* Right Feature Cards */}
           <motion.div
-            className="flex flex-wrap gap-4 mt-8"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-6"
             variants={containerVariants}
             role="region"
-            aria-label="Company timeline milestones"
+            aria-label="Company achievements and capabilities"
           >
-            {timelineItems.map(({ year, title, description }, idx) => (
+            {featureCards.map(({ icon: Icon, title, description, ariaLabel }, idx) => (
               <motion.div
                 key={idx}
-                className="glass-card rounded-lg px-5 py-4 text-center hover-lift group transition-all duration-300"
-                variants={cardVariants}
+                className="glass-card p-6 hover-lift group transition-all duration-300"
+                variants={itemVariants}
                 whileHover={{
                   scale: 1.02,
+                  y: -5,
                   transition: { duration: 0.2 }
                 }}
-                whileTap={{ scale: 0.98 }}
                 role="article"
-                aria-label={`Milestone ${year}: ${title}`}
+                aria-label={ariaLabel}
                 tabIndex={0}
               >
-                <h3 className="text-primary text-xl font-bold group-hover:scale-110 transition-transform duration-300">
-                  {year}
-                </h3>
-                <p className="text-foreground font-semibold text-sm mb-1">{title}</p>
-                <p className="text-muted-foreground text-xs">{description}</p>
+                <Icon className="text-primary w-6 h-6 mb-3 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
+                <h4 className="font-semibold mb-1 text-foreground group-hover:text-primary transition-colors">
+                  {title}
+                </h4>
+                <p className="text-muted-foreground text-sm">
+                  {description}
+                </p>
               </motion.div>
             ))}
           </motion.div>
         </motion.div>
-
-        {/* Right Feature Cards */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 gap-6"
-          variants={containerVariants}
-          role="region"
-          aria-label="Company achievements and capabilities"
-        >
-          {featureCards.map(({ icon: Icon, title, description, ariaLabel }, idx) => (
-            <motion.div
-              key={idx}
-              className="glass-card p-6 hover-lift group transition-all duration-300"
-              variants={itemVariants}
-              whileHover={{
-                scale: 1.02,
-                y: -5,
-                transition: { duration: 0.2 }
-              }}
-              role="article"
-              aria-label={ariaLabel}
-              tabIndex={0}
-            >
-              <Icon className="text-primary w-6 h-6 mb-3 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
-              <h4 className="font-semibold mb-1 text-foreground group-hover:text-primary transition-colors">
-                {title}
-              </h4>
-              <p className="text-muted-foreground text-sm">
-                {description}
-              </p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </motion.div>
+      </motion.section>
 
       {/* Measurable Impact Section */}
       <motion.section
@@ -518,8 +522,8 @@ const OurJourney: React.FC = () => {
           })
         }}
       />
-    </motion.section>
+    </>
   );
-};
+}
 
 export default OurJourney;
