@@ -64,7 +64,7 @@ const ServicesSection = () => {
           transition: { duration: 0.6 }
         }
       }}
-      id="services"
+      id="services-section"
       aria-labelledby="services-heading"
       role="region"
     >
@@ -263,7 +263,7 @@ const ServicesSection = () => {
             "@type": "WebPage",
             "name": "Our Services - Professional Audiovisual Production",
             "description": "Comprehensive audiovisual services including video production, photography, live streaming, audio production, sound systems, and lighting services",
-            "url": "https://goodav.net#services",
+            "url": "https://goodav.net#services-section",
             "mainEntity": {
               "@type": "OfferCatalog",
               "name": "Audiovisual Services",

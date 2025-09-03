@@ -14,7 +14,7 @@ export default function BlogsSection() {
     };
     
     return (
-      <motion.section className="relative bg-[#0e0f10] text-zinc-100" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} aria-labelledby="our-stories-heading">
+      <motion.section id="blogs-section" className="relative bg-[#0e0f10] text-zinc-100" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} aria-labelledby="our-stories-heading">
         {/* soft background glows */}
         <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute left-10 top-0 h-80 w-80 rounded-full bg-orange-500/10 blur-3xl" />

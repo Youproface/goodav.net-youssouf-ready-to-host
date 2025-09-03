@@ -22,7 +22,7 @@ const StatsSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-section">
+    <section id="stats-section" className="py-20 bg-gradient-section">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">

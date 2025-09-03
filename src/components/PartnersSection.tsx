@@ -113,7 +113,7 @@ const PartnersSection = () => {
 
   return (
     <section 
-      id="partners" 
+      id="partners-section" 
       className="py-20 bg-gradient-hero"
       aria-labelledby="partners-heading"
       role="region"
@@ -496,7 +496,7 @@ const PartnersSection = () => {
             "@type": "WebPage",
             "name": "Our Partners - Strategic Partnerships & Collaborations",
             "description": "Discover GoodAV's strategic partnerships and long-term collaborations with global organizations and African enterprises",
-            "url": "https://goodav.net#partners",
+            "url": "https://goodav.net#partners-section",
             "mainEntity": {
               "@type": "ItemList",
               "name": "Strategic Partners",

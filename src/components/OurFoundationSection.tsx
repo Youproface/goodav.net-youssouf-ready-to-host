@@ -70,6 +70,7 @@ const OurFoundationSection: React.FC = () => {
 
   return (
     <motion.section
+      id="foundation-section"
       className="py-20 bg-gradient-to-b from-background via-muted/30 to-background"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -172,8 +173,8 @@ const OurFoundationSection: React.FC = () => {
               whileInView="show"
               viewport={{ once: true }}
             >
-              {missionItems.map((item, index) => {
-                const Icon = item.icon;
+              {missionItems.map((itemData, index) => {
+                const Icon = itemData.icon;
                 return (
                   <motion.div
                     key={index}
@@ -194,10 +195,10 @@ const OurFoundationSection: React.FC = () => {
                         id={`mission-item-${index}-title`}
                         className="text-foreground font-semibold text-base"
                       >
-                        {item.title}
+                        {itemData.title}
                       </h4>
                       <p className="text-muted-foreground text-sm">
-                        {item.description}
+                        {itemData.description}
                       </p>
                     </div>
                   </motion.div>
@@ -262,8 +263,8 @@ const OurFoundationSection: React.FC = () => {
               whileInView="show"
               viewport={{ once: true }}
             >
-              {visionItems.map((item, index) => {
-                const Icon = item.icon;
+              {visionItems.map((itemData, index) => {
+                const Icon = itemData.icon;
                 return (
                   <motion.div
                     key={index}
@@ -284,10 +285,10 @@ const OurFoundationSection: React.FC = () => {
                         id={`vision-item-${index}-title`}
                         className="text-foreground font-semibold text-base"
                       >
-                        {item.title}
+                        {itemData.title}
                       </h4>
                       <p className="text-muted-foreground text-sm">
-                        {item.description}
+                        {itemData.description}
                       </p>
                     </div>
                   </motion.div>

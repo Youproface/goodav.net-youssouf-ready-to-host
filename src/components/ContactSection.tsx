@@ -158,7 +158,7 @@ export default function ContactUs() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
-    <section id="contact" className="relative bg-[#0e0f10] text-zinc-100">
+    <section id="contact-section" className="relative bg-[#0e0f10] text-zinc-100">
       {/* Branded Loading Overlay for Contact Form Submission */}
       {submitting && typeof window !== 'undefined' && createPortal(
         <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-black/80 backdrop-blur-lg">
@@ -275,32 +275,19 @@ export default function ContactUs() {
                   </div>
 
                   <div>
-                    <Label>Tell us about your project, timeline, and creative vision…</Label>
-                    {fieldErrors.message ? (
-                      <textarea
-                        name="message"
-                        rows={5}
-                        value={message}
-                        onChange={(e) => updateFieldAndValidate('message', e.target.value, setMessage)}
-                        ref={messageRef}
-                        className="mt-2 w-full rounded-xl bg-white/[0.06] px-4 py-3 text-sm sm:text-base text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60"
-                        placeholder="Describe the goals, audience, deliverables, and any references"
-                        aria-required="true"
-                        aria-invalid="true"
-                      />
-                    ) : (
-                      <textarea
-                        name="message"
-                        rows={5}
-                        value={message}
-                        onChange={(e) => updateFieldAndValidate('message', e.target.value, setMessage)}
-                        ref={messageRef}
-                        className="mt-2 w-full rounded-xl bg-white/[0.06] px-4 py-3 text-sm sm:text-base text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60"
-                        placeholder="Describe the goals, audience, deliverables, and any references"
-                        aria-required="true"
-                        aria-invalid="false"
-                      />
-                    )}
+                    <Label htmlFor="contact-message">Tell us about your project, timeline, and creative vision…</Label>
+                    <textarea
+                      id="contact-message"
+                      name="message"
+                      rows={5}
+                      value={message}
+                      onChange={(e) => updateFieldAndValidate('message', e.target.value, setMessage)}
+                      ref={messageRef}
+                      className="mt-2 w-full rounded-xl bg-white/[0.06] px-4 py-3 text-sm sm:text-base text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60"
+                      placeholder="Describe the goals, audience, deliverables, and any references"
+                      aria-required="true"
+                      aria-invalid={!!fieldErrors.message}
+                    />
                   </div>
 
                   {errors.length > 0 && (
@@ -367,9 +354,14 @@ export default function ContactUs() {
   
   /* ——— Subcomponents ——— */
 
-  function Label({ children }: { children: React.ReactNode }) {
+  interface LabelProps {
+    children: React.ReactNode;
+    htmlFor?: string;
+  }
+
+  function Label({ children, htmlFor }: LabelProps) {
     return (
-      <label className="block text-[12px] font-medium text-zinc-300">
+      <label className="block text-[12px] font-medium text-zinc-300" htmlFor={htmlFor}>
         {children}
       </label>
     );

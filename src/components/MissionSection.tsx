@@ -88,7 +88,7 @@ const MissionSection: React.FC = () => {
 
   return (
     <motion.section
-      id="about"
+      id="mission-section"
       className="py-20 bg-background"
       initial="hidden"
       whileInView="show"
@@ -379,7 +379,7 @@ const MissionSection: React.FC = () => {
             "@type": "WebPage",
             "name": "Our Mission - Transforming Africa's Narrative Globally",
             "description": "Learn about GoodAV's mission to transform Africa's narrative through authentic storytelling and cultural excellence",
-            "url": "https://goodav.net#mission",
+            "url": "https://goodav.net#mission-section",
             "mainEntity": {
               "@type": "Organization",
               "name": "GoodAV",

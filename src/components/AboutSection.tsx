@@ -67,23 +67,23 @@ const AboutSection: React.FC = () => {
   };
 
   return (
-    <motion.section
-      className="relative bg-gradient-to-b from-background via-muted/30 to-background text-foreground py-16 px-6 md:px-12 lg:px-20"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={containerVariants}
-      aria-labelledby="about-heading"
-      id="main-content"
-      role="region"
-    >
-      {/* Skip Link for Accessibility */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50 focus:outline-none focus:ring-2 focus:ring-primary/50"
+      <motion.section
+        className="relative bg-gradient-to-b from-background via-muted/30 to-background text-foreground py-16 px-6 md:px-12 lg:px-20"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={containerVariants}
+        aria-labelledby="about-heading"
+        id="about-section"
+        role="region"
       >
-        Skip to main content
-      </a>
+      {/* Skip Link for Accessibility */}
+        <a
+          href="#about-section"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50 focus:outline-none focus:ring-2 focus:ring-primary/50"
+        >
+          Skip to About section
+        </a>
 
       {/* Section Tag */}
       <motion.div
@@ -226,7 +226,7 @@ const AboutSection: React.FC = () => {
             "@type": "AboutPage",
             "name": "About GoodAV - Crafting Authentic Stories",
             "description": "Learn about GoodAV, Africa's premier audiovisual storytelling company since 2019, crafting authentic narratives that resonate globally",
-            "url": "https://goodav.net/about",
+            "url": "https://goodav.net#about-section",
             "mainEntity": {
               "@type": "Organization",
               "name": "GoodAV",
