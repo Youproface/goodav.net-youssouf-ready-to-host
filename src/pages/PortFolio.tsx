@@ -138,6 +138,9 @@ const ALL_VIDEOS = [
 ];
 
 export default function PortFolio() {
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [profileClient, setProfileClient] = useState<string | null>(null);
+  const [profileUrl, setProfileUrl] = useState<string | null>(null);
   // Set selectedVideo to null by default so preview is hidden until a video is clicked
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -411,6 +414,16 @@ export default function PortFolio() {
   <section className="sticky top-0 z-30 -mt-6 mb-6 backdrop-blur supports-[backdrop-filter]:bg-[#0f1012]/70 bg-[#0f1012]/95 border-b border-white/5" aria-label="Portfolio controls">
           <div className="max-w-7xl mx-auto px-1 sm:px-2 md:px-0 py-3 flex flex-col gap-3">
             <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-3 mb-2">
+                {/* Global View Company Profile Button */}
+                <button
+                  type="button"
+                  className="px-4 py-2 rounded-md bg-primary text-primary-foreground font-semibold shadow hover:bg-primary/90 transition-colors"
+                  onClick={() => setProfileModalOpen(true)}
+                >
+                  View Company Profile
+                </button>
+              </div>
               <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter portfolio by category">
                 {(['All','Featured','Event','Documentary','Shorts'] as const).map(tab => {
                   const isSelected = category === tab;
@@ -592,7 +605,57 @@ export default function PortFolio() {
           })}
   </section>
 
-        {/* Pagination controls */}
+        {/* Company Profile Modal */}
+        {profileModalOpen && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+            aria-modal="true"
+            role="dialog"
+            tabIndex={-1}
+            onKeyDown={e => {
+              if (e.key === 'Escape') setProfileModalOpen(false);
+            }}
+          >
+            <div
+              className="bg-[#18181b] rounded-lg shadow-xl max-w-2xl w-full p-6 relative flex flex-col"
+              tabIndex={0}
+              autoFocus
+            >
+              <button
+                className="absolute top-3 right-3 text-white text-xl font-bold hover:text-primary"
+                onClick={() => setProfileModalOpen(false)}
+                aria-label="Close modal"
+              >
+                &times;
+              </button>
+              <h2 className="text-2xl font-bold mb-4 text-primary">Company Profile</h2>
+              <div className="flex flex-col items-center gap-4">
+                <iframe
+                  src={"/download/company-profile/company-profile.pdf"}
+                  title="Company Profile PDF"
+                  className="w-full h-96 border rounded"
+                />
+                <div className="flex gap-3 mt-2">
+                  <a
+                    href="/download/company-profile/company-profile.pdf"
+                    download
+                    className="px-4 py-2 rounded-md bg-primary text-primary-foreground font-semibold shadow hover:bg-primary/90 transition-colors"
+                  >
+                    Download
+                  </a>
+                  <button
+                    className="px-4 py-2 rounded-md bg-primary text-primary-foreground font-semibold shadow hover:bg-primary/90 transition-colors"
+                    onClick={() => {
+                      window.open("/download/company-profile/company-profile.pdf", '_blank');
+                    }}
+                  >
+                    Expand
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {totalPages > 1 && (
           <nav className="flex justify-center items-center gap-2 my-10" aria-label="Portfolio pagination">
             <button
