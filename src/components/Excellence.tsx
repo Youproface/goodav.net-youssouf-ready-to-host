@@ -1,6 +1,7 @@
 import { FaLightbulb, FaCalendarAlt, FaCamera, FaPen, FaImages, FaPlay } from 'react-icons/fa';
 import { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 
 export default function Excellence() {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,41 +40,41 @@ export default function Excellence() {
       itemScope
       itemType="https://schema.org/CreativeWork"
     >
-        {/* SEO Meta Tags & Structured Data for Excellence Section */}
-        <head>
-          <title>GoodAV Creative Excellence | Rwanda Africa Documentary Workflow</title>
-          <meta name="description" content="Explore GoodAV's creative excellence process: concept, pre-production, expert filming, and luxury post-production for Rwanda, Africa, and global documentary impact." />
-          <meta name="keywords" content="Rwanda, Africa, documentary, creative excellence, video production, workflow, concept, pre-production, filming, post-production, global impact, conversion" />
-          <meta name="author" content="GoodAV" />
-          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-          <link rel="canonical" href="https://goodav.net/#excellence-section" />
-          <meta name="geo.region" content="RW" />
-          <meta name="geo.placename" content="Kigali, Rwanda" />
-          <meta name="language" content="English" />
-          <meta name="industry" content="Media Production, Audiovisual Services" />
-          <meta name="category" content="Professional Services, Creative Agency" />
-          {/* Schema.org HowTo structured data for Excellence section */}
-          <script type="application/ld+json">
-            {JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "HowTo",
-              "name": "GoodAV Creative Excellence Process",
-              "description": "Explore GoodAV's creative excellence process: concept, pre-production, expert filming, and luxury post-production for Rwanda, Africa, and global documentary impact.",
-              "url": "https://goodav.net/#excellence-section",
-              "provider": {
-                "@type": "Organization",
-                "name": "GoodAV",
-                "url": "https://goodav.net"
-              },
-              "step": [
-                { "@type": "HowToStep", "name": "Concept Development", "text": "Innovative brainstorming and strategic planning of the creative vision with our clients" },
-                { "@type": "HowToStep", "name": "Premium Pre-Production", "text": "Meticulous scheduling, location scouting, and professional equipment preparation" },
-                { "@type": "HowToStep", "name": "Expert Production", "text": "Professional filming and photography with our world-class expert team" },
-                { "@type": "HowToStep", "name": "Luxury Post-Production", "text": "Master-level editing, color grading, and premium final delivery" }
-              ]
-            })}
-          </script>
-        </head>
+      <Helmet>
+        <title>GoodAV Creative Excellence | Rwanda Africa Documentary Workflow</title>
+        <meta name="description" content="Explore GoodAV's creative excellence process: concept, pre-production, expert filming, and luxury post-production for Rwanda, Africa, and global documentary impact." />
+        <meta name="keywords" content="Rwanda, Africa, documentary, creative excellence, video production, workflow, concept, pre-production, filming, post-production, global impact, conversion" />
+        <meta name="author" content="GoodAV" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <link rel="canonical" href="https://goodav.net/#excellence-section" />
+        <meta name="geo.region" content="RW" />
+        <meta name="geo.placename" content="Kigali, Rwanda" />
+        <meta name="language" content="English" />
+        <meta name="industry" content="Media Production, Audiovisual Services" />
+        <meta name="category" content="Professional Services, Creative Agency" />
+        {/* Schema.org HowTo structured data for Excellence section */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": "GoodAV Creative Excellence Process",
+            "description": "Explore GoodAV's creative excellence process: concept, pre-production, expert filming, and luxury post-production for Rwanda, Africa, and global documentary impact.",
+            "url": "https://goodav.net/#excellence-section",
+            "provider": {
+              "@type": "Organization",
+              "name": "GoodAV",
+              "url": "https://goodav.net"
+            },
+            "step": [
+              { "@type": "HowToStep", "name": "Concept Development", "text": "Innovative brainstorming and strategic planning of the creative vision with our clients" },
+              { "@type": "HowToStep", "name": "Premium Pre-Production", "text": "Meticulous scheduling, location scouting, and professional equipment preparation" },
+              { "@type": "HowToStep", "name": "Expert Production", "text": "Professional filming and photography with our world-class expert team" },
+              { "@type": "HowToStep", "name": "Luxury Post-Production", "text": "Master-level editing, color grading, and premium final delivery" }
+            ]
+          })}
+        </script>
+      </Helmet>
+
       {/* SEO Structured Data */}
       <script type="application/ld+json">
         {JSON.stringify({
@@ -369,4 +370,3 @@ function ProcessCard({ icon, title, body, step, variants, transition }) {
     </motion.div>
   );
 }
-  

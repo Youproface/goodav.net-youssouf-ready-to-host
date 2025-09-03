@@ -2,6 +2,7 @@ import { motion, useAnimation, useInView } from 'framer-motion';
 import { Play, Video, Camera, Mic, Users, Trophy, Eye, Handshake } from 'lucide-react';
 import React, { useRef, useState, useEffect } from 'react';
 import './Hero.css';
+import { Helmet } from 'react-helmet-async';
 
 // Animated counter component
 interface AnimatedCounterProps {
@@ -68,56 +69,54 @@ const Hero = () => {
   
   return (
     <>
-        {/* SEO Meta Tags & Structured Data for Hero Section */}
-        <head>
-          <title>GoodAV | Rwanda Africa Documentary Video Production Agency</title>
-          <meta name="description" content="Africa's premier audiovisual agency. Award-winning video production, documentary, live streaming, and creative services for Rwanda, Africa, and global impact." />
-          <meta name="keywords" content="Rwanda, Africa, documentary, video production, audiovisual, creative agency, global impact, live streaming, event media, Africa branding, Rwanda tourism, Africa storytelling, conversion, excellence" />
-          <meta name="author" content="GoodAV" />
-          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-          <link rel="canonical" href="https://goodav.net/" />
-          <meta name="geo.region" content="RW" />
-          <meta name="geo.placename" content="Kigali, Rwanda" />
-          <meta name="language" content="English" />
-          <meta name="industry" content="Media Production, Audiovisual Services" />
-          <meta name="category" content="Professional Services, Creative Agency" />
-          {/* Schema.org WebPage structured data for Hero section */}
-          <script type="application/ld+json">
-            {JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              "name": "GoodAV Hero Section",
-              "description": "Africa's premier audiovisual agency. Award-winning video production, documentary, live streaming, and creative services for Rwanda, Africa, and global impact.",
-              "url": "https://goodav.net/",
-              "mainEntity": {
-                "@type": "Organization",
-                "name": "GoodAV",
-                "url": "https://goodav.net",
-                "contactPoint": {
-                  "@type": "ContactPoint",
-                  "telephone": "+250788613332",
-                  "email": "info@goodav.net",
-                  "contactType": "Customer Support",
-                  "areaServed": ["Rwanda", "Africa", "International"],
-                  "availableLanguage": ["en", "fr"]
-                },
-                "address": {
-                  "@type": "PostalAddress",
-                  "addressLocality": "Kigali",
-                  "addressCountry": "RW"
-                },
-                "keywords": [
-                  "Rwanda documentary",
-                  "Africa video production",
-                  "global impact",
-                  "event media coverage",
-                  "customer conversion",
-                  "creative excellence"
-                ]
-              }
-            })}
-          </script>
-        </head>
+      <Helmet>
+        <title>GoodAV | Rwanda Africa Documentary Video Production Agency</title>
+        <meta name="description" content="Africa's premier audiovisual agency. Award-winning video production, documentary, live streaming, and creative services for Rwanda, Africa, and global impact." />
+        <meta name="keywords" content="Rwanda, Africa, documentary, video production, audiovisual, creative agency, global impact, live streaming, event media, Africa branding, Rwanda tourism, Africa storytelling, conversion, excellence" />
+        <meta name="author" content="GoodAV" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <link rel="canonical" href="https://goodav.net/" />
+        <meta name="geo.region" content="RW" />
+        <meta name="geo.placename" content="Kigali, Rwanda" />
+        <meta name="language" content="English" />
+        <meta name="industry" content="Media Production, Audiovisual Services" />
+        <meta name="category" content="Professional Services, Creative Agency" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "GoodAV Hero Section",
+            "description": "Africa's premier audiovisual agency. Award-winning video production, documentary, live streaming, and creative services for Rwanda, Africa, and global impact.",
+            "url": "https://goodav.net/",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "GoodAV",
+              "url": "https://goodav.net",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+250788613332",
+                "email": "info@goodav.net",
+                "contactType": "Customer Support",
+                "areaServed": ["Rwanda", "Africa", "International"],
+                "availableLanguage": ["en", "fr"]
+              },
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Kigali",
+                "addressCountry": "RW"
+              },
+              "keywords": [
+                "Rwanda documentary",
+                "Africa video production",
+                "global impact",
+                "event media coverage",
+                "customer conversion",
+                "creative excellence"
+              ]
+            }
+          })}
+        </script>
+      </Helmet>
       {/* Skip Link for Accessibility */}
       <a 
         href="#main-content" 
