@@ -1,4 +1,5 @@
 import React from 'react';
+import './StatsSection.css';
 import { Trophy, Eye, Handshake } from 'lucide-react';
 
 const StatsSection = () => {
@@ -25,7 +26,7 @@ const StatsSection = () => {
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-2 text-center text-orange-300" style={{letterSpacing: '0.01em'}}>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-2 text-center text-orange-300 stats-header">
             Our Impact Speaks Volumes
           </h2>
           <div className="flex justify-center mb-2">
@@ -41,8 +42,7 @@ const StatsSection = () => {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className={"flex flex-col items-center justify-center text-center p-10 rounded-2xl border border-orange-300 bg-black/40 backdrop-blur-md shadow-lg transition-all duration-300 hover:shadow-[0_0_32px_8px_rgba(255,122,0,0.35)] hover:border-orange-500 hover:bg-orange-900/30"}
-              style={{ minHeight: '320px' }}
+              className={"flex flex-col items-center justify-center text-center p-10 rounded-2xl border border-orange-300 bg-black/40 backdrop-blur-md shadow-lg transition-all duration-300 hover:shadow-[0_0_32px_8px_rgba(255,122,0,0.35)] hover:border-orange-500 hover:bg-orange-900/30 stats-card"}
             >
               <div className="mb-6 flex items-center justify-center">
                 <div className="bg-orange-900/30 rounded-xl p-4 flex items-center justify-center">

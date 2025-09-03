@@ -1,0 +1,9 @@
+/* StatsSection styles extracted from inline styles */
+
+.stats-header {
+  letter-spacing: 0.01em;
+}
+
+.stats-card {
+  min-height: 320px;
+}
