@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import VideoPlaceholder from './VideoPlaceholder';
 import { motion, Variants } from "framer-motion";
 import { BookOpen, Globe2, Award, Handshake, Lightbulb, CheckCircle2, Play, Rocket, Film, Users, Eye, Calendar, LucideIcon } from "lucide-react";
 
@@ -385,60 +386,14 @@ const OurJourney: React.FC = () => {
               AI-POWERED
             </span>
 
-            {!play ? (
-              <>
-                {/* Thumbnail */}
-                <img
-                  src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-                  alt="GoodAV: AI-Powered Visual Marketing - Innovation Showcase"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  loading="lazy"
-                />
-
-                {/* Play Button Overlay */}
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <motion.button
-                    className="w-16 h-16 flex items-center justify-center bg-gradient-primary rounded-full hover-lift shadow-glow group"
-                    whileHover={{
-                      scale: 1.1,
-                      transition: { duration: 0.2 }
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-                    onClick={() => setPlay(true)}
-                    aria-label="Play video: AI-Powered Visual Marketing Showcase"
-                    tabIndex={0}
-                  >
-                    <Play className="w-6 h-6 text-primary-foreground ml-1 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
-                  </motion.button>
-                </div>
-
-                {/* Caption */}
-                <motion.div
-                  className="absolute bottom-4 left-0 right-0 text-center text-white px-4"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.8, duration: 0.6 }}
-                >
-                  <h4 className="font-bold text-lg">AI-Powered Visual Marketing</h4>
-                  <p className="text-gray-300 text-sm">
-                    Showcasing our cutting-edge innovation capabilities
-                  </p>
-                </motion.div>
-              </>
-            ) : (
-              // Video iframe
-              <iframe
-                className="absolute inset-0 w-full h-full rounded-2xl"
-                src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-                title="GoodAV: AI-Powered Visual Marketing - Innovation Showcase"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
-              />
-            )}
+            <VideoPlaceholder
+              videoId={videoId}
+              title="AI-Powered Visual Marketing"
+              subtitle="Showcasing our cutting-edge innovation capabilities"
+              // provide an explicit high-res thumbnail to ensure the image is visible
+              thumbnail={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+              className="rounded-2xl"
+            />
           </motion.div>
 
           {/* Right: Text + Highlights */}

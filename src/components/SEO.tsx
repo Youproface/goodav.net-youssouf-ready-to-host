@@ -590,10 +590,10 @@ const DEFAULT_SEO: SEOPageData = {
       {/* Twitter - Real Production Data */}
       {generateTwitterTags}
 
-      {/* Favicon - Real Production Paths */}
+      {/* Favicon and Apple Touch Icon - Only in <head> */}
       <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="apple-touch-icon" href="/images/all_site_images/Assets/logo-icon-color.svg" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      <link rel="apple-touch-icon" href="/images/all_site_images/Assets/logo-icon-color.svg" />
 
       {/* Performance Optimization - Essential preconnects only */}
       <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
@@ -633,7 +633,7 @@ const DEFAULT_SEO: SEOPageData = {
       {alternateLanguages?.map((lang, index) => (
         <link key={index} rel="alternate" hrefLang={lang.hreflang} href={lang.href} />
       ))}
-  <link rel="alternate" hrefLang="x-default" href={SITE_CONFIG.url} />
+      <link rel="alternate" hrefLang="x-default" href={SITE_CONFIG.url} />
 
       {/* Breadcrumb Navigation for SEO */}
       {breadcrumbs && breadcrumbs.length > 0 && (

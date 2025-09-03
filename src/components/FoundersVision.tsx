@@ -87,8 +87,7 @@ export default function FoundersVision() {
           className="text-center"
         >
           <motion.div variants={itemVariants} className="mb-4 flex justify-center">
-            "/images/all_site_images/Home/TIMELINE/2010-The Beginning-1.jpg",
-            "/images/all_site_images/Home/TIMELINE/2010-The-Beginning-2.jpg",
+            {/* Icon or visual element can go here */}
           </motion.div>
           <motion.h2
             variants={itemVariants}

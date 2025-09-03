@@ -22,7 +22,12 @@ export default function LegalModal({ isOpen, onClose, title, content }: LegalMod
         {/* Header */}
         <div className="flex justify-between items-center border-b pb-3 mb-4">
           <h2 className="text-xl text-orange-500 font-semibold">{title}</h2>
-          <button onClick={onClose} className="p-2 bg-orange-500 hover:bg-grey-500 hover:text-white rounded-full">
+          <button
+            onClick={onClose}
+            className="p-2 bg-orange-500 hover:bg-grey-500 hover:text-white rounded-full"
+            aria-label="Close modal"
+            title="Close"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>

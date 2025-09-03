@@ -1,5 +1,6 @@
 
 import { Flag, Star, Rocket, Trophy, Globe, Bolt, Play, X } from "lucide-react";
+import VideoPlaceholder from './VideoPlaceholder';
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -113,47 +114,14 @@ export default function CreativeExcellence() {
           {/* Team Action Video */}
           <div className="w-full md:w-1/2 flex flex-col justify-center">
             <div className="video-container relative rounded-xl overflow-hidden group h-[400px] bg-black shadow-lg">
-              {!play ? (
-                <>
-                  {/* Thumbnail */}
-                  <img
-                    src="/images/all_site_images/Home/BTS/GOODAV_BTS_2.jpg"
-                    alt="Epic Behind-the-Scenes Cinematic | GoodAV Field Team in Action"
-                    className="absolute inset-0 w-full h-full object-cover rounded-xl opacity-80 group-hover:opacity-100 transition duration-300"
-                    loading="lazy"
-                  />
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <motion.button
-                      className="w-20 h-20 flex items-center justify-center bg-primary/90 rounded-full hover-lift shadow-glow group"
-                      whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
-                      whileTap={{ scale: 0.95 }}
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
-                      onClick={() => setPlay(true)}
-                      aria-label="Play video: GoodAV Team in Action"
-                      tabIndex={0}
-                    >
-                      <Play className="w-10 h-10 text-primary-foreground ml-1 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
-                    </motion.button>
-                  </div>
-                </>
-              ) : (
-                <iframe
-                  className="absolute inset-0 w-full h-full rounded-xl"
-                  src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&showinfo=0`}
-                  title="Epic Behind-the-Scenes Cinematic | GoodAV Field Team in Action"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  loading="eager"
-                />
-              )}
-              {/* Caption */}
-              <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 to-transparent p-4">
-                <h5 className="video-title font-bold text-lg text-white">Epic Behind-the-Scenes Cinematic | GoodAV Field Team in Action</h5>
-                <p className="video-subtitle text-muted-foreground text-sm">Watch our team in action creating exceptional content</p>
-              </div>
+              <VideoPlaceholder
+                videoId={videoId}
+                thumbnail="/images/all_site_images/Home/BTS/GOODAV_BTS_2.jpg"
+                title="Epic Behind-the-Scenes Cinematic | GoodAV Field Team in Action"
+                subtitle="Watch our team in action creating exceptional content"
+                className="rounded-xl"
+                aspectClass="h-[400px]"
+              />
             </div>
           </div>
         </div>

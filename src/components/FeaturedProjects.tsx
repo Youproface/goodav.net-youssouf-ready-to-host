@@ -23,6 +23,7 @@
  */
 
 import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import VideoPlaceholder from './VideoPlaceholder';
 import { Play, X, Eye } from "lucide-react";
 import { motion, useAnimationFrame, useMotionValue, AnimatePresence, Variants } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -143,8 +144,10 @@ interface Project {
   id: number;
   title: string;
   category: string;
+  // `video` now stores the YouTube video ID (e.g. '5Cjbze8jBIA')
   video: string;
-  thumbnail: string;
+  // `thumbnail` may be either a full URL or a videoId; when absent we derive from `video`
+  thumbnail?: string;
   description?: string;
   year?: string;
   client?: string;
@@ -177,6 +180,7 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelectedVideo, variants }) => {
   const handleClick = useCallback(() => {
+    // project.video now contains the YouTube ID
     setSelectedVideo(project.video);
   }, [project.video, setSelectedVideo]);
 
@@ -187,8 +191,12 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelect
     }
   }, [handleClick]);
 
-  // 🖼️ Performance: Optimized thumbnail URLs for faster loading
-  const optimizedThumbnail = `${project.thumbnail}?format=webp&quality=85`;
+  // 🖼️ Performance: Resolve thumbnail (accepts full URL or videoId)
+  const thumbnailSrc = project.thumbnail && project.thumbnail.startsWith('http')
+    ? project.thumbnail
+    : `https://img.youtube.com/vi/${project.video}/hqdefault.jpg`;
+
+  const optimizedThumbnail = `${thumbnailSrc}?format=webp&quality=85`;
 
   return (
     <motion.article
@@ -210,7 +218,7 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelect
       <picture>
         <source srcSet={optimizedThumbnail} type="image/webp" />
         <img
-          src={project.thumbnail}
+          src={thumbnailSrc}
           alt={`${project.title} - ${project.category} project ${project.client ? `for ${project.client}` : ''} (${project.year || 'Year unknown'})`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 will-change-transform"
           loading="lazy"
@@ -219,40 +227,22 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelect
         />
       </picture>
 
-      {/* 🎨 Accessible Overlay with proper contrast */}
-      <div 
-        className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        aria-hidden="true"
-      />
-
-      {/* 📝 Content with semantic structure */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-        <div className="flex items-center gap-2 mb-2">
+      {/* 📝 Content with semantic structure (caption pill) */}
+      <div className="absolute left-4 bottom-4 bg-black/40 text-white px-3 py-2 rounded-full backdrop-blur-sm max-w-[85%]">
+        <div className="flex items-center gap-3">
           <span 
             className="px-2 py-1 bg-primary/90 text-primary-foreground text-xs font-medium rounded-full"
             aria-label={`Category: ${project.category}`}
           >
             {project.category}
           </span>
-          {project.year && (
-            <time 
-              dateTime={project.year}
-              className="text-xs opacity-75"
-              aria-label={`Released in ${project.year}`}
-            >
-              {project.year}
-            </time>
-          )}
+          <div className="text-left">
+            <h3 className="font-semibold text-sm line-clamp-1" title={project.title}>{project.title}</h3>
+            {project.client && (
+              <p className="text-xs opacity-75 line-clamp-1">{project.client}</p>
+            )}
+          </div>
         </div>
-        <h3 className="font-semibold text-sm line-clamp-2 mb-1" title={project.title}>
-          {project.title}
-        </h3>
-        {project.client && (
-          <p className="text-xs opacity-75" title={`Client: ${project.client}`}>
-            <span className="sr-only">Client: </span>
-            {project.client}
-          </p>
-        )}
       </div>
 
       {/* 🎬 Accessible Play Button */}
@@ -288,10 +278,12 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelect
             "@id": `https://goodav.net/project/${project.id}`,
             "name": project.title,
             "description": project.description || `${project.title} - ${project.category} project by GoodAV`,
-            "thumbnailUrl": project.thumbnail,
+            "thumbnailUrl": project.thumbnail && project.thumbnail.startsWith('http')
+              ? project.thumbnail
+              : `https://img.youtube.com/vi/${project.video}/hqdefault.jpg`,
             "uploadDate": project.year ? `${project.year}-01-01` : "2024-01-01",
             "duration": "PT0M",
-            "embedUrl": project.video,
+            "embedUrl": `https://www.youtube.com/embed/${project.video}`,
             "genre": project.category,
             "inLanguage": "en",
             "producer": {
@@ -345,8 +337,8 @@ const FeaturedProjects: React.FC = () => {
       id: 1,
       title: "Africa's Business Heroes (ABH) 2023 RECAP VIDEO",
       category: "Corporate",
-      video: "https://www.youtube.com/embed/5Cjbze8jBIA",
-      thumbnail: "https://img.youtube.com/vi/5Cjbze8jBIA/hqdefault.jpg",
+      video: "5Cjbze8jBIA",
+      thumbnail: "5Cjbze8jBIA",
       description: "Comprehensive recap of Africa's leading business conference",
       year: "2023",
       client: "African Leadership University"
@@ -355,8 +347,8 @@ const FeaturedProjects: React.FC = () => {
       id: 2,
       title: "#Kwibuka30: 4K video : Rwanda from Despair to Hope",
       category: "Documentary",
-      video: "https://www.youtube.com/embed/ydWaP0-Bi_8",
-      thumbnail: "https://img.youtube.com/vi/ydWaP0-Bi_8/hqdefault.jpg",
+      video: "ydWaP0-Bi_8",
+      thumbnail: "ydWaP0-Bi_8",
       description: "Commemorating Rwanda's journey of resilience and progress",
       year: "2024",
       client: "Government of Rwanda"
@@ -365,8 +357,8 @@ const FeaturedProjects: React.FC = () => {
       id: 3,
       title: "COP28: The Impossible Dream: lets act now",
       category: "International",
-      video: "https://www.youtube.com/embed/NxLQiDbXxUk",
-      thumbnail: "https://img.youtube.com/vi/NxLQiDbXxUk/hqdefault.jpg",
+      video: "NxLQiDbXxUk",
+      thumbnail: "NxLQiDbXxUk",
       description: "Urgent call to action on climate change from COP28",
       year: "2023",
       client: "United Nations"
@@ -375,8 +367,8 @@ const FeaturedProjects: React.FC = () => {
       id: 4,
       title: "NEF Global Gathering highlight reel",
       category: "Events",
-      video: "https://www.youtube.com/embed/jFWAgnAkD8k",
-      thumbnail: "https://img.youtube.com/vi/jFWAgnAkD8k/hqdefault.jpg",
+      video: "jFWAgnAkD8k",
+      thumbnail: "jFWAgnAkD8k",
       description: "Capturing the essence of global entrepreneurship summit",
       year: "2024",
       client: "NEF Global Secretariat"
@@ -385,8 +377,8 @@ const FeaturedProjects: React.FC = () => {
       id: 5,
       title: "BUBR AFRICA 2024 - Rwanda (Full Film)",
       category: "Documentary",
-      video: "https://www.youtube.com/embed/DrT8QQoSJi4",
-      thumbnail: "https://img.youtube.com/vi/DrT8QQoSJi4/hqdefault.jpg",
+      video: "DrT8QQoSJi4",
+      thumbnail: "DrT8QQoSJi4",
       description: "Documentary showcasing Rwanda's business landscape",
       year: "2024",
       client: "Black Unity Bike Ride"
@@ -395,8 +387,8 @@ const FeaturedProjects: React.FC = () => {
       id: 6,
       title: "Ibere rya Bigogwe The Ultimate Cow Experience in Rwanda",
       category: "Documentary",
-      video: "https://www.youtube.com/embed/25MQcKjepJo",
-      thumbnail: "https://img.youtube.com/vi/25MQcKjepJo/hqdefault.jpg",
+      video: "25MQcKjepJo",
+      thumbnail: "25MQcKjepJo",
       description: "Cultural exploration of Rwanda's traditional cattle farming",
       year: "2024",
       client: "Echoes of Tradition"
@@ -405,8 +397,8 @@ const FeaturedProjects: React.FC = () => {
       id: 7,
       title: "Rwanda Rising: The Cimerwa Documentary",
       category: "Documentary",
-      video: "https://www.youtube.com/embed/ekaDY3S7bIk",
-      thumbnail: "https://img.youtube.com/vi/ekaDY3S7bIk/hqdefault.jpg",
+      video: "ekaDY3S7bIk",
+      thumbnail: "ekaDY3S7bIk",
       description: "Story of Rwanda's cement industry transformation",
       year: "2024",
       client: "Cimerwa Ltd"
@@ -415,8 +407,8 @@ const FeaturedProjects: React.FC = () => {
       id: 8,
       title: "UNDP GOMERA MAXWELL on SDG",
       category: "International",
-      video: "https://www.youtube.com/embed/U3xPDLQvzrE",
-      thumbnail: "https://img.youtube.com/vi/U3xPDLQvzrE/hqdefault.jpg",
+      video: "U3xPDLQvzrE",
+      thumbnail: "U3xPDLQvzrE",
       description: "Sustainable Development Goals advocacy and implementation",
       year: "2024",
       client: "UNDP Rwanda"
@@ -425,8 +417,8 @@ const FeaturedProjects: React.FC = () => {
       id: 9,
       title: "USAID Kungahara Wagura Amasoko Flag-off by Igire Continental Trading",
       category: "International",
-      video: "https://www.youtube.com/embed/X9QGsDfCLDA",
-      thumbnail: "https://img.youtube.com/vi/X9QGsDfCLDA/hqdefault.jpg",
+      video: "X9QGsDfCLDA",
+      thumbnail: "X9QGsDfCLDA",
       description: "Market development initiative launch ceremony",
       year: "2024",
       client: "USAID Rwanda"
@@ -435,8 +427,8 @@ const FeaturedProjects: React.FC = () => {
       id: 10,
       title: "ICPD25 in Rwanda a story of change through Inanga",
       category: "Documentary",
-      video: "https://www.youtube.com/embed/GaT9R1Dkuhs",
-      thumbnail: "https://img.youtube.com/vi/GaT9R1Dkuhs/hqdefault.jpg",
+      video: "GaT9R1Dkuhs",
+      thumbnail: "GaT9R1Dkuhs",
       description: "Population and development conference documentary",
       year: "2019",
       client: "United Nations"
@@ -445,8 +437,8 @@ const FeaturedProjects: React.FC = () => {
       id: 11,
       title: "DBB's Pioneer Order Inauguration in Rwanda Bralirwa",
       category: "Corporate",
-      video: "https://www.youtube.com/embed/QN1YAEUKyIE",
-      thumbnail: "https://img.youtube.com/vi/QN1YAEUKyIE/hqdefault.jpg",
+      video: "QN1YAEUKyIE",
+      thumbnail: "QN1YAEUKyIE",
       description: "Corporate milestone celebration and product launch",
       year: "2024",
       client: "Bralirwa"
@@ -455,8 +447,8 @@ const FeaturedProjects: React.FC = () => {
       id: 12,
       title: "Kepler Gym video",
       category: "Corporate",
-      video: "https://www.youtube.com/embed/OjDScdrYm8w",
-      thumbnail: "https://img.youtube.com/vi/OjDScdrYm8w/hqdefault.jpg",
+      video: "OjDScdrYm8w",
+      thumbnail: "OjDScdrYm8w",
       description: "Fitness center promotional video and facility showcase",
       year: "2024",
       client: "Kepler College"
@@ -465,8 +457,8 @@ const FeaturedProjects: React.FC = () => {
       id: 13,
       title: "Coffee Market Building for People and Prosperity",
       category: "Documentary",
-      video: "https://www.youtube.com/embed/EQdb0uKpg8A",
-      thumbnail: "https://img.youtube.com/vi/EQdb0uKpg8A/hqdefault.jpg",
+      video: "EQdb0uKpg8A",
+      thumbnail: "EQdb0uKpg8A",
       description: "Agricultural development and coffee industry transformation",
       year: "2024",
       client: "Challenges Rwanda"
@@ -475,8 +467,8 @@ const FeaturedProjects: React.FC = () => {
       id: 14,
       title: "Rwanda NgurizaNshore USAID Funded Project",
       category: "Corporate",
-      video: "https://www.youtube.com/embed/FCV0DRRpV4w",
-      thumbnail: "https://img.youtube.com/vi/FCV0DRRpV4w/hqdefault.jpg",
+      video: "FCV0DRRpV4w",
+      thumbnail: "FCV0DRRpV4w",
       description: "Youth empowerment and entrepreneurship development",
       year: "2024",
       client: "USAID Rwanda"
@@ -485,8 +477,8 @@ const FeaturedProjects: React.FC = () => {
       id: 15,
       title: "Work Integrated Learning (WIL) Institute AIMS",
       category: "Events",
-      video: "https://www.youtube.com/embed/_bB0IXCcIvI",
-      thumbnail: "https://img.youtube.com/vi/_bB0IXCcIvI/hqdefault.jpg",
+      video: "_bB0IXCcIvI",
+      thumbnail: "_bB0IXCcIvI",
       description: "Educational innovation and skills development program",
       year: "2024",
       client: "AIMS Rwanda"
@@ -495,8 +487,8 @@ const FeaturedProjects: React.FC = () => {
       id: 16,
       title: "Just MOMO The Gift - MTN",
       category: "Corporate",
-      video: "https://www.youtube.com/embed/MEeSUlN4PbA",
-      thumbnail: "https://img.youtube.com/vi/MEeSUlN4PbA/hqdefault.jpg",
+      video: "MEeSUlN4PbA",
+      thumbnail: "MEeSUlN4PbA",
       description: "Telecommunications product launch and brand campaign",
       year: "2024",
       client: "MTN South Africa"
@@ -827,15 +819,14 @@ const FeaturedProjects: React.FC = () => {
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <iframe
-                src={`${selectedVideo}?autoplay=1&rel=0&modestbranding=1&showinfo=0`}
-                className="w-full h-full"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                title="GoodAV Project Video - Featured Portfolio Showcase"
-                loading="eager"
-              />
+              {selectedVideo && (
+                <VideoPlaceholder
+                  videoId={selectedVideo}
+                  title="GoodAV Project Video - Featured Portfolio Showcase"
+                  showClose={true}
+                  onClose={() => setSelectedVideo(null)}
+                />
+              )}
             </motion.div>
 
             {/* Loading indicator */}

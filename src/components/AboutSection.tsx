@@ -74,6 +74,7 @@ const AboutSection: React.FC = () => {
       viewport={{ once: true, margin: "-100px" }}
       variants={containerVariants}
       aria-labelledby="about-heading"
+      id="main-content"
       role="region"
     >
       {/* Skip Link for Accessibility */}
@@ -152,11 +153,11 @@ const AboutSection: React.FC = () => {
         variants={itemVariants}
       >
         <div className="relative w-full md:w-3/4 lg:w-2/3 glass-card rounded-xl overflow-hidden shadow-glow">
-          {/* Video Container */}
-          <div className="flex items-center justify-center h-64 md:h-96 bg-gradient-to-b from-muted to-background">
+          {/* Video Container - show full-bright thumbnail, play button centered */}
+          <div className="flex items-center justify-center h-64 md:h-96 bg-transparent">
             {!play ? (
               <>
-                {/* Thumbnail */}
+                {/* Thumbnail at full visibility */}
                 <img
                   src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
                   alt="GoodAV: Crafting Authentic Stories - Video Thumbnail"
@@ -164,47 +165,53 @@ const AboutSection: React.FC = () => {
                   loading="lazy"
                 />
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                  <motion.button
-                    className="w-16 h-16 flex items-center justify-center bg-gradient-primary rounded-full hover-lift shadow-glow group"
-                    whileHover={{
-                      scale: 1.1,
-                      transition: { duration: 0.2 }
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
-                    onClick={() => setPlay(true)}
-                    aria-label="Play video: GoodAV Impactful Storytelling"
-                    tabIndex={0}
-                  >
-                    <Play className="w-8 h-8 text-primary-foreground ml-1 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
-                  </motion.button>
-                </div>
+                {/* Play button only (no dark overlay) */}
+                <motion.button
+                  className="absolute z-20 w-16 h-16 flex items-center justify-center bg-gradient-primary rounded-full hover-lift shadow-glow group"
+                  whileHover={{
+                    scale: 1.1,
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
+                  onClick={() => setPlay(true)}
+                  aria-label="Play video: GoodAV Impactful Storytelling"
+                  tabIndex={0}
+                >
+                  <Play className="w-8 h-8 text-primary-foreground ml-1 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
+                </motion.button>
               </>
             ) : (
               // YouTube iframe replaces thumbnail
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-                title="GoodAV: Crafting Authentic Stories - Our Journey and Vision"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
-              />
+              <>
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
+                  title="GoodAV: Crafting Authentic Stories - Our Journey and Vision"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                />
+                <noscript>
+                  <a href={`https://www.youtube.com/watch?v=${videoId}`} target="_blank" rel="noopener noreferrer" className="sr-only">Open video in new tab</a>
+                </noscript>
+              </>
             )}
           </div>
 
-          {/* Caption */}
+          {/* Caption pill (non-blocking) */}
           <motion.div
-            className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 to-transparent p-4"
-            initial={{ opacity: 0, y: 20 }}
+            className="absolute bottom-4 left-4 right-4 text-white pointer-events-none"
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.6 }}
+            transition={{ delay: 1, duration: 0.5 }}
           >
-            <h3 className="text-lg font-semibold text-white">GoodAV: Impactful Storytelling</h3>
+            <div className="flex items-center justify-between">
+              <span className="px-2 py-1 bg-primary/90 text-primary-foreground text-xs font-medium rounded-full">Featured</span>
+            </div>
+            <h3 className="mt-2 text-lg md:text-xl font-semibold line-clamp-2">GoodAV: Impactful Storytelling</h3>
             <p className="text-gray-300 text-sm">Our journey and vision for the future</p>
           </motion.div>
         </div>

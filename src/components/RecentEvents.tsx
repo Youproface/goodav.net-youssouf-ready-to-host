@@ -1,4 +1,5 @@
 import { FaPlay, FaTimes } from 'react-icons/fa';
+import VideoPlaceholder from './VideoPlaceholder';
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 
 // SEO and Performance: Memoize expensive computations
@@ -211,50 +212,17 @@ export default function RecentEvents() {
           {/* Part 1: Main Video & Description */}
           <article className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" itemScope itemType="https://schema.org/VideoObject">
             <div className="main-video-container relative">
-              {playingInline === mainVideoId ? (
-                <div className="video-player relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-orange-500/10 ring-1 ring-white/10">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${mainVideoId}?autoplay=1`}
-                    title="Featured Project Video: IAS 2025 Shape the future of the HIV response"
-                    allow="autoplay; encrypted-media"
-                    allowFullScreen
-                    className="w-full h-full"
-                    loading="lazy"
-                  />
-                  <button
-                    className="absolute top-2 right-2 text-white text-2xl bg-black/60 rounded-full p-2 hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
-                    onClick={() => setPlayingInline(null)}
-                    aria-label="Stop video playback"
-                    type="button"
-                  >
-                    <FaTimes />
-                  </button>
-                </div>
-              ) : (
-                <div className="video-thumbnail relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl shadow-orange-500/10 ring-1 ring-white/10">
-                  <img
-                    src={`https://img.youtube.com/vi/${mainVideoId}/maxresdefault.jpg`}
-                    alt="Featured Project Video Thumbnail: IAS 2025 Shape the future of the HIV response"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    onError={(e) => {
-                      console.log(`Main video thumbnail failed for ${mainVideoId}`);
-                      // Fallback to lower quality
-                      e.currentTarget.src = `https://img.youtube.com/vi/${mainVideoId}/hqdefault.jpg`;
-                    }}
-                  />
-                  <button
-                    className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/60 focus:bg-black/60 transition-all duration-300 rounded-2xl group focus:outline-none focus:ring-2 focus:ring-orange-400"
-                    onClick={() => setPlayingInline(mainVideoId)}
-                    aria-label="Play video: IAS 2025 Shape the future of the HIV response"
-                    type="button"
-                  >
-                    <div className="p-4 rounded-full bg-white/10 backdrop-blur-sm ring-1 ring-white/20 group-hover:scale-110 group-focus:scale-110 transition-transform">
-                      <FaPlay className="text-white text-4xl" aria-hidden="true" />
-                    </div>
-                  </button>
-                </div>
-              )}
+              <div>
+                <VideoPlaceholder
+                  videoId={mainVideoId}
+                  title="IAS 2025: Shape the future of the HIV response"
+                  showClose={true}
+                  playing={playingInline === mainVideoId}
+                  onPlay={() => setPlayingInline(mainVideoId)}
+                  onClose={() => setPlayingInline(null)}
+                  className="rounded-2xl"
+                />
+              </div>
               <div className="mt-4 text-center">
                 <h3 className="font-bold text-zinc-100 text-xl" itemProp="name">IAS 2025: Shape the future of the HIV response</h3>
               </div>
@@ -310,52 +278,16 @@ export default function RecentEvents() {
                   itemScope
                   itemType="https://schema.org/VideoObject"
                 >
-                  {playingInline === video.id ? (
-                    <div className="video-player relative w-[200px] sm:w-[240px] md:w-[280px] h-[300px] sm:h-[360px] md:h-[400px] lg:h-[498px] rounded-2xl overflow-hidden shadow-lg ring-1 ring-white/10">
-                      <iframe
-                        src={`https://www.youtube.com/embed/${video.id}?autoplay=1`}
-                        title={video.title}
-                        allow="autoplay; encrypted-media"
-                        allowFullScreen
-                        className="w-full h-full"
-                        loading="lazy"
-                      />
-                      <button
-                        className="absolute top-2 right-2 text-white text-2xl bg-black/60 rounded-full p-2 hover:bg-black/80 focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setPlayingInline(null);
-                        }}
-                        aria-label="Stop video playback"
-                        type="button"
-                      >
-                        <FaTimes />
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      className="thumbnail relative w-[200px] sm:w-[240px] md:w-[280px] h-[300px] sm:h-[360px] md:h-[400px] lg:h-[498px] rounded-2xl overflow-hidden shadow-lg cursor-pointer ring-1 ring-white/10 group-hover:ring-orange-400 transition-all focus:outline-none focus:ring-2 focus:ring-orange-400 block w-full h-full p-0 border-0 bg-transparent"
-                      onClick={() => setPlayingInline(video.id)}
-                      aria-label={`Play video: ${video.title}`}
-                      type="button"
-                    >
-                      <img
-                        src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`}
-                        alt={`${video.title} video thumbnail`}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        itemProp="thumbnailUrl"
-                        onError={(e) => {
-                          console.log(`YouTube thumbnail failed for ${video.id}`);
-                          // Fallback to a placeholder or different quality
-                          e.currentTarget.src = `https://img.youtube.com/vi/${video.id}/default.jpg`;
-                        }}
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <FaPlay className="text-white text-5xl" aria-hidden="true" />
-                      </div>
-                    </button>
-                  )}
+                  <VideoPlaceholder
+                    videoId={video.id}
+                    // pass only the id; VideoPlaceholder will resolve the thumbnail URL
+                    title={video.title}
+                    subtitle={video.client}
+                    playing={playingInline === video.id}
+                    onPlay={() => setPlayingInline(video.id)}
+                    onClose={() => setPlayingInline(null)}
+                    className="w-[200px] sm:w-[240px] md:w-[280px] h-[300px] sm:h-[360px] md:h-[400px] lg:h-[498px] rounded-2xl"
+                  />
                   <div className="mt-3">
                     <h4 className="font-semibold text-zinc-100 truncate" itemProp="name">{video.title}</h4>
                     <p className="text-sm text-zinc-400" itemProp="creator">{video.client}</p>

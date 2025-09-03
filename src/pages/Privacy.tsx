@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useState, useRef, useEffect } from "react";
 import SchemaMarkup from "../components/SchemaMarkup";
+import "../AppPrivacyPolicy.css";
 
 export default function PrivacyPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,12 +45,8 @@ export default function PrivacyPage() {
           "inLanguage": "en"
         }}
       />
-      <div className="container mx-auto py-10 px-4 max-w-2xl mt-24"
-        style={{
-          background: "linear-gradient(180deg, rgba(30,30,30,0.98) 0%, rgba(20,20,20,0.96) 100%)",
-          borderRadius: "1rem",
-          boxShadow: "0 10px 40px -10px rgba(0,0,0,0.6)",
-        }}
+      <div
+        className="container mx-auto py-10 px-4 max-w-2xl mt-24 privacy-policy-container"
       >
         <h1 className="text-3xl font-bold text-orange-500 mb-6">Privacy Policy</h1>
         <div className="mb-6 bg-orange-50 border-l-4 border-orange-500 p-4 rounded-lg text-gray-900">

@@ -120,6 +120,17 @@ All colors MUST be HSL for proper theming.
     will-change: transform;
   }
 
+  /* Keyboard focus outlines for accessibility */
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 3px solid hsl(var(--primary) / 0.9);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
   .hover-lift {
     @apply transition-all duration-300 hover:scale-105 hover:shadow-xl;
     will-change: transform;
@@ -201,6 +212,16 @@ html {
   transform: translateZ(0); /* Force hardware acceleration */
   backface-visibility: hidden; /* Prevent flickering */
 }
+
+  /* Respect user's reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 
 /* Optimize scrolling container */
 .overflow-x-auto {

@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useState, useRef, useEffect } from "react";
 import SchemaMarkup from "../components/SchemaMarkup";
+import "../AppTermsPage.css";
 
 export default function TermsPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,12 +43,8 @@ export default function TermsPage() {
           "inLanguage": "en"
         }}
       />
-      <div className="container mx-auto py-10 px-4 max-w-2xl mt-24"
-        style={{
-          background: "linear-gradient(180deg, rgba(30,30,30,0.98) 0%, rgba(20,20,20,0.96) 100%)",
-          borderRadius: "1rem",
-          boxShadow: "0 10px 40px -10px rgba(0,0,0,0.6)",
-        }}
+      <div
+        className="container mx-auto py-10 px-4 max-w-2xl mt-24 terms-page-container"
         aria-label="Terms of Service Section"
       >
         <h1 className="text-3xl font-bold text-orange-500 mb-6">Terms of Service</h1>

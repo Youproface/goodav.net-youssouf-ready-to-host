@@ -707,13 +707,19 @@ Proven Track Record: With over 200 successful projects and 28 satisfied clients,
   <iframe 
     width="100%" 
     height="450"
-    src="https://www.youtube.com/embed/HyHigPOWxYs?autoplay=0" 
+    src="https://www.youtube-nocookie.com/embed/HyHigPOWxYs?autoplay=0" 
     title="GoodAV Video Showcase"
     frameBorder="0" 
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
     allowFullScreen
     className="rounded-lg shadow-lg"
+    loading="lazy"
   ></iframe>
+  <noscript>
+    <div className="text-center">
+      <a href="https://www.youtube.com/watch?v=HyHigPOWxYs" target="_blank" rel="noopener noreferrer">Open video in a new tab</a>
+    </div>
+  </noscript>
 </div>
 
 ## Top 5 Video Production and Photography Agencies in Rwanda
@@ -728,6 +734,7 @@ Proven Track Record: With over 200 successful projects and 28 satisfied clients,
     date: "March 2024",
     readTime: "5 min read",
     slug: "top-video-production-companies-rwanda",
-    ytThumbnail: "https://i.ytimg.com/vi_webp/HyHigPOWxYs/sddefault.webp&quot;"
+  // store only the video id; renderers can derive the thumbnail URL
+  ytThumbnail: "HyHigPOWxYs"
   }
 ];
