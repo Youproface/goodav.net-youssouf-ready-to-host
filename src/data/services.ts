@@ -301,7 +301,7 @@ export const services: ServiceType[] = [
       heroDescription: 'Connect with global audiences through seamless live streaming. Professional broadcasting that transcends borders and brings your events to the world.',
       overview: 'Professional broadcasting for every platform and audience with reliable technical support and crystal-clear streaming quality.',
       stats: [
-        { number: '200+', label: 'Live Events' },
+  { number: '500+', label: 'Live Events' },
         { number: '50M+', label: 'Viewers Reached' },
         { number: '99.9%', label: 'Uptime Record' }
       ],
