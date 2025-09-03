@@ -346,7 +346,7 @@ const Hero = () => {
           {/* Trust Indicators */}
           <div className="flex flex-col md:flex-row gap-8 justify-center items-center mt-4 mb-2">
             <div className="flex items-center gap-3 px-6 py-4 rounded-xl card-bg">
-              <span className="text-white font-medium text-base"><span className="font-bold">Trusted by 200+</span> Organizations</span>
+              <span className="text-white font-medium text-base"><span className="font-bold">Trusted by 50+</span> Organizations</span>
             </div>
             <div className="flex items-center gap-3 px-6 py-4 rounded-xl card-bg">
               <span className="text-orange-500"><Play className="h-5 w-5" /></span>
@@ -375,77 +375,7 @@ const Hero = () => {
             </p>
           </motion.div>
           
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto"
-            initial={prefersReducedMotion ? "show" : "hidden"}
-            whileInView="show"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={prefersReducedMotion ? {
-              hidden: { opacity: 1 },
-              show: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0,
-                  delayChildren: 0
-                }
-              }
-            } : {
-              hidden: { opacity: 0 },
-              show: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.2,
-                  delayChildren: 0.2
-                }
-              }
-            }}
-          >
-            {[
-              {
-                number: <AnimatedCounter value={10} suffix="+" />,
-                label: "Years of Excellence",
-                icon: <Trophy className="h-8 w-8 text-orange-500" />,
-              },
-              {
-                number: <AnimatedCounter value={5} suffix="+" />,
-                label: "Countries",
-                icon: <Eye className="h-8 w-8 text-orange-500" />,
-              },
-              {
-                number: <AnimatedCounter value={500} suffix="+" />,
-                label: "Projects",
-                icon: <Handshake className="h-8 w-8 text-orange-500" />,
-              },
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                className="flex flex-col items-center justify-center text-center p-8 rounded-lg border border-orange-500/20 hover:bg-orange-900/20 transition-all duration-300 hover:shadow-[0_0_32px_8px_rgba(255,122,0,0.15)]"
-                variants={{
-                  hidden: { opacity: 0, y: 30 },
-                  show: { 
-                    opacity: 1, 
-                    y: 0,
-                    transition: {
-                      duration: 0.6,
-                      ease: [0.22, 1, 0.36, 1]
-                    }
-                  }
-                }}
-                whileHover={{ 
-                  y: -5,
-                  transition: { duration: 0.2 }
-                }}
-              >
-                <div className="text-orange-500 mb-4">
-                  {stat.icon}
-                </div>
-                <div className="mb-2">
-                  <div className="text-4xl font-bold text-white">{stat.number}</div>
-                  <div className="text-sm text-orange-300 mt-2 uppercase tracking-wider">{stat.label}</div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+          {/* Removed home service stats section (6 Core Services, 15+ Countries, 200+ Projects) as requested */}
         </div>
       </section>
     </section>
