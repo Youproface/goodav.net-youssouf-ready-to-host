@@ -28,7 +28,7 @@ const GlobalImpact: React.FC = () => {
     },
     {
       icon: Globe,
-      mainText: '15+',
+  mainText: '5+',
       subTextBold: 'AFRICAN COUNTRIES',
       subTextItalic: 'Continental presence',
       ariaLabel: 'Presence in over 15 African countries'
@@ -236,7 +236,7 @@ const GlobalImpact: React.FC = () => {
             "@context": "https://schema.org",
             "@type": "WebPage",
             "name": "Measurable Impact - Our Achievements & Statistics",
-            "description": "Discover GoodAV's measurable impact with 500+ projects across 15+ African countries, showcasing our growth and excellence in audiovisual production",
+            "description": "Discover GoodAV's measurable impact with 500+ projects across 5+ African countries, showcasing our growth and excellence in audiovisual production",
             "url": "https://goodav.net#impact",
             "mainEntity": {
               "@type": "ItemList",
@@ -253,7 +253,7 @@ const GlobalImpact: React.FC = () => {
                 {
                   "@type": "PropertyValue",
                   "name": "African Countries",
-                  "value": "15+",
+                  "value": "5+",
                   "description": "Continental presence across Africa"
                 },
                 {
