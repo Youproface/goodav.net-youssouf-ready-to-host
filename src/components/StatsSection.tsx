@@ -14,7 +14,7 @@ const StatsSection = () => {
       icon: <Eye className="h-10 w-10 text-orange-500" />,
     },
     {
-      number: "200+",
+      number: "500+",
       label: "Success Stories",
       icon: <Handshake className="h-10 w-10 text-orange-500" />,
     },
