@@ -159,7 +159,7 @@ export default function FAQSection() {
                 <span className="text-orange-300">▾</span>
               </summary>
               <div className="border-t border-white/10 px-4 py-4 text-body text-zinc-300">
-                Primary operations across East and Central Africa with project experience in 15+ countries.
+                Primary operations across East and Central Africa with project experience in 5+ countries.
                 International assignments are supported on request.
               </div>
             </details>
