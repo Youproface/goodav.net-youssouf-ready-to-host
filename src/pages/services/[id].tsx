@@ -49,8 +49,9 @@ const ServiceDetails: React.FC = () => {
   return (
     <main role="main" aria-label={`Service Details for ${service.title}`}> 
       <SEO
-        title={`${service.title} | Our Services | GoodAV`}
-        description={service.details.heroDescription}
+        title={`${service.title} | GoodAV - Rwanda, Kigali Convention Center, Visit Rwanda, Gorilla Naming`}
+        description={`${service.details.heroDescription} GoodAV is your trusted audiovisual partner for conferences, events, and tourism in Rwanda. We support Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and more.`}
+        keywords="Rwanda, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda"
         canonical={`https://goodav.net/services/${service.id}`}
       />
       {/* Hero Section */}

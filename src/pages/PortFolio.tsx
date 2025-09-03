@@ -368,9 +368,9 @@ export default function PortFolio() {
   return (
     <>
       <Helmet>
-        <title>Portfolio | GoodAV - Audiovisual Projects & Creative Highlights</title>
-        <meta name="description" content="Explore GoodAV's portfolio of impactful audiovisual projects, documentaries, events, and creative highlights. Discover our work with leading organizations and brands." />
-        <meta name="keywords" content="GoodAV, portfolio, audiovisual, video production, Rwanda, documentary, event, creative, storytelling, client work, media, marketing" />
+  <title>Portfolio | GoodAV - Audiovisual Projects, Rwanda, Africa, Documentary, Conferences, Visit Rwanda, Gorilla Naming</title>
+  <meta name="description" content="Explore GoodAV's portfolio of impactful audiovisual projects for Rwanda, Africa, documentary, conferences, Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and international events. Discover why global organizations trust GoodAV for audiovisual excellence in Rwanda and Africa." />
+  <meta name="keywords" content="Rwanda, Africa, documentary, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda, portfolio, client work, media, marketing" />
         <meta property="og:title" content="Portfolio | GoodAV - Audiovisual Projects & Creative Highlights" />
         <meta property="og:description" content="Explore GoodAV's portfolio of impactful audiovisual projects, documentaries, events, and creative highlights. Discover our work with leading organizations and brands." />
         <meta property="og:image" content="/images/all_site_images/Home/BG/Home_BG.png" />

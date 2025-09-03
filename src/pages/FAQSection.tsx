@@ -5,8 +5,9 @@ export default function FAQSection() {
     return (
       <>
         <SEO
-          title="Frequently Asked Questions - GoodAV"
-          description="Find answers to the most common questions about GoodAV’s audiovisual services, production, and support."
+          title="Frequently Asked Questions - GoodAV | Rwanda, Africa, Documentary, Kigali Convention Center, Visit Rwanda"
+          description="Find answers to the most common questions about GoodAV’s audiovisual services, production, and support in Rwanda and Africa. Learn about our work in conferences, documentaries, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and more."
+          keywords="Rwanda, Africa, documentary, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda"
           canonical="https://goodav.net/faq"
         />
         <SchemaMarkup

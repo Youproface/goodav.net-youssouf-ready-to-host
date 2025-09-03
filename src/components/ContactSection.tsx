@@ -5,6 +5,7 @@ import BookingModal from './forms/BookingModal';
 import { FaCalendarAlt, FaPhone, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaCheck } from 'react-icons/fa';
 
 export default function ContactUs() {
+  // ...existing code...
 
   const formRef = useRef<HTMLFormElement | null>(null);
   const firstNameRef = useRef<HTMLInputElement | null>(null);
@@ -159,6 +160,67 @@ export default function ContactUs() {
 
   return (
     <section id="contact-section" className="relative bg-[#0e0f10] text-zinc-100">
+      {/* SEO Meta Tags & Structured Data for Contact/Conversion */}
+      <head>
+        <title>Contact GoodAV | Audiovisual Services Rwanda, Africa, Documentary, Conversion</title>
+        <meta name="description" content="Contact GoodAV for world-class audiovisual services in Rwanda, Africa, and globally. Get a quote for video production, documentary, live streaming, photography, and more. Trusted partner for conferences, tourism, conversion, and international events." />
+        <meta name="keywords" content="Contact, Rwanda, Africa, documentary, conversion, audiovisual services, video production, live streaming, photography, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, Trust Partner Rwanda, event media coverage, customer conversion, global impact, Africa documentary, Rwanda documentary, international events, Africa tourism, Rwanda tourism, Africa branding, Rwanda branding, Africa creative, Rwanda creative" />
+        <meta name="author" content="GoodAV" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <link rel="canonical" href="https://goodav.net/contact" />
+        <meta name="geo.region" content="RW" />
+        <meta name="geo.placename" content="Kigali, Rwanda" />
+        <meta name="language" content="English" />
+        <meta name="industry" content="Media Production, Audiovisual Services" />
+        <meta name="category" content="Professional Services, Creative Agency" />
+        {/* Schema.org ContactPoint structured data for conversion & trust */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            "name": "Contact GoodAV",
+            "description": "Contact GoodAV for world-class audiovisual services in Rwanda, Africa, and globally. Get a quote for video production, documentary, live streaming, photography, and more. Trusted partner for conferences, tourism, conversion, and international events.",
+            "url": "https://goodav.net/contact",
+            "mainEntity": {
+              "@type": "Organization",
+              "name": "GoodAV",
+              "url": "https://goodav.net",
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+250788613332",
+                "email": "info@goodav.net",
+                "contactType": "Customer Support",
+                "areaServed": ["Rwanda", "Africa", "International"],
+                "availableLanguage": ["en", "fr"],
+                "sameAs": [
+                  "https://www.instagram.com/goodaudiovisual",
+                  "https://www.youtube.com/@goodaudiovisuals",
+                  "https://www.facebook.com/goodaudiovisuals",
+                  "https://www.linkedin.com/company/goodav"
+                ]
+              },
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Kigali",
+                "addressCountry": "RW"
+              },
+              "keywords": [
+                "contact GoodAV",
+                "audiovisual production Rwanda",
+                "video production Kigali",
+                "African storytelling",
+                "event media coverage",
+                "customer conversion",
+                "documentary filmmaking Rwanda",
+                "conference tourism Africa",
+                "creative economy Africa",
+                "global impact",
+                "international events"
+              ]
+            }
+          })}
+        </script>
+      </head>
       {/* Branded Loading Overlay for Contact Form Submission */}
       {submitting && typeof window !== 'undefined' && createPortal(
         <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-black/80 backdrop-blur-lg">
@@ -286,7 +348,7 @@ export default function ContactUs() {
                       className="mt-2 w-full rounded-xl bg-white/[0.06] px-4 py-3 text-sm sm:text-base text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60"
                       placeholder="Describe the goals, audience, deliverables, and any references"
                       aria-required="true"
-                      aria-invalid={!!fieldErrors.message}
+                      aria-invalid={fieldErrors.message ? "true" : "false"}
                     />
                   </div>
 

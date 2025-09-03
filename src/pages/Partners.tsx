@@ -10,8 +10,9 @@ export default function Partners() {
   return (
     <div>
       <SEO
-        title="Partners - GoodAV | Trusted Audiovisual Collaborators"
-        description="Meet GoodAV’s partners and collaborators. Discover why global organizations trust GoodAV for audiovisual production in Rwanda and Africa."
+        title="Partners - GoodAV | Trusted Audiovisual Collaborators | Rwanda, Africa, Documentary, Kigali Convention Center, Visit Rwanda"
+        description="Meet GoodAV’s partners and collaborators. Discover why global organizations trust GoodAV for audiovisual production in Rwanda and Africa. We support conferences, documentaries, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and more."
+        keywords="Rwanda, Africa, documentary, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda"
         canonical="https://goodav.net/partner"
       />
       <SchemaMarkup

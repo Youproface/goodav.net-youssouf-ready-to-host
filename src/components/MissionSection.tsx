@@ -97,6 +97,42 @@ const MissionSection: React.FC = () => {
       aria-labelledby="mission-heading"
       role="region"
     >
+        {/* SEO Meta Tags & Structured Data for Mission Section */}
+        <head>
+          <title>GoodAV Mission | Transforming Africa's Narrative Globally</title>
+          <meta name="description" content="Learn about GoodAV's mission to transform Africa's narrative through authentic storytelling, documentary, and creative excellence. Trusted for conversion and global impact." />
+          <meta name="keywords" content="Rwanda, Africa, documentary, mission, storytelling, creative excellence, global impact, conversion, audiovisual agency" />
+          <meta name="author" content="GoodAV" />
+          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+          <link rel="canonical" href="https://goodav.net/#mission-section" />
+          <meta name="geo.region" content="RW" />
+          <meta name="geo.placename" content="Kigali, Rwanda" />
+          <meta name="language" content="English" />
+          <meta name="industry" content="Media Production, Audiovisual Services" />
+          <meta name="category" content="Professional Services, Creative Agency" />
+          {/* Schema.org WebPage structured data for Mission section */}
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "GoodAV Mission Section",
+              "description": "Learn about GoodAV's mission to transform Africa's narrative through authentic storytelling, documentary, and creative excellence.",
+              "url": "https://goodav.net/#mission-section",
+              "mainEntity": {
+                "@type": "Organization",
+                "name": "GoodAV",
+                "url": "https://goodav.net",
+                "keywords": [
+                  "mission",
+                  "Africa storytelling",
+                  "Rwanda documentary",
+                  "creative excellence",
+                  "global impact"
+                ]
+              }
+            })}
+          </script>
+        </head>
       <div className="container mx-auto px-4">
         {/* Skip Link for Accessibility */}
         <a 

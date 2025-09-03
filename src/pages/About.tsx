@@ -19,8 +19,9 @@ export default function AboutUs() {
     return (
       <>
         <SEO
-          title="About GoodAV - Africa's Premier Audiovisual Agency"
-          description="Learn about GoodAV, Africa's leading audiovisual agency based in Kigali, Rwanda. Discover our mission, team, and story."
+          title="About GoodAV - Trust Partner in Audiovisual Industry | Rwanda, Africa, Documentary, Kigali Convention Center, Visit Rwanda"
+          description="Learn about GoodAV, your trusted audiovisual partner in Rwanda and Africa. Discover our mission, team, and story. We support conferences, documentaries, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and more."
+          keywords="Rwanda, Africa, documentary, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda"
           canonical="https://goodav.net/about-us"
         />
         <SchemaMarkup

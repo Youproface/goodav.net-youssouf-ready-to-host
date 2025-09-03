@@ -23,6 +23,43 @@ const StatsSection = () => {
 
   return (
     <section id="stats-section" className="py-20 bg-gradient-section">
+        {/* SEO Meta Tags & Structured Data for Stats Section */}
+        <head>
+          <title>GoodAV Impact Stats | Rwanda Africa Documentary Video Production</title>
+          <meta name="description" content="Discover GoodAV's impact: years of excellence, global reach, and hundreds of success stories in Rwanda, Africa, and worldwide. Trusted for documentary, conversion, and creative services." />
+          <meta name="keywords" content="Rwanda, Africa, documentary, video production, impact, success stories, global reach, excellence, conversion, creative agency" />
+          <meta name="author" content="GoodAV" />
+          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+          <link rel="canonical" href="https://goodav.net/#stats-section" />
+          <meta name="geo.region" content="RW" />
+          <meta name="geo.placename" content="Kigali, Rwanda" />
+          <meta name="language" content="English" />
+          <meta name="industry" content="Media Production, Audiovisual Services" />
+          <meta name="category" content="Professional Services, Creative Agency" />
+          {/* Schema.org WebPage structured data for Stats section */}
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebPage",
+              "name": "GoodAV Impact Stats",
+              "description": "Discover GoodAV's impact: years of excellence, global reach, and hundreds of success stories in Rwanda, Africa, and worldwide.",
+              "url": "https://goodav.net/#stats-section",
+              "mainEntity": {
+                "@type": "Organization",
+                "name": "GoodAV",
+                "url": "https://goodav.net",
+                "keywords": [
+                  "impact stats",
+                  "years of excellence",
+                  "global reach",
+                  "success stories",
+                  "Rwanda documentary",
+                  "Africa video production"
+                ]
+              }
+            })}
+          </script>
+        </head>
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">

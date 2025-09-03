@@ -41,6 +41,20 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
   }
   return (
     <main className="min-h-screen bg-[#0f1012] text-zinc-100">
+      {/* SEO Meta Tags */}
+      <head>
+        <title>{`${blog.title} | GoodAV - Rwanda, Africa, Documentary, Gorilla Naming, Kigali Convention Center, Visit Rwanda`}</title>
+        <meta name="description" content={`Read about ${blog.title} - ${blog.excerpt} | GoodAV is your trusted audiovisual partner for Rwanda, Africa, documentary, conferences, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina, gorilla naming, Rwanda visa, national parks, and more.`} />
+        <meta name="keywords" content="Rwanda, Africa, documentary, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda, blog, article, engagement, customer conversion" />
+        <meta property="og:title" content={`${blog.title} | GoodAV - Rwanda, Africa, Documentary`} />
+        <meta property="og:description" content={blog.excerpt} />
+        <meta property="og:image" content={blog.image} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://goodav.net/blog/${blog.slug}`} />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href={`https://goodav.net/blog/${blog.slug}`} />
+        <meta httpEquiv="Content-Language" content="en" />
+      </head>
       {/* HERO */}
       <section className="relative mt-20">
         <div className="relative mt-10 py-28 px-4 bg-transparent">

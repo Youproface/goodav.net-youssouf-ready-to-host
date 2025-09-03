@@ -23,6 +23,7 @@
  */
 
 import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import SEO from './SEO';
 import VideoPlaceholder from './VideoPlaceholder';
 import { Play, X, Eye } from "lucide-react";
 import { motion, useAnimationFrame, useMotionValue, AnimatePresence, Variants } from "framer-motion";
@@ -557,41 +558,27 @@ const FeaturedProjects: React.FC = () => {
         }
       },
     } as Variants,
-    card: {
-      hidden: { opacity: 0, scale: 0.9 },
-      visible: {
-        opacity: 1,
-        scale: 1,
-        transition: {
-          duration: 0.3, // Quick card appearance
-          ease: "easeOut"
-        }
-      },
-    } as Variants,
+    // Add any additional variants here if needed
   }), []);
-
-  // 🎯 Accessibility: Enhanced video modal handler with focus management
-  const handleVideoSelect = useCallback((videoUrl: string | null) => {
-    if (videoUrl) {
-      // Store current focused element for restoration
-      const currentFocus = document.activeElement as HTMLElement;
-      if (currentFocus) {
-        currentFocus.setAttribute('data-last-focused', 'true');
-      }
-    }
-    setSelectedVideo(videoUrl);
-  }, []);
+  // ...existing code...
 
   return (
-    <motion.section
-      className="relative bg-gradient-to-b from-background via-muted/30 to-background text-foreground py-20 px-6 md:px-12 lg:px-20 overflow-hidden"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }} // Reduced margin for faster triggering
-      variants={animationVariants.container}
-      aria-labelledby="portfolio-heading"
-      role="region"
-    >
+    <>
+      <SEO
+        title="Featured Projects | GoodAV - World-Class Audiovisual, Rwanda, Africa, Documentary, Conferences, Conversion"
+        description="Explore GoodAV's world-class featured audiovisual projects for Rwanda, Africa, conferences, documentaries, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and more. Our work drives engagement, customer conversion, and international recognition."
+        keywords="Rwanda, Africa, documentary, conversion, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda, world-class audiovisual, professional media, customer conversion, global impact, international events, Africa documentary, Rwanda documentary, Kigali events, Africa conferences, Rwanda conferences, Africa tourism, Rwanda tourism, Africa branding, Rwanda branding, Africa creative, Rwanda creative"
+        canonical="https://goodav.net/projects"
+      />
+      <motion.section
+        className="relative bg-gradient-to-b from-background via-muted/30 to-background text-foreground py-20 px-6 md:px-12 lg:px-20 overflow-hidden"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }} // Reduced margin for faster triggering
+        variants={animationVariants.container}
+        aria-labelledby="portfolio-heading"
+        role="region"
+      >
       {/* 🎯 Accessibility: Enhanced skip link */}
       <a
         href="#portfolio-cta"
@@ -675,8 +662,8 @@ const FeaturedProjects: React.FC = () => {
                     <div key={`left-${copyIndex}-${project.id}`} className="w-72 h-48 flex-shrink-0">
                       <ProjectCard
                         project={project}
-                        setSelectedVideo={handleVideoSelect}
-                        variants={animationVariants.card}
+                        setSelectedVideo={setSelectedVideo}
+                        variants={animationVariants.item}
                       />
                     </div>
                   ))}
@@ -708,8 +695,8 @@ const FeaturedProjects: React.FC = () => {
                     <div key={`right-${copyIndex}-${project.id}`} className="w-72 h-48 flex-shrink-0">
                       <ProjectCard
                         project={project}
-                        setSelectedVideo={handleVideoSelect}
-                        variants={animationVariants.card}
+                        setSelectedVideo={setSelectedVideo}
+                        variants={animationVariants.item}
                       />
                     </div>
                   ))}
@@ -778,7 +765,7 @@ const FeaturedProjects: React.FC = () => {
             onClick={(e) => {
               // Only close if clicking directly on the backdrop
               if (e.target === e.currentTarget) {
-                handleVideoSelect(null);
+                setSelectedVideo(null);
               }
             }}
             role="dialog"
@@ -791,7 +778,7 @@ const FeaturedProjects: React.FC = () => {
               className="absolute top-4 right-4 text-white hover:text-primary transition-colors p-3 rounded-full hover:bg-white/10 z-10 focus:outline-none focus:ring-2 focus:ring-white/50"
               onClick={(e) => {
                 e.stopPropagation();
-                handleVideoSelect(null);
+                setSelectedVideo(null);
               }}
               aria-label="Close video player and return to portfolio"
               whileHover={{ scale: 1.1 }}
@@ -978,8 +965,9 @@ const FeaturedProjects: React.FC = () => {
         }}
       />
     </motion.section>
+  </>
   );
-};
+}
 
 // 🎯 Performance: Set display name for React DevTools
 FeaturedProjects.displayName = 'FeaturedProjects';
