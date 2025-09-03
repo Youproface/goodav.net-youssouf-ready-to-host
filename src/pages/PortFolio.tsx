@@ -182,98 +182,88 @@ export default function PortFolio() {
 
   // Assign real client names and varied views for portfolio videos
   const portfolioMetaMap = {
-    'X9QGsDfCLDA': { client: 'USAID', views: 18900, duration: '5:12' },
-    'mPg62W1k0GM': { client: 'AIMS', views: 12400, duration: '6:03' },
-    'k0yiRBYhfdU': { client: 'ReCIC', views: 35600, duration: '7:45' },
+  'X9QGsDfCLDA': { client: 'USAID', views: 18900, duration: '5:12' },
+  'mPg62W1k0GM': { client: 'AIMS', views: 12400, duration: '6:03' },
   'k0yiRBYhfdU': { client: 'SNV', views: 35600, duration: '7:45' },
-    '5Cjbze8jBIA': { client: 'Africa Business Heroes', views: 28500, duration: '4:58' },
   '5Cjbze8jBIA': { client: 'African Leadership University', views: 28500, duration: '4:58' },
   'a0GyLzJrVTM': { client: 'UNDP', views: deterministicViews('a0GyLzJrVTM', 3000, 15000), duration: '6:45' },
-    'ydWaP0-Bi_8': { client: 'Ministry of National Unity & Civic Engagement', views: 9800, duration: '6:22' },
-    'jFWAgnAkD8k': { client: 'Next Einsten Forum', views: 11200, duration: '5:40' },
-    'QMRA7bNMi1k': { client: 'UNDP', views: 15400, duration: '6:10' },
-    'NxLQiDbXxUk': { client: 'COP28', views: 8700, duration: '7:01' },
-    '3J6nTSc3SkM': { client: 'SONARWA', views: 7200, duration: '4:33' },
-    'DrT8QQoSJi4': { client: 'BUBR', views: 13100, duration: '8:15' },
-    'oiL9hp1btjc': { client: 'Sonarwa Life', views: 6700, duration: '3:59' },
-    'UAO6T2hDqWU': { client: 'Kepler', views: 15800, duration: '6:44' },
-    '8r27UYS-qaM': { client: 'Kepler', views: 14200, duration: '5:21' },
-    'g9xSgGRRrL0': { client: 'Kepler', views: 9100, duration: '4:50' },
-    'O-bQXQctLJk': { client: 'RSSB', views: 12300, duration: '7:32' },
-    'ekaDY3S7bIk': { client: 'Cimerwa', views: 10100, duration: '6:18' },
-    'EQdb0uKpg8A': { client: 'Rwanda Coffee Project', views: 8800, duration: '5:07' },
+  'ydWaP0-Bi_8': { client: 'Ministry of National Unity & Civic Engagement', views: 9800, duration: '6:22' },
+  'jFWAgnAkD8k': { client: 'Next Einsten Forum', views: 11200, duration: '5:40' },
+  'QMRA7bNMi1k': { client: 'UNDP', views: 15400, duration: '6:10' },
+  'NxLQiDbXxUk': { client: 'COP28', views: 8700, duration: '7:01' },
+  '3J6nTSc3SkM': { client: 'SONARWA', views: 7200, duration: '4:33' },
+  'DrT8QQoSJi4': { client: 'BUBR', views: 13100, duration: '8:15' },
+  'oiL9hp1btjc': { client: 'Sonarwa Life', views: 6700, duration: '3:59' },
+  'UAO6T2hDqWU': { client: 'Kepler', views: 15800, duration: '6:44' },
+  '8r27UYS-qaM': { client: 'Kepler', views: 14200, duration: '5:21' },
+  'g9xSgGRRrL0': { client: 'Kepler', views: 9100, duration: '4:50' },
+  'O-bQXQctLJk': { client: 'RSSB', views: 12300, duration: '7:32' },
+  'ekaDY3S7bIk': { client: 'Cimerwa', views: 10100, duration: '6:18' },
   'EQdb0uKpg8A': { client: 'Challenges Groupe', views: 8800, duration: '5:07' },
-    'pIld8HxDAWQ': { client: 'MINEMA', views: 7600, duration: '6:29' },
-    '1iBUUd04ap0': { client: 'Sonarwa', views: 5400, duration: '3:41' },
+  'pIld8HxDAWQ': { client: 'MINEMA', views: 7600, duration: '6:29' },
   '1iBUUd04ap0': { client: 'Sonarwa', views: 5400, duration: '3:41' },
-    '-gWxCpGePoI': { client: 'Gashora Girls Academy', views: 6200, duration: '4:22' },
-    'iuVhdo1KDAw': { client: 'ReSAKSS', views: 4300, duration: '5:55' },
+  '-gWxCpGePoI': { client: 'Gashora Girls Academy', views: 6200, duration: '4:22' },
   'iuVhdo1KDAw': { client: 'Akademiya2063', views: 4300, duration: '5:55' },
-    'm7X7Wc4GDlA': { client: 'SONARWA', views: 5100, duration: '4:09' },
-    'GxSdzkkzawA': { client: 'UN Women', views: 7300, duration: '6:36' },
+  'm7X7Wc4GDlA': { client: 'SONARWA', views: 5100, duration: '4:09' },
   'GxSdzkkzawA': { client: 'UN Women', views: 7300, duration: '6:36' },
-    'z5Zm1BG9vFc': { client: 'Kigali Muhanga', views: 4100, duration: '3:58' },
   'z5Zm1BG9vFc': { client: 'BUBR', views: 4100, duration: '3:58' },
-    'nuYQUypGUJg': { client: 'Rubavu KGL', views: 3900, duration: '4:44' },
   'nuYQUypGUJg': { client: 'BUBR', views: 3900, duration: '4:44' },
-    'DJomISAEqUA': { client: 'KIGALI Musanze', views: 3700, duration: '5:02' },
   'DJomISAEqUA': { client: 'BUBR', views: 3700, duration: '5:02' },
-    'S6QEONDEhvY': { client: 'KIGALI NYAMATA', views: 3500, duration: '4:27' },
   'S6QEONDEhvY': { client: 'BUBR', views: 3500, duration: '4:27' },
   'JQtxbW0Tfyc': { client: 'African Union', views: 8100, duration: '6:11' },
-    '2KOHCOg6aRo': { client: 'Mariya Yohana', views: 2900, duration: '3:33' },
+  '2KOHCOg6aRo': { client: 'Mariya Yohana', views: 2900, duration: '3:33' },
   'GaT9R1Dkuhs': { client: 'UNFPA', views: 4100, duration: '5:46' },
-    'LZoUzSVFO0c': { client: 'Mobisol', views: 2700, duration: '4:01' },
-    'MEeSUlN4PbA': { client: 'MTN', views: 2700, duration: '4:01' },
+  'LZoUzSVFO0c': { client: 'Mobisol', views: 2700, duration: '4:01' },
+  'MEeSUlN4PbA': { client: 'MTN', views: 2700, duration: '4:01' },
   'voBWRVs6SAc': { client: 'Aegis Trust', views: 4800, duration: '5:19' },
-    'OjDScdrYm8w': { client: 'Kepler', views: 3200, duration: '3:54' },
-    'LCllChb326E': { client: 'NEF GG', views: 4100, duration: '4:48' },
+  'OjDScdrYm8w': { client: 'Kepler', views: 3200, duration: '3:54' },
+  'LCllChb326E': { client: 'NEF GG', views: 4100, duration: '4:48' },
   'N-kaJpP6UW4': { client: 'GoodAV', views: 3900, duration: '6:27' },
   'iBUxkpNdXZ0': { client: 'AIMS', views: deterministicViews('iBUxkpNdXZ0', 3000, 15000), duration: '6:45' },
-    'vJvAXgnQplk': { client: 'Miss Rwanda', views: 3700, duration: '5:03' },
-    '92XGK353E_E': { client: 'Miss Rwanda', views: 3500, duration: '4:36' },
-    'acOICw-Z8gU': { client: 'AllSightsAfrica', views: 3100, duration: '3:47' },
-    'UJQWe0zPxcA': { client: 'GENDER SUMMIT', views: 2900, duration: '5:29' },
-    'XN0BGHRe6FE': { client: 'ALN', views: 2700, duration: '6:02' },
-    'O8KgYZy3gxU': { client: 'Africa Leadership University', views: 2500, duration: '4:55' },
+  'vJvAXgnQplk': { client: 'Miss Rwanda', views: 3700, duration: '5:03' },
+  '92XGK353E_E': { client: 'Miss Rwanda', views: 3500, duration: '4:36' },
+  'acOICw-Z8gU': { client: 'AllSightsAfrica', views: 3100, duration: '3:47' },
+  'UJQWe0zPxcA': { client: 'GENDER SUMMIT', views: 2900, duration: '5:29' },
+  'XN0BGHRe6FE': { client: 'ALN', views: 2700, duration: '6:02' },
+  'O8KgYZy3gxU': { client: 'Africa Leadership University', views: 2500, duration: '4:55' },
   'HH-DM8h27Qc': { client: 'Echoes of Tradition', views: 2300, duration: '7:08' },
-    'B1ihjDs5K8Q': { client: 'USAID', views: 2100, duration: '5:16' },
-    'Rt9Bsrsng0M': { client: 'UNDP', views: 1900, duration: '4:39' },
+  'B1ihjDs5K8Q': { client: 'USAID', views: 2100, duration: '5:16' },
+  'Rt9Bsrsng0M': { client: 'UNDP', views: 1900, duration: '4:39' },
   '25MQcKjepJo': { client: 'Echoes of Tradition', views: 1700, duration: '3:59' },
-    'L35E2Rpv95Q': { client: 'Africa Climate', views: 1500, duration: '6:21' },
-    '2lfU9SWRxrU': { client: 'Pan African Parliament', views: 1300, duration: '5:43' },
-    'xceOolaMwVs': { client: 'African Economic Conference', views: 1100, duration: '4:32' },
-    'OyKf8xm06cw': { client: 'Youth Connekt Africa', views: 900, duration: '3:45' },
-    'o46mz0pKZyc': { client: 'SDGs Implementation', views: 700, duration: '4:28' },
-    'q9oAUoDXV4U': { client: 'African Economic Conference', views: 500, duration: '3:51' },
-    'KqpaO22Djx8': { client: 'Smart Africa', views: 300, duration: '5:09' },
-    'eUIcNtPSxIU': { client: 'Partners in Health', views: 100, duration: '6:00' },
-    '-AxxDRyNd80': { client: 'World Vision', views: 1200, duration: '4:41' },
-    'ITF54ZLAjyM': { client: 'SIDA', views: 1400, duration: '5:27' },
-    'K1X-VYTMPo8': { client: 'RRA', views: 1600, duration: '6:13' },
-    '1867pEefRVk': { client: 'WASH', views: 1800, duration: '4:17' },
-    'IQE3ZDIsV-4': { client: 'Rwanda Revenue Authority', views: 2000, duration: '5:34' },
-    'r1LgmIiq2Cs': { client: 'World Vision', views: 2200, duration: '6:08' },
+  'L35E2Rpv95Q': { client: 'Africa Climate', views: 1500, duration: '6:21' },
+  '2lfU9SWRxrU': { client: 'Pan African Parliament', views: 1300, duration: '5:43' },
+  'xceOolaMwVs': { client: 'African Economic Conference', views: 1100, duration: '4:32' },
+  'OyKf8xm06cw': { client: 'Youth Connekt Africa', views: 900, duration: '3:45' },
+  'o46mz0pKZyc': { client: 'SDGs Implementation', views: 700, duration: '4:28' },
+  'q9oAUoDXV4U': { client: 'African Economic Conference', views: 500, duration: '3:51' },
+  'KqpaO22Djx8': { client: 'Smart Africa', views: 300, duration: '5:09' },
+  'eUIcNtPSxIU': { client: 'Partners in Health', views: 100, duration: '6:00' },
+  '-AxxDRyNd80': { client: 'World Vision', views: 1200, duration: '4:41' },
+  'ITF54ZLAjyM': { client: 'SIDA', views: 1400, duration: '5:27' },
+  'K1X-VYTMPo8': { client: 'RRA', views: 1600, duration: '6:13' },
+  '1867pEefRVk': { client: 'WASH', views: 1800, duration: '4:17' },
+  'IQE3ZDIsV-4': { client: 'Rwanda Revenue Authority', views: 2000, duration: '5:34' },
+  'r1LgmIiq2Cs': { client: 'World Vision', views: 2200, duration: '6:08' },
   'RklfarDKsvY': { client: 'World Vision', views: 2400, duration: '4:53' },
-    'cHF-r2_o4dk': { client: 'TechnoServe', views: 2600, duration: '5:22' },
+  'cHF-r2_o4dk': { client: 'TechnoServe', views: 2600, duration: '5:22' },
   'XeYldO4e2KU': { client: 'Touch Media', views: 3000, duration: '3:42' },
   'KLUq0pgZG-8': { client: 'Mopas', views: 3200, duration: '4:59' },
-    'FwL-RSkEi8Y': { client: 'STROMAE', views: 3400, duration: '6:25' },
-    'rzHSv_z6GT0': { client: 'SEBURIKOKO', views: 3600, duration: '5:18' },
-    'GYxmhTgCWMA': { client: 'World Vision', views: 3800, duration: '4:46' },
-    'qo4NPjCtSQk': { client: 'JOAN TALK SHOW', views: 4000, duration: '5:31' },
-    'fTwvL8FLnL8': { client: 'Kepler', views: 4200, duration: '6:19' },
-    'gPiMpj2BpxE': { client: 'AEC', views: 4400, duration: '4:38' },
-    'TuuuO-WfD3s': { client: 'The Catalyst', views: 4600, duration: '5:25' },
-    'ZNJHy-JcWzI': { client: 'UNDP', views: 4800, duration: '6:07' },
-    '55yTPL1o-_M': { client: 'NEF', views: 5000, duration: '4:35' },
-    'Ja36-ZFELg8': { client: 'AIMS', views: 5200, duration: '5:50' },
-    'L8h9cLK94D0': { client: 'Connected GirlsHub', views: 5400, duration: '4:20' },
-    '_bB0IXCcIvI': { client: 'AIMS', views: 5600, duration: '6:14' },
-    'kyGXssz7OVU': { client: 'Rwanda Police', views: 5800, duration: '5:03' },
-    'Chdk4A-kgIA': { client: 'Bralirwa', views: 6200, duration: '4:56' },
-    'HX_BA5zkOgo': { client: 'KIFC', views: 6400, duration: '5:39' },
-    '7BSqXwAka4k': { client: 'Bralirwa', views: 6600, duration: '6:22' },
+  'FwL-RSkEi8Y': { client: 'STROMAE', views: 3400, duration: '6:25' },
+  'rzHSv_z6GT0': { client: 'SEBURIKOKO', views: 3600, duration: '5:18' },
+  'GYxmhTgCWMA': { client: 'World Vision', views: 3800, duration: '4:46' },
+  'qo4NPjCtSQk': { client: 'JOAN TALK SHOW', views: 4000, duration: '5:31' },
+  'fTwvL8FLnL8': { client: 'Kepler', views: 4200, duration: '6:19' },
+  'gPiMpj2BpxE': { client: 'AEC', views: 4400, duration: '4:38' },
+  'TuuuO-WfD3s': { client: 'The Catalyst', views: 4600, duration: '5:25' },
+  'ZNJHy-JcWzI': { client: 'UNDP', views: 4800, duration: '6:07' },
+  '55yTPL1o-_M': { client: 'NEF', views: 5000, duration: '4:35' },
+  'Ja36-ZFELg8': { client: 'AIMS', views: 5200, duration: '5:50' },
+  'L8h9cLK94D0': { client: 'Connected GirlsHub', views: 5400, duration: '4:20' },
+  '_bB0IXCcIvI': { client: 'AIMS', views: 5600, duration: '6:14' },
+  'kyGXssz7OVU': { client: 'Rwanda Police', views: 5800, duration: '5:03' },
+  'Chdk4A-kgIA': { client: 'Bralirwa', views: 6200, duration: '4:56' },
+  'HX_BA5zkOgo': { client: 'KIFC', views: 6400, duration: '5:39' },
+  '7BSqXwAka4k': { client: 'Bralirwa', views: 6600, duration: '6:22' },
   };
 
   // Improved category labeling based on title
@@ -386,10 +376,40 @@ export default function PortFolio() {
         <meta property="og:image" content="/images/all_site_images/Home/BG/Home_BG.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://goodav.net/portfolio" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://goodav.net/portfolio" />
+        <meta httpEquiv="Content-Language" content="en" />
+        {/* Structured data for all videos */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            'name': 'GoodAV Portfolio',
+            'itemListElement': ENRICHED_VIDEOS.map((video, idx) => ({
+              '@type': 'VideoObject',
+              'position': idx + 1,
+              'name': video.title,
+              'description': `${video.title} by ${video.client} (${video.year})`,
+              'thumbnailUrl': getThumbnail(video),
+              'uploadDate': `${video.year}-01-01`,
+              'url': `https://www.youtube.com/watch?v=${video.id}`,
+              'duration': `PT${video.duration.replace(':', 'M')}S`,
+              'interactionStatistic': {
+                '@type': 'InteractionCounter',
+                'interactionType': 'https://schema.org/WatchAction',
+                'userInteractionCount': video.views
+              },
+              'publisher': {
+                '@type': 'Organization',
+                'name': video.client || 'GoodAV'
+              }
+            }))
+          })}
+        </script>
       </Helmet>
       <main className="bg-[#0f1012] text-zinc-100 min-h-screen px-4 py-0 relative">
         {/* Full-bleed hero header (moved out of centered container) */}
-        <header className="relative mt-10 py-32 px-4 -mx-4 sm:-mx-6 md:-mx-8 bg-transparent text-center mb-10 flex flex-col items-center justify-center min-h-[340px]">
+  <header className="relative mt-10 py-32 px-4 -mx-4 sm:-mx-6 md:-mx-8 bg-transparent text-center mb-10 flex flex-col items-center justify-center min-h-[340px]" role="banner">
           <div className="absolute inset-0">
             <img
               src="/images/all_site_images/Home/BG/Home_BG.png"
@@ -400,10 +420,10 @@ export default function PortFolio() {
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#0f1012]" />
           </div>
           <div className="relative max-w-6xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-white via-orange-200 to-amber-200 bg-clip-text text-transparent tracking-tight mb-4">
+            <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-white via-orange-200 to-amber-200 bg-clip-text text-transparent tracking-tight mb-4" id="portfolio-heading">
               GoodAV Portfolio: Audiovisual Projects & Creative Highlights
             </h1>
-            <p className="text-zinc-200 text-xl md:text-2xl font-medium max-w-2xl mx-auto">
+            <p className="text-zinc-200 text-xl md:text-2xl font-medium max-w-2xl mx-auto" aria-describedby="portfolio-heading">
               Discover our recent work in video production, documentary filmmaking, and event coverage for leading organizations in Rwanda and beyond. <strong>Storytelling, innovation, and impact</strong> are at the heart of every project.
             </p>
           </div>
@@ -411,7 +431,7 @@ export default function PortFolio() {
 
   <div className="max-w-7xl mx-auto relative">
         {/* Controls: category filters, search, sort */}
-  <section className="sticky top-0 z-30 -mt-6 mb-6 backdrop-blur supports-[backdrop-filter]:bg-[#0f1012]/70 bg-[#0f1012]/95 border-b border-white/5" aria-label="Portfolio controls">
+  <section className="sticky top-0 z-30 -mt-6 mb-6 backdrop-blur supports-[backdrop-filter]:bg-[#0f1012]/70 bg-[#0f1012]/95 border-b border-white/5" aria-label="Portfolio controls" role="region">
           <div className="max-w-7xl mx-auto px-1 sm:px-2 md:px-0 py-3 flex flex-col gap-3">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-3 mb-2">
@@ -472,7 +492,7 @@ export default function PortFolio() {
 
         {/* Main video player only shown when a video is selected */}
         {selectedVideo && (
-          <article className="sticky top-16 z-40 bg-[#0f1012] pb-8" ref={playerRef} aria-label="Selected video preview">
+          <article className="sticky top-16 z-40 bg-[#0f1012] pb-8" ref={playerRef} aria-label="Selected video preview" role="region">
             <div className="relative w-full max-w-3xl mx-auto aspect-video mb-4 rounded-lg overflow-hidden glass-card shadow-glow border-2 border-primary/30">
               {!isPlaying ? (
                 <>
@@ -480,6 +500,7 @@ export default function PortFolio() {
                   <img
                     src={`https://img.youtube.com/vi/${selectedVideo}/hqdefault.jpg`}
                     alt={ALL_VIDEOS.find(v => v.id === selectedVideo)?.title + ' - Video thumbnail'}
+                    title={ALL_VIDEOS.find(v => v.id === selectedVideo)?.title}
                     className="absolute inset-0 w-full h-full object-cover"
                     loading="lazy"
                   />
@@ -524,6 +545,7 @@ export default function PortFolio() {
                     allowFullScreen
                     loading="lazy"
                     className="w-full h-full absolute inset-0"
+                    aria-label={ALL_VIDEOS.find(v => v.id === selectedVideo)?.title}
                   />
                   <noscript>
                     <a href={`https://www.youtube.com/watch?v=${selectedVideo}`} target="_blank" rel="noopener noreferrer" className="sr-only">Open video in new tab</a>
@@ -548,20 +570,21 @@ export default function PortFolio() {
           {pagedVideos.map((video, idx) => {
             const cat = (video as any)._cat as string;
             return (
-              <article key={video.id + idx} className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-[#0b0b0c]" aria-label={`Portfolio video: ${video.title}`}>
+              <article key={video.id + idx} className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-[#0b0b0c]" aria-label={`Portfolio video: ${video.title}`} role="article">
                 <button
                   onClick={() => handleSelectVideo(video.id)}
                   aria-label={`Play video ${video.title}`}
                   className="relative w-full h-full block focus:outline-none"
+                  tabIndex={0}
+                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') handleSelectVideo(video.id); }}
                 >
                   <div className="w-full aspect-[16/9] overflow-hidden relative rounded-xl">
                     {/* Play button overlay on hover - highest z-index, rendered last */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
                       <button
-                        className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-amber-400 text-primary-foreground shadow-glow flex items-center justify-center border-4 border-white/30"
+                        className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-amber-400 text-primary-foreground shadow-glow flex items-center justify-center border-4 border-white/30 pointer-events-none"
                         tabIndex={-1}
                         aria-label="Play video"
-                        style={{ pointerEvents: 'none' }}
                       >
                         <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                           <path d="M8 5v14l11-7z" />
@@ -571,6 +594,7 @@ export default function PortFolio() {
                     <img
                       src={getThumbnail(video)}
                       alt={video.title + ' - Portfolio video thumbnail'}
+                      title={video.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
@@ -590,10 +614,10 @@ export default function PortFolio() {
                   </div>
                   {/* Bottom overlay: title, client, year, views */}
                   <div className="absolute left-0 right-0 bottom-0 px-4 pb-3 pt-2 text-white">
-                    <h2 className="text-sm md:text-base font-semibold line-clamp-2 text-left" title={video.title}>{video.title}</h2>
-                    <p className="text-xs text-zinc-300 mt-1 text-left">{video.client}</p>
+                    <h2 className="text-sm md:text-base font-semibold line-clamp-2 text-left" title={video.title} id={`video-title-${video.id}`}>{video.title}</h2>
+                    <p className="text-xs text-zinc-300 mt-1 text-left" aria-label="Client">{video.client}</p>
                     <div className="flex items-center justify-between mt-2">
-                      <div className="flex items-center gap-1 text-xs text-zinc-200">
+                      <div className="flex items-center gap-1 text-xs text-zinc-200" aria-label="Year">
                         <svg className="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                         {video.year}
                       </div>
@@ -657,7 +681,7 @@ export default function PortFolio() {
           </div>
         )}
         {totalPages > 1 && (
-          <nav className="flex justify-center items-center gap-2 my-10" aria-label="Portfolio pagination">
+          <nav className="flex justify-center items-center gap-2 my-10" aria-label="Portfolio pagination" role="navigation">
             <button
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
