@@ -407,13 +407,13 @@ const Hero = () => {
                 icon: <Trophy className="h-8 w-8 text-orange-500" />,
               },
               {
-                number: <><AnimatedCounter value={95} suffix="+" /><span className="text-orange-500 text-2xl">M</span></>,
-                label: "Global Reach",
+                number: <AnimatedCounter value={5} suffix="+" />,
+                label: "Countries",
                 icon: <Eye className="h-8 w-8 text-orange-500" />,
               },
               {
-                number: <AnimatedCounter value={200} suffix="+" />,
-                label: "Success Stories",
+                number: <AnimatedCounter value={500} suffix="+" />,
+                label: "Projects",
                 icon: <Handshake className="h-8 w-8 text-orange-500" />,
               },
             ].map((stat, index) => (
