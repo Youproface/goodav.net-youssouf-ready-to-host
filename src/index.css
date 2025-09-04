@@ -341,3 +341,16 @@ html {
   will-change: scroll-position;
   transform: translateZ(0); /* Force hardware acceleration */
 }
+
+/* About page: images grayscale by default, colored on hover/focus for accessibility */
+.about-grayscale img {
+  filter: grayscale(100%) contrast(95%);
+  transition: filter 300ms ease, transform 300ms ease;
+  will-change: filter, transform;
+}
+.about-grayscale img:hover,
+.about-grayscale img:focus,
+.about-grayscale img:active {
+  filter: none;
+  transform: scale(1.02);
+}

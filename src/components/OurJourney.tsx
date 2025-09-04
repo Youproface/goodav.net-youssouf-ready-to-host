@@ -52,7 +52,7 @@ const OurJourney: React.FC = () => {
     {
       icon: Globe2,
       title: "Continental Reach",
-      description: "Operating across 15+ African countries with deep cultural understanding",
+      description: "Operating across 5+ African countries with deep cultural understanding",
       ariaLabel: "Continental reach across 15+ African countries"
     },
     {
