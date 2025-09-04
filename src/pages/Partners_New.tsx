@@ -1,11 +1,6 @@
 import BTSMasterProduction from '@/components/BTSMasterProdcution';
-import Testimonials from '@/components/Testimonials';
-import BookingModal from '@/components/forms/BookingModal';
-import React, { useState, useMemo, useCallback, Suspense } from 'react';
-
-// Lazy load components for better performance
-const PartnersLogos = React.lazy(() => import('@/components/PartnersLogos'));
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   FaTrophy, 
@@ -19,8 +14,6 @@ import {
   FaStar,
   FaHandshake,
   FaAward,
-  FaEye,
-  FaArrowRight,
   FaRocket,
   FaShieldAlt,
   FaUsers,
@@ -37,9 +30,8 @@ import SchemaMarkup from '@/components/SchemaMarkup';
 export default function Partners() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('overview');
-  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
-  // Optimized animation variants for performance
+  // Optimized animation variants
   const animationVariants = useMemo(() => ({
     containerVariants: {
       hidden: { opacity: 0 },
@@ -83,6 +75,26 @@ export default function Partners() {
         },
       },
     },
+    slideInLeftVariants: {
+      hidden: { opacity: 0, x: -30 },
+      visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+          duration: 0.7,
+        },
+      },
+    },
+    slideInRightVariants: {
+      hidden: { opacity: 0, x: 30 },
+      visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+          duration: 0.7,
+        },
+      },
+    },
     fadeInUpVariants: {
       hidden: { opacity: 0, y: 40 },
       visible: {
@@ -100,6 +112,8 @@ export default function Partners() {
     itemVariants,
     titleVariants,
     cardVariants,
+    slideInLeftVariants,
+    slideInRightVariants,
     fadeInUpVariants,
   } = animationVariants;
 
@@ -111,220 +125,63 @@ export default function Partners() {
         keywords="GoodAV partnerships, audiovisual collaboration Rwanda, production partnerships Africa, corporate media partnerships, NGO video partnerships, international conference partners, documentary production partners, strategic media alliances, premium audiovisual services, professional video partnerships, Rwanda media partnerships, African storytelling partners, global production partners, media agency collaborations"
         canonical="https://goodav.net/partners"
         type="website"
-        image="/images/all_site_images/Home/BG/Home_BG.png"
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Strategic Partnerships', url: '/partners' }
         ]}
-        alternateLanguages={[
-          { hreflang: 'en', href: 'https://goodav.net/partners' },
-          { hreflang: 'fr', href: 'https://goodav.net/fr/partenaires' },
-          { hreflang: 'rw', href: 'https://goodav.net/rw/ubufatanye' }
-        ]}
       />
       <SchemaMarkup
-        schema={[
-          {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "GoodAV",
-            "alternateName": "GoodAV Rwanda",
-            "url": "https://goodav.net",
-            "logo": {
-              "@type": "ImageObject",
-              "url": "https://goodav.net/images/all_site_images/Assets/logo-full-color.svg",
-              "width": 300,
-              "height": 100
-            },
-            "description": "Africa's premier audiovisual agency offering strategic partnerships for global organizations. Specialized in premium production services, compliance management, and authentic African storytelling.",
-            "sameAs": [
-              "https://www.instagram.com/goodaudiovisual",
-              "https://www.youtube.com/@goodaudiovisuals",
-              "https://www.facebook.com/goodaudiovisuals",
-              "https://www.linkedin.com/company/goodav"
-            ],
-            "contactPoint": {
-              "@type": "ContactPoint",
-              "telephone": "+250788613332",
-              "email": "info@goodav.net",
-              "contactType": "Partnership Inquiries",
-              "areaServed": ["Rwanda", "Africa", "International"],
-              "availableLanguage": ["en", "fr", "rw"],
-              "hoursAvailable": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                "opens": "08:00",
-                "closes": "18:00"
-              }
-            },
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Kigali",
-              "addressCountry": "RW",
-              "addressRegion": "Kigali City"
-            },
-            "founder": {
-              "@type": "Person",
-              "name": "Youssouf Hakizimana",
-              "jobTitle": "Founder & CEO"
-            },
-            "numberOfEmployees": "15-50",
-            "foundingDate": "2014",
-            "awards": [
-              "Rwanda's Leading Audiovisual Production Company 2024",
-              "Best Creative Agency East Africa 2023",
-              "Excellence in African Storytelling 2022"
-            ],
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "4.9",
-              "reviewCount": "127",
-              "bestRating": "5",
-              "worstRating": "1"
-            },
-            "hasOfferCatalog": {
-              "@type": "OfferCatalog",
-              "name": "Partnership Services",
-              "itemListElement": [
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Strategic Alliance Partnership",
-                    "description": "Long-term partnership with dedicated resources and preferential rates"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Project Partnership",
-                    "description": "Event and campaign focused collaboration"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Retainer Partnership",
-                    "description": "Ongoing audiovisual coverage with reserved capacity"
-                  }
-                }
-              ]
-            }
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "GoodAV",
+          "url": "https://goodav.net",
+          "logo": "/images/all_site_images/Assets/logo-full-color.svg",
+          "description": "Africa's premier audiovisual agency offering strategic partnerships for global organizations. Specialized in premium production services, compliance management, and authentic African storytelling.",
+          "sameAs": [
+            "https://www.instagram.com/goodaudiovisual",
+            "https://www.youtube.com/@goodaudiovisuals",
+            "https://www.facebook.com/goodaudiovisuals",
+            "https://www.linkedin.com/company/goodav"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+250788613332",
+            "email": "info@goodav.net",
+            "contactType": "Partnership Inquiries",
+            "areaServed": ["Rwanda", "Africa", "International"],
+            "availableLanguage": ["en", "fr", "rw"]
           },
-          {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Home",
-                "item": "https://goodav.net"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Strategic Partnerships",
-                "item": "https://goodav.net/partners"
-              }
-            ]
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Kigali",
+            "addressCountry": "RW"
           },
-          {
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": "Strategic Partnership Services",
-            "provider": {
-              "@type": "Organization",
-              "name": "GoodAV"
-            },
-            "description": "Comprehensive partnership solutions for audiovisual production and media services across Africa",
-            "serviceType": "Media Production Partnership",
-            "areaServed": [
-              {
-                "@type": "Country",
-                "name": "Rwanda"
-              },
-              {
-                "@type": "Continent",
-                "name": "Africa"
-              }
-            ],
-            "hasOfferCatalog": {
-              "@type": "OfferCatalog",
-              "name": "Partnership Packages",
-              "itemListElement": [
-                {
-                  "@type": "Offer",
-                  "name": "Strategic Alliance",
-                  "description": "Long-term partnership with dedicated resources and preferential rates",
-                  "businessFunction": "Sell"
-                },
-                {
-                  "@type": "Offer",
-                  "name": "Project Partnership",
-                  "description": "Flexible collaboration for specific events, campaigns, or documentary projects",
-                  "businessFunction": "Sell"
-                },
-                {
-                  "@type": "Offer",
-                  "name": "Retainer Partnership",
-                  "description": "Consistent audiovisual support with reserved capacity and guaranteed availability",
-                  "businessFunction": "Sell"
-                }
-              ]
-            }
+          "founder": {
+            "@type": "Person",
+            "name": "Youssouf Hakizimana"
           },
-          {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "What types of partnership does GoodAV offer?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "GoodAV offers three main partnership types: Strategic Alliance for long-term partnerships, Project Partnership for specific campaigns, and Retainer Partnership for ongoing audiovisual support."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Which countries does GoodAV serve?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "GoodAV provides services across 5+ African countries with global reach, specializing in Rwanda and expanding throughout the African continent."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "How many projects has GoodAV completed?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "GoodAV has successfully delivered over 500 projects for 50+ trusted partner organizations over 10+ years of excellence in the audiovisual industry."
-                }
-              }
-            ]
+          "awards": [
+            "Rwanda's Leading Audiovisual Production Company 2024",
+            "Best Creative Agency East Africa 2023",
+            "Excellence in African Storytelling 2022"
+          ],
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "reviewCount": "127",
+            "bestRating": "5",
+            "worstRating": "1"
           }
-        ]}
+        }}
       />
 
       {/* Skip to content link for accessibility */}
       <a 
         href="#main-content" 
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-orange-500 text-white px-6 py-3 rounded-md z-50 focus:outline-none focus:ring-4 focus:ring-orange-300 font-semibold transition-all"
-        aria-label="Skip to main content"
       >
         Skip to main content
-      </a>
-
-      {/* Skip to navigation link */}
-      <a 
-        href="#main-navigation" 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-48 bg-orange-500 text-white px-6 py-3 rounded-md z-50 focus:outline-none focus:ring-4 focus:ring-orange-300 font-semibold transition-all"
-        aria-label="Skip to navigation"
-      >
-        Skip to navigation
       </a>
 
       {/* Premium Hero Section */}
@@ -335,7 +192,6 @@ export default function Partners() {
         animate="visible"
         variants={containerVariants}
         aria-labelledby="hero-heading"
-        aria-describedby="hero-description"
       >
         <div className="hero-background absolute inset-0" aria-hidden="true">
           <img
@@ -344,10 +200,6 @@ export default function Partners() {
             className="w-full h-full object-cover opacity-20"
             loading="eager"
             role="presentation"
-            width="1920"
-            height="1080"
-            decoding="async"
-            fetchPriority="high"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#0f1012]" />
         </div>
@@ -357,11 +209,9 @@ export default function Partners() {
           <motion.div 
             className="mb-8 flex justify-center"
             variants={fadeInUpVariants}
-            role="img"
-            aria-label="Trust badge: Trusted by 500+ Global Organizations"
           >
             <div className="inline-flex items-center gap-3 bg-gradient-to-r from-orange-500/20 to-amber-500/20 border border-orange-500/30 text-orange-300 px-6 py-3 rounded-full backdrop-blur-sm">
-              <MdVerified className="text-xl" aria-hidden="true" />
+              <MdVerified className="text-xl" />
               <span className="font-semibold">Trusted by 500+ Global Organizations</span>
             </div>
           </motion.div>
@@ -380,7 +230,6 @@ export default function Partners() {
           
           <motion.p 
             className="text-zinc-200 text-xl md:text-2xl lg:text-3xl font-medium max-w-5xl mx-auto leading-relaxed mb-12" 
-            id="hero-description"
             variants={fadeInUpVariants}
             role="doc-subtitle"
           >
@@ -390,18 +239,15 @@ export default function Partners() {
           </motion.p>
 
           {/* Key Stats */}
-          <motion.section
+          <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12"
             variants={containerVariants}
-            aria-labelledby="stats-heading"
-            role="region"
           >
-            <h2 id="stats-heading" className="sr-only">Partnership Statistics</h2>
             {[
-              { number: '50+', label: 'Partners', description: 'Trusted organizations we collaborate with', icon: FaHandshake },
-              { number: '5+', label: 'Countries', description: 'Global reach across African nations', icon: FaGlobe },
-              { number: '500+', label: 'Projects', description: 'Successful collaborations delivered', icon: FaRocket },
-              { number: '10+', label: 'Years of Excellence', description: 'Proven track record of success', icon: FaAward }
+              { number: '500+', label: 'Global Partners', icon: FaHandshake },
+              { number: '1000+', label: 'Projects Delivered', icon: FaRocket },
+              { number: '15+', label: 'Years Experience', icon: FaAward },
+              { number: '25+', label: 'Countries Served', icon: FaGlobe }
             ].map((stat, index) => (
               <motion.div 
                 key={stat.label}
@@ -409,43 +255,44 @@ export default function Partners() {
                 variants={itemVariants}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -5, scale: 1.05, transition: { duration: 0.3 } }}
-                role="img"
-                aria-label={`${stat.number} ${stat.label}: ${stat.description}`}
-                tabIndex={0}
               >
-                <stat.icon className="text-3xl text-orange-400 mx-auto mb-2" aria-hidden="true" />
-                <div className="text-3xl md:text-4xl font-bold text-white" aria-label={`${stat.number} ${stat.label}`}>{stat.number}</div>
-                <div className="text-sm text-zinc-300 font-medium mb-1">{stat.label}</div>
-                <div className="text-xs text-zinc-400 leading-tight">{stat.description}</div>
+                <stat.icon className="text-3xl text-orange-400 mx-auto mb-2" />
+                <div className="text-3xl md:text-4xl font-bold text-white">{stat.number}</div>
+                <div className="text-sm text-zinc-300 font-medium">{stat.label}</div>
               </motion.div>
             ))}
-          </motion.section>
+          </motion.div>
 
           {/* CTA Buttons */}
           <motion.div
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
             variants={containerVariants}
-            role="group"
-            aria-label="Partnership action buttons"
           >
             <motion.button 
-              className="px-10 py-4 rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-lg hover:from-orange-600 hover:to-amber-600 transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-[#0f1012]"
+              className="px-10 py-4 rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-lg hover:from-orange-600 hover:to-amber-600 transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-400"
               variants={itemVariants}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setIsBookingOpen(true)}
-              aria-label="Start Partnership - Open booking consultation modal"
-              type="button"
+              onClick={() => navigate('/contact')}
             >
-              <FaHandshake className="inline mr-3" aria-hidden="true" />
+              <FaHandshake className="inline mr-3" />
               Start Partnership
+            </motion.button>
+            <motion.button 
+              className="px-10 py-4 rounded-lg border-2 border-white/20 text-zinc-200 hover:bg-white/5 hover:border-white/30 transition-all font-semibold text-lg flex items-center gap-3"
+              variants={itemVariants}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaDownload />
+              Partnership Deck
             </motion.button>
           </motion.div>
         </div>
       </motion.header>
 
       {/* Main Content */}
-      <div id="main-content" className="scroll-mt-8" role="main" aria-label="Partnership information and services">
+      <div id="main-content" className="scroll-mt-8">
 
         {/* Why Partner With GoodAV - Premium Value Proposition */}
         <motion.section 
@@ -454,14 +301,13 @@ export default function Partners() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={containerVariants}
-          aria-labelledby="why-partner-heading"
         >
           <motion.div className="text-center mb-16" variants={titleVariants}>
-            <h2 id="why-partner-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
               Why Partner With 
               <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent"> GoodAV</span>
             </h2>
-            <div className="w-32 h-2 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto rounded-full" aria-hidden="true"></div>
+            <div className="w-32 h-2 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto rounded-full"></div>
             <p className="text-xl text-zinc-300 mt-6 max-w-4xl mx-auto">
               Experience the difference of working with Africa's most trusted audiovisual production partner
             </p>
@@ -633,7 +479,7 @@ export default function Partners() {
                         ? 'bg-gradient-to-r from-orange-500 to-amber-500 text-white hover:from-orange-600 hover:to-amber-600'
                         : 'border-2 border-orange-500/20 text-orange-300 hover:bg-orange-500/10 hover:border-orange-500/40'
                     }`}
-                    onClick={() => setIsBookingOpen(true)}
+                    onClick={() => navigate('/contact')}
                   >
                     Get Started
                   </button>
@@ -799,92 +645,153 @@ export default function Partners() {
           </div>
         </motion.section>
 
-        {/* Partner Logos Section - Using Reusable Component */}
-        <Suspense fallback={
-          <div className="flex justify-center items-center py-20" role="status" aria-label="Loading partner logos">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
-            <span className="sr-only">Loading partner logos...</span>
-          </div>
-        }>
-          <PartnersLogos />
-        </Suspense>
-
-        {/* Success Stories Section */}
+        {/* Trust Indicators */}
         <motion.section 
           className="max-w-7xl mx-auto px-4 py-20"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={containerVariants}
-          aria-labelledby="success-stories-heading"
         >
           <motion.div className="text-center mb-16" variants={titleVariants}>
-            <h2 id="success-stories-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Our <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">Success Stories</span>
-            </h2>
-            <div className="w-32 h-2 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto rounded-full" aria-hidden="true"></div>
-            <p className="text-xl text-zinc-300 mt-6 max-w-4xl mx-auto">
-              Discover how we've delivered exceptional results for clients across the globe
-            </p>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Trusted by Global Leaders</h2>
+            <div className="w-32 h-2 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto rounded-full"></div>
           </motion.div>
 
+          {/* Trust Badges */}
           <motion.div 
-            className="bg-gradient-to-r from-zinc-900/50 to-zinc-800/50 backdrop-blur-sm rounded-3xl p-8 lg:p-12 text-center"
-            variants={itemVariants}
+            className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 mb-16"
+            variants={containerVariants}
           >
-            <div className="mb-8">
-              <FaTrophy className="text-6xl text-orange-400 mx-auto mb-6" />
-              <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
-                Featured Case Study: Gilead IAS 2025
-              </h3>
-              <p className="text-lg text-zinc-300 mb-6 max-w-3xl mx-auto">
-                Full media coverage of the 13th International AIDS Society Conference on HIV Science in Kigali, Rwanda. 
-                A comprehensive audiovisual production showcasing our global capabilities and local expertise.
-              </p>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-400">5 Days</div>
-                  <div className="text-sm text-zinc-400">Production</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-400">100+</div>
-                  <div className="text-sm text-zinc-400">Photos Delivered</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-400">5+</div>
-                  <div className="text-sm text-zinc-400">Video Assets</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-400">100%</div>
-                  <div className="text-sm text-zinc-400">Client Satisfaction</div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/case-studies/gilead-ias-2025"
-                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-orange-600 hover:to-amber-600 transition-all transform hover:scale-105"
+            {[
+              "UN", "USAID", "GIZ", "SNV", "Gilead Sciences", "World Bank",
+              "African Union", "EU", "DFID", "Gates Foundation", "Mastercard Foundation", "AFD"
+            ].map((org, index) => (
+              <motion.div
+                key={org}
+                className="bg-white/5 border border-white/10 rounded-lg p-4 text-center hover:border-orange-500/30 transition-all"
+                variants={itemVariants}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ scale: 1.05 }}
               >
-                <FaEye className="text-lg" />
-                View Full Case Study
-              </Link>
-              <Link
-                to="/case-studies"
-                className="inline-flex items-center justify-center gap-2 border-2 border-orange-400 text-orange-400 px-8 py-4 rounded-xl font-bold text-lg hover:bg-orange-400 hover:text-white transition-all"
+                <span className="text-zinc-300 font-semibold">{org}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Testimonials */}
+          <motion.div 
+            className="grid md:grid-cols-2 gap-8"
+            variants={containerVariants}
+          >
+            {[
+              {
+                quote: "GoodAV's partnership has been transformational for our African operations. Their deep cultural understanding combined with international production standards makes them irreplaceable.",
+                author: "Regional Director",
+                company: "Major International NGO",
+                rating: 5
+              },
+              {
+                quote: "Working with GoodAV feels like having an extension of our own team. Their responsiveness, quality, and cultural sensitivity consistently exceed our expectations.",
+                author: "Communications Lead",
+                company: "Global Health Organization", 
+                rating: 5
+              }
+            ].map((testimonial, index) => (
+              <motion.blockquote
+                key={index}
+                className="bg-gradient-to-br from-white/5 to-white/2 p-8 rounded-2xl border border-white/10"
+                variants={cardVariants}
+                transition={{ delay: index * 0.2 }}
+                whileHover={{ y: -5, scale: 1.02 }}
               >
-                <FaArrowRight className="text-lg" />
-                Explore All Case Studies
-              </Link>
-            </div>
+                <div className="flex mb-4">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <FaStar key={i} className="text-orange-400" />
+                  ))}
+                </div>
+                <p className="text-zinc-300 text-lg leading-relaxed mb-6 italic">
+                  "{testimonial.quote}"
+                </p>
+                <footer className="text-orange-300 font-semibold">
+                  {testimonial.author}
+                  <br />
+                  <span className="text-zinc-400 text-sm">{testimonial.company}</span>
+                </footer>
+              </motion.blockquote>
+            ))}
           </motion.div>
         </motion.section>
 
-        {/* Testimonials from Home Page */}
-        <Testimonials />
+        {/* Final CTA Section */}
+        <motion.section 
+          className="bg-gradient-to-br from-orange-500/10 to-amber-500/10 border-t border-orange-500/20 py-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={containerVariants}
+        >
+          <div className="max-w-4xl mx-auto text-center px-4">
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-white mb-6"
+              variants={titleVariants}
+            >
+              Ready to Elevate Your Impact?
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-zinc-300 mb-8 leading-relaxed"
+              variants={fadeInUpVariants}
+            >
+              Join 500+ organizations who trust GoodAV to transform their stories into powerful visual narratives that drive real change across Africa and beyond.
+            </motion.p>
+            
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12"
+              variants={containerVariants}
+            >
+              <motion.button 
+                className="px-12 py-4 rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-xl hover:from-orange-600 hover:to-amber-600 transition-all transform hover:scale-105"
+                variants={itemVariants}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate('/contact')}
+              >
+                Start Your Partnership Journey
+              </motion.button>
+              <motion.button 
+                className="px-8 py-4 rounded-lg border-2 border-white/20 text-zinc-200 hover:bg-white/5 hover:border-white/30 transition-all font-semibold text-lg flex items-center gap-3"
+                variants={itemVariants}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <FaPhone />
+                Schedule Discovery Call
+              </motion.button>
+            </motion.div>
 
-        {/* Booking Modal */}
-        <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+            <motion.div 
+              className="flex flex-wrap justify-center items-center gap-8 text-zinc-400 text-sm"
+              variants={containerVariants}
+            >
+              <motion.div className="flex items-center gap-2" variants={itemVariants}>
+                <FaCheckCircle className="text-orange-400" />
+                No Setup Fees
+              </motion.div>
+              <motion.div className="flex items-center gap-2" variants={itemVariants}>
+                <FaCheckCircle className="text-orange-400" />
+                Flexible Terms
+              </motion.div>
+              <motion.div className="flex items-center gap-2" variants={itemVariants}>
+                <FaCheckCircle className="text-orange-400" />
+                Proven Results
+              </motion.div>
+              <motion.div className="flex items-center gap-2" variants={itemVariants}>
+                <FaCheckCircle className="text-orange-400" />
+                24/7 Support
+              </motion.div>
+            </motion.div>
+          </div>
+        </motion.section>
 
       </div>
 

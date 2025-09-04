@@ -12,6 +12,11 @@ export interface CaseStudyData {
   date: string;
   client: string;
   category: string;
+  location?: string;
+  tags?: string[];
+  slug?: string;
+  youtubeUrl?: string;
+  youtubeUrls?: string[];
   testimonial?: {
     text: string;
     author: string;

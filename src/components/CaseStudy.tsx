@@ -1,400 +1,169 @@
-import { useNavigate, useLocation } from 'react-router-dom';
-import { FaCircle, FaSearch, FaCheck, FaLightbulb, FaStar, FaTools, FaVideo, FaCamera, FaHelicopter, FaMusic, FaBolt, FaBoxOpen, FaBullseye, FaFilm, FaMobileAlt, FaArrowLeft, FaFolderOpen, FaRocket, FaComments } from 'react-icons/fa';
-import { CaseStudyData } from '../types/caseStudy';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useParams, Navigate, useNavigate, Link } from 'react-router-dom';
+import { FaCheckCircle } from 'react-icons/fa';
+import { getCaseStudyById } from '@/data/caseStudies';
+import SEO from '@/components/SEO';
+import SchemaMarkup from '@/components/SchemaMarkup';
 
-// Default case study data in case none is passed
-const defaultCaseStudy: CaseStudyData = {
-  id: 'default',
-  title: 'Project Title',
-  description: 'A brief description of the project',
-  content: {
-    overview: 'Overview content goes here...',
-    challenge: 'Challenge content goes here...',
-    solution: 'Solution content goes here...',
-    impact: 'Impact content goes here...',
-  },
-  image: '/images/all_site_images/placeholder.svg',
-  date: '2025',
-  client: 'Client Name',
-  category: 'Category',
-};
+const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.6, staggerChildren: 0.12, delayChildren: 0.15 } } };
+const itemVariants = { hidden: { opacity: 0, y: 24, scale: 0.98 }, visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6 } } };
+const cardVariants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } };
+const heroVariants = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7 } } };
 
-interface LocationState {
-  caseStudy?: CaseStudyData;
-}
-
-const CaseStudy = () => {
+const CaseStudy: React.FC = () => {
+  const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const location = useLocation();
-  
-  // Get case study data from location state or use default
-  const state = location.state as LocationState;
-  const caseStudy: CaseStudyData = state?.caseStudy || defaultCaseStudy;
+
+  if (!slug) return <Navigate to="/case-studies" replace />;
+
+  const caseStudy: any = getCaseStudyById(slug);
+  if (!caseStudy) return <Navigate to="/case-studies" replace />;
+
   return (
-    <div className="bg-gray-900 text-white font-sans min-h-screen">
-      {/* Hero Section with Project Header */}
-      <div className="relative h-96 overflow-hidden">
-        <img 
-          src={caseStudy.image} 
-          alt={caseStudy.title}
-          className="w-full h-full object-cover opacity-70"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 p-8 md:p-16 w-full">
-          <div className="max-w-6xl mx-auto">
-            <span className="text-orange-500 font-semibold text-sm uppercase tracking-wider">
-              {caseStudy.category}
-            </span>
-            <h1 className="text-4xl md:text-6xl font-bold mt-2 mb-4">{caseStudy.title}</h1>
-            <p className="text-xl text-gray-300 max-w-3xl">{caseStudy.description}</p>
-            <div className="flex items-center mt-6 text-sm text-gray-400">
-              <span className="mr-6">Client: {caseStudy.client}</span>
-              <span>Year: {caseStudy.date}</span>
-            </div>
+    <motion.main initial="hidden" animate="visible" variants={containerVariants} className="min-h-screen bg-zinc-900 text-zinc-100 pb-24">
+      <SEO title={`${caseStudy.title} — Case Study`} description={caseStudy.description} />
+      <SchemaMarkup schema={caseStudy.schema || {}} />
+
+      <motion.section variants={heroVariants} className="relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -left-24 -top-24 w-96 h-96 bg-gradient-to-br from-orange-500 to-amber-400 opacity-10 rounded-full blur-3xl" />
+          <div className="absolute right-24 -bottom-24 w-72 h-72 bg-gradient-to-br from-emerald-400 to-teal-400 opacity-8 rounded-full blur-2xl" />
+        </div>
+
+        <div className="max-w-6xl mx-auto px-6 py-24 relative z-10">
+          <div className="grid lg:grid-cols-3 gap-8 items-center">
+            <motion.div variants={itemVariants} className="lg:col-span-2">
+              <span className="inline-block text-sm font-medium text-amber-400 bg-amber-900/10 px-3 py-1 rounded-md">{caseStudy.category}</span>
+              <h1 className="mt-4 text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-amber-300 to-orange-400">{caseStudy.title}</h1>
+              <p className="mt-4 text-zinc-300 max-w-3xl">{caseStudy.description}</p>
+
+              <div className="mt-6 flex flex-wrap gap-3">
+                {caseStudy.tags?.map((t: string) => (
+                  <span key={t} className="text-xs px-3 py-1 rounded-full bg-zinc-800/50 border border-zinc-700 text-zinc-200">{t}</span>
+                ))}
+              </div>
+
+              <div className="mt-8 flex gap-3">
+                <button onClick={() => navigate('/case-studies')} className="px-4 py-2 rounded-md bg-zinc-800/60 hover:bg-zinc-800/80 border border-zinc-700">Back</button>
+                <Link to="/contact" className="px-4 py-2 rounded-md bg-amber-500 text-zinc-900 font-semibold">Start a project</Link>
+              </div>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="hidden lg:block">
+              <div className="rounded-xl overflow-hidden shadow-2xl border border-zinc-700">
+                {caseStudy.image && <img src={caseStudy.image} alt={caseStudy.title} className="w-full h-56 object-cover" />}
+              </div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.section>
 
-      {/* Header Navigation */}
-      <header className="px-6 py-4 flex justify-between items-center border-b border-gray-800">
-        <div className="text-xl font-bold text-white flex items-center">
-          <FaCircle className="mr-2 text-red-500 w-2 h-2" aria-hidden /> GoodAv
-        </div>
-        <nav className="hidden md:flex space-x-8">
-          {['HOMEPAGE', 'ABOUT', 'PORTFOLIO', 'PARTNERSHIPS', 'BLOG', 'CONTACT'].map((item, index) => (
-            <a 
-              key={item} 
-              href="#" 
-              className={`text-sm font-medium transition-colors duration-300 ${
-                item === 'PARTNERSHIPS' 
-                  ? 'text-orange-500 border-b-2 border-orange-500 pb-1' 
-                  : 'text-white hover:text-orange-500'
-              }`}
-            >
-              {item}
-            </a>
-          ))}
-        </nav>
-      </header>
+      <div className="max-w-6xl mx-auto px-6 mt-12 grid lg:grid-cols-3 gap-8">
+        <motion.section variants={containerVariants} className="lg:col-span-2 space-y-8">
+          <motion.article variants={cardVariants} className="bg-zinc-900/60 rounded-2xl p-8 border border-zinc-700 shadow-lg">
+            <h2 className="text-2xl font-bold mb-4">Project Overview</h2>
+            <p className="text-zinc-300 leading-relaxed">{caseStudy.content?.overview}</p>
+          </motion.article>
 
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        {caseStudy.testimonial && (
-          <section className="mb-16">
-            <div className="bg-gray-800 rounded-lg p-8">
-              <div className="text-center">
-                <span className="text-6xl text-gray-600">"</span>
-                <p className="text-xl italic text-gray-300 mb-6">
-                  {caseStudy.testimonial.text}
-                </p>
-                <div className="font-semibold">
-                  <p className="text-white">{caseStudy.testimonial.author}</p>
-                  <p className="text-orange-500">{caseStudy.testimonial.role}</p>
-                </div>
+          <motion.div variants={cardVariants} className="grid md:grid-cols-2 gap-6">
+            <div className="bg-zinc-900/60 rounded-2xl p-6 border border-zinc-700">
+              <h3 className="font-semibold mb-3">The Challenge</h3>
+              <p className="text-zinc-300">{caseStudy.content?.challenge}</p>
+            </div>
+            <div className="bg-zinc-900/60 rounded-2xl p-6 border border-zinc-700">
+              <h3 className="font-semibold mb-3">Our Solution</h3>
+              <p className="text-zinc-300">{caseStudy.content?.solution}</p>
+            </div>
+          </motion.div>
+
+          {caseStudy.content?.metrics && (
+            <motion.div variants={cardVariants} className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {caseStudy.content.metrics.map((m: any, idx: number) => (
+                <motion.div key={idx} variants={itemVariants} className="bg-zinc-900/60 rounded-2xl p-6 border border-zinc-700 text-center">
+                  <div className="text-3xl font-bold text-amber-400">{m.value}</div>
+
+                  <div className="text-3xl font-bold text-amber-400">{m.value}</div>
+                  <div className="text-sm text-zinc-300 mt-2">{m.label}</div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+
+          {caseStudy.testimonial && (
+            <motion.blockquote variants={cardVariants} className="bg-zinc-900/60 rounded-2xl p-8 border border-zinc-700">
+              <p className="text-zinc-200 italic">“{caseStudy.testimonial.text}”</p>
+              <cite className="mt-4 block text-sm text-zinc-400">— {caseStudy.testimonial.author}, {caseStudy.testimonial.role}</cite>
+            </motion.blockquote>
+          )}
+
+          {caseStudy.youtubeUrl && (
+            <motion.div variants={cardVariants} className="bg-zinc-900/60 rounded-2xl overflow-hidden p-6 border border-zinc-700">
+              <h3 className="font-semibold mb-4">Project Video</h3>
+              <div className="aspect-video w-full rounded-lg overflow-hidden bg-black">
+                <iframe title={`${caseStudy.title} video`} src={`https://www.youtube.com/embed/${caseStudy.youtubeUrl}`} className="w-full h-full" allowFullScreen />
+              </div>
+            </motion.div>
+          )}
+
+          {caseStudy.youtubeUrls && caseStudy.youtubeUrls.length > 0 && (
+            <motion.div variants={cardVariants} className="grid md:grid-cols-2 gap-6">
+              {caseStudy.youtubeUrls.map((v: any, i: number) => (
+                <motion.div key={i} variants={itemVariants} className="space-y-3">
+                  <div className="aspect-video rounded-lg overflow-hidden bg-black">
+                    <iframe title={v.title} src={`https://www.youtube.com/embed/${v.url}`} className="w-full h-full" allowFullScreen />
+                  </div>
+                  <h4 className="text-zinc-200 font-semibold">{v.title}</h4>
+                  {v.description && <p className="text-zinc-400 text-sm">{v.description}</p>}
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </motion.section>
+
+        <motion.aside variants={containerVariants} className="space-y-6">
+          <motion.div variants={cardVariants} className="bg-zinc-900/60 rounded-2xl p-6 border border-zinc-700">
+            <h4 className="font-semibold mb-3">Project Details</h4>
+            <div className="text-sm text-zinc-300 space-y-2">
+              <div>
+                <div className="text-xs text-zinc-400">Client</div>
+                <div className="font-medium">{caseStudy.client}</div>
+              </div>
+              <div>
+                <div className="text-xs text-zinc-400">Date</div>
+                <div className="font-medium">{caseStudy.date}</div>
+              </div>
+              <div>
+                <div className="text-xs text-zinc-400">Location</div>
+                <div className="font-medium">{caseStudy.location}</div>
               </div>
             </div>
-          </section>
-        )}
-        {/* Project Overview */}
-        <section className="max-w-6xl mx-auto px-6 py-16">
-          <h2 className="text-3xl font-bold mb-8 flex items-center">
-            <FaSearch className="text-orange-500 mr-3" aria-hidden /> Project Overview
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="md:col-span-2">
-              <p className="text-lg text-gray-300 mb-6">
-                {caseStudy.content.overview}
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h4 className="text-orange-500 font-semibold">CLIENT</h4>
-                  <p>{caseStudy.client}</p>
-                </div>
-                <div>
-                  <h4 className="text-orange-500 font-semibold">CATEGORY</h4>
-                  <p>{caseStudy.category}</p>
-                </div>
-                <div>
-                  <h4 className="text-orange-500 font-semibold">DATE</h4>
-                  <p>{caseStudy.date}</p>
-                </div>
-                <div>
-                  <h4 className="text-orange-500 font-semibold">STATUS</h4>
-                  <p>Completed</p>
-                </div>
-              </div>
-            </div>
-            <div className="bg-gray-800 p-6 rounded-lg">
-              <h3 className="text-xl font-semibold mb-4">Project Highlights</h3>
-              <ul className="space-y-3">
-                {caseStudy.content.impact.split('.').filter(Boolean).map((point, index) => (
-                  <li key={index} className="flex items-start">
-                    <FaCheck className="text-orange-500 mr-2 mt-1" aria-hidden />
-                    <span>{point.trim()}.</span>
+          </motion.div>
+
+          {caseStudy.content?.deliverables && (
+            <motion.div variants={cardVariants} className="bg-zinc-900/60 rounded-2xl p-6 border border-zinc-700">
+              <h4 className="font-semibold mb-3">Deliverables</h4>
+              <ul className="text-sm space-y-2">
+                {caseStudy.content.deliverables.map((d: string, i: number) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <FaCheckCircle className="text-emerald-400 mt-1" />
+                    <span className="text-zinc-300">{d}</span>
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
-        </section>
+            </motion.div>
+          )}
 
-        {/* Challenge & Solution */}
-        <section className="bg-gray-800 py-16 mt-12">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid md:grid-cols-2 gap-12">
-              <div>
-                <h3 className="text-2xl font-bold mb-6 flex items-center">
-                  <FaLightbulb className="text-orange-500 mr-3" aria-hidden /> The Challenge
-                </h3>
-                <p className="text-gray-300">
-                  {caseStudy.content.challenge}
-                </p>
-              </div>
-              <div>
-                <h3 className="text-2xl font-bold mb-6 flex items-center">
-                  <FaStar className="text-orange-500 mr-3" aria-hidden /> Our Solution
-                </h3>
-                <p className="text-gray-300">
-                  {caseStudy.content.solution}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Scope of Work Section */}
-        <section className="mb-12">
-          <h3 className="text-2xl font-bold mb-8 flex items-center">
-            <FaTools className="text-orange-500 mr-3" aria-hidden />Scope of Work
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Video Production */}
-            <div>
-              <h4 className="font-semibold mb-4 text-orange-500 flex items-center">
-                <FaVideo className="mr-2" aria-hidden />Video Production
-              </h4>
-              <div className="space-y-2 text-sm text-gray-300">
-                <div className="flex items-center">
-                  <FaCheck className="text-green-400 mr-2 mt-1" aria-hidden />
-                  Conference highlights and interviews
-                </div>
-                <div className="flex items-center">
-                  <FaCheck className="text-green-400 mr-2 mt-1" aria-hidden />
-                  Gilead booth footage
-                </div>
-                <div className="flex items-center">
-                  <FaCheck className="text-green-400 mr-2 mt-1" aria-hidden />
-                  Symposium sessions
-                </div>
-                <div className="flex items-center">
-                  <FaCheck className="text-green-400 mr-2 mt-1" aria-hidden />
-                  Street-style interview series
-                </div>
-              </div>
-            </div>
-
-            {/* Photography */}
-            <div>
-              <h4 className="font-semibold mb-4 text-orange-500 flex items-center">
-                <FaCamera className="mr-2" aria-hidden />Photography
-              </h4>
-              <div className="space-y-2 text-sm text-gray-300">
-                <div className="flex items-center">
-                  <span className="text-green-400 mr-2">✓</span>
-                  Editorial portraits
-                </div>
-                <div className="flex items-center">
-                  <span className="text-green-400 mr-2">✓</span>
-                  LinkedIn-ready photos
-                </div>
-                <div className="flex items-center">
-                  <span className="text-green-400 mr-2">✓</span>
-                  Booth activations
-                </div>
-                <div className="flex items-center">
-                  <span className="text-green-400 mr-2">✓</span>
-                  Behind-the-scenes shots
-                </div>
-              </div>
-            </div>
-
-            {/* Drone Footage */}
-            <div>
-              <h4 className="font-semibold mb-4 text-orange-500 flex items-center">
-                <FaHelicopter className="mr-2" aria-hidden />Drone Footage
-              </h4>
-              <p className="text-sm text-gray-300">
-                Aerial visuals capturing Kigali venues including Kimihurura, Kanyirya Hill, Mulamba, and the city center.
-              </p>
-            </div>
-
-            {/* Sound Recording */}
-            <div>
-              <h4 className="font-semibold mb-4 text-orange-500 flex items-center">
-                <FaMusic className="mr-2" aria-hidden />Sound Recording
-              </h4>
-              <p className="text-sm text-gray-300">
-                Clear audio capture for panel discussions, interviews, and voiceover elements.
-              </p>
-            </div>
-
-            {/* Quick-Turn Editing */}
-            <div className="md:col-span-2">
-              <h4 className="font-semibold mb-4 text-orange-500 flex items-center">
-                <FaBolt className="mr-2" aria-hidden />Quick-Turn Editing
-              </h4>
-              <p className="text-sm text-gray-300">
-                Same-day delivery of edited content for use during the conference and on broadcast platforms.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Deliverables Section */}
-        <section className="mb-12">
-          <h3 className="text-2xl font-bold mb-6 flex items-center">
-            <FaBoxOpen className="text-orange-500 mr-3" aria-hidden />Deliverables
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <FaCircle className="text-orange-500 mr-3" aria-hidden />
-                <span className="text-sm">3 Highlight Videos (Recaps & Cutdowns)</span>
-              </div>
-              <div className="flex items-center">
-                <FaCircle className="text-orange-500 mr-3" aria-hidden />
-                <span className="text-sm">100+ High-Res Edited Photos</span>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <FaCircle className="text-orange-500 mr-3" aria-hidden />
-                <span className="text-sm">2 "Street Style" Interview Films</span>
-              </div>
-              <div className="flex items-center">
-                <FaCircle className="text-orange-500 mr-3" aria-hidden />
-                <span className="text-sm">Full Access to Raw Footage & Drone Assets</span>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <span className="text-orange-500 mr-3">●</span>
-                <span className="text-sm">1 Internal Sizzle Reel (No VO)</span>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <span className="text-orange-500 mr-3">●</span>
-                <span className="text-sm">Photography for CEO LinkedIn Feature</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* What Made It Unique Section */}
-        <section className="mb-12">
-          <h3 className="text-2xl font-bold mb-6 flex items-center">
-            <FaStar className="text-orange-500 mr-3" aria-hidden />What Made It Unique
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-300">
-            <div className="space-y-4">
-              <div className="flex items-start">
-                <FaBullseye className="text-orange-500 mr-3 mt-1" aria-hidden />
-                <span>Local expertise combined with global production standards</span>
-              </div>
-              <div className="flex items-start">
-                <FaFilm className="text-orange-500 mr-3 mt-1" aria-hidden />
-                <span>Filming across five high-traffic Kigali locations</span>
-              </div>
-              <div className="flex items-start">
-                <FaMobileAlt className="text-orange-500 mr-3 mt-1" aria-hidden />
-                <span>Daily WhatsApp updates for international creative teams</span>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-start">
-                <span className="text-orange-500 mr-3 mt-1">🔬</span>
-                <span>Pharmaceutical and regulatory compliance</span>
-              </div>
-              <div className="flex items-start">
-                <span className="text-orange-500 mr-3 mt-1">🏨</span>
-                <span>Additional client hospitality including Safari tour support</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-       
-
-        {/* Testimonials Section */}
-        <section className="mb-12">
-          <h3 className="text-2xl font-bold mb-8 flex items-center">
-            <FaComments className="text-orange-500 mr-3" aria-hidden />What Our Partners Said
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <blockquote className="bg-gray-800 p-6 rounded-lg">
-              <p className="text-sm text-gray-300 italic mb-4">
-                "A huge thank you to you and the team, Yousouf! I've seen some of the initial edits — they're all so professional and beautiful!"
-              </p>
-              <footer className="text-xs">
-                <div className="font-semibold text-orange-500">Michelle</div>
-                <div className="text-gray-400">Creative Lead, Resilience Byrne</div>
-              </footer>
-            </blockquote>
-            
-            <blockquote className="bg-gray-800 p-6 rounded-lg">
-              <p className="text-sm text-gray-300 italic mb-4">
-                "Yes, thank you so much to everyone for all of your help! Really great work bringing this to life and all the content, photographs and the footage & photos are all looking really great."
-              </p>
-              <footer className="text-xs">
-                <div className="font-semibold text-orange-500">Katie Link</div>
-                <div className="text-gray-400">Producer, Resilience Byrne</div>
-              </footer>
-            </blockquote>
-            
-            <blockquote className="bg-gray-800 p-6 rounded-lg">
-              <p className="text-sm text-gray-300 italic mb-4">
-                "Just wanted to send a HUGE thank you to everyone for such an amazing experience in Kigali - I've never felt more looked after or thrilled."
-              </p>
-              <footer className="text-xs">
-                <div className="font-semibold text-orange-500">Bonny Durie</div>
-                <div className="text-gray-400">VP, Group Business Director, Resilience Byrne</div>
-              </footer>
-            </blockquote>
-          </div>
-        </section>
-
-        {/* Outcome Section */}
-        <section className="mb-12">
-          <h3 className="text-2xl font-bold mb-6 flex items-center">
-            <span className="text-orange-500 mr-3">🏆</span>Outcome
-          </h3>
-          <p className="text-sm text-gray-300 leading-relaxed">
-            The resulting content was featured on broadcast platforms, used for Gilead's internal and public campaigns, and praised by both creative directors and clients. From drone visuals and live interviews to last-minute logistics and hospitality support, GoodAV delivered excellence with cultural fluency and technical precision.
-          </p>
-        </section>
-
-        {/* Action Buttons */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <button onClick={() => navigate('/partner-with-us')} className="bg-gray-700 hover:bg-gray-600 py-3 px-6 rounded-md font-semibold text-sm transition-colors flex items-center">
-            <span className="mr-2">←</span>BACK TO PARTNERSHIPS
-          </button>
-          <button onClick={() => navigate('/portfolio')} className="bg-gray-700 hover:bg-gray-600 py-3 px-6 rounded-md font-semibold text-sm transition-colors flex items-center">
-            <span className="mr-2">📁</span>VIEW MORE PROJECTS
-          </button>
-          <button onClick={() => navigate('/contact')} className="bg-orange-500 hover:bg-orange-600 py-3 px-6 rounded-md font-semibold text-sm transition-colors flex items-center">
-            <span className="mr-2">🚀</span>START YOUR PROJECT
-          </button>
-        </div>
+          <motion.div variants={cardVariants} className="bg-amber-600/10 rounded-2xl p-6 border border-amber-400/20">
+            <h4 className="font-semibold mb-2">Start a project</h4>
+            <p className="text-sm text-zinc-300 mb-4">Want results like this? Let's talk about your next project.</p>
+            <Link to="/contact" className="block text-center bg-amber-500 text-zinc-900 font-semibold px-4 py-2 rounded-md">Get in touch</Link>
+          </motion.div>
+        </motion.aside>
       </div>
-
-      
-    </div>
+    </motion.main>
   );
 };
 
 export default CaseStudy;
+
