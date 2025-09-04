@@ -1,0 +1,6 @@
+/* Terms of Service Page Styles */
+.terms-page-container {
+  background: linear-gradient(180deg, rgba(30,30,30,0.98) 0%, rgba(20,20,20,0.96) 100%);
+  border-radius: 1rem;
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.6);
+}
