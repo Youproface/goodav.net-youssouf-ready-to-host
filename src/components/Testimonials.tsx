@@ -145,12 +145,7 @@ export default function Testimonials() {
           </p>
         </header>
 
-        <div className="mt-12 grid grid-cols-2 gap-6 sm:grid-cols-4" role="region" aria-label="Company statistics">
-          <KPI value="50+" label="Partners" />
-          <KPI value="5+" label="Countries" />
-          <KPI value="500+" label="Projects" />
-          <KPI value="10+" label="Years of Excellence" />
-        </div>
+  {/* KPI statistics removed as requested */}
 
         <div className="mt-16 grid grid-cols-12 gap-8 items-stretch content-stretch" role="region" aria-label="Client testimonials">
           <div className="col-span-12 lg:col-span-7 xl:col-span-8 h-full" data-aos="fade-up">
