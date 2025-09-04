@@ -228,56 +228,7 @@ const GlobalImpact: React.FC = () => {
         ))}
       </motion.div>
 
-      {/* Structured Data for SEO - WebPage Schema for Impact Section */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "Measurable Impact - Our Achievements & Statistics",
-            "description": "Discover GoodAV's measurable impact with 500+ projects across 5+ African countries, showcasing our growth and excellence in audiovisual production",
-            "url": "https://goodav.net#impact",
-            "mainEntity": {
-              "@type": "ItemList",
-              "name": "Key Performance Indicators",
-              "description": "Statistical achievements and measurable impact metrics",
-              "numberOfItems": 4,
-              "itemListElement": [
-                {
-                  "@type": "PropertyValue",
-                  "name": "Projects Delivered",
-                  "value": "500+",
-                  "description": "Award-winning audiovisual productions completed"
-                },
-                {
-                  "@type": "PropertyValue",
-                  "name": "African Countries",
-                  "value": "5+",
-                  "description": "Continental presence across Africa"
-                },
-                {
-                  "@type": "PropertyValue",
-                  "name": "Strategic Partners",
-                  "value": "50+",
-                  "description": "Global partnerships and collaborations"
-                },
-                {
-                  "@type": "PropertyValue",
-                  "name": "Years of Excellence",
-                  "value": "10+",
-                  "description": "Years of industry excellence and innovation"
-                }
-              ]
-            },
-            "isPartOf": {
-              "@type": "WebSite",
-              "name": "GoodAV",
-              "url": "https://goodav.net"
-            }
-          })
-        }}
-      />
+  {/* Structured data intentionally omitted to avoid exposing numeric KPIs */}
     </motion.section>
   );
 };
