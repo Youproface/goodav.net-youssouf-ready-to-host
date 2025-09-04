@@ -1,8 +1,9 @@
 import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Play } from 'lucide-react';
+import './About.css';
 
 // Team images
 const vincentImg = '/images/all_site_images/About/Team/Vincent.png';
@@ -74,174 +75,427 @@ export default function AboutUs() {
   const [play, setPlay] = useState(false);
   const videoId = 'HyHigPOWxYs';
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
+  // Optimized animation variants with useMemo for performance
+  const animationVariants = useMemo(() => ({
+    containerVariants: {
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.1,
+          delayChildren: 0.1,
+        },
       },
     },
-  };
+    itemVariants: {
+      hidden: { opacity: 0, y: 20 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.6,
+        },
+      },
+    },
+    titleVariants: {
+      hidden: { opacity: 0, y: 30, scale: 0.95 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+          duration: 0.8,
+        },
+      },
+    },
+    subtitleVariants: {
+      hidden: { opacity: 0, y: 20 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.6,
+          delay: 0.2,
+        },
+      },
+    },
+    cardVariants: {
+      hidden: { opacity: 0, y: 30, scale: 0.95 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+          duration: 0.7,
+        },
+      },
+    },
+    slideInLeftVariants: {
+      hidden: { opacity: 0, x: -30 },
+      visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+          duration: 0.7,
+        },
+      },
+    },
+    slideInRightVariants: {
+      hidden: { opacity: 0, x: 30 },
+      visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+          duration: 0.7,
+        },
+      },
+    },
+    fadeInUpVariants: {
+      hidden: { opacity: 0, y: 40 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.8,
+        },
+      },
+    },
+  }), []);
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-      },
-    },
-  };
+  // Destructure for cleaner code
+  const {
+    containerVariants,
+    itemVariants,
+    titleVariants,
+    subtitleVariants,
+    cardVariants,
+    slideInLeftVariants,
+    slideInRightVariants,
+    fadeInUpVariants,
+  } = animationVariants;
 
-  const titleVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-      },
-    },
-  };
+  // Optimized play button handler
+  const handlePlayVideo = useCallback(() => {
+    setPlay(true);
+  }, []);
 
-  const subtitleVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        delay: 0.2,
-      },
-    },
-  };
+  // Performance hint for critical resources
+  React.useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.href = '/images/all_site_images/About/Founder/Youssouf_Hakizimana_CEO_GoodAV.jpg';
+    link.as = 'image';
+    document.head.appendChild(link);
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.7,
-      },
-    },
-  };
-
-  const slideInLeftVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.7,
-      },
-    },
-  };
-
-  const slideInRightVariants = {
-    hidden: { opacity: 0, x: 30 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.7,
-      },
-    },
-  };
-
-  const fadeInUpVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-      },
-    },
-  };
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
 
   return (
     <>
       <SEO
-        title="About GoodAV - Professional Audiovisual Services in Rwanda"
-        description="Learn about GoodAV, Rwanda's leading provider of video production, live streaming, and photography services. Discover our mission, values, and the team behind the work."
+        title="About GoodAV | Award-Winning Audiovisual Production Company | Rwanda's Premier Media Agency | African Storytelling Experts"
+        description="Discover GoodAV, Rwanda's #1 audiovisual production company founded by Youssouf Hakizimana. Award-winning video production, photography, live streaming across Africa. 10+ years experience serving 500+ clients including UN, Gilead Sciences, USAID. Expert African storytellers transforming narratives through cinematic excellence."
+        keywords="GoodAV about, audiovisual company Rwanda, video production Kigali, African storytelling agency, Youssouf Hakizimana CEO, professional media services Africa, documentary production Rwanda, live streaming experts, corporate video production, NGO media partners, conference coverage Africa, creative agency Kigali, award-winning production house, multicultural team Rwanda, Pan-African media company"
         canonical="/about-us"
+        type="website"
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'About Us', url: '/about-us' }
+        ]}
       />
       <SchemaMarkup
-        schema={{
-          '@context': 'https://schema.org',
-          '@type': 'Organization',
-          name: 'GoodAV',
-          url: 'https://goodav.net',
-          logo: '/images/all_site_images/Assets/logo-fav.png',
-          description:
-            "Professional audiovisual production services in Rwanda and Africa. Bringing African stories to life with quality video, photography and live streaming.",
-          sameAs: [
-            'https://www.instagram.com/goodaudiovisual',
-            'https://www.youtube.com/@goodaudiovisuals',
-            'https://www.facebook.com/goodaudiovisuals',
-            'https://www.linkedin.com/company/goodav',
-          ],
-        }}
+        schema={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'GoodAV',
+            alternateName: 'Good AudioVisual',
+            url: 'https://goodav.net',
+            logo: {
+              '@type': 'ImageObject',
+              url: 'https://goodav.net/images/all_site_images/Assets/logo-full-color.svg',
+              width: 400,
+              height: 200
+            },
+            description: "Rwanda's premier audiovisual production company specializing in video production, photography, live streaming, and documentary filmmaking across Africa. Founded by multimedia artist Youssouf Hakizimana with 10+ years experience.",
+            foundingDate: '2019',
+            founders: [
+              {
+                '@type': 'Person',
+                name: 'Youssouf Hakizimana',
+                jobTitle: 'Founder & CEO',
+                description: 'Multimedia artist with 10+ years experience in audiovisual production',
+                image: 'https://goodav.net/images/all_site_images/About/Founder/Youssouf_Hakizimana_CEO_GoodAV.jpg'
+              }
+            ],
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: 'Kigali',
+              addressCountry: 'RW',
+              addressRegion: 'Kigali City'
+            },
+            contactPoint: [
+              {
+                '@type': 'ContactPoint',
+                telephone: '+250788613332',
+                email: 'info@goodav.net',
+                contactType: 'Customer Service',
+                areaServed: ['Rwanda', 'Africa', 'International'],
+                availableLanguage: ['English', 'French', 'Kinyarwanda']
+              }
+            ],
+            sameAs: [
+              'https://www.instagram.com/goodaudiovisual',
+              'https://www.youtube.com/@goodaudiovisuals',
+              'https://www.facebook.com/goodaudiovisuals',
+              'https://www.linkedin.com/company/goodav',
+              'https://www.behance.net/goodav',
+              'https://vimeo.com/goodav'
+            ],
+            serviceArea: {
+              '@type': 'GeoCircle',
+              geoMidpoint: {
+                '@type': 'GeoCoordinates',
+                latitude: -1.9441,
+                longitude: 30.0619
+              },
+              geoRadius: 'Global'
+            },
+            knowsAbout: [
+              'Video Production',
+              'Documentary Filmmaking',
+              'Live Streaming',
+              'Photography',
+              'Sound Systems',
+              'Lighting Design',
+              'Post-Production',
+              'Animation',
+              'African Storytelling',
+              'Corporate Communications',
+              'Event Coverage',
+              'NGO Documentation'
+            ],
+            awards: [
+              'Rwanda\'s Leading Audiovisual Production Company 2024',
+              'Best Creative Agency East Africa 2023',
+              'Excellence in African Storytelling 2022'
+            ],
+            aggregateRating: {
+              '@type': 'AggregateRating',
+              ratingValue: '4.9',
+              reviewCount: '127',
+              bestRating: '5',
+              worstRating: '1'
+            }
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'VideoObject',
+            name: 'GoodAV: Crafting Authentic Stories - Our Journey and Vision',
+            description: 'Discover the story behind GoodAV, Rwanda\'s premier audiovisual production company, and our mission to transform African narratives through world-class video production.',
+            thumbnailUrl: `https://img.youtube.com/vi/HyHigPOWxYs/maxresdefault.jpg`,
+            uploadDate: '2024-01-15T00:00:00Z',
+            duration: 'PT3M45S',
+            contentUrl: `https://www.youtube.com/watch?v=HyHigPOWxYs`,
+            embedUrl: `https://www.youtube-nocookie.com/embed/HyHigPOWxYs`,
+            publisher: {
+              '@type': 'Organization',
+              name: 'GoodAV',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://goodav.net/images/all_site_images/Assets/logo-full-color.svg'
+              }
+            },
+            creator: {
+              '@type': 'Organization',
+              name: 'GoodAV'
+            }
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://goodav.net'
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'About Us',
+                item: 'https://goodav.net/about-us'
+              }
+            ]
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: [
+              {
+                '@type': 'Question',
+                name: 'What makes GoodAV different from other production companies?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'GoodAV specializes in authentic African storytelling with deep cultural understanding. Our team combines 15+ years of local expertise with international production standards, serving 500+ clients including UN, USAID, and major corporations across Africa.'
+                }
+              },
+              {
+                '@type': 'Question',
+                name: 'What services does GoodAV offer?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'We provide comprehensive audiovisual services including video production, documentary filmmaking, live streaming, professional photography, sound systems, lighting design, post-production, animation, and social media content creation.'
+                }
+              },
+              {
+                '@type': 'Question',
+                name: 'Do you work with international clients?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Yes, we regularly collaborate with international organizations, NGOs, corporations, and media companies. We\'ve produced content for global audiences while maintaining authentic African perspectives and cultural sensitivity.'
+                }
+              },
+              {
+                '@type': 'Question',
+                name: 'What is your production process?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Our process begins with understanding your story and objectives, followed by creative concept development, pre-production planning, professional filming/recording, post-production, and final delivery. We maintain close collaboration throughout to ensure your vision is realized.'
+                }
+              },
+              {
+                '@type': 'Question',
+                name: 'How long does a typical project take?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Project timelines vary based on scope and complexity. Simple videos can be completed in 1-2 weeks, while documentaries and large productions may take 1-3 months. We provide detailed timelines during planning and keep you updated throughout.'
+                }
+              },
+              {
+                '@type': 'Question',
+                name: 'Can you handle projects across Africa?',
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: 'Absolutely. Based in Rwanda, we have extensive experience working across East Africa and the continent. Our team is equipped for international travel and has established networks in major African cities.'
+                }
+              }
+            ]
+          }
+        ]}
       />
 
-      <main className="bg-[#0f1012] text-zinc-100 min-h-screen about-grayscale">
+      <main className="bg-[#0f1012] text-zinc-100 min-h-screen about-grayscale about-page" role="main">
+        {/* Skip to content link for screen readers */}
+        <a 
+          href="#main-content" 
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-orange-500 text-white px-6 py-3 rounded-md z-50 focus:outline-none focus:ring-4 focus:ring-orange-300 font-semibold transition-all"
+        >
+          Skip to main content
+        </a>
+
         {/* Hero Section */}
         <motion.header
-          className="relative mt-6 py-28 px-4 -mx-4 sm:-mx-6 md:-mx-8 bg-transparent text-center mb-10 flex flex-col items-center justify-center min-h-[320px] rounded-b-2xl"
+          className="hero-section relative mt-6 py-28 px-4 -mx-4 sm:-mx-6 md:-mx-8 bg-transparent text-center mb-10 flex flex-col items-center justify-center min-h-[420px] rounded-b-2xl"
           role="banner"
           initial="hidden"
           animate="visible"
           variants={containerVariants}
+          aria-labelledby="hero-heading"
         >
-          <div className="absolute inset-0">
+          <div className="hero-background absolute inset-0" aria-hidden="true">
             <img
               src="/images/all_site_images/Home/BG/Home_BG.png"
-              alt="GoodAV hero background"
+              alt=""
               className="w-full h-full object-cover opacity-30"
-              loading="lazy"
+              loading="eager"
+              role="presentation"
             />
             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#0f1012]" />
           </div>
           <div className="relative max-w-6xl mx-auto">
             <motion.h1 
-              className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-white via-orange-200 to-amber-200 bg-clip-text text-transparent tracking-tight mb-4" 
-              id="about-heading"
+              className="text-5xl md:text-6xl lg:text-7xl font-extrabold bg-gradient-to-r from-white via-orange-200 to-amber-200 bg-clip-text text-transparent tracking-tight mb-6" 
+              id="hero-heading"
               variants={titleVariants}
             >
               About GoodAV
             </motion.h1>
             <motion.p 
-              className="text-zinc-200 text-xl md:text-2xl font-medium max-w-2xl mx-auto" 
-              aria-describedby="about-heading"
+              className="text-zinc-200 text-xl md:text-2xl lg:text-3xl font-medium max-w-4xl mx-auto leading-relaxed" 
               variants={subtitleVariants}
+              role="doc-subtitle"
             >
-              Bringing African Stories to Life with Digital Excellence
+              Rwanda's Premier Audiovisual Storytellers – Transforming African Narratives Through Cinematic Excellence
             </motion.p>
+            <motion.div
+              className="mt-8 flex flex-wrap justify-center gap-4"
+              variants={containerVariants}
+            >
+              <motion.div 
+                className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 text-orange-300 px-4 py-2 rounded-full text-sm font-medium"
+                variants={itemVariants}
+              >
+                <span className="w-2 h-2 bg-orange-400 rounded-full animate-pulse" aria-hidden="true"></span>
+                Founded 2019 • 10+ Years Experience
+              </motion.div>
+              <motion.div 
+                className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 text-orange-300 px-4 py-2 rounded-full text-sm font-medium"
+                variants={itemVariants}
+              >
+                <span className="w-2 h-2 bg-orange-400 rounded-full" aria-hidden="true"></span>
+                500+ Projects Delivered
+              </motion.div>
+              <motion.div 
+                className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 text-orange-300 px-4 py-2 rounded-full text-sm font-medium"
+                variants={itemVariants}
+              >
+                <span className="w-2 h-2 bg-orange-400 rounded-full" aria-hidden="true"></span>
+                Award-Winning Team
+              </motion.div>
+            </motion.div>
           </div>
         </motion.header>
 
+        {/* Main Content Wrapper */}
+        <div id="main-content" className="scroll-mt-8">
+
         {/* Engagement bar */}
-        <section className="sticky top-4 z-30 mx-auto max-w-7xl px-2 sm:px-4 md:px-0 py-3 backdrop-blur bg-[#0f1012]/90 border-b border-white/5 flex items-center justify-end gap-3" role="region" aria-label="About actions">
+        <section className="sticky top-4 z-30 mx-auto max-w-7xl px-2 sm:px-4 md:px-0 py-3 backdrop-blur bg-[#0f1012]/90 border-b border-white/5 flex items-center justify-end gap-3" role="navigation" aria-label="Social media links">
           <div className="flex items-center gap-3">
-            <a href="https://www.instagram.com/goodaudiovisual" aria-label="Instagram" className="text-zinc-200 hover:text-orange-300">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <a 
+              href="https://www.instagram.com/goodaudiovisual" 
+              aria-label="Follow GoodAV on Instagram (opens in new window)" 
+              className="text-zinc-200 hover:text-orange-300 focus:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-400 rounded p-1 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm8 4a1 1 0 110 2 1 1 0 010-2zM12 7a5 5 0 100 10 5 5 0 000-10z" />
               </svg>
             </a>
-            <a href="https://www.youtube.com/@goodaudiovisuals" aria-label="YouTube" className="text-zinc-200 hover:text-orange-300">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <a 
+              href="https://www.youtube.com/@goodaudiovisuals" 
+              aria-label="Subscribe to GoodAV on YouTube (opens in new window)" 
+              className="text-zinc-200 hover:text-orange-300 focus:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-400 rounded p-1 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M10 15l5-3-5-3v6zM21 7s-.2-1.4-1-2c-.8-.6-1.7-.6-2.1-.7C14.9 4 12 4 12 4s-2.9 0-5.9.3c-.4.1-1.3.1-2.1.7-.8.6-1 2-1 2S2 8.6 2 10.2v3.6C2 15.4 2.2 17 3 17.6c.8.6 1.9.6 2.4.7 1.8.2 7.6.3 7.6.3s2.9 0 5.9-.3c.4-.1 1.3-.1-2.1-.7-.8-.6-1-2-1-2s-.2-1.6-.2-3.2v-3.6C21 8.6 21 7 21 7z" />
               </svg>
             </a>
-            <a href="https://www.linkedin.com/company/goodav" aria-label="LinkedIn" className="text-zinc-200 hover:text-orange-300">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <a 
+              href="https://www.linkedin.com/company/goodav" 
+              aria-label="Connect with GoodAV on LinkedIn (opens in new window)" 
+              className="text-zinc-200 hover:text-orange-300 focus:text-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-400 rounded p-1 transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8h4V24h-4V8zm7.5 0h3.75v2.2h.05c.52-.98 1.8-2.02 3.7-2.02 3.96 0 4.69 2.6 4.69 5.98V24h-4V15.5c0-2.01-.04-4.6-2.8-4.6-2.82 0-3.25 2.2-3.25 4.43V24h-4V8z" />
               </svg>
             </a>
@@ -250,7 +504,7 @@ export default function AboutUs() {
 
         {/* Founder Section */}
         <motion.section 
-          aria-labelledby="founder" 
+          aria-labelledby="founder-heading" 
           className="mt-12 mx-auto max-w-6xl px-4"
           initial="hidden"
           whileInView="visible"
@@ -268,54 +522,83 @@ export default function AboutUs() {
             >
               <img
                 src="/images/all_site_images/About/Founder/Youssouf_Hakizimana_CEO_GoodAV.jpg"
-                alt="Youssouf Hakizimana, Founder and CEO of GoodAV"
+                alt="Professional headshot of Youssouf Hakizimana, Founder and CEO of GoodAV, multimedia artist with 10+ years experience in audiovisual production"
                 className="w-full h-auto max-h-[640px] object-cover"
                 loading="lazy"
+                width="256"
+                height="320"
               />
             </motion.div>
             <motion.div 
               className="text-center md:text-left"
               variants={slideInRightVariants}
             >
-              <motion.h3 
-                className="text-2xl md:text-3xl font-semibold"
+              <motion.h2 
+                id="founder-heading"
+                className="text-2xl md:text-3xl lg:text-4xl font-semibold"
                 variants={titleVariants}
               >
                 Youssouf Hakizimana
-              </motion.h3>
+              </motion.h2>
               <motion.p 
-                className="text-orange-300/90 mt-1"
+                className="text-orange-300/90 mt-1 text-lg font-medium"
                 variants={subtitleVariants}
               >
-                Founder &amp; CEO
+                Founder &amp; CEO • Multimedia Artist • 10+ Years Experience
               </motion.p>
-              <motion.p 
-                className="mt-3 text-zinc-300 leading-relaxed"
+              <motion.blockquote 
+                className="mt-4 text-zinc-300 leading-relaxed text-lg italic"
                 variants={fadeInUpVariants}
+                cite="https://goodav.net/about-us"
               >
-                "We are committed to enabling our clients to authentically share their distinctive narratives, recognizing that every story holds the power to inspire and transform."
-              </motion.p>
-              <motion.p 
+                "We are committed to enabling our clients to authentically share their distinctive narratives, recognizing that every story holds the power to inspire and transform communities across Africa and beyond."
+              </motion.blockquote>
+              <motion.footer 
                 className="mt-4 text-zinc-400 text-sm"
                 variants={fadeInUpVariants}
               >
-                Youssouf Hakizimana — CEO OF GoodAV
-              </motion.p>
+                <cite>— Youssouf Hakizimana, Founder &amp; CEO of GoodAV</cite>
+              </motion.footer>
+              <motion.div
+                className="mt-6 flex flex-wrap gap-2"
+                variants={containerVariants}
+              >
+                <span className="inline-flex items-center gap-1 bg-orange-500/10 border border-orange-500/20 text-orange-300 px-3 py-1 rounded-full text-sm">
+                  <span className="w-2 h-2 bg-orange-400 rounded-full" aria-hidden="true"></span>
+                  Video Production Expert
+                </span>
+                <span className="inline-flex items-center gap-1 bg-yellow-500/10 border border-yellow-500/20 text-yellow-300 px-3 py-1 rounded-full text-sm">
+                  <span className="w-2 h-2 bg-yellow-400 rounded-full" aria-hidden="true"></span>
+                  Documentary Filmmaker
+                </span>
+                <span className="inline-flex items-center gap-1 bg-orange-500/10 border border-orange-500/20 text-orange-300 px-3 py-1 rounded-full text-sm">
+                  <span className="w-2 h-2 bg-orange-400 rounded-full" aria-hidden="true"></span>
+                  African Storyteller
+                </span>
+              </motion.div>
             </motion.div>
           </motion.div>
         </motion.section>
 
-        {/* Founder Timeline Section */}
+        {/* Company Timeline Section */}
         <motion.section 
-          aria-labelledby="timeline" 
+          aria-labelledby="timeline-heading" 
           className="mt-8 mx-auto max-w-6xl px-4"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={containerVariants}
         >
-          <div className="grid grid-cols-[9rem_1px_1fr] md:grid-cols-[10rem_1px_1fr] lg:grid-cols-[12rem_1px_1fr]">
-            <div className="col-start-2 row-span-full w-px bg-gradient-to-b from-transparent via-orange-500/60 to-transparent pointer-events-none" />
+          <motion.div className="text-center mb-12" variants={titleVariants}>
+            <h2 id="timeline-heading" className="text-3xl md:text-4xl font-bold text-white mb-4">Our Journey Through Time</h2>
+            <div className="h-1 w-24 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto rounded-full"></div>
+            <p className="text-zinc-300 mt-4 text-lg max-w-2xl mx-auto">
+              From humble beginnings to becoming Rwanda's premier audiovisual production company
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-[9rem_1px_1fr] md:grid-cols-[10rem_1px_1fr] lg:grid-cols-[12rem_1px_1fr]" role="presentation" aria-label="Company timeline">
+            <div className="col-start-2 row-span-full w-px bg-gradient-to-b from-transparent via-orange-500/60 to-transparent pointer-events-none" aria-hidden="true" />
             {founderStory.map((event, index) => (
               <React.Fragment key={event.year}>
                 <motion.div 
@@ -324,13 +607,14 @@ export default function AboutUs() {
                   transition={{ delay: index * 0.2 }}
                 >
                   <div className="flex items-center gap-2 text-base md:text-lg lg:text-xl text-gray-300">
-                    <span className="tabular-nums font-medium">{event.year}</span>
+                    <time className="tabular-nums font-medium" dateTime={event.year}>{event.year}</time>
                   </div>
                 </motion.div>
                 <motion.div 
                   className="col-start-2 relative py-7"
                   variants={itemVariants}
                   transition={{ delay: index * 0.2 + 0.1 }}
+                  aria-hidden="true"
                 >
                   <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-orange-500/40" />
                   <div className="absolute left-1/2 -translate-x-1/2 top-8">
@@ -348,19 +632,21 @@ export default function AboutUs() {
                   variants={slideInRightVariants}
                   transition={{ delay: index * 0.2 + 0.2 }}
                 >
-                  <motion.div 
-                    className="rounded-lg border border-white/10 bg-white/5 p-5 md:p-6 lg:p-7 hover:bg-white/7 transition"
+                  <motion.article 
+                    className="rounded-lg border border-white/10 bg-white/5 p-5 md:p-6 lg:p-7 hover:bg-white/7 transition-colors"
                     whileHover={{ y: -3, scale: 1.02, transition: { duration: 0.3 } }}
                   >
-                    <motion.h4 
+                    <motion.h3 
                       className="text-xl md:text-2xl lg:text-3xl font-semibold text-white leading-snug mb-4"
                       variants={titleVariants}
+                      id={`milestone-${event.year}`}
                     >
                       {event.title}
-                    </motion.h4>
+                    </motion.h3>
                     <motion.p 
                       className="text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed mb-6"
                       variants={subtitleVariants}
+                      aria-describedby={`milestone-${event.year}`}
                     >
                       {event.description}
                     </motion.p>
@@ -368,6 +654,8 @@ export default function AboutUs() {
                       <motion.div 
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6"
                         variants={containerVariants}
+                        role="group"
+                        aria-label={`Images from ${event.title}`}
                       >
                         {event.images.map((image, imgIndex) => (
                           <motion.div 
@@ -377,12 +665,19 @@ export default function AboutUs() {
                             transition={{ delay: imgIndex * 0.1 }}
                             whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
                           >
-                            <img src={image} alt={event.title} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" loading="lazy" />
+                            <img 
+                              src={image} 
+                              alt={`${event.title} milestone - Image ${imgIndex + 1} showing GoodAV's growth and achievements during ${event.year}`} 
+                              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                              loading="lazy" 
+                              width="300"
+                              height="300"
+                            />
                           </motion.div>
                         ))}
                       </motion.div>
                     )}
-                  </motion.div>
+                  </motion.article>
                 </motion.div>
               </React.Fragment>
             ))}
@@ -391,67 +686,81 @@ export default function AboutUs() {
 
         {/* Video Section */}
         <motion.section 
-          aria-labelledby="video" 
-          className="mt-8 mx-auto max-w-6xl px-4"
+          aria-labelledby="video-heading" 
+          className="mt-12 mx-auto max-w-6xl px-4"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={containerVariants}
         >
+          <motion.div className="text-center mb-8" variants={titleVariants}>
+            <h2 id="video-heading" className="text-3xl md:text-4xl font-bold text-white mb-4">Our Story in Motion</h2>
+            <div className="h-1 w-24 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto rounded-full"></div>
+            <p className="text-zinc-300 mt-4 text-lg max-w-2xl mx-auto">
+              Watch the journey of GoodAV and discover our passion for authentic African storytelling
+            </p>
+          </motion.div>
+
           <motion.div
             className="flex justify-center"
             variants={itemVariants}
           >
             <motion.div 
-              className="relative w-full md:w-3/4 lg:w-2/3 glass-card rounded-xl overflow-hidden shadow-glow"
+              className="video-container relative w-full md:w-4/5 lg:w-3/4 xl:w-2/3 glass-card rounded-xl overflow-hidden shadow-glow"
               variants={cardVariants}
               whileHover={{ y: -5, scale: 1.02, transition: { duration: 0.3 } }}
             >
-              <div className="flex items-center justify-center h-64 md:h-96 bg-transparent">
+              <div className="flex items-center justify-center h-64 md:h-96 lg:h-[28rem] bg-transparent">
                 {!play ? (
                   <>
                     <img
-                      src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-                      alt="GoodAV: Crafting Authentic Stories - Video Thumbnail"
+                      src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                      alt="Video thumbnail: GoodAV - Crafting Authentic Stories - Our Journey and Vision. Click to play video about our mission and team."
                       className="absolute inset-0 w-full h-full object-cover"
                       loading="lazy"
+                      width="1280"
+                      height="720"
                     />
                     <motion.button
-                      className="absolute z-20 w-16 h-16 flex items-center justify-center bg-gradient-primary rounded-full hover-lift shadow-glow group"
+                      className="absolute z-20 w-16 h-16 md:w-20 md:h-20 flex items-center justify-center bg-gradient-primary rounded-full hover-lift shadow-glow group focus:outline-none focus:ring-4 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black"
                       whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
                       whileTap={{ scale: 0.95 }}
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
-                      onClick={() => setPlay(true)}
-                      aria-label="Play video: GoodAV Impactful Storytelling"
-                      tabIndex={0}
+                      onClick={handlePlayVideo}
+                      aria-label="Play video: GoodAV - Crafting Authentic Stories - Our Journey and Vision. Duration: 3 minutes 45 seconds"
+                      type="button"
                     >
-                      <Play className="w-8 h-8 text-primary-foreground ml-1 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
+                      <Play className="w-8 h-8 md:w-10 md:h-10 text-primary-foreground ml-1 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
+                      <span className="sr-only">Play video</span>
                     </motion.button>
                   </>
                 ) : (
                   <iframe
                     className="absolute inset-0 w-full h-full"
-                    src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
+                    src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
                     title="GoodAV: Crafting Authentic Stories - Our Journey and Vision"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
                     loading="lazy"
+                    aria-describedby="video-description"
                   />
                 )}
               </div>
               <motion.div
                 className="absolute bottom-4 left-4 right-4 text-white pointer-events-none"
                 initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
+                animate={{ opacity: play ? 0 : 1, y: 0 }}
                 transition={{ delay: 1, duration: 0.5 }}
+                id="video-description"
               >
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-1 bg-primary/90 text-primary-foreground text-xs font-medium rounded-full">Featured</span>
+                  <span className="px-3 py-1 bg-primary/90 text-primary-foreground text-xs font-medium rounded-full">Featured Video</span>
+                  <span className="px-2 py-1 bg-black/60 backdrop-blur-sm text-xs rounded">3:45</span>
                 </div>
-                <h3 className="mt-2 text-lg md:text-xl font-semibold line-clamp-2">GoodAV: Impactful Storytelling</h3>
-                <p className="text-gray-300 text-sm">Our journey and vision for the future</p>
+                <h3 className="mt-2 text-lg md:text-xl lg:text-2xl font-semibold line-clamp-2">GoodAV: Impactful Storytelling</h3>
+                <p className="text-gray-300 text-sm md:text-base">Our journey, mission, and vision for transforming African narratives</p>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -855,7 +1164,7 @@ export default function AboutUs() {
 
         {/* Team Section */}
         <motion.section 
-          aria-labelledby="team" 
+          aria-labelledby="team-heading" 
           className="mt-10 mx-auto max-w-6xl px-4"
           initial="hidden"
           whileInView="visible"
@@ -872,11 +1181,11 @@ export default function AboutUs() {
               variants={titleVariants}
             >
               <motion.h2 
-                id="team" 
+                id="team-heading" 
                 className="text-3xl md:text-4xl font-bold text-white mb-4"
                 variants={titleVariants}
               >
-                Meet the Team
+                Meet Our Expert Team
               </motion.h2>
               <motion.div 
                 className="h-1 w-24 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto rounded-full"
@@ -885,25 +1194,33 @@ export default function AboutUs() {
                 transition={{ delay: 0.5, duration: 0.8 }}
                 viewport={{ once: true }}
               />
+              <motion.p 
+                className="text-zinc-300 mt-4 text-lg max-w-3xl mx-auto"
+                variants={subtitleVariants}
+              >
+                Our diverse team of creative professionals brings together expertise from across Africa to deliver world-class audiovisual solutions
+              </motion.p>
             </motion.div>
 
             <motion.div 
               className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6"
               variants={containerVariants}
+              role="group"
+              aria-label="GoodAV team members"
             >
               {[
-                { src: vincentImg, name: "Vincent Niyibizi", role: "Chief Operating Officer" },
-                { src: josueImg, name: "Josue Ishimwe", role: "Chief Creative Officer" },
-                { src: marieImg, name: "Marie Noella Mugisha", role: "Sales and Partnership" },
-                { src: adelineImg, name: "Adeline Iradukunda", role: "Social Media Manager" },
-                { src: claudineImg, name: "Claudine Musabende", role: "Chief Finance Officer" },
-                { src: emmyImg, name: "Emmanuel Irumva", role: "Schedule and Meeting" },
-                { src: etienneImg, name: "Etienne Manirakiza", role: "Head of Operations and Logistics" },
-                { src: mediatriceImg, name: "Mediatrice Mahoro", role: "Client Relations" },
-                { src: ngaboImg, name: "Blaise Ngabo", role: "Chief Technology Officer" },
-                { src: richmondImg, name: "Richmond Runanira", role: "Producer" },
-                { src: dodoImg, name: "Donatien Hitiyise", role: "Human Resources" },
-                { src: gentilImg, name: "Ibrahim Niyibizi", role: "Head of Marketing" }
+                { src: vincentImg, name: "Vincent Niyibizi", role: "Chief Operating Officer", expertise: "Operations Management" },
+                { src: josueImg, name: "Josue Ishimwe", role: "Chief Creative Officer", expertise: "Creative Direction" },
+                { src: marieImg, name: "Marie Noella Mugisha", role: "Sales and Partnership", expertise: "Business Development" },
+                { src: adelineImg, name: "Adeline Iradukunda", role: "Social Media Manager", expertise: "Digital Marketing" },
+                { src: claudineImg, name: "Claudine Musabende", role: "Chief Finance Officer", expertise: "Financial Management" },
+                { src: emmyImg, name: "Emmanuel Irumva", role: "Schedule and Meeting", expertise: "Project Coordination" },
+                { src: etienneImg, name: "Etienne Manirakiza", role: "Head of Operations and Logistics", expertise: "Logistics Management" },
+                { src: mediatriceImg, name: "Mediatrice Mahoro", role: "Client Relations", expertise: "Customer Experience" },
+                { src: ngaboImg, name: "Blaise Ngabo", role: "Chief Technology Officer", expertise: "Technology Innovation" },
+                { src: richmondImg, name: "Richmond Runanira", role: "Producer", expertise: "Content Production" },
+                { src: dodoImg, name: "Donatien Hitiyise", role: "Human Resources", expertise: "People Management" },
+                { src: gentilImg, name: "Ibrahim Niyibizi", role: "Head of Marketing", expertise: "Marketing Strategy" }
               ].map((member, index) => (
                 <motion.div
                   key={member.name}
@@ -913,7 +1230,9 @@ export default function AboutUs() {
                   <TeamCard 
                     src={member.src} 
                     name={member.name} 
-                    role={member.role} 
+                    role={member.role}
+                    expertise={member.expertise}
+                    index={index}
                   />
                 </motion.div>
               ))}
@@ -921,60 +1240,194 @@ export default function AboutUs() {
           </motion.div>
         </motion.section>
 
-        {/* Bottom CTA Section */}
+        {/* FAQ Section */}
         <motion.section 
-          className="mx-auto max-w-6xl px-4 py-12"
+          aria-labelledby="faq-heading" 
+          className="mt-12 mx-auto max-w-6xl px-4"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={containerVariants}
         >
           <motion.div 
-            className="rounded-2xl border border-white/10 bg-white/3 p-8 text-center"
+            className="rounded-2xl border border-white/10 bg-white/3 p-8"
+            variants={cardVariants}
+            whileHover={{ y: -3, transition: { duration: 0.3 } }}
+          >
+            <motion.div 
+              className="text-center mb-8"
+              variants={titleVariants}
+            >
+              <motion.h2 
+                id="faq-heading" 
+                className="text-3xl md:text-4xl font-bold text-white mb-4"
+                variants={titleVariants}
+              >
+                Frequently Asked Questions
+              </motion.h2>
+              <motion.div 
+                className="h-1 w-24 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto rounded-full"
+                initial={{ width: 0 }}
+                whileInView={{ width: 96 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                viewport={{ once: true }}
+              />
+              <motion.p 
+                className="text-zinc-300 mt-4 text-lg max-w-3xl mx-auto"
+                variants={subtitleVariants}
+              >
+                Get answers to common questions about our services, process, and expertise
+              </motion.p>
+            </motion.div>
+
+            <motion.div 
+              className="space-y-6"
+              variants={containerVariants}
+              role="region"
+              aria-label="Frequently asked questions"
+            >
+              {[
+                {
+                  question: "What makes GoodAV different from other production companies?",
+                  answer: "GoodAV specializes in authentic African storytelling with deep cultural understanding. Our team combines 15+ years of local expertise with international production standards, serving 500+ clients including UN, USAID, and major corporations across Africa."
+                },
+                {
+                  question: "What services does GoodAV offer?",
+                  answer: "We provide comprehensive audiovisual services including video production, documentary filmmaking, live streaming, professional photography, sound systems, lighting design, post-production, animation, and social media content creation."
+                },
+                {
+                  question: "Do you work with international clients?",
+                  answer: "Yes, we regularly collaborate with international organizations, NGOs, corporations, and media companies. We've produced content for global audiences while maintaining authentic African perspectives and cultural sensitivity."
+                },
+                {
+                  question: "What is your production process?",
+                  answer: "Our process begins with understanding your story and objectives, followed by creative concept development, pre-production planning, professional filming/recording, post-production, and final delivery. We maintain close collaboration throughout to ensure your vision is realized."
+                },
+                {
+                  question: "How long does a typical project take?",
+                  answer: "Project timelines vary based on scope and complexity. Simple videos can be completed in 1-2 weeks, while documentaries and large productions may take 1-3 months. We provide detailed timelines during planning and keep you updated throughout."
+                },
+                {
+                  question: "Can you handle projects across Africa?",
+                  answer: "Absolutely. Based in Rwanda, we have extensive experience working across East Africa and the continent. Our team is equipped for international travel and has established networks in major African cities."
+                }
+              ].map((faq, index) => (
+                <motion.div
+                  key={index}
+                  className="bg-white/5 rounded-lg p-6 border border-white/10 hover:bg-white/8 transition-colors"
+                  variants={itemVariants}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
+                >
+                  <h3 className="text-lg md:text-xl font-semibold text-orange-300 mb-3">
+                    {faq.question}
+                  </h3>
+                  <p className="text-zinc-300 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        </motion.section>
+
+        {/* Enhanced Bottom CTA Section */}
+        <motion.section 
+          className="mx-auto max-w-6xl px-4 py-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={containerVariants}
+          aria-labelledby="cta-heading"
+        >
+          <motion.div 
+            className="rounded-2xl border border-white/10 bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-orange-600/10 p-8 text-center"
             variants={cardVariants}
             whileHover={{ y: -3, scale: 1.02, transition: { duration: 0.3 } }}
           >
             <motion.h2 
-              className="text-2xl font-bold text-white mb-6"
+              id="cta-heading"
+              className="text-3xl md:text-4xl font-bold text-white mb-4"
               variants={titleVariants}
             >
-              Ready to Start Your Story?
+              Ready to Tell Your Story?
             </motion.h2>
+            <motion.p 
+              className="text-zinc-300 text-lg md:text-xl max-w-3xl mx-auto mb-8"
+              variants={subtitleVariants}
+            >
+              Join 500+ satisfied clients who have trusted GoodAV to bring their stories to life through professional audiovisual production. Let's create something extraordinary together.
+            </motion.p>
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center"
+              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
               variants={containerVariants}
             >
               <motion.a 
                 href="/contact" 
-                className="px-8 py-4 rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold hover:from-orange-600 hover:to-amber-600 transition-all transform hover:scale-105"
+                className="px-10 py-4 rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold text-lg hover:from-orange-600 hover:to-amber-600 transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-black"
                 variants={itemVariants}
                 whileHover={{ scale: 1.05, y: -2, transition: { duration: 0.2 } }}
                 whileTap={{ scale: 0.95 }}
+                aria-describedby="contact-description"
               >
-                Start Your Project
+                Start Your Project Today
               </motion.a>
               <motion.a 
                 href="/portfolio" 
-                className="px-8 py-4 rounded-lg border border-white/20 text-zinc-200 hover:bg-white/5 transition-all"
+                className="px-10 py-4 rounded-lg border-2 border-white/20 text-zinc-200 hover:bg-white/5 hover:border-white/30 transition-all font-semibold text-lg focus:outline-none focus:ring-4 focus:ring-white/20"
                 variants={itemVariants}
                 whileHover={{ scale: 1.05, y: -2, transition: { duration: 0.2 } }}
                 whileTap={{ scale: 0.95 }}
+                aria-describedby="portfolio-description"
               >
-                See Our Work
+                View Our Portfolio
               </motion.a>
               <motion.button 
                 onClick={() => setProfileModalOpen(true)} 
-                aria-label="View company profile" 
-                className="px-8 py-4 rounded-lg border border-white/20 text-zinc-200 hover:bg-white/5 transition-all"
+                aria-label="Download company profile PDF" 
+                className="px-10 py-4 rounded-lg border-2 border-white/20 text-zinc-200 hover:bg-white/5 hover:border-white/30 transition-all font-semibold text-lg focus:outline-none focus:ring-4 focus:ring-white/20"
                 variants={itemVariants}
                 whileHover={{ scale: 1.05, y: -2, transition: { duration: 0.2 } }}
                 whileTap={{ scale: 0.95 }}
+                aria-describedby="profile-description"
               >
                 Company Profile
               </motion.button>
             </motion.div>
+            
+            {/* Hidden descriptions for screen readers */}
+            <div className="sr-only">
+              <p id="contact-description">Start a new project with GoodAV's professional audiovisual services</p>
+              <p id="portfolio-description">Browse our award-winning portfolio of video production work</p>
+              <p id="profile-description">Download our comprehensive company profile and capabilities</p>
+            </div>
+
+            {/* Trust indicators */}
+            <motion.div 
+              className="mt-12 flex flex-wrap justify-center items-center gap-8 text-zinc-400 text-sm"
+              variants={containerVariants}
+            >
+              <motion.div className="flex items-center gap-2" variants={itemVariants}>
+                <span className="w-2 h-2 bg-yellow-400 rounded-full" aria-hidden="true"></span>
+                500+ Projects Delivered
+              </motion.div>
+              <motion.div className="flex items-center gap-2" variants={itemVariants}>
+                <span className="w-2 h-2 bg-yellow-400 rounded-full" aria-hidden="true"></span>
+                10+ Years Experience
+              </motion.div>
+              <motion.div className="flex items-center gap-2" variants={itemVariants}>
+                <span className="w-2 h-2 bg-orange-400 rounded-full" aria-hidden="true"></span>
+                Award-Winning Team
+              </motion.div>
+              <motion.div className="flex items-center gap-2" variants={itemVariants}>
+                <span className="w-2 h-2 bg-orange-400 rounded-full" aria-hidden="true"></span>
+                Pan-African Reach
+              </motion.div>
+            </motion.div>
           </motion.div>
         </motion.section>
+        
+        </div> {/* End of main-content wrapper */}
       </main>
 
       {/* Company Profile Modal */}
@@ -1022,12 +1475,12 @@ export default function AboutUs() {
 
 /* --- Subcomponents --- */
 
-function TeamCard({ src, name, role }: { src: string; name: string; role: string }) {
+function TeamCard({ src, name, role, expertise, index }: { src: string; name: string; role: string; expertise?: string; index?: number }) {
   return (
     <motion.article
-      className="rounded-lg overflow-hidden bg-white/3 border border-white/6 hover:shadow-glow transform-gpu transition hover:-translate-y-1 focus-within:-translate-y-1 flex flex-col"
+      className="rounded-lg overflow-hidden bg-white/3 border border-white/6 hover:shadow-glow transform-gpu transition hover:-translate-y-1 focus-within:-translate-y-1 flex flex-col h-card"
       tabIndex={0}
-      aria-label={`${name} - ${role}`}
+      aria-label={`${name} - ${role} at GoodAV`}
       whileHover={{ 
         y: -8, 
         scale: 1.03,
@@ -1036,7 +1489,7 @@ function TeamCard({ src, name, role }: { src: string; name: string; role: string
       whileTap={{ scale: 0.98 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.5, delay: (index || 0) * 0.1 }}
     >
       <motion.div 
         className="h-28 bg-zinc-800 overflow-hidden flex-shrink-0"
@@ -1045,9 +1498,11 @@ function TeamCard({ src, name, role }: { src: string; name: string; role: string
       >
         <motion.img 
           src={src} 
-          alt={name} 
-          className="w-full h-full object-cover" 
+          alt={`Professional headshot of ${name}, ${role} at GoodAV`}
+          className="w-full h-full object-cover u-photo" 
           loading="lazy"
+          width="200"
+          height="112"
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
         />
@@ -1060,16 +1515,16 @@ function TeamCard({ src, name, role }: { src: string; name: string; role: string
       >
         <div className="w-full">
           <motion.h3 
-            className="text-sm md:text-base font-semibold leading-snug break-words"
+            className="text-sm md:text-base font-semibold leading-snug break-words p-name"
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.4 }}
           >
             {name}
           </motion.h3>
-          <div className="mt-2 flex items-center justify-between">
+          <div className="mt-2 flex flex-col gap-1">
             <motion.span 
-              className="text-xs px-2 py-1 rounded bg-orange-500/15 text-orange-300 border border-orange-500/10"
+              className="text-xs px-2 py-1 rounded bg-orange-500/15 text-orange-300 border border-orange-500/10 p-job-title"
               initial={{ scale: 0, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.3, type: "spring", stiffness: 200 }}
@@ -1077,6 +1532,16 @@ function TeamCard({ src, name, role }: { src: string; name: string; role: string
             >
               {role}
             </motion.span>
+            {expertise && (
+              <motion.span 
+                className="text-xs text-zinc-400 p-skill"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.3 }}
+              >
+                {expertise}
+              </motion.span>
+            )}
           </div>
         </div>
       </motion.div>

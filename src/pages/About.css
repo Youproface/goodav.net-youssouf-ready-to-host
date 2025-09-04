@@ -1,0 +1,96 @@
+/* About Page Performance Optimizations */
+
+/* Critical CSS for Above-the-fold content */
+.hero-section {
+  contain: layout style paint;
+  will-change: auto;
+}
+
+/* Optimize hero background for performance */
+.hero-background {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Team cards performance optimization */
+.team-card {
+  contain: layout style paint;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.team-card:hover {
+  will-change: transform;
+}
+
+.team-card:not(:hover) {
+  will-change: auto;
+}
+
+/* Timeline performance */
+.timeline-item {
+  contain: layout style;
+}
+
+/* Video container optimization */
+.video-container {
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+/* FAQ section optimization */
+.faq-item {
+  contain: layout style;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .about-page * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Optimize fonts for better CLS */
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+  src: local('Inter');
+}
+
+/* Critical path optimization */
+.critical-section {
+  font-display: swap;
+}
+
+/* Lazy loading optimization */
+.lazy-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+  .team-card {
+    will-change: auto;
+  }
+  
+  .timeline-item {
+    contain: layout;
+  }
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize scroll performance */
+.scroll-optimized {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
