@@ -141,6 +141,88 @@ All colors MUST be HSL for proper theming.
     animation: float 6s ease-in-out infinite;
   }
 
+  /* Heading reveal and shimmer used on hero sections (Portfolio, About) */
+  .reveal-up {
+    transform: translateY(22px);
+    opacity: 0;
+    animation: revealUp 1000ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  .reveal-up.delay-150 {
+    animation-delay: 150ms;
+  }
+
+  .reveal-up.delay-300 {
+    animation-delay: 300ms;
+  }
+
+  @keyframes revealUp {
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /* Removed text-shimmer — using JS animation library instead for headings */
+  /* Removed shimmer — using CSS fade-up utilities for consistent animations */
+
+  /* Fade-up for blocks */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: fadeUp 700ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Small utility delays for staggering (ms) */
+  .delay-75 { animation-delay: 75ms; }
+  .delay-150 { animation-delay: 150ms; }
+  .delay-225 { animation-delay: 225ms; }
+  .delay-300 { animation-delay: 300ms; }
+  .delay-375 { animation-delay: 375ms; }
+  .delay-450 { animation-delay: 450ms; }
+  .delay-600 { animation-delay: 600ms; }
+
+  /* Per-letter reveal utilities (used by AnimatedHeading) */
+  .char {
+    display: inline-block;
+    transform: translateY(10px) rotateX(6deg);
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .char.revealed {
+    animation: charReveal 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  @keyframes charReveal {
+    to {
+      transform: translateY(0) rotateX(0);
+      opacity: 1;
+    }
+  }
+
+  .char.static {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Per-letter delays removed; Framer Motion will control stagger timings instead */
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-up, .reveal-up.delay-150, .reveal-up.delay-300, .text-shimmer::after {
+      animation: none !important;
+      transition: none !important;
+      left: auto !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
   @keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }

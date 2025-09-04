@@ -147,6 +147,29 @@ export default function PortFolio() {
 	const [page, setPage] = useState(1);
 	const playerRef = useRef<HTMLDivElement | null>(null);
 
+	// Animate heading once per session to avoid replay on every navigation
+	const [shouldAnimate, setShouldAnimate] = useState<boolean>(() => {
+		try {
+			return !sessionStorage.getItem('portfolioHeadingAnimated');
+		} catch (e) {
+			return true;
+		}
+	});
+
+	useEffect(() => {
+		if (!shouldAnimate) return;
+		// After a short time, stop shimmer and mark as animated in session
+		const t = setTimeout(() => {
+			try {
+				sessionStorage.setItem('portfolioHeadingAnimated', '1');
+			} catch (e) {}
+			setShouldAnimate(false);
+		}, 1600);
+		return () => clearTimeout(t);
+	}, [shouldAnimate]);
+
+	// Using CSS-only reveal and shimmer for heading (restored)
+
 	function getThumbnail(video) {
 		if (video.thumb) return video.thumb;
 		// Shorts and normal videos use YouTube default thumbnail
@@ -481,11 +504,11 @@ export default function PortFolio() {
 						<div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[#0f1012]" />
 					</div>
 					<div className="relative max-w-6xl mx-auto">
-						<h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-white via-orange-200 to-amber-200 bg-clip-text text-transparent tracking-tight mb-4" id="portfolio-heading">
+						<h1 className={`text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-white via-orange-200 to-amber-200 bg-clip-text text-transparent tracking-tight mb-4 fade-up`} id="portfolio-heading">
 							GoodAV Portfolio: Audiovisual Projects & Creative Highlights
 						</h1>
 						<p
-							className="text-zinc-200 text-xl md:text-2xl font-medium max-w-2xl mx-auto"
+							className={`text-zinc-200 text-xl md:text-2xl font-medium max-w-2xl mx-auto fade-up delay-150`}
 							aria-describedby="portfolio-heading"
 						>
 							Discover our recent work in video production, documentary filmmaking, and event coverage for leading organizations in Rwanda and beyond.{' '}
@@ -497,7 +520,7 @@ export default function PortFolio() {
 				<div className="max-w-7xl mx-auto relative">
 					{/* Controls: category filters, search, sort */}
 					<section
-						className="sticky top-0 z-30 -mt-6 mb-6 backdrop-blur supports-[backdrop-filter]:bg-[#0f1012]/70 bg-[#0f1012]/95 border-b border-white/5"
+						className={`sticky top-0 z-30 -mt-6 mb-6 backdrop-blur supports-[backdrop-filter]:bg-[#0f1012]/70 bg-[#0f1012]/95 border-b border-white/5 fade-up delay-225`}
 						aria-label="Portfolio controls"
 						role="region"
 					>
@@ -570,7 +593,7 @@ export default function PortFolio() {
 					{/* Main video player only shown when a video is selected */}
 					{selectedVideo && (
 						<article
-							className="sticky top-16 z-40 bg-[#0f1012] pb-8"
+							className={`sticky top-16 z-40 bg-[#0f1012] pb-8 fade-up delay-300`}
 							ref={playerRef}
 							aria-label="Selected video preview"
 							role="region"
@@ -671,10 +694,13 @@ export default function PortFolio() {
 					>
 						{pagedVideos.map((video, idx) => {
 							const cat = (video as any)._cat as string;
+							// pick delay class based on index for simple stagger
+							const delays = ['delay-75', 'delay-150', 'delay-225', 'delay-300'];
+							const delayClass = delays[idx % delays.length];
 							return (
 								<article
 									key={video.id + idx}
-									className="group relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-[#0b0b0c]"
+									className={`group relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-[#0b0b0c] ${delayClass} fade-up`}
 									aria-label={`Portfolio video: ${video.title}`}
 									role="article"
 								>
@@ -710,7 +736,7 @@ export default function PortFolio() {
 											{/* dark gradient overlay */}
 											<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 											{/* View count badge top-right */}
-											<div className="absolute top-3 right-3 z-10">
+											<div className={`absolute top-3 right-3 z-10 fade-up delay-375`}>
 												<span className="text-xs font-medium px-2 py-1 rounded-full bg-black/70 text-white backdrop-blur flex items-center gap-1">
 													<svg
 														className="w-4 h-4 inline-block mr-1"
@@ -725,7 +751,7 @@ export default function PortFolio() {
 												</span>
 											</div>
 											{/* Category label top-left */}
-											<div className="absolute top-3 left-3 z-10">
+											<div className={`absolute top-3 left-3 z-10 fade-up delay-375`}>
 												<span
 													className={`text-xs font-bold px-3 py-1 rounded-full shadow-md uppercase tracking-wide ${
 														cat === 'Documentary'
@@ -740,7 +766,7 @@ export default function PortFolio() {
 											</div>
 										</div>
 										{/* Bottom overlay: title, client, year, views */}
-										<div className="absolute left-0 right-0 bottom-0 px-4 pb-3 pt-2 text-white">
+										<div className={`absolute left-0 right-0 bottom-0 px-4 pb-3 pt-2 text-white fade-up delay-450`}>
 											<h2
 												className="text-sm md:text-base font-semibold line-clamp-2 text-left"
 												title={video.title}
