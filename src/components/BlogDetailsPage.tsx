@@ -34,29 +34,55 @@ interface BlogDetailsPageProps {
 export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
   if (!blog) {
     return (
-      <div className="min-h-screen bg-[#0f1012] flex items-center justify-center">
+      <div className="min-h-screen bg-[#0f1012] flex items-center justify-center" role="status" aria-live="polite">
         <p className="text-zinc-300">Loading blog post...</p>
       </div>
     );
   }
+  // SEO and structured data
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": blog.title,
+    "description": blog.excerpt,
+    "image": blog.image,
+    "datePublished": blog.date,
+    "author": {
+      "@type": "Organization",
+      "name": "GoodAV"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GoodAV"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://goodav.net/blog/${blog.slug}`
+    }
+  };
   return (
-    <main className="min-h-screen bg-[#0f1012] text-zinc-100">
+    <main className="min-h-screen bg-[#0f1012] text-zinc-100" role="main" aria-label="Blog Post">
       {/* SEO Meta Tags */}
-      <head>
-        <title>{`${blog.title} | GoodAV - Rwanda, Africa, Documentary, Gorilla Naming, Kigali Convention Center, Visit Rwanda`}</title>
-        <meta name="description" content={`Read about ${blog.title} - ${blog.excerpt} | GoodAV is your trusted audiovisual partner for Rwanda, Africa, documentary, conferences, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina, gorilla naming, Rwanda visa, national parks, and more.`} />
-        <meta name="keywords" content="Rwanda, Africa, documentary, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda, blog, article, engagement, customer conversion" />
-        <meta property="og:title" content={`${blog.title} | GoodAV - Rwanda, Africa, Documentary`} />
-        <meta property="og:description" content={blog.excerpt} />
-        <meta property="og:image" content={blog.image} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://goodav.net/blog/${blog.slug}`} />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`https://goodav.net/blog/${blog.slug}`} />
-        <meta httpEquiv="Content-Language" content="en" />
-      </head>
-      {/* HERO */}
-      <section className="relative mt-20">
+      <title>{`${blog.title} | GoodAV - Rwanda, Africa, Documentary, Gorilla Naming, Kigali Convention Center, Visit Rwanda`}</title>
+      <meta name="description" content={`Read about ${blog.title} - ${blog.excerpt} | GoodAV is your trusted audiovisual partner for Rwanda, Africa, documentary, conferences, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina, gorilla naming, Rwanda visa, national parks, and more.`} />
+      <meta name="keywords" content="Rwanda, Africa, documentary, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda, blog, article, engagement, customer conversion" />
+      <meta property="og:title" content={`${blog.title} | GoodAV - Rwanda, Africa, Documentary`} />
+      <meta property="og:description" content={blog.excerpt} />
+      <meta property="og:image" content={blog.image} />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content={`https://goodav.net/blog/${blog.slug}`} />
+      <meta name="robots" content="index, follow" />
+      <link rel="canonical" href={`https://goodav.net/blog/${blog.slug}`} />
+      <meta httpEquiv="Content-Language" content="en" />
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={`${blog.title} | GoodAV - Rwanda, Africa, Documentary`} />
+      <meta name="twitter:description" content={blog.excerpt} />
+      <meta name="twitter:image" content={blog.image} />
+      {/* Structured Data */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+  {/* HERO */}
+  <section className="relative mt-20" tabIndex={-1} aria-labelledby="blog-title">
         <div className="relative mt-10 py-28 px-4 bg-transparent">
           {/* Background Image with Overlay */}
           <div className="absolute inset-0">
@@ -70,14 +96,13 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
 
           {/* Content */}
           <div className="relative max-w-6xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r text-white bg-clip-text text-transparent">
+            <h1 id="blog-title" className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r text-white bg-clip-text text-transparent">
               {blog?.title}
             </h1>
-
             <p className="text-sm text-zinc-300">
               <span className="font-semibold text-orange-300">{blog?.category}</span>
               <span className="mx-2">•</span>
-              <time>{blog?.date}</time>
+              <time dateTime={blog?.date}>{blog?.date}</time>
               <span className="mx-2">•</span>
               <span>{blog?.readTime}</span>
             </p>
@@ -146,7 +171,9 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
               <figure className="overflow-hidden rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur shadow">
                 <img 
                   src={blog.image} 
-                  alt={blog.title} 
+                  alt={blog.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-auto max-h-[500px] object-cover rounded-lg opacity-0 transition-opacity duration-500"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
@@ -169,18 +196,18 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
                 remarkPlugins={[remarkGfm]} 
                 rehypePlugins={[rehypeRaw]}
                 components={{
-                  h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-orange-400 mt-8 mb-4" {...props} />,
-                  h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-orange-400 mt-8 mb-3" {...props} />,
-                  h3: ({node, ...props}) => <h3 className="text-xl font-semibold text-orange-400 mt-6 mb-2" {...props} />,
-                  p: ({node, ...props}) => <p className="text-zinc-300 mb-4 leading-relaxed" {...props} />,
-                  a: ({node, ...props}) => <a className="text-orange-400 hover:text-orange-300 underline" target="_blank" rel="noopener noreferrer" {...props} />,
+                  h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-orange-400 mt-8 mb-4" tabIndex={0} {...props} />,
+                  h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-orange-400 mt-8 mb-3" tabIndex={0} {...props} />,
+                  h3: ({node, ...props}) => <h3 className="text-xl font-semibold text-orange-400 mt-6 mb-2" tabIndex={0} {...props} />,
+                  p: ({node, ...props}) => <p className="text-zinc-300 mb-4 leading-relaxed" tabIndex={0} {...props} />,
+                  a: ({node, ...props}) => <a className="text-orange-400 hover:text-orange-300 underline focus:outline focus:ring-2 focus:ring-orange-400" target="_blank" rel="noopener noreferrer" tabIndex={0} {...props} />,
                   ul: ({node, ...props}) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />,
                   ol: ({node, ...props}) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />,
                   li: ({node, ...props}) => <li className="text-zinc-300" {...props} />,
-                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-orange-400 pl-4 italic my-4 text-zinc-300" {...props} />,
-                  code: ({node, ...props}) => <code className="bg-zinc-800 text-orange-300 px-1.5 py-0.5 rounded text-sm" {...props} />,
-                  pre: ({node, ...props}) => <pre className="bg-zinc-900 p-4 rounded-lg overflow-x-auto my-4" {...props} />,
-                  img: ({node, ...props}) => <img className="rounded-lg my-6 w-full h-auto" {...props} />
+                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-orange-400 pl-4 italic my-4 text-zinc-300" tabIndex={0} {...props} />,
+                  code: ({node, ...props}) => <code className="bg-zinc-800 text-orange-300 px-1.5 py-0.5 rounded text-sm" tabIndex={0} {...props} />,
+                  pre: ({node, ...props}) => <pre className="bg-zinc-900 p-4 rounded-lg overflow-x-auto my-4" tabIndex={0} {...props} />,
+                  img: ({node, ...props}) => <img className="rounded-lg my-6 w-full h-auto" loading="lazy" decoding="async" {...props} />
                 }}
               >
                 {blog.content}
