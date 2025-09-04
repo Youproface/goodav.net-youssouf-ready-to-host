@@ -1,6 +1,6 @@
 import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play } from 'lucide-react';
 
@@ -107,7 +107,7 @@ export default function AboutUs() {
         }}
       />
 
-  <main className="bg-[#0f1012] text-zinc-100 min-h-screen about-grayscale">
+      <main className="bg-[#0f1012] text-zinc-100 min-h-screen about-grayscale">
         {/* Full-bleed hero matching Portfolio style */}
         <header
           className="relative mt-6 py-28 px-4 -mx-4 sm:-mx-6 md:-mx-8 bg-transparent text-center mb-10 flex flex-col items-center justify-center min-h-[320px] rounded-b-2xl"
@@ -155,139 +155,8 @@ export default function AboutUs() {
           </div>
         </section>
 
-        <section aria-labelledby="mission" className="mt-12 mx-auto max-w-6xl px-4">
-          <div className="rounded-2xl p-6">
-            <h2 id="mission" className="text-2xl font-semibold text-center text-orange-300">About Us</h2>
-
-            <p className="mt-3 text-zinc-300">
-              <strong>GOODAV</strong> is a pioneering and market-leading provider of digital consulting services,
-              including audio-visual content production and photography. We have extensive experience in the
-              development of digital content — from concise summaries to full documentaries and high-quality
-              photography coverage. Our work also includes live streaming, branding and marketing to tell a
-              visual story about a variety of events using integrated techniques that deliver to the utmost
-              satisfaction of our customers.
-            </p>
-
-            <p className="mt-4 text-zinc-300">
-              Our approach is founded on clear principles: customer-centricity, quality & reliability,
-              diversity & inclusion, and an impact-driven mindset. We use our know-how and experience to assess
-              customers’ needs, discuss expectations, and achieve goals in a factual, results-oriented way.
-              Rooted in the belief that Africa’s stories are best told by those who understand its essence,
-              culture, and communities, GoodAV combines deep local knowledge with world-class videography,
-              photography, and documentation expertise to support organizations across the continent.
-            </p>
-
-            <p className="mt-4 text-zinc-300 font-semibold">EMPOWERING STORIES, CREATING CONNECTIONS</p>
-            <p className="mt-2 text-zinc-300">
-              GOODAV’s strength lies in its team and our ongoing investment in skills development. We embrace
-              storytelling because it stimulates imagination and builds a sense of community between tellers and
-              listeners. Storytelling helps us understand our environment and personal experience; that is why we
-              always strive to help customers tell the story of their work and the impact they make in an articulated
-              and engaging way.
-            </p>
-
-            {/* Optional homepage intro copy copied for context */}
-            <p className="mt-4 text-zinc-300 italic">We are Africa's premier audiovisual storytellers, transforming authentic narratives into compelling visual experiences that resonate globally while honoring our continental heritage.</p>
-          </div>
-        </section>
-
-        <section aria-labelledby="story" className="mt-8 mx-auto max-w-6xl px-4">
-          <div className="rounded-2xl p-6">
-            <h2 id="story" className="text-2xl font-semibold text-center text-orange-300">Story behind GoodAV</h2>
-
-            <p className="mt-3 text-zinc-300">
-              At the core of GoodAV is a vision inspired by its founder and CEO, <strong>Youssouf Hakizimana</strong>,
-              a multimedia artist with over a decade of experience in the audiovisual industry. Driven by a passion
-              for storytelling, innovation, and cultural preservation, Youssouf established GoodAV to be more than a
-              media company — it’s a catalyst for Africa’s transformation through the art of media.
-            </p>
-
-            <h3 className="mt-6 text-xl font-semibold text-orange-300">A Vision Born from Experience</h3>
-            <p className="mt-3 text-zinc-300">
-              Youssouf’s journey began with a powerful belief: every story deserves to be told with authenticity,
-              impact, and precision. His expertise spans video production, photography, live streaming, and audio
-              creation, complemented by a strong foundation in digital communication and continuous learning. Over
-              the years, he identified a gap in the market for high-quality, client-focused content production
-              tailored to diverse audiences. GoodAV started as a small initiative but quickly grew into a trusted
-              partner for businesses, individuals, and organizations. Under Youssouf’s leadership, the company
-              delivers exceptional services by blending creativity, cutting-edge technology, and a commitment to
-              excellence.
-            </p>
-
-            <h3 className="mt-6 text-xl font-semibold text-orange-300">From Idea to Impact</h3>
-            <p className="mt-3 text-zinc-300">
-              One of Youssouf’s standout projects is “Echoes of Tradition,” a heartfelt initiative that captures the
-              beauty, resilience, and spirit of Rwanda through photography and videography. This project reflects
-              GoodAV’s deeper mission: to showcase Africa’s rich heritage while empowering clients to amplify their
-              unique stories. Youssouf connects with diverse communities, ensuring GoodAV’s work resonates across
-              cultures. As advancements in Machine Learning and Artificial Intelligence reshape the creative
-              landscape, GoodAV is at the forefront, integrating these innovations to enhance its storytelling
-              capabilities.
-            </p>
-
-            <h3 className="mt-6 text-xl font-semibold text-orange-300">The Driving Philosophy</h3>
-            <p className="mt-3 text-zinc-300">
-              For Youssouf Hakizimana, storytelling isn’t just about creating visuals — it’s about building
-              connections, evoking emotions, and leaving a lasting legacy. This philosophy is woven into every
-              project at GoodAV, where the focus is on empowering clients to share their stories authentically and
-              powerfully.
-            </p>
-
-            <blockquote className="mt-4 italic text-zinc-200 border-l-4 pl-4 border-orange-500">“Our mission is to empower others to tell their stories, their way—because every story matters.” — Youssouf Hakizimana</blockquote>
-
-            <p className="mt-4 text-zinc-300">At GoodAV, we’re not just creating content; we’re creating connections that inspire and transform.</p>
-
-            {/* Services and Organizational Blocks */}
-            <div className="mt-6 rounded-lg border border-white/10 bg-white/3 p-6">
-              <h3 className="text-lg font-semibold text-orange-300">Services we provide</h3>
-              <p className="mt-3 text-zinc-300">VIDEO PRODUCTION, PHOTOGRAPHY, LIVE STREAMING, AUDIO PRODUCTION, SOUND SYSTEM, LIGHTING</p>
-
-              <h4 className="mt-6 text-sm font-semibold text-zinc-200">OUR FOUNDATION</h4>
-              <p className="text-zinc-300 mt-2">Built on purpose, driven by passion, defined by excellence</p>
-
-              <h4 className="mt-4 text-sm font-semibold text-zinc-200">MISSION</h4>
-              <p className="text-zinc-300 mt-2"><strong>EMPOWERING AFRICAN VOICES</strong></p>
-              <p className="text-zinc-300 mt-2">We elevate African narratives through world-class audiovisual excellence, authentically showcasing our continent's rich cultures and transformative stories with unparalleled creativity and technical mastery.</p>
-
-              <ul className="mt-3 grid gap-2 sm:grid-cols-3">
-                <li className="text-zinc-300"><strong>Cultural Authenticity</strong><div className="text-sm text-zinc-400">Preserving Africa's rich heritage through genuine storytelling</div></li>
-                <li className="text-zinc-300"><strong>Technical Excellence</strong><div className="text-sm text-zinc-400">World-class production standards and cutting-edge technology</div></li>
-                <li className="text-zinc-300"><strong>Global Standards</strong><div className="text-sm text-zinc-400">Meeting international benchmarks while honoring local contexts</div></li>
-              </ul>
-
-              <h4 className="mt-6 text-sm font-semibold text-zinc-200">VISION</h4>
-              <p className="text-zinc-300 mt-2"><strong>AFRICA'S PREMIER STORYTELLERS</strong></p>
-              <p className="text-zinc-300 mt-2">To become Africa's most trusted audiovisual partner, inspiring global audiences with authentic, impactful narratives that celebrate our continent's diversity and drive meaningful change worldwide.</p>
-
-              <ul className="mt-3 grid gap-2 sm:grid-cols-3">
-                <li className="text-zinc-300"><strong>Industry Leadership</strong><div className="text-sm text-zinc-400">Setting new standards for African audiovisual excellence</div></li>
-                <li className="text-zinc-300"><strong>Global Impact</strong><div className="text-sm text-zinc-400">Creating content that resonates worldwide and drives change</div></li>
-                <li className="text-zinc-300"><strong>Cultural Bridge</strong><div className="text-sm text-zinc-400">Connecting African stories with global audiences authentically</div></li>
-              </ul>
-
-              <h4 className="mt-6 text-sm font-semibold text-zinc-200">OUR CORE VALUES</h4>
-              <p className="text-zinc-300 mt-2">The pillars that guide our work and define who we are</p>
-              <ul className="mt-3 grid gap-3 sm:grid-cols-2">
-                <li className="bg-white/3 p-3 rounded"> <strong>Pan-African Unity</strong><div className="text-sm text-zinc-400">Fostering collaboration across Africa's 54 nations, celebrating our diversity while strengthening our collective narrative through unified storytelling excellence.</div></li>
-                <li className="bg-white/3 p-3 rounded"> <strong>Authentic Representation</strong><div className="text-sm text-zinc-400">Preserving and presenting Africa's rich heritage with integrity, ensuring every story honors our traditions while embracing contemporary innovation.</div></li>
-                <li className="bg-white/3 p-3 rounded"> <strong>Innovation Leadership</strong><div className="text-sm text-zinc-400">Pioneering cutting-edge audiovisual technologies and creative methodologies that set new standards for storytelling excellence across the continent.</div></li>
-              </ul>
-
-              <h4 className="mt-6 text-sm font-semibold text-zinc-200">From Vision to Continental Impact</h4>
-              <p className="text-zinc-300 mt-2">GOODAV emerged from a revolutionary vision: to elevate African storytelling to global standards while preserving cultural authenticity. Founded by passionate creators who understood the power of visual narrative, we've transformed from a local production house into Africa's most trusted audiovisual partner.</p>
-
-              <p className="mt-4 text-zinc-300">Our evolution spans documenting grassroots communities to capturing international conferences, producing award-winning documentaries, and pioneering live streaming technologies across the continent—always with African authenticity at our core.</p>
-
-              <div className="mt-6">
-                <h5 className="text-sm font-semibold text-orange-300">Milestones</h5>
-                <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="glass-card p-4 rounded"> <div className="text-lg font-bold">2019</div><div className="text-sm text-zinc-400">Founded with a vision — Established with revolutionary vision to elevate African storytelling</div></div>
-                  <div className="glass-card p-4 rounded"> <div className="text-lg font-bold">2021</div><div className="text-sm text-zinc-400">Pan-African expansion — Expanded operations across multiple African countries</div></div>
-                  <div className="glass-card p-4 rounded"> <div className="text-lg font-bold">2024</div><div className="text-sm text-zinc-400">AI integration pioneer — Became pioneer in AI-powered content creation</div></div>
-                </div>
-              </div>
-            </div>
-
+        {/* Main Content Section */}
+        <section className="px-4 sm:px-6 md:px-8 py-8">
             {/* Video Section */}
             <motion.div
               className="flex justify-center mt-12"
@@ -365,7 +234,7 @@ export default function AboutUs() {
                   <div className="col-start-2 row-span-full w-px bg-gradient-to-b from-transparent via-orange-500/60 to-transparent pointer-events-none" />
 
                   {founderStory.map((event) => (
-                    <>
+                    <React.Fragment key={event.year}>
                       <div className="col-start-1 pr-4 md:pr-6 py-7 flex items-start justify-end">
                         <div className="flex items-center gap-2 text-base md:text-lg lg:text-xl text-gray-300">
                           <span className="tabular-nums font-medium">{event.year}</span>
@@ -394,11 +263,14 @@ export default function AboutUs() {
                           )}
                         </div>
                       </div>
-                    </>
+                    </React.Fragment>
                   ))}
                 </div>
               </div>
-              <div className="rounded-xl border border-white/10 bg-white/5 p-6 md:p-8 flex flex-col md:flex-row items-center gap-6">
+            </div>
+              
+            {/* Founder Section */}
+            <div className="rounded-xl border border-white/10 bg-white/5 p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 mt-8">
                 <div className="flex-shrink-0 rounded-lg overflow-hidden w-40 md:w-56 lg:w-64">
                   <img
                     src="/images/all_site_images/About/Founder/Youssouf_Hakizimana_CEO_GoodAV.jpg"
@@ -412,6 +284,137 @@ export default function AboutUs() {
                   <p className="text-orange-300/90 mt-1">Founder &amp; CEO</p>
                   <p className="mt-3 text-zinc-300 leading-relaxed">“Our mission is to empower others to tell their stories, their way—because every story matters.”</p>
                   <p className="mt-4 text-zinc-400 text-sm">Youssouf Hakizimana — CEO OF GoodAV</p>
+                </div>
+              </div>
+        </section>
+
+        {/* About Us Section */}
+        <section aria-labelledby="mission" className="mt-12 mx-auto max-w-6xl px-4">
+          <div className="rounded-2xl p-6">
+            <h2 id="mission" className="text-2xl font-semibold text-center text-orange-300">About Us</h2>
+
+            <p className="mt-3 text-zinc-300">
+              <strong>GOODAV</strong> is a pioneering and market-leading provider of digital consulting services,
+              including audio-visual content production and photography. We have extensive experience in the
+              development of digital content — from concise summaries to full documentaries and high-quality
+              photography coverage. Our work also includes live streaming, branding and marketing to tell a
+              visual story about a variety of events using integrated techniques that deliver to the utmost
+              satisfaction of our customers.
+            </p>
+
+            <p className="mt-4 text-zinc-300">
+              Our approach is founded on clear principles: customer-centricity, quality & reliability,
+              diversity & inclusion, and an impact-driven mindset. We use our know-how and experience to assess
+              customers’ needs, discuss expectations, and achieve goals in a factual, results-oriented way.
+              Rooted in the belief that Africa’s stories are best told by those who understand its essence,
+              culture, and communities, GoodAV combines deep local knowledge with world-class videography,
+              photography, and documentation expertise to support organizations across the continent.
+            </p>
+
+            <p className="mt-4 text-zinc-300 font-semibold">EMPOWERING STORIES, CREATING CONNECTIONS</p>
+            <p className="mt-2 text-zinc-300">
+              GOODAV’s strength lies in its team and our ongoing investment in skills development. We embrace
+              storytelling because it stimulates imagination and builds a sense of community between tellers and
+              listeners. Storytelling helps us understand our environment and personal experience; that is why we
+              always strive to help customers tell the story of their work and the impact they make in an articulated
+              and engaging way.
+            </p>
+
+            {/* Optional homepage intro copy copied for context */}
+            <p className="mt-4 text-zinc-300 italic">We are Africa's premier audiovisual storytellers, transforming authentic narratives into compelling visual experiences that resonate globally while honoring our continental heritage.</p>
+          </div>
+        </section>
+
+  <section aria-labelledby="story" className="mt-8 mx-auto max-w-6xl px-4">
+          <div className="rounded-2xl p-6">
+            <h2 id="story" className="text-2xl font-semibold text-center text-orange-300">Story behind GoodAV</h2>
+
+            <p className="mt-3 text-zinc-300">
+              At the core of GoodAV is a vision inspired by its founder and CEO, <strong>Youssouf Hakizimana</strong>,
+              a multimedia artist with over a decade of experience in the audiovisual industry. Driven by a passion
+              for storytelling, innovation, and cultural preservation, Youssouf established GoodAV to be more than a
+              media company — it’s a catalyst for Africa’s transformation through the art of media.
+            </p>
+
+            <h3 className="mt-6 text-xl font-semibold text-orange-300">A Vision Born from Experience</h3>
+            <p className="mt-3 text-zinc-300">
+              Youssouf’s journey began with a powerful belief: every story deserves to be told with authenticity,
+              impact, and precision. His expertise spans video production, photography, live streaming, and audio
+              creation, complemented by a strong foundation in digital communication and continuous learning. Over
+              the years, he identified a gap in the market for high-quality, client-focused content production
+              tailored to diverse audiences. GoodAV started as a small initiative but quickly grew into a trusted
+              partner for businesses, individuals, and organizations. Under Youssouf’s leadership, the company
+              delivers exceptional services by blending creativity, cutting-edge technology, and a commitment to
+              excellence.
+            </p>
+
+            <h3 className="mt-6 text-xl font-semibold text-orange-300">From Idea to Impact</h3>
+            <p className="mt-3 text-zinc-300">
+              One of Youssouf’s standout projects is “Echoes of Tradition,” a heartfelt initiative that captures the
+              beauty, resilience, and spirit of Rwanda through photography and videography. This project reflects
+              GoodAV’s deeper mission: to showcase Africa’s rich heritage while empowering clients to amplify their
+              unique stories. Youssouf connects with diverse communities, ensuring GoodAV’s work resonates across
+              cultures. As advancements in Machine Learning and Artificial Intelligence reshape the creative
+              landscape, GoodAV is at the forefront, integrating these innovations to enhance its storytelling
+              capabilities.
+            </p>
+
+            <h3 className="mt-6 text-xl font-semibold text-orange-300">The Driving Philosophy</h3>
+            <p className="mt-3 text-zinc-300">
+              For Youssouf Hakizimana, storytelling isn’t just about creating visuals — it’s about building
+              connections, evoking emotions, and leaving a lasting legacy. This philosophy is woven into every
+              project at GoodAV, where the focus is on empowering clients to share their stories authentically and
+              powerfully.
+            </p>
+
+
+            {/* Services and Organizational Blocks */}
+            <div className="mt-6 rounded-lg border border-white/10 bg-white/3 p-6">
+              <h3 className="text-lg font-semibold text-orange-300">Services we provide</h3>
+              <p className="mt-3 text-zinc-300">VIDEO PRODUCTION, PHOTOGRAPHY, LIVE STREAMING, AUDIO PRODUCTION, SOUND SYSTEM, LIGHTING</p>
+
+              <h4 className="mt-6 text-sm font-semibold text-zinc-200">OUR FOUNDATION</h4>
+              <p className="text-zinc-300 mt-2">Built on purpose, driven by passion, defined by excellence</p>
+
+              <h4 className="mt-4 text-sm font-semibold text-zinc-200">MISSION</h4>
+              <p className="text-zinc-300 mt-2"><strong>EMPOWERING AFRICAN VOICES</strong></p>
+              <p className="text-zinc-300 mt-2">We elevate African narratives through world-class audiovisual excellence, authentically showcasing our continent's rich cultures and transformative stories with unparalleled creativity and technical mastery.</p>
+
+              <ul className="mt-3 grid gap-2 sm:grid-cols-3">
+                <li className="text-zinc-300"><strong>Cultural Authenticity</strong><div className="text-sm text-zinc-400">Preserving Africa's rich heritage through genuine storytelling</div></li>
+                <li className="text-zinc-300"><strong>Technical Excellence</strong><div className="text-sm text-zinc-400">World-class production standards and cutting-edge technology</div></li>
+                <li className="text-zinc-300"><strong>Global Standards</strong><div className="text-sm text-zinc-400">Meeting international benchmarks while honoring local contexts</div></li>
+              </ul>
+
+              <h4 className="mt-6 text-sm font-semibold text-zinc-200">VISION</h4>
+              <p className="text-zinc-300 mt-2"><strong>AFRICA'S PREMIER STORYTELLERS</strong></p>
+              <p className="text-zinc-300 mt-2">To become Africa's most trusted audiovisual partner, inspiring global audiences with authentic, impactful narratives that celebrate our continent's diversity and drive meaningful change worldwide.</p>
+
+              <ul className="mt-3 grid gap-2 sm:grid-cols-3">
+                <li className="text-zinc-300"><strong>Industry Leadership</strong><div className="text-sm text-zinc-400">Setting new standards for African audiovisual excellence</div></li>
+                <li className="text-zinc-300"><strong>Global Impact</strong><div className="text-sm text-zinc-400">Creating content that resonates worldwide and drives change</div></li>
+                <li className="text-zinc-300"><strong>Cultural Bridge</strong><div className="text-sm text-zinc-400">Connecting African stories with global audiences authentically</div></li>
+              </ul>
+
+              <h4 className="mt-6 text-sm font-semibold text-zinc-200">OUR CORE VALUES</h4>
+              <p className="text-zinc-300 mt-2">The pillars that guide our work and define who we are</p>
+              <ul className="mt-3 grid gap-3 sm:grid-cols-2">
+                <li className="bg-white/3 p-3 rounded"> <strong>Pan-African Unity</strong><div className="text-sm text-zinc-400">Fostering collaboration across Africa's 54 nations, celebrating our diversity while strengthening our collective narrative through unified storytelling excellence.</div></li>
+                <li className="bg-white/3 p-3 rounded"> <strong>Authentic Representation</strong><div className="text-sm text-zinc-400">Preserving and presenting Africa's rich heritage with integrity, ensuring every story honors our traditions while embracing contemporary innovation.</div></li>
+                <li className="bg-white/3 p-3 rounded"> <strong>Innovation Leadership</strong><div className="text-sm text-zinc-400">Pioneering cutting-edge audiovisual technologies and creative methodologies that set new standards for storytelling excellence across the continent.</div></li>
+              </ul>
+
+              <h4 className="mt-6 text-sm font-semibold text-zinc-200">From Vision to Continental Impact</h4>
+              <p className="text-zinc-300 mt-2">GOODAV emerged from a revolutionary vision: to elevate African storytelling to global standards while preserving cultural authenticity. Founded by passionate creators who understood the power of visual narrative, we've transformed from a local production house into Africa's most trusted audiovisual partner.</p>
+
+              <p className="mt-4 text-zinc-300">Our evolution spans documenting grassroots communities to capturing international conferences, producing award-winning documentaries, and pioneering live streaming technologies across the continent—always with African authenticity at our core.</p>
+
+              <div className="mt-6">
+                <h5 className="text-sm font-semibold text-orange-300">Milestones</h5>
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="glass-card p-4 rounded"> <div className="text-lg font-bold">2019</div><div className="text-sm text-zinc-400">Founded with a vision — Established with revolutionary vision to elevate African storytelling</div></div>
+                  <div className="glass-card p-4 rounded"> <div className="text-lg font-bold">2021</div><div className="text-sm text-zinc-400">Pan-African expansion — Expanded operations across multiple African countries</div></div>
+                  <div className="glass-card p-4 rounded"> <div className="text-lg font-bold">2024</div><div className="text-sm text-zinc-400">AI integration pioneer — Became pioneer in AI-powered content creation</div></div>
                 </div>
               </div>
             </div>
