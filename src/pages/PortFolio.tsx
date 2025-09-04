@@ -535,6 +535,13 @@ export default function PortFolio() {
 									>
 										View Company Profile
 									</button>
+									{/* View Case Studies Button */}
+									<a
+										href="/case-studies"
+										className="px-4 py-2 rounded-md bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold shadow hover:from-orange-600 hover:to-amber-600 transition-all"
+									>
+										View Case Studies
+									</a>
 								</div>
 								<div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter portfolio by category">
 									{(['All', 'Featured', 'Event', 'Documentary', 'Shorts'] as const).map((tab) => {

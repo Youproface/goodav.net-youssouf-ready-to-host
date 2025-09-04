@@ -739,6 +739,19 @@ const FeaturedProjects: React.FC = () => {
             View Full Portfolio
           </motion.button>
           <motion.button
+            onClick={() => navigate("/case-studies")}
+            className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 hover-lift text-white font-semibold rounded-lg shadow-glow transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:ring-offset-2"
+            variants={animationVariants.item}
+            whileHover={{
+              scale: 1.05,
+              transition: { duration: 0.2, ease: "easeOut" }
+            }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="View detailed case studies of our successful projects"
+          >
+            View Case Studies
+          </motion.button>
+          <motion.button
             onClick={() => navigate("/contact")}
             className="px-8 py-4 glass-card hover-lift text-foreground hover:text-primary font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
             variants={animationVariants.item}

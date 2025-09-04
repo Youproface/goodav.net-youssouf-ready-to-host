@@ -10,6 +10,7 @@ const FeaturedProjects = lazy(() => import('@/components/FeaturedProjects'));
 const FoundersVision = lazy(() => import('@/components/FoundersVision'));
 const CreativeExcellence = lazy(() => import('@/components/CreativeExcellence'));
 const RecentEvents = lazy(() => import('@/components/RecentEvents'));
+const PartnersLogos = lazy(() => import('@/components/PartnersLogos'));
 const Testimonials = lazy(() => import('@/components/Testimonials'));
 const Blogs = lazy(() => import('@/components/BlogsSection'));
 const BTSMasterProdcution = lazy(() => import('@/components/BTSMasterProdcution'));
@@ -114,6 +115,14 @@ const Index = () => {
           <FoundersVision />
           <CreativeExcellence />
           <RecentEvents />
+          <PartnersLogos 
+            title="Our Valued Partners"
+            subtitle="Building impactful relationships with leading organizations across Africa and beyond to create meaningful audiovisual experiences."
+            showTrustedBadge={true}
+            showTitle={true}
+            showSubtitle={true}
+            containerPadding="py-20"
+          />
           <Testimonials />
           <Blogs />
           <BTSMasterProdcution />

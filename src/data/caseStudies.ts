@@ -32,7 +32,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'Deployed a comprehensive production team with specialized equipment for video, photography, drone coverage, and sound recording. Implemented daily WhatsApp updates for international teams, established efficient workflows for quick-turn editing, and maintained regulatory compliance throughout all production phases.',
       impact: 'Successfully delivered all content deliverables on time, received exceptional client feedback, and the resulting content was featured on broadcast platforms and used for Gilead\'s internal and public campaigns. The project strengthened GoodAV\'s reputation as a trusted partner for international pharmaceutical and healthcare events.'
     },
-    image: '/images/placeholder.svg', // Placeholder until actual Gilead IAS image is added
+    image: '/images/all_site_images/case-study/case-study-1.jpg',
     date: 'July 13-17, 2025',
     client: 'Gilead Sciences',
     category: 'International Conference',
@@ -55,7 +55,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'Deployed mobile production units to remote locations, conducted intimate interviews with beneficiaries, and used drone footage to showcase the scale of the initiative. Created a narrative that balanced technical achievements with human stories.',
       impact: 'The documentary demonstrated a 77% energy savings across participating communities and helped secure additional funding for expanding the clean cooking program. The content was used for international development conferences and donor presentations.'
     },
-    image: '/images/placeholder.svg',
+    image: '/images/all_site_images/case-study/case-study-2.png',
     date: '2024',
     client: 'SNV Netherlands Development Organisation',
     category: 'Documentary Production',
@@ -78,7 +78,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'Deployed a comprehensive production approach with efficient one-day filming at UVU-Bio laboratories, combining natural light interviews with dynamic b-roll footage. Created authentic storytelling driven by participants\' voices with professional branding integration and multi-platform optimization.',
       impact: 'Successfully launched across multiple platforms including LinkedIn, Facebook, YouTube, and the official BioMex website. The documentary was widely reshared by stakeholders, enhanced program visibility, and positioned BioMex as a pioneer in scalable biotechnology workforce development.'
     },
-    image: '/images/placeholder.svg',
+    image: '/images/all_site_images/case-study/case-study-3.jpg',
     date: '2024',
     client: 'Zentrum für Fernstudien im Hochschulverbund (BioMex Project)',
     category: 'Educational Documentary',
@@ -125,7 +125,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'GoodAV delivered a full suite of post-production services including professional editing with color correction and sound design, custom voice-over production in English, illustrated visual elements and infographics aligned with ASPIRE branding, and animated sequences for statistics and achievements. The team organized raw footage from field teams, developed a structured narrative, and delivered content in multiple formats including 4K master, 1080p, and web-optimized versions.',
       impact: 'The final documentary was successfully used in donor reports and presentations, peacebuilding and education conferences, and public advocacy platforms and community screenings. It serves as a lasting communication tool for ASPIRE\'s grassroots peace education impact and reaffirms Aegis Trust\'s role in fostering post-genocide reconciliation and inclusion in Rwanda.'
     },
-    image: '/images/placeholder.svg',
+    image: '/images/all_site_images/case-study/case-study-5.jpeg',
     date: 'March 2024',
     client: 'Aegis Trust',
     category: 'Post-Production Services',
@@ -149,7 +149,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'GoodAV provided full-scale production and editing services to create an emotionally powerful, high-quality narrative through emotionally resonant storytelling that captured the contrast between Rwanda\'s dark past and bright future, strategic visuals and music using stunning 4K footage including aerial shots and historical imagery paired with moving soundtrack, dynamic pacing combining interviews, archival footage, and milestones for seamless flow, and honoring cultural sensitivity with respectful portrayal focusing on resilience, unity, and progress.',
       impact: 'The video honored Rwanda\'s resilience as a powerful tribute to the strength and spirit of the Rwandan people, increased global awareness by reaching local and international audiences about the country\'s progress, created emotional connection and unity resonating with Rwandans and global viewers while promoting shared pride in achievements and reconciliation spirit, and strengthened GoodAV\'s reputation as a leading production company for high-quality, emotionally impactful content on globally significant occasions.'
     },
-    image: '/images/placeholder.svg',
+    image: '/images/all_site_images/case-study/case-study-6.png',
     date: 'January 2024 - April 2024',
     client: 'Ministry of National Unity & Civic Engagement',
     category: '4K Video Production',
@@ -173,7 +173,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'GoodAV provided end-to-end production and editing services to effectively communicate the MoU\'s impact through concise and impactful storytelling by selecting critical statements from speeches and combining them with visual overlays, professional cinematic editing using smooth transitions, crisp audio enhancement, and subtle motion graphics, strategic visual composition capturing key signing moments, stakeholder interactions, and audience engagement for complete narrative, and multi-platform optimization ensuring suitability for social media, government websites, and formal presentations.',
       impact: 'The video enhanced visibility of the MoU\'s significance by effectively communicating strategic benefits and strengthening public awareness and institutional credibility. It strengthened stakeholder engagement through polished production that reinforced professionalism of all participating organizations, fostering trust and future collaboration. The content increased public awareness by presenting the MoU in an engaging format, informing the Rwandan public about healthcare advancements from the partnership, and reinforced GoodAV\'s reputation as a go-to production company for capturing government and institutional milestones.'
     },
-    image: '/images/placeholder.svg',
+    image: '/images/all_site_images/case-study/case-study-7.jpg',
     date: 'November 2024',
     client: 'Rwanda Social Security Board (RSSB)',
     category: 'Corporate Event Production',
@@ -197,7 +197,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'GoodAV provided full-scale production and editing services to create a visually compelling and emotionally engaging recap video through strategic content curation by selecting the most inspiring speeches, powerful reactions, and key event highlights for concise yet impactful narrative, dynamic editing and motion graphics integrating seamless transitions, high-energy pacing, and engaging visual effects to enhance storytelling, balanced storytelling approach structured to highlight the competition\'s mission, showcase finalists\' achievements, and emphasize ABH\'s impact on Africa\'s entrepreneurial ecosystem, and optimization for maximum reach ensuring polish for social media, websites, and investor presentations.',
       impact: 'The video amplified the ABH brand and mission by effectively capturing the competition\'s excitement and prestige, helping attract more entrepreneurs, partners, and investors for future editions. It increased visibility for the business heroes by showcasing finalists\' journeys, building credibility, and inspiring future entrepreneurs across Africa. The content engaged a global audience through dynamic editing and high-quality storytelling that resonated worldwide, enhancing ABH\'s international presence, and strengthened GoodAV\'s reputation by successfully delivering a high-energy event recap, positioning the company as a top-tier media production partner for global business and entrepreneurial events.'
     },
-    image: '/images/placeholder.svg',
+    image: '/images/all_site_images/case-study/case-study-8.jpg',
     date: '2023',
     client: 'African Leadership University (ALU)',
     category: 'Event Recap Production',
@@ -221,7 +221,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'GoodAV provided full-scale production services from filming to editing, ensuring a visually compelling and informative documentary through story-driven editing that carefully structured the video to highlight AIMS\' mission, key research projects, and future aspirations while making complex topics accessible to general audiences, engaging visuals and motion graphics using dynamic animations to visually explain abstract mathematical concepts and research findings, expert interview integration edited for clarity and impact, balancing scientific depth with storytelling to maintain viewer engagement, and multi-platform optimization ensuring the final video was polished and versatile for websites, social media, and academic presentations.',
       impact: 'The video amplified AIMS\' research and innovation by effectively showcasing Africa\'s growing role in global scientific research, increasing visibility for AIMS and its groundbreaking work. It strengthened stakeholder engagement by making complex research accessible and compelling, helping engage investors, partners, and students while fostering further support for AIMS initiatives. The content positioned AIMS as a scientific leader by highlighting cutting-edge technology and research breakthroughs, reinforcing AIMS\' role as a hub for mathematical excellence in Africa, and enhanced GoodAV\'s reputation by delivering a high-quality, research-focused documentary, strengthening the company\'s position as a trusted media production partner for academic and scientific institutions.'
     },
-    image: '/images/placeholder.svg',
+    image: '/images/all_site_images/case-study/case-study-9.jpg',
     date: '2024',
     client: 'African Institute for Mathematical Sciences (AIMS)',
     category: 'Research Documentary',
@@ -244,7 +244,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'GoodAV delivered comprehensive documentary production services including strategic storytelling that connected Cimerwa\'s industrial operations to Rwanda\'s national development story, high-quality cinematography capturing both macro industrial processes and detailed manufacturing operations, expert interview integration featuring company leadership, industry experts, and community stakeholders, and professional post-production ensuring broadcast-quality content suitable for multiple distribution channels.',
       impact: 'The documentary successfully positioned Cimerwa as a leader in Rwanda\'s industrial sector, enhanced the company\'s reputation among stakeholders and potential partners, increased awareness of Rwanda\'s manufacturing capabilities on both national and international levels, and demonstrated GoodAV\'s expertise in creating compelling industrial documentaries that balance commercial objectives with engaging storytelling.'
     },
-    image: '/images/placeholder.svg',
+    image: '/images/all_site_images/case-study/case-study-4.jpeg',
     date: '2025',
     client: 'CIMERWA Plc',
     category: 'Industrial Documentary',
@@ -272,7 +272,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'GoodAV developed a comprehensive short-form content strategy featuring rapid-fire editing techniques optimized for social media consumption, strategic use of motion graphics and text overlays to communicate key messages quickly, compliance-focused content creation ensuring all pharmaceutical regulations were met, and multi-platform optimization ensuring content performed well across YouTube Shorts, Instagram Reels, and other short-form platforms.',
       impact: 'The short-form content series significantly increased Gilead\'s social media engagement and reach, enhanced brand visibility among younger demographics and digital-native audiences, demonstrated innovative approaches to pharmaceutical marketing in the digital age, and established GoodAV as a specialist in creating compliant yet engaging content for highly regulated industries.'
     },
-    image: '/images/placeholder.svg',
+    image: '/images/all_site_images/case-study/case-study-10.jpg',
     date: '2025',
     client: 'Gilead Sciences',
     category: 'Short-Form Content',
@@ -301,7 +301,7 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'GoodAV assembled and managed a comprehensive 5-person media crew including 2 camera operators, 2 assistant camera operators, 1 gaffer, and 1 on-site production coordinator. The team provided full support including team selection and credential submission, media registration through IAS portal, direct coordination with IAS and Rwandan authorities, filming of interviews, panel sessions, and b-roll content, equipment advisory and logistics, and post-event support for content delivery. A crucial component involved navigating the Rwandan Media Council\'s accreditation process, securing all necessary documentation while ensuring full compliance with both IAS and local government requirements.',
       impact: 'The collaboration resulted in full team registration and accreditation without delays, on-time production support during the complete conference week, strong coordination between U.S. and Rwandan teams, successful capture of key interviews and event moments, and seamless post-production handoff. This project established GoodAV as the ideal partner for international media houses working in Rwanda or across East Africa, demonstrating the ability to bridge local expertise with global standards for health, advocacy, and live event coverage.'
     },
-    image: '/images/placeholder.svg',
+    image: '/images/all_site_images/case-study/case-study-11.jpg',
     date: 'July 2025',
     client: 'Plus Life Media (Los Angeles, USA)',
     category: 'International Media Partnership',
@@ -328,14 +328,14 @@ export const caseStudies: Record<string, CaseStudyData> = {
       solution: 'GoodAV implemented a comprehensive production strategy including detailed pre-production with concept development, regional scheduling, and team mobilization across all provinces. The production scope covered regional selections documenting contestant journeys and local culture, pre-selection and boot camp with daily updates and contestant profiles, and grand finale with full multi-camera live event coverage. Post-production delivered regional highlight reels, contestant profile films, boot camp documentary, finale coverage, post-crowning promotional videos, and optimized social media content for Instagram, TikTok, and YouTube.',
       impact: 'The production achieved nationwide engagement reaching millions of viewers across TV, YouTube, and social platforms, provided exceptional cultural representation showcasing Rwanda\'s diversity and beauty through high-quality audiovisual storytelling, strengthened Rwanda Inspiration Backup\'s reputation for delivering world-class pageant productions, and equipped the crowned Miss Rwanda with professional video content to amplify her advocacy both locally and internationally. The partnership set a new benchmark in event production, ensuring the Miss Rwanda brand continues to inspire, empower, and represent Rwandan culture with excellence.'
     },
-    image: '/images/placeholder.svg',
+    image: '/images/all_site_images/case-study/case-study-12.jpg',
     date: '2022-2024',
     client: 'Rwanda Inspiration Backup',
     category: 'Full Production Company',
     testimonial: {
-      text: 'GoodAV delivered exceptional end-to-end production that perfectly captured the essence of Miss Rwanda, showcasing our contestants and culture with unmatched professionalism and creativity.',
-      author: 'Executive Producer',
-      role: 'Rwanda Inspiration Backup'
+      text: 'Our live-streamed event was flawless—zero frame drops and crystal-clear quality. GoodAV delivered beyond expectations.',
+      author: 'Dieudonne Ishimwe',
+      role: 'Founder and CEO, Miss Rwanda'
     }
   }
 };

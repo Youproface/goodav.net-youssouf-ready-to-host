@@ -7,6 +7,7 @@ import React, { useState, useMemo, useCallback, Suspense } from 'react';
 const PartnersLogos = React.lazy(() => import('@/components/PartnersLogos'));
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { getFeaturedCaseStudies } from '@/data/caseStudies';
 import { 
   FaTrophy, 
   FaPlay, 
@@ -36,8 +37,13 @@ import SchemaMarkup from '@/components/SchemaMarkup';
 
 export default function Partners() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('overview');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+
+  // Get specific case studies for partnership success stories - only Gilead and Miss Rwanda
+  const allCaseStudies = getFeaturedCaseStudies();
+  const featuredCaseStudies = allCaseStudies.filter(caseStudy => 
+    caseStudy.id === 'gilead-ias-2025' || caseStudy.id === 'miss-rwanda-inspiration-backup'
+  );
 
   // Optimized animation variants for performance
   const animationVariants = useMemo(() => ({
@@ -643,92 +649,104 @@ export default function Partners() {
           </div>
         </motion.section>
 
-        {/* Success Stories */}
+        {/* Partnership Success Stories */}
         <motion.section 
           className="max-w-7xl mx-auto px-4 py-20"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
           variants={containerVariants}
+          aria-labelledby="partnership-success-heading"
         >
           <motion.div className="text-center mb-16" variants={titleVariants}>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Partnership Success Stories</h2>
-            <div className="w-32 h-2 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto rounded-full"></div>
-            <p className="text-xl text-zinc-300 mt-6">Real results from our global partnerships</p>
+            <h2 id="partnership-success-heading" className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Partnership Success Stories
+            </h2>
+            <div className="w-32 h-2 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto rounded-full" aria-hidden="true"></div>
+            <p className="text-xl text-zinc-300 mt-6 max-w-4xl mx-auto">
+              Discover our real case studies and successful collaborations with global partners
+            </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                client: "Gilead Sciences",
-                project: "IAS 2025 Conference Coverage",
-                result: "5-day comprehensive coverage for 15,000+ attendees",
-                impact: "Global reach of 2M+ viewers",
-                image: "/images/all_site_images/Home/Feature_Video/Feature_Video_01.jpg",
-                testimonial: "GoodAV delivered exceptional quality across multiple days with professionalism and precision."
-              },
-              {
-                client: "GIZ & SNV",
-                project: "Clean Cooking Initiative",
-                result: "Documentary series showcasing 44,000 cookstove distribution",
-                impact: "77% energy savings demonstrated",
-                image: "/images/all_site_images/Home/Feature_Video/Feature_Video_02.jpg",
-                testimonial: "Their storytelling brought our environmental impact to life beautifully."
-              },
-              {
-                client: "UN & Development Partners",
-                project: "Pan-African Development Summit",
-                result: "Multi-country production across 5 African nations",
-                impact: "Policy changes in 3 countries",
-                image: "/images/all_site_images/Home/Feature_Video/Feature_Video_03.jpg",
-                testimonial: "GoodAV's cultural understanding made all the difference in authentic storytelling."
-              }
-            ].map((story, index) => (
+          <div className="grid md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
+            {featuredCaseStudies.map((caseStudy, index) => (
               <motion.article
-                key={story.client}
-                className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-orange-500/30 transition-all duration-300"
+                key={caseStudy.id}
+                className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-orange-500/30 transition-all duration-300 group"
                 variants={cardVariants}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -5, scale: 1.02 }}
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={story.image}
-                    alt={`${story.project} case study`}
-                    className="w-full h-full object-cover"
+                    src={caseStudy.image || '/images/placeholder.svg'}
+                    alt={`${caseStudy.title} case study`}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                   <div className="absolute bottom-4 left-4">
                     <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                      Success Story
+                      {caseStudy.category}
+                    </span>
+                  </div>
+                  <div className="absolute top-4 right-4">
+                    <span className="bg-black/50 text-white px-2 py-1 rounded text-xs">
+                      {caseStudy.date}
                     </span>
                   </div>
                 </div>
                 
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-orange-300 mb-2">{story.client}</h3>
-                  <h4 className="text-lg font-semibold text-white mb-3">{story.project}</h4>
-                  <p className="text-zinc-300 mb-4">{story.result}</p>
+                  <h3 className="text-xl font-bold text-orange-300 mb-2">{caseStudy.client}</h3>
+                  <h4 className="text-lg font-semibold text-white mb-3 line-clamp-2">{caseStudy.title}</h4>
+                  <p className="text-zinc-300 mb-4 text-sm line-clamp-3">{caseStudy.description}</p>
                   
-                  <div className="mb-4 p-3 bg-orange-500/10 rounded-lg border border-orange-500/20">
-                    <span className="text-orange-300 font-semibold">Impact: </span>
-                    <span className="text-white">{story.impact}</span>
+                  <div className="flex flex-wrap gap-1 mb-4">
+                    {caseStudy.tags.slice(0, 3).map((tag, idx) => (
+                      <span 
+                        key={idx} 
+                        className="bg-orange-500/10 text-orange-300 px-2 py-1 rounded text-xs border border-orange-500/20"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                   
-                  <blockquote className="text-zinc-400 italic text-sm border-l-4 border-orange-500/30 pl-4">
-                    "{story.testimonial}"
-                  </blockquote>
+                  {caseStudy.testimonial && (
+                    <blockquote className="text-zinc-400 italic text-sm border-l-4 border-orange-500/30 pl-4 mb-4">
+                      "{caseStudy.testimonial.text.substring(0, 80)}..."
+                      <footer className="text-orange-300 text-xs mt-1">
+                        — {caseStudy.testimonial.author}
+                      </footer>
+                    </blockquote>
+                  )}
                   
-                  <button 
-                    className="mt-4 text-orange-400 hover:text-orange-300 font-semibold flex items-center gap-2 transition-colors"
-                    onClick={() => navigate('/portfolio')}
+                  <Link
+                    to={`/case-studies/${caseStudy.slug}`}
+                    className="inline-flex items-center gap-2 text-orange-400 hover:text-orange-300 font-semibold transition-colors group"
                   >
-                    View Full Case Study <FaPlay className="text-sm" />
-                  </button>
+                    View Case Study 
+                    <FaArrowRight className="text-sm group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </div>
               </motion.article>
             ))}
           </div>
+
+          {/* See All Case Studies Button */}
+          <motion.div 
+            className="text-center"
+            variants={fadeInUpVariants}
+          >
+            <Link
+              to="/case-studies"
+              className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-10 py-4 rounded-xl font-bold text-lg hover:from-orange-600 hover:to-amber-600 transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-[#0f1012]"
+            >
+              <FaEye className="text-xl" />
+              See All Case Studies
+              <FaArrowRight className="text-lg" />
+            </Link>
+          </motion.div>
         </motion.section>
 
         {/* Partnership Process */}
@@ -808,77 +826,6 @@ export default function Partners() {
         }>
           <PartnersLogos />
         </Suspense>
-
-        {/* Success Stories Section */}
-        <motion.section 
-          className="max-w-7xl mx-auto px-4 py-20"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={containerVariants}
-          aria-labelledby="success-stories-heading"
-        >
-          <motion.div className="text-center mb-16" variants={titleVariants}>
-            <h2 id="success-stories-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Our <span className="bg-gradient-to-r from-orange-400 to-amber-400 bg-clip-text text-transparent">Success Stories</span>
-            </h2>
-            <div className="w-32 h-2 bg-gradient-to-r from-orange-500 to-amber-400 mx-auto rounded-full" aria-hidden="true"></div>
-            <p className="text-xl text-zinc-300 mt-6 max-w-4xl mx-auto">
-              Discover how we've delivered exceptional results for clients across the globe
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className="bg-gradient-to-r from-zinc-900/50 to-zinc-800/50 backdrop-blur-sm rounded-3xl p-8 lg:p-12 text-center"
-            variants={itemVariants}
-          >
-            <div className="mb-8">
-              <FaTrophy className="text-6xl text-orange-400 mx-auto mb-6" />
-              <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
-                Featured Case Study: Gilead IAS 2025
-              </h3>
-              <p className="text-lg text-zinc-300 mb-6 max-w-3xl mx-auto">
-                Full media coverage of the 13th International AIDS Society Conference on HIV Science in Kigali, Rwanda. 
-                A comprehensive audiovisual production showcasing our global capabilities and local expertise.
-              </p>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-400">5 Days</div>
-                  <div className="text-sm text-zinc-400">Production</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-400">100+</div>
-                  <div className="text-sm text-zinc-400">Photos Delivered</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-400">5+</div>
-                  <div className="text-sm text-zinc-400">Video Assets</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-orange-400">100%</div>
-                  <div className="text-sm text-zinc-400">Client Satisfaction</div>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/case-studies/gilead-ias-2025"
-                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-orange-600 hover:to-amber-600 transition-all transform hover:scale-105"
-              >
-                <FaEye className="text-lg" />
-                View Full Case Study
-              </Link>
-              <Link
-                to="/case-studies"
-                className="inline-flex items-center justify-center gap-2 border-2 border-orange-400 text-orange-400 px-8 py-4 rounded-xl font-bold text-lg hover:bg-orange-400 hover:text-white transition-all"
-              >
-                <FaArrowRight className="text-lg" />
-                Explore All Case Studies
-              </Link>
-            </div>
-          </motion.div>
-        </motion.section>
 
         {/* Testimonials from Home Page */}
         <Testimonials />
