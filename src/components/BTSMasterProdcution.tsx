@@ -58,11 +58,11 @@ export default function BTSMasterProduction() {
   };
 
   return (
-    <main className="min-h-screen bg-[transparent] mt-10 text-zinc-100">
+    <main className="bg-[transparent] mt-10 text-zinc-100">
       {/* HERO */}
 
       {/* BTS GALLERY */}
-      <section className="relative mx-auto max-w-6xl px-6">
+  <section className="relative mx-auto max-w-6xl px-6 pb-12">
         {/* Header panel */}
         <div className="rounded-3xl text-center ring-1 ring-white/10 bg-white/5 backdrop-blur p-6 md:p-8">
           <div className="mx-auto w-max rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-orange-300/90">

@@ -95,10 +95,10 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
                 Category
               </div>
               <ul className="p-4 space-y-2 text-sm">
-                <SidebarLink href="/">Home</SidebarLink>
-                <SidebarLink href="/about">About Us</SidebarLink>
-                <SidebarLink href="/portfolio">Portfolio</SidebarLink>
-                <SidebarLink href="/blog" active>Blog Archives</SidebarLink>
+                <li><SidebarLink href="/">Home</SidebarLink></li>
+                <li><SidebarLink href="/about">About Us</SidebarLink></li>
+                <li><SidebarLink href="/portfolio">Portfolio</SidebarLink></li>
+                <li><SidebarLink href="/blog" active>Blog Archives</SidebarLink></li>
               </ul>
             </div>
 
@@ -147,7 +147,7 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
                 <img 
                   src={blog.image} 
                   alt={blog.title} 
-                  className="w-full h-auto max-h-[500px] object-cover rounded-lg"
+                  className="w-full h-auto max-h-[500px] object-cover rounded-lg opacity-0 transition-opacity duration-500"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.onerror = null;
@@ -157,7 +157,6 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
                     const target = e.target as HTMLImageElement;
                     target.style.opacity = '1';
                   }}
-                  style={{ opacity: 0 }}
                 />
               </figure>
             )}

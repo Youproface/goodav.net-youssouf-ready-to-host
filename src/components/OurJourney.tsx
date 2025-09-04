@@ -179,10 +179,10 @@ const OurJourney: React.FC = () => {
       >
         {/* Skip Link for Accessibility */}
         <a
-          href="#main-content"
+          href="#journey-heading"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50 focus:outline-none focus:ring-2 focus:ring-primary/50"
         >
-          Skip to main content
+          Skip to Our Journey section
         </a>
 
         <motion.div
@@ -302,71 +302,6 @@ const OurJourney: React.FC = () => {
         </motion.div>
       </motion.section>
 
-      {/* Measurable Impact Section */}
-      <motion.section
-        className="relative bg-gradient-to-b from-background via-muted/30 to-background text-foreground py-16 px-6 md:px-12 lg:px-20 mt-16"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={containerVariants}
-        aria-labelledby="impact-heading"
-        role="region"
-      >
-        <motion.div
-          className="max-w-7xl mx-auto text-center"
-          variants={itemVariants}
-        >
-          {/* Heading */}
-          <motion.h2
-            id="impact-heading"
-            className="text-2xl md:text-3xl font-bold tracking-wide gradient-text mb-2"
-            variants={itemVariants}
-          >
-            MEASURABLE IMPACT
-          </motion.h2>
-          <motion.p
-            className="text-muted-foreground mt-2 mb-10"
-            variants={itemVariants}
-          >
-            Numbers that tell our story of growth and excellence
-          </motion.p>
-
-          {/* Stats Grid */}
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-            variants={containerVariants}
-            role="region"
-            aria-label="Company performance statistics"
-          >
-            {stats.map(({ icon: Icon, value, title, desc, ariaLabel }, idx) => (
-              <motion.div
-                key={idx}
-                className="glass-card flex flex-col items-center justify-center p-6 hover-lift group transition-all duration-300"
-                variants={itemVariants}
-                whileHover={{
-                  scale: 1.05,
-                  y: -5,
-                  boxShadow: "0 10px 25px -5px rgba(249, 115, 22, 0.3)",
-                  transition: { duration: 0.2 }
-                }}
-                role="article"
-                aria-label={ariaLabel}
-                tabIndex={0}
-              >
-                <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4 group-hover:bg-primary/20 transition-colors duration-300">
-                  <Icon className="w-6 h-6 text-primary" aria-hidden="true" />
-                </div>
-                <h3 className="text-2xl font-bold gradient-text group-hover:scale-110 transition-transform duration-300">
-                  {value}
-                </h3>
-                <p className="font-semibold text-foreground mt-1">{title}</p>
-                <p className="text-muted-foreground text-sm">{desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </motion.section>
-
       {/* Future Innovation Section */}
       <motion.section
         className="relative bg-gradient-to-b from-background via-muted/30 to-background text-foreground py-16 px-6 md:px-12 lg:px-20"
@@ -381,6 +316,7 @@ const OurJourney: React.FC = () => {
           className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center"
           variants={itemVariants}
         >
+
           {/* Left: Video Section */}
           <motion.div
             className="relative rounded-2xl glass-card overflow-hidden flex items-center justify-center aspect-video shadow-glow"
@@ -394,9 +330,9 @@ const OurJourney: React.FC = () => {
               videoId={videoId}
               title="AI-Powered Visual Marketing"
               subtitle="Showcasing our cutting-edge innovation capabilities"
-              // provide an explicit high-res thumbnail to ensure the image is visible
               thumbnail={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
               className="rounded-2xl"
+              aspectClass="aspect-video w-full h-full"
             />
           </motion.div>
 
@@ -449,79 +385,6 @@ const OurJourney: React.FC = () => {
           </motion.div>
         </motion.div>
       </motion.section>
-
-      {/* Structured Data for SEO - Journey Page Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "AboutPage",
-            "name": "Our Journey - From Vision to Continental Impact",
-            "description": "Discover GoodAV's journey from vision to continental impact, showcasing our evolution, achievements, and commitment to African storytelling excellence",
-            "url": "https://goodav.net/journey",
-            "mainEntity": {
-              "@type": "Organization",
-              "name": "GoodAV",
-              "description": "Africa's premier audiovisual storytelling company on a journey of innovation and impact",
-              "foundingDate": "2019",
-              "url": "https://goodav.net",
-              "areaServed": {
-                "@type": "Continent",
-                "name": "Africa"
-              },
-              "numberOfEmployees": "50+",
-              "knowsAbout": [
-                "Audiovisual Production",
-                "African Storytelling",
-                "Documentary Filmmaking",
-                "Video Production",
-                "Cultural Preservation",
-                "Digital Media",
-                "Event Coverage",
-                "Photography",
-                "AI-Powered Content Creation",
-                "Live Streaming Technologies"
-              ],
-              "hasOfferCatalog": {
-                "@type": "OfferCatalog",
-                "name": "Audiovisual Services",
-                "description": "Comprehensive audiovisual production services with African authenticity"
-              },
-              "founder": {
-                "@type": "Person",
-                "name": "Youssouf Hakizimana",
-                "jobTitle": "Founder & CEO"
-              },
-              "milestone": [
-                {
-                  "@type": "Event",
-                  "name": "Company Founding",
-                  "startDate": "2019",
-                  "description": "Founded with revolutionary vision to elevate African storytelling"
-                },
-                {
-                  "@type": "Event",
-                  "name": "Pan-African Expansion",
-                  "startDate": "2021",
-                  "description": "Expanded operations across multiple African countries"
-                },
-                {
-                  "@type": "Event",
-                  "name": "AI Integration Pioneer",
-                  "startDate": "2024",
-                  "description": "Became pioneer in AI-powered content creation"
-                }
-              ]
-            },
-            "isPartOf": {
-              "@type": "WebSite",
-              "name": "GoodAV",
-              "url": "https://goodav.net"
-            }
-          })
-        }}
-      />
     </>
   );
 }
