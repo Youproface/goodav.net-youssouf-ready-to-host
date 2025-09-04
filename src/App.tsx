@@ -30,7 +30,7 @@ import About from './pages/About';
 import Partners from './pages/Partners';
 import CaseStudy from './components/CaseStudy';
 import GileadCaseStudy from './pages/case-studies/GileadCaseStudy';
-import CaseStudies from './pages/CaseStudies';
+import CaseStudiesNew from './pages/CaseStudiesNew';
 import ScrollToTop from './components/ScrollToTop';
 
 const queryClient = new QueryClient();
@@ -87,7 +87,7 @@ const App = () => (
             <Route path="/partner" element={<Partners />} />
             <Route path="/blog" element={<BlogArchive />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/case-studies" element={<CaseStudies />} />
+            <Route path="/case-studies" element={<CaseStudiesNew />} />
             <Route path="/case-study/:slug" element={<CaseStudy />} />
             <Route path="/case-studies/gilead-ias-2025" element={<GileadCaseStudy />} />
             <Route path="/privacy" element={<PrivacyPage />} />
@@ -101,5 +101,7 @@ const App = () => (
     </TooltipProvider>
   </QueryClientProvider>
 );
+
+console.log('Route /case-studies accessed');
 
 export default App;

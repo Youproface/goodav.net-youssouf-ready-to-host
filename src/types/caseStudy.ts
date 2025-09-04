@@ -17,6 +17,11 @@ export interface CaseStudyData {
   slug?: string;
   youtubeUrl?: string;
   youtubeUrls?: string[];
+  videos?: Array<{
+    title: string;
+    url: string;
+    description: string;
+  }>;
   testimonial?: {
     text: string;
     author: string;

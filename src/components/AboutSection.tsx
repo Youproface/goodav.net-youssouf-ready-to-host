@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { Heart, Award, Globe2, Lightbulb, Play, Calendar, Users, Star, LucideIcon } from "lucide-react";
+import { getYouTubeThumbnail, getYouTubeEmbedUrl } from "../utils/youtube";
 
 interface FeatureItem {
   icon: LucideIcon;
@@ -65,6 +66,9 @@ const AboutSection: React.FC = () => {
       }
     },
   };
+
+  const thumbnail = getYouTubeThumbnail(videoId);
+  const embedUrl = getYouTubeEmbedUrl(videoId, { autoplay: true });
 
   return (
       <motion.section
@@ -159,7 +163,7 @@ const AboutSection: React.FC = () => {
               <>
                 {/* Thumbnail at full visibility */}
                 <img
-                  src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+                  src={thumbnail}
                   alt="GoodAV: Crafting Authentic Stories - Video Thumbnail"
                   className="absolute inset-0 w-full h-full object-cover"
                   loading="lazy"
@@ -188,7 +192,7 @@ const AboutSection: React.FC = () => {
               <>
                 <iframe
                   className="absolute inset-0 w-full h-full"
-                  src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`}
+                  src={embedUrl}
                   title="GoodAV: Crafting Authentic Stories - Our Journey and Vision"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen

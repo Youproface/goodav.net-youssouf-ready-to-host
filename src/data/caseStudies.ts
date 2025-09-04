@@ -1,4 +1,4 @@
-import { CaseStudyData } from '@/types/caseStudy';
+import { CaseStudyData } from '../types/caseStudy';
 
 export const caseStudies: Record<string, CaseStudyData> = {
   'gilead-ias-2025': {
@@ -8,6 +8,24 @@ export const caseStudies: Record<string, CaseStudyData> = {
     description: '13th International AIDS Society Conference on HIV Science - Comprehensive audiovisual production in partnership with Gilead Sciences and Bensimon Byrne',
     location: 'Kigali, Rwanda',
     tags: ['Conference Coverage', 'International Event', 'Pharmaceutical', 'Video Production', 'Photography', 'Live Streaming'],
+    youtubeUrl: 'https://www.youtube.com/watch?v=CsdRr8Fvt2g', // IAS 2025 Conference Highlight
+    videos: [
+      {
+        title: 'IAS 2025 Conference Opening Ceremony',
+        url: 'CsdRr8Fvt2g',
+        description: 'Official opening ceremony of the 13th IAS Conference on HIV Science in Kigali'
+      },
+      {
+        title: 'Scientific Sessions Highlights', 
+        url: 'HgPGMQuZMn0',
+        description: 'Key moments from scientific presentations and panel discussions'
+      },
+      {
+        title: 'Conference Documentary Feature',
+        url: 'Ge26tZmJRQ0',
+        description: 'Behind-the-scenes look at the conference production and impact'
+      }
+    ],
     content: {
       overview: 'GoodAV had the honor of covering the 13th IAS Conference on HIV Science (IAS 2025) — one of the most prominent global events in HIV research and public health. Hosted in Kigali by the Government of Rwanda, the conference brought together world leaders in science, policy, and advocacy. In strategic partnership with Bensimon Byrne and Gilead Sciences, GoodAV led the full-scale audiovisual production — managing a dynamic schedule across the Kigali Convention Centre and other key sites around the city. Our team ensured real-time coordination with international creative teams, delivering high-impact content for social, news, and internal platforms.',
       challenge: 'Managing a complex multi-day conference with international stakeholders, maintaining pharmaceutical compliance standards, and delivering real-time content across multiple platforms while ensuring seamless coordination between local production and international creative teams.',

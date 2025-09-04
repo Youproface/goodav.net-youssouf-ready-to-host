@@ -29,6 +29,8 @@ import {
 } from 'react-icons/fa';
 import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
+import YouTubeModal from '../../components/YouTubeModal';
+import { caseStudies } from '../../data/caseStudies';
 
 const GileadCaseStudy: React.FC = () => {
   const navigate = useNavigate();
@@ -100,24 +102,6 @@ const GileadCaseStudy: React.FC = () => {
         }}
       />
 
-      {/* Back Navigation */}
-      <motion.div 
-        className="container mx-auto px-4 pt-8"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-      >
-        <motion.button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors mb-8"
-          variants={itemVariants}
-          whileHover={{ x: -5 }}
-        >
-          <FaArrowLeft />
-          <span>Back to Portfolio</span>
-        </motion.button>
-      </motion.div>
-
       {/* Hero Section */}
       <motion.section 
         className="relative py-20"
@@ -128,13 +112,6 @@ const GileadCaseStudy: React.FC = () => {
         <div className="container mx-auto px-4 relative z-10">
           {/* Header */}
           <motion.div className="text-center mb-12" variants={itemVariants}>
-            <div className="mb-6">
-              <img 
-                src="/images/all_site_images/Assets/logo-full-color.svg" 
-                alt="GoodAV Logo" 
-                className="h-16 mx-auto"
-              />
-            </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-4">
               <FaCamera className="inline mr-4 text-orange-400" />
               Full Media Coverage of IAS 2025
@@ -161,6 +138,17 @@ const GileadCaseStudy: React.FC = () => {
                 <FaHandshake className="text-orange-400 inline mr-2" />
                 <span className="font-semibold">Gilead Sciences</span>
               </div>
+            </div>
+          </motion.div>
+
+          {/* Hero Image */}
+          <motion.div className="flex justify-center" variants={itemVariants}>
+            <div className="rounded-xl overflow-hidden shadow-2xl border border-zinc-700 max-w-4xl">
+              <img 
+                src="/images/all_site_images/case-study/case-study-1.jpg" 
+                alt="Full Media Coverage of IAS 2025" 
+                className="w-full h-96 object-cover"
+              />
             </div>
           </motion.div>
         </div>
@@ -375,6 +363,46 @@ const GileadCaseStudy: React.FC = () => {
               </div>
             </div>
           </motion.div>
+        </div>
+      </motion.section>
+
+      {/* Featured Videos Section */}
+      <motion.section 
+        className="py-16 bg-zinc-900/50"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={containerVariants}
+      >
+        <div className="container mx-auto px-4">
+          <motion.div variants={itemVariants} className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-orange-400 mb-4 flex items-center justify-center">
+              <FaVideo className="mr-3" />
+              Featured Project Videos
+            </h3>
+            <p className="text-zinc-300 max-w-2xl mx-auto">
+              Watch the highlights from our comprehensive coverage of the IAS 2025 Conference
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            {caseStudies['gilead-ias-2025']?.videos?.map((video, index) => (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                transition={{ delay: index * 0.2 }}
+                className="flex justify-center"
+              >
+                <YouTubeModal
+                  videoId={video.url}
+                  title={video.title}
+                  className="w-full max-w-sm"
+                  containerClassName="h-48 md:h-56"
+                  buttonClassName="w-12 h-12"
+                />
+              </motion.div>
+            ))}
+          </div>
         </div>
       </motion.section>
 

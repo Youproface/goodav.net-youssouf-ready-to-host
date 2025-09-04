@@ -50,6 +50,24 @@ interface SEOProps {
     hreflang: string;
     href: string;
   }>;
+  openGraph?: {
+    title: string;
+    description: string;
+    url: string;
+    type: string;
+    images: Array<{
+      url: string;
+      width: number;
+      height: number;
+      alt: string;
+    }>;
+  };
+  twitter?: {
+    card: string;
+    title: string;
+    description: string;
+    image: string;
+  };
 }
 
 interface SEOPageData {
@@ -85,7 +103,9 @@ const SEO: React.FC<SEOProps> = ({
   article,
   video,
   breadcrumbs,
-  alternateLanguages
+  alternateLanguages,
+  openGraph,
+  twitter
 }) => {
   const location = useLocation();
   const pathname = location.pathname;
@@ -467,51 +487,37 @@ const DEFAULT_SEO: SEOPageData = {
   }, [type, article, pathname, video, schema, finalData, SITE_CONFIG]);
 
   // Generate rich Open Graph tags using real data
-  const generateOpenGraphTags = useMemo(() => (
-    <>
-      <meta property="og:title" content={finalData.title} />
-      <meta property="og:description" content={finalData.description} />
-  <meta property="og:image" content={finalData.image ? `${SITE_CONFIG.url}${finalData.image}` : `${SITE_CONFIG.url}${SITE_CONFIG.logo}`} />
-      <meta property="og:url" content={finalData.canonical} />
-      <meta property="og:type" content={finalData.type} />
-  <meta property="og:site_name" content={SITE_CONFIG.name} />
-  <meta property="og:locale" content={SITE_CONFIG.locale} />
-
-      {/* Additional Open Graph tags for articles */}
-      {type === 'article' && article && (
+  const generateOpenGraphTags = useMemo(() => {
+    if (openGraph) {
+      return (
         <>
-          <meta property="article:published_time" content={article.publishedTime} />
-          <meta property="article:modified_time" content={article.modifiedTime} />
-          <meta property="article:author" content={article.author} />
-          <meta property="article:section" content={article.section} />
-          {article.tags?.map((tag, index) => (
-            <meta key={index} property="article:tag" content={tag} />
+          <meta property="og:title" content={openGraph.title} />
+          <meta property="og:description" content={openGraph.description} />
+          <meta property="og:url" content={openGraph.url} />
+          <meta property="og:type" content={openGraph.type} />
+          {openGraph.images.map((image, index) => (
+            <meta key={index} property="og:image" content={image.url} />
           ))}
         </>
-      )}
-
-      {/* Video Open Graph tags */}
-      {video && video.url && (
-        <>
-          <meta property="og:video" content={video.url} />
-          <meta property="og:video:type" content={video.type || "video/mp4"} />
-          <meta property="og:video:width" content={String(video.width || 1920)} />
-          <meta property="og:video:height" content={String(video.height || 1080)} />
-        </>
-      )}
-    </>
-  ), [finalData, type, article, video, SITE_CONFIG]);
+      );
+    }
+    return null;
+  }, [openGraph]);
 
   // Generate Twitter Card tags using real data
-  const generateTwitterTags = useMemo(() => (
-    <>
-      <meta property="twitter:card" content={finalData.image ? "summary_large_image" : "summary"} />
-      <meta property="twitter:url" content={finalData.canonical} />
-      <meta property="twitter:title" content={finalData.title} />
-      <meta property="twitter:description" content={finalData.description} />
-  {finalData.image && <meta property="twitter:image" content={`${SITE_CONFIG.url}${finalData.image}`} />}
-    </>
-  ), [finalData, SITE_CONFIG]);
+  const generateTwitterTags = useMemo(() => {
+    if (twitter) {
+      return (
+        <>
+          <meta name="twitter:card" content={twitter.card} />
+          <meta name="twitter:title" content={twitter.title} />
+          <meta name="twitter:description" content={twitter.description} />
+          <meta name="twitter:image" content={twitter.image} />
+        </>
+      );
+    }
+    return null;
+  }, [twitter]);
 
   // Generate Analytics scripts using real production IDs
   const generateAnalyticsScripts = useMemo(() => (
