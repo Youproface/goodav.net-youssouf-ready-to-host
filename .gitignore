@@ -6,3 +6,7 @@ public/*.db
 /tmp/php-smtp.log
 /vendor/
 node_modules/
+
+# macOS system files
+.DS_Store
+**/.DS_Store
