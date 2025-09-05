@@ -3,6 +3,8 @@ import BlogsSection from './BlogsSection';
 import { blogPosts, BlogPost } from '@/data/blog';
 import { useState, useMemo } from 'react';
 export default function BlogArchive() {
+  // Modal state for company profile (not visible in render)
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
   // Build category list dynamically
@@ -17,10 +19,8 @@ export default function BlogArchive() {
     return blogPosts.filter((p) => p.category === selectedCategory);
   }, [selectedCategory]);
 
-  const getCoverImage = (post: BlogPost) => {
-    const yt = post.ytThumbnail?.replace(/&quot;|"/g, "")?.trim();
-    return yt && yt.length > 10 ? yt : post.image;
-  };
+  // Use new image naming convention for blog images: blog-1.jpg, blog-2.jpg, ...
+  const getCoverImage = (post: BlogPost) => `/images/all_site_images/Blog/blog-${post.id}.jpg`;
 
   return (
     <div className="min-h-screen bg-black text-zinc-200">
@@ -99,19 +99,72 @@ export default function BlogArchive() {
               </a>
             </div>
 
-            {/* Download card */}
-            <div className="bg-[#111112] border border-zinc-800/60 rounded-sm p-5">
+            {/* View Company Profile (Modal) */}
+            <div className="bg-[#111112] border border-zinc-800/60 rounded-sm p-5 text-center">
               <div className="text-[11px] uppercase tracking-[0.25em] font-bold text-zinc-400">
-                Download company profile
+                View company profile
               </div>
-              <a
-                href="#download"
-                className="mt-3 inline-flex items-center gap-2 text-[12px] text-zinc-200 hover:text-white"
+              <button
+                onClick={() => setProfileModalOpen(true)}
+                className="mt-3 inline-flex items-center gap-2 text-[12px] text-orange-500 hover:text-white border border-orange-500 px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                type="button"
+                aria-label="View company profile PDF"
               >
                 <span className="inline-block h-2 w-2 rounded-full bg-orange-500" />
-                Download PDF
-              </a>
+                View Company Profile
+              </button>
             </div>
+      {/* Company Profile Modal (same as Portfolio) */}
+      {profileModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+          aria-modal="true"
+          role="dialog"
+          tabIndex={-1}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') setProfileModalOpen(false);
+          }}
+        >
+          <div
+            className="bg-[#18181b] rounded-lg shadow-xl max-w-2xl w-full p-6 relative flex flex-col"
+            tabIndex={0}
+            autoFocus
+          >
+            <button
+              className="absolute top-3 right-3 text-white text-xl font-bold hover:text-primary"
+              onClick={() => setProfileModalOpen(false)}
+              aria-label="Close modal"
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-bold mb-4 text-primary">Company Profile</h2>
+            <div className="flex flex-col items-center gap-4">
+              <iframe
+                src={'/download/company-profile/company-profile.pdf'}
+                title="Company Profile PDF"
+                className="w-full h-96 border rounded"
+              />
+              <div className="flex gap-3 mt-2">
+                <a
+                  href="/download/company-profile/company-profile.pdf"
+                  download
+                  className="px-4 py-2 rounded-md bg-primary text-primary-foreground font-semibold shadow hover:bg-primary/90 transition-colors"
+                >
+                  Download
+                </a>
+                <button
+                  className="px-4 py-2 rounded-md bg-primary text-primary-foreground font-semibold shadow hover:bg-primary/90 transition-colors"
+                  onClick={() => {
+                    window.open('/download/company-profile/company-profile.pdf', '_blank');
+                  }}
+                >
+                  Expand
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
           </aside>
 
           {/* Main List */}

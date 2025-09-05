@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 const heroBackground = '/images/all_site_images/Home/BG/Home_BG.png';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -32,6 +32,7 @@ interface BlogDetailsPageProps {
 }
 
 export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
   if (!blog) {
     return (
       <div className="min-h-screen bg-[#0f1012] flex items-center justify-center" role="status" aria-live="polite">
@@ -60,6 +61,8 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
       "@id": `https://goodav.net/blog/${blog.slug}`
     }
   };
+  // Use new image naming convention for blog images: blog-1.jpg, blog-2.jpg, ...
+  const blogImage = `/images/all_site_images/Blog/blog-${blog.id}.jpg`;
   return (
     <main className="min-h-screen bg-[#0f1012] text-zinc-100" role="main" aria-label="Blog Post">
       {/* SEO Meta Tags */}
@@ -149,44 +152,94 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
               </div>
             </div>
 
-            {/* Download */}
-            <div className="rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur p-5">
+            {/* View Company Profile (Modal) */}
+            <div className="rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur p-5 text-center">
               <div className="text-[11px] font-semibold uppercase tracking-wider text-zinc-300">
-                Download Company Profile
+                View Company Profile
               </div>
-              <a
-                href="/Download/Company_Profile/Company_Profile.pdf"
-                className="mt-3 inline-flex items-center gap-2 rounded bg-white/10 px-3 py-2 text-xs font-semibold text-orange-300 ring-1 ring-white/10 hover:bg-white/15"
-                rel="noopener"
+              <button
+                onClick={() => setProfileModalOpen(true)}
+                className="mt-3 inline-flex items-center gap-2 rounded bg-white/10 px-3 py-2 text-xs font-semibold text-orange-300 ring-1 ring-white/10 hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-orange-400"
+                type="button"
+                aria-label="View company profile PDF"
               >
                 <FaDownload className="h-4 w-4" />
-                <span>Download PDF</span>
-              </a>
+                <span>View Company Profile</span>
+              </button>
             </div>
+      {/* Company Profile Modal (same as Portfolio) */}
+      {profileModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+          aria-modal="true"
+          role="dialog"
+          tabIndex={-1}
+          onKeyDown={(e) => {
+            if (e.key === 'Escape') setProfileModalOpen(false);
+          }}
+        >
+          <div
+            className="bg-[#18181b] rounded-lg shadow-xl max-w-2xl w-full p-6 relative flex flex-col"
+            tabIndex={0}
+            autoFocus
+          >
+            <button
+              className="absolute top-3 right-3 text-white text-xl font-bold hover:text-primary"
+              onClick={() => setProfileModalOpen(false)}
+              aria-label="Close modal"
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-bold mb-4 text-primary">Company Profile</h2>
+            <div className="flex flex-col items-center gap-4">
+              <iframe
+                src={'/download/company-profile/company-profile.pdf'}
+                title="Company Profile PDF"
+                className="w-full h-96 border rounded"
+              />
+              <div className="flex gap-3 mt-2">
+                <a
+                  href="/download/company-profile/company-profile.pdf"
+                  download
+                  className="px-4 py-2 rounded-md bg-primary text-primary-foreground font-semibold shadow hover:bg-primary/90 transition-colors"
+                >
+                  Download
+                </a>
+                <button
+                  className="px-4 py-2 rounded-md bg-primary text-primary-foreground font-semibold shadow hover:bg-primary/90 transition-colors"
+                  onClick={() => {
+                    window.open('/download/company-profile/company-profile.pdf', '_blank');
+                  }}
+                >
+                  Expand
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
           </aside>
 
           {/* ARTICLE */}
           <article className="lg:col-span-9 space-y-8">
-            {blog?.image && (
-              <figure className="overflow-hidden rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur shadow">
-                <img 
-                  src={blog.image} 
-                  alt={blog.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-auto max-h-[500px] object-cover rounded-lg opacity-0 transition-opacity duration-500"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.onerror = null;
-                    target.src = '/placeholder.svg';
-                  }}
-                  onLoad={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.opacity = '1';
-                  }}
-                />
-              </figure>
-            )}
+            <figure className="overflow-hidden rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur shadow">
+              <img 
+                src={blogImage}
+                alt={blog.title}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-auto max-h-[500px] object-cover rounded-lg opacity-0 transition-opacity duration-500"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.onerror = null;
+                  target.src = '/placeholder.svg';
+                }}
+                onLoad={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.opacity = '1';
+                }}
+              />
+            </figure>
 
             
 

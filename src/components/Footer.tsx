@@ -28,6 +28,7 @@ const Footer = () => {
     { name: "Portfolio", href: "/portfolio" },
     { name: "Partner", href: "/partner" },
     { name: "Blog", href: "/blog" },
+    { name: "Case Studies", href: "/case-studies" },
     { name: "Contact", href: "/contact" }
   ];
 
@@ -48,12 +49,9 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-section border-t border-border" role="contentinfo">
       <div>
-  {!isServicePage && !isContactPage && !isHomePage && (
-          <>
-            <ContactSection />
-            <BottomCTA />
-          </>
-        )}
+        {/* Always show Contact section at the top of the footer for all pages, including services */}
+        <ContactSection />
+        {!isContactPage && !isHomePage && <BottomCTA />}
         <div className="container mx-auto px-4">
           {/* Main Footer Content */}
           <div className="py-16">
