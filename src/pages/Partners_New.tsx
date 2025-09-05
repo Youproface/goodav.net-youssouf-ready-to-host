@@ -510,7 +510,7 @@ export default function Partners() {
                 project: "IAS 2025 Conference Coverage",
                 result: "5-day comprehensive coverage for 15,000+ attendees",
                 impact: "Global reach of 2M+ viewers",
-                image: "/images/all_site_images/Home/Feature_Video/Feature_Video_01.jpg",
+                image: "/images/all_site_images/Home/Feature_Video/Feature_Video_01.webp",
                 testimonial: "GoodAV delivered exceptional quality across multiple days with professionalism and precision."
               },
               {
@@ -518,7 +518,7 @@ export default function Partners() {
                 project: "Clean Cooking Initiative",
                 result: "Documentary series showcasing 44,000 cookstove distribution",
                 impact: "77% energy savings demonstrated",
-                image: "/images/all_site_images/Home/Feature_Video/Feature_Video_02.jpg",
+                image: "/images/all_site_images/Home/Feature_Video/Feature_Video_02.webp",
                 testimonial: "Their storytelling brought our environmental impact to life beautifully."
               },
               {
@@ -526,7 +526,7 @@ export default function Partners() {
                 project: "Pan-African Development Summit",
                 result: "Multi-country production across 5 African nations",
                 impact: "Policy changes in 3 countries",
-                image: "/images/all_site_images/Home/Feature_Video/Feature_Video_03.jpg",
+                image: "/images/all_site_images/Home/Feature_Video/Feature_Video_03.webp",
                 testimonial: "GoodAV's cultural understanding made all the difference in authentic storytelling."
               }
             ].map((story, index) => (

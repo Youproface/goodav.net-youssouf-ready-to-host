@@ -1,15 +1,238 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { FaCalendarAlt, FaMapMarkerAlt, FaBuilding, FaArrowRight } from 'react-icons/fa';
+import SEO from '../components/SEO';
+import SchemaMarkup from '../components/SchemaMarkup';
+import { getFeaturedCaseStudies } from '../data/featuredCaseStudies';
 
-const CaseStudies: React.FC = () => {
-  console.log('CaseStudies component is rendering - BASIC VERSION');
-  
-  return (
-    <div className="bg-red-500 text-white p-8 m-8 min-h-screen">
-      <h1 className="text-4xl">BASIC CASE STUDIES PAGE</h1>
-      <p>If you can see this, the component is working</p>
-      <p>Check the console for the log message</p>
-    </div>
-  );
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.1,
+    },
+  },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6 },
+  },
 };
 
-export default CaseStudies;
+const CaseStudies: React.FC = () => {
+  const featuredCaseStudies = getFeaturedCaseStudies();
+  return (
+    <>
+      <SEO
+        title="Case Studies - GoodAV | Success Stories & Client Projects"
+        description="Explore GoodAV's portfolio of successful audiovisual projects, from international conferences to digital campaigns. See our impact across various industries."
+        keywords="GoodAV case studies, client success stories, audiovisual projects, conference coverage, video production portfolio, photography portfolio"
+        canonical="https://goodav.net/case-studies"
+        type="website"
+        openGraph={{
+          title: "Case Studies - GoodAV | Success Stories & Client Projects",
+          description: "Explore GoodAV's portfolio of successful audiovisual projects, from international conferences to digital campaigns. See our impact across various industries.",
+          url: "https://goodav.net/case-studies",
+          type: "website",
+          images: [
+            {
+              url: "https://goodav.net/images/case-studies-og-image.jpg",
+              width: 1200,
+              height: 630,
+              alt: "GoodAV Case Studies - Success Stories & Client Projects"
+            }
+          ]
+        }}
+        twitter={{
+          card: "summary_large_image",
+          title: "Case Studies - GoodAV | Success Stories & Client Projects",
+          description: "Explore GoodAV's portfolio of successful audiovisual projects, from international conferences to digital campaigns. See our impact across various industries.",
+          image: "https://goodav.net/images/case-studies-og-image.jpg"
+        }}
+      />
+      <SchemaMarkup
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "GoodAV Case Studies",
+          "description": "Portfolio of successful audiovisual projects and client success stories",
+          "url": "https://goodav.net/case-studies",
+          "mainEntity": {
+            "@type": "ItemList",
+            "itemListElement": featuredCaseStudies.map((study, index) => ({
+              "@type": "ListItem",
+              "position": index + 1,
+              "item": {
+                "@type": "Article",
+                "name": study.title,
+                "description": study.content.overview,
+                "url": `https://goodav.net/case-studies/${study.id}`,
+                "image": study.image,
+                "author": {
+                  "@type": "Organization",
+                  "name": "GoodAV"
+                },
+                "publisher": {
+                  "@type": "Organization",
+                  "name": "GoodAV",
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://goodav.net/images/all_site_images/Assets/logo-full-color.svg"
+                  }
+                },
+                "datePublished": study.date,
+                "dateModified": study.date
+              }
+            }))
+          }
+        }}
+      />
+      <main>
+        <motion.header
+          className="hero-section relative mt-6 py-32 px-4 -mx-4 sm:-mx-6 md:-mx-8 bg-transparent text-center mb-16 flex flex-col items-center justify-center min-h-[420px] rounded-b-2xl"
+          role="banner"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          aria-labelledby="hero-heading"
+        >
+          <div className="hero-background absolute inset-0" aria-hidden="true">
+            <img
+              src="/images/all_site_images/Home/BG/Home_BG.webp"
+              alt=""
+              className="w-full h-full object-cover opacity-20"
+              loading="eager"
+              role="presentation"
+              width="1920"
+              height="1080"
+              decoding="async"
+              fetchPriority="high"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-[#0f1012]" />
+          </div>
+          <div className="relative max-w-7xl mx-auto px-4 text-center">
+            <motion.div variants={itemVariants}>
+              <h1 id="hero-heading" className="text-5xl md:text-6xl font-bold mb-6">
+                Our <span className="text-orange-400">Success Stories</span>
+              </h1>
+              <p className="text-xl text-zinc-300 max-w-3xl mx-auto">
+                Discover how GoodAV has delivered exceptional audiovisual experiences for clients across the globe. From international conferences to digital campaigns, see our impact in action.
+              </p>
+            </motion.div>
+          </div>
+        </motion.header>
+  <motion.section 
+          className="py-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={containerVariants}
+        >
+          <div className="container mx-auto px-4">
+            <motion.div className="text-center mb-12" variants={itemVariants}>
+              <h2 className="text-3xl font-bold text-orange-400 mb-4">Featured Projects</h2>
+              <p className="text-lg text-zinc-300">
+                Highlighting our most impactful and innovative audiovisual productions
+              </p>
+            </motion.div>
+            {featuredCaseStudies.length === 0 && (
+              <p className="text-center text-red-500">No case studies available.</p>
+            )}
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+              {featuredCaseStudies.map((study, index) => (
+                <motion.div
+                  key={study.id}
+                  className="bg-zinc-800/30 rounded-xl overflow-hidden hover:bg-zinc-800/50 transition-all duration-300 group"
+                  variants={itemVariants}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <div className="relative overflow-hidden">
+                    <img 
+                      src={study.image} 
+                      alt={study.title}
+                      className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center gap-4 text-sm text-zinc-400 mb-3">
+                      <span className="flex items-center gap-1">
+                        <FaCalendarAlt className="text-orange-400" />
+                        {study.date}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <FaMapMarkerAlt className="text-orange-400" />
+                        {study.location}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold mb-3 group-hover:text-orange-400 transition-colors">
+                      {study.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-sm text-zinc-400 mb-4">
+                      <FaBuilding className="text-orange-400" />
+                      <span>{study.client}</span>
+                    </div>
+                    <p className="text-zinc-300 text-sm mb-6 line-clamp-3">
+                      {study.content?.overview}
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {study.tags.slice(0, 3).map((tag, tagIndex) => (
+                        <span
+                          key={tagIndex}
+                          className="px-3 py-1 bg-orange-400/10 text-orange-400 text-xs rounded-full"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    {(study.slug || study.id) ? (
+                      <Link
+                        to={`/case-studies/${study.slug ?? study.id}`}
+                        className="flex items-center gap-2 text-orange-400 hover:text-orange-300 transition-colors font-semibold"
+                      >
+                        View Full Case Study
+                        <FaArrowRight className="transition-transform group-hover:translate-x-1" />
+                      </Link>
+                    ) : (
+                      <div className="flex items-center gap-2 text-zinc-400">
+                        <span className="text-sm">Coming Soon</span>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+  <motion.section 
+          className="py-20 bg-zinc-900/30"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={containerVariants}
+        >
+          <div className="container mx-auto px-4 text-center">
+            <motion.div variants={itemVariants}>
+              <h3 className="text-3xl font-bold mb-6">Ready to Create Your Success Story?</h3>
+              <p className="text-xl text-zinc-300 mb-8 max-w-2xl mx-auto">
+                Join our growing list of satisfied clients who have experienced the GoodAV difference.
+              </p>
+              <Link
+                to="/contact"
+                className="inline-block bg-gradient-to-r from-orange-500 to-amber-500 text-white px-8 py-4 rounded-lg font-bold text-lg hover:from-orange-600 hover:to-amber-600 transition-all transform hover:scale-105"
+              >
+                Start Your Project
+              </Link>
+            </motion.div>
+          </div>
+        </motion.section>
+      </main>
+    </>
+  );
+};

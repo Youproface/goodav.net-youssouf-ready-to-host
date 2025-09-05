@@ -449,13 +449,13 @@ export default function PortFolio() {
 				/>
 				<meta property="og:title" content="Portfolio | GoodAV - Audiovisual Projects & Creative Highlights" />
 				<meta property="og:description" content="Explore GoodAV's portfolio of impactful audiovisual projects, documentaries, events, and creative highlights. Discover our work with leading organizations and brands." />
-				<meta property="og:image" content="/images/all_site_images/Home/BG/Home_BG.png" />
+				<meta property="og:image" content="/images/all_site_images/Home/BG/Home_BG.webp" />
 				<meta property="og:type" content="website" />
 				<meta property="og:url" content="https://goodav.net/portfolio" />
 				<meta name="twitter:card" content="summary_large_image" />
 				<meta name="twitter:title" content="Portfolio | GoodAV - Audiovisual Projects & Creative Highlights" />
 				<meta name="twitter:description" content="Explore GoodAV's portfolio of impactful audiovisual projects, documentaries, events, and creative highlights. Discover our work with leading organizations and brands." />
-				<meta name="twitter:image" content="/images/all_site_images/Home/BG/Home_BG.png" />
+				<meta name="twitter:image" content="/images/all_site_images/Home/BG/Home_BG.webp" />
 				<meta name="robots" content="index, follow" />
 				<link rel="canonical" href="https://goodav.net/portfolio" />
 				<meta httpEquiv="Content-Language" content="en" />
@@ -496,7 +496,7 @@ export default function PortFolio() {
 				>
 					<div className="absolute inset-0">
 						<img
-							src="/images/all_site_images/Home/BG/Home_BG.png"
+								src="/images/all_site_images/Home/BG/Home_BG.webp"
 							alt="GoodAV Portfolio - Audiovisual Projects Background"
 							className="w-full h-full object-cover opacity-30"
 							loading="lazy"

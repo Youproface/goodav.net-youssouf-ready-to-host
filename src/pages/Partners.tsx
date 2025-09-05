@@ -1,13 +1,13 @@
+import React, { useState, useMemo, useCallback, Suspense } from 'react';
 import BTSMasterProduction from '@/components/BTSMasterProdcution';
 import Testimonials from '@/components/Testimonials';
-import BookingModal from '@/components/forms/BookingModal';
-import React, { useState, useMemo, useCallback, Suspense } from 'react';
+const BookingModal = React.lazy(() => import('@/components/forms/BookingModal'));
 
 // Lazy load components for better performance
 const PartnersLogos = React.lazy(() => import('@/components/PartnersLogos'));
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { getFeaturedCaseStudies } from '@/data/caseStudies';
+
 import { 
   FaTrophy, 
   FaPlay, 
@@ -40,10 +40,21 @@ export default function Partners() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   // Get specific case studies for partnership success stories - only Gilead and Miss Rwanda
-  const allCaseStudies = getFeaturedCaseStudies();
-  const featuredCaseStudies = allCaseStudies.filter(caseStudy => 
-    caseStudy.id === 'gilead-ias-2025' || caseStudy.id === 'miss-rwanda-inspiration-backup'
-  );
+  const [featuredCaseStudies, setFeaturedCaseStudies] = useState([]);
+  React.useEffect(() => {
+    let mounted = true;
+    import('@/data/caseStudies').then(mod => {
+      const allCaseStudies = mod.getFeaturedCaseStudies();
+      if (mounted) {
+        setFeaturedCaseStudies(
+          allCaseStudies.filter(caseStudy =>
+            caseStudy.id === 'gilead-ias-2025' || caseStudy.id === 'miss-rwanda-inspiration-backup'
+          )
+        );
+      }
+    });
+    return () => { mounted = false; };
+  }, []);
 
   // Optimized animation variants for performance
   const animationVariants = useMemo(() => ({
@@ -345,7 +356,7 @@ export default function Partners() {
       >
         <div className="hero-background absolute inset-0" aria-hidden="true">
           <img
-            src="/images/all_site_images/Home/BG/Home_BG.png"
+            src="/images/all_site_images/Home/BG/Home_BG.webp"
             alt=""
             className="w-full h-full object-cover opacity-20"
             loading="eager"
@@ -831,7 +842,9 @@ export default function Partners() {
         <Testimonials />
 
         {/* Booking Modal */}
-        <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+        <Suspense fallback={null}>
+          <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+        </Suspense>
 
       </div>
 

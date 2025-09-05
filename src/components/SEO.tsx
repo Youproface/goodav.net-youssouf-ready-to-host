@@ -599,7 +599,6 @@ const DEFAULT_SEO: SEOPageData = {
       {/* Favicon and Apple Touch Icon - Only in <head> */}
       <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-      <link rel="apple-touch-icon" href="/images/all_site_images/Assets/logo-icon-color.svg" />
 
       {/* Performance Optimization - Essential preconnects only */}
       <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />

@@ -13,7 +13,7 @@ const HomePage: React.FC = () => {
 			<main className="homepage-main">
 				<section className="hero-section">
 					<h1 className="text-4xl font-bold gradient-text mb-4">World-Class Audiovisual Production in Rwanda & Africa</h1>
-					<p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+					<p className="text-lg text-gray-200 mb-8 max-w-2xl mx-auto">
 						GoodAV is your trusted partner for professional video production, live streaming, photography, and documentary filmmaking. We empower brands, organizations, and events to achieve global impact and customer conversion through creative excellence.
 					</p>
 					<ul className="seo-keywords-list text-sm mb-6">

@@ -8,7 +8,7 @@
     <meta property="og:title" content="GoodAV - Africa's Premier AV Agency" />
     <meta property="og:description" content="Transforming Ideas Into Impactful Visual Stories. Where African creativity meets global excellence." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/hero-background.jpg" />
+  <meta property="og:image" content="/images/all_site_images/Home/BG/Home_BG.webp" />
   <link rel="canonical" href="https://goodav.net/" />
 
   <meta name="description" content="Leading audiovisual production company in Rwanda & Africa. Expert video production, live streaming, photography & documentary filming. 500+ satisfied clients across 5+ countries. Transform your brand story today.">
@@ -17,6 +17,7 @@
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="googlebot" content="index, follow">
     <meta name="theme-color" content="#FF6B35">
+  <meta name="color-scheme" content="light dark">
     
     <!-- Geo Location -->
     <meta name="geo.region" content="RW">
@@ -41,14 +42,234 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="GoodAV - Africa's Premier AV Agency" />
     <meta name="twitter:description" content="Transforming Ideas Into Impactful Visual Stories" />
-    <meta name="twitter:image" content="/hero-background.jpg" />
-    <link rel="stylesheet" 
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <meta name="twitter:image" content="/images/all_site_images/Home/BG/Home_BG.webp" />
+  <!-- Preload critical hero assets for LCP optimization -->
+  <link rel="preload" as="image" href="/images/all_site_images/Home/BG/Home_BG.webp" type="image/webp" />
+  <!-- Only preload above-the-fold images. Remove or defer preloading for images not used immediately. -->
+  <!-- <link rel="preload" as="video" href="/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.mp4" type="video/mp4" /> -->
+  <!-- <link rel="preload" as="image" href="/images/all_site_images/Home/Feature_Video/Feature_Video_01.webp" type="image/webp" /> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" media="print" onload="this.media='all'">
 
-    <script type="module" crossorigin src="/assets/js/index-Ndvfakwe.js"></script>
+  <!-- Preload Inter font for LCP text -->
+  <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Inline critical CSS for LCP text -->
+    <style>
+      /* Critical CSS for LCP text in PartnersSection */
+      .text-lg.text-muted-foreground.leading-relaxed {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+        color: hsl(215.4, 16.3%, 46.9%); /* --muted-foreground */
+        font-family: 'Inter', system-ui, sans-serif;
+        font-weight: 400;
+        margin-bottom: 1.5rem;
+      }
+      @media (max-width: 640px) {
+        .text-lg.text-muted-foreground.leading-relaxed {
+          font-size: 1rem;
+          line-height: 1.5;
+        }
+      }
+
+      /* Critical CSS for Hero above-the-fold */
+      .hero-bg, .hero-bg-video, .hero-bg-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        -o-object-fit: cover;
+           object-fit: cover;
+        z-index: 0;
+        overflow: hidden;
+      }
+      .hero-bg-video, .hero-bg-img {
+        -o-object-fit: cover;
+           object-fit: cover;
+      }
+      .bg-gradient-hero {
+        background: linear-gradient(135deg, hsl(220, 13%, 9%, 0.9), hsl(16, 90%, 58%, 0.1));
+      }
+      .gradient-text {
+        background: linear-gradient(to right, hsl(16, 90%, 58%), hsl(16, 90%, 68%));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+      }
+      .card-bg {
+        background: hsl(220, 13%, 12%, 0.15);
+        border: 1.5px solid rgba(255,255,255,0.08);
+      }
+      .glass-card {
+  backdrop-filter: blur(12px);
+  background: rgba(24, 28, 36, 0.5);
+  border: 1.5px solid rgba(255,255,255,0.08);
+  will-change: transform;
+      }
+      .hover-lift {
+        transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      }
+      .rounded-full {
+        border-radius: 9999px;
+      }
+      .shadow-lg {
+        box-shadow: 0 10px 40px -10px hsl(16, 90%, 58%, 0.3), 0 4px 20px hsl(220, 13%, 5%, 0.8);
+      }
+      .rounded-lg {
+        border-radius: 0.5rem;
+      }
+      .border-orange-500 {
+        border-color: #FF6B35;
+      }
+      .bg-black\/10 {
+        background: rgba(0,0,0,0.10);
+      }
+      .text-orange-500 {
+        color: #FF6B35;
+      }
+      .text-white {
+        color: #fff;
+      }
+      .font-bold {
+        font-weight: 700;
+      }
+      .font-semibold {
+        font-weight: 600;
+      }
+      .uppercase {
+        text-transform: uppercase;
+      }
+      .tracking-wide {
+        letter-spacing: 0.05em;
+      }
+      .text-center {
+        text-align: center;
+      }
+      .container {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-width: 1280px;
+      }
+      .mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .px-4 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .py-20 {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+      }
+      .mb-8 {
+        margin-bottom: 2rem;
+      }
+      .flex {
+        display: flex;
+      }
+      .justify-center {
+        justify-content: center;
+      }
+      .items-center {
+        align-items: center;
+      }
+      .gap-3 {
+        gap: 0.75rem;
+      }
+      .gap-8 {
+        gap: 2rem;
+      }
+      .min-w-\[340px\] {
+        min-width: 340px;
+      }
+      .rounded-xl {
+        border-radius: 0.75rem;
+      }
+      .text-base {
+        font-size: 1rem;
+        line-height: 1.5rem;
+      }
+      .text-2xl {
+        font-size: 1.5rem;
+        line-height: 2rem;
+      }
+      .md\:text-4xl {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+      .font-black {
+        font-weight: 900;
+      }
+      .tracking-tighter {
+        letter-spacing: -0.05em;
+      }
+      .uppercase {
+        text-transform: uppercase;
+      }
+      .transition-all {
+        transition: all 0.2s;
+      }
+      .duration-200 {
+        transition-duration: 200ms;
+      }
+      .shadow-lg {
+        box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      }
+      .w-16 {
+        width: 4rem;
+      }
+      .h-0\.5 {
+        height: 2px;
+      }
+      .mt-2 {
+        margin-top: 0.5rem;
+      }
+      .mb-1 {
+        margin-bottom: 0.25rem;
+      }
+      .mb-2 {
+        margin-bottom: 0.5rem;
+      }
+      .mb-4 {
+        margin-bottom: 1rem;
+      }
+      .mb-6 {
+        margin-bottom: 1.5rem;
+      }
+      .mt-5 {
+        margin-top: 1.25rem;
+      }
+      .max-w-5xl {
+        max-width: 64rem;
+      }
+      .max-w-full {
+        max-width: 100%;
+      }
+      .min-h-screen {
+        min-height: 100vh;
+      }
+      .z-10 {
+        z-index: 10;
+      }
+      .relative {
+        position: relative;
+      }
+      .absolute {
+        position: absolute;
+      }
+      .inset-0 {
+        top: 0; right: 0; bottom: 0; left: 0;
+      }
+    </style>
+
+    <script type="module" crossorigin src="/assets/js/index-CDcjsD0R.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/js/react-QLrdM8zg.js">
-    <link rel="modulepreload" crossorigin href="/assets/js/vendor-CnlDlmLs.js">
-    <link rel="stylesheet" crossorigin href="/assets/css/index-6aMZQdry.css">
+    <link rel="modulepreload" crossorigin href="/assets/js/vendor-CPy9PHxJ.js">
+    <link rel="stylesheet" crossorigin href="/assets/css/index-BDtgygjS.css">
   </head>
 
   <body>

@@ -1,4 +1,4 @@
-const heroBackground = '/images/all_site_images/Home/BG/Home_BG.png';
+const heroBackground = '/images/all_site_images/Home/BG/Home_BG.webp';
 import BlogsSection from './BlogsSection';
 import { blogPosts, BlogPost } from '@/data/blog';
 import { useState, useMemo } from 'react';

@@ -735,8 +735,8 @@ Proven Track Record: With over 200 successful projects and 28 satisfied clients,
   // store only the video id; renderers can derive the thumbnail URL
   ytThumbnail: "HyHigPOWxYs"
   }
-];
-  [{
+  ,
+  {
     id: "12",
     title: "Why Rwanda Is Africa’s Top Destination for Conferences, Tourism, and Audiovisual Excellence",
     excerpt: "Discover why Rwanda is the go-to destination for international conferences, tourism, Kwita Izina gorilla naming, national parks, and audiovisual innovation. GoodAV is your trusted partner for world-class events and storytelling in Rwanda.",
@@ -772,4 +772,5 @@ Proven Track Record: With over 200 successful projects and 28 satisfied clients,
     date: "September 2025",
     readTime: "5 min read",
     slug: "rwanda-conferences-tourism-audiovisual-excellence"
-    }]
+  }
+];

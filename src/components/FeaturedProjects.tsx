@@ -217,9 +217,11 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelect
     >
       {/* 🖼️ Optimized Image with WebP support and lazy loading */}
       <picture>
+        <source srcSet={optimizedThumbnail.replace('webp', 'avif')} type="image/avif" />
         <source srcSet={optimizedThumbnail} type="image/webp" />
         <img
           src={thumbnailSrc}
+          srcSet={`${thumbnailSrc} 1x, ${optimizedThumbnail} 2x`}
           alt={`${project.title} - ${project.category} project ${project.client ? `for ${project.client}` : ''} (${project.year || 'Year unknown'})`}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 will-change-transform"
           loading="lazy"
@@ -622,7 +624,7 @@ const FeaturedProjects: React.FC = () => {
 
           {/* Enhanced description with richer content */}
           <motion.p
-            className="text-muted-foreground max-w-2xl mx-auto mb-8 text-lg leading-relaxed"
+            className="text-gray-200 max-w-2xl mx-auto mb-8 text-lg leading-relaxed"
             variants={animationVariants.item}
           >
             Discover our most impactful audiovisual productions that have transformed brands, told
@@ -707,7 +709,7 @@ const FeaturedProjects: React.FC = () => {
 
           {/* 🎯 Accessibility hint for interaction */}
           <motion.p 
-            className="text-center text-sm text-muted-foreground mt-4"
+            className="text-center text-sm text-gray-300 mt-4"
             variants={animationVariants.item}
           >
             <span className="inline-flex items-center gap-2">

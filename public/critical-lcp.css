@@ -1,0 +1,15 @@
+/* Critical CSS for LCP text in PartnersSection */
+.text-lg.text-muted-foreground.leading-relaxed {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: hsl(215.4, 16.3%, 46.9%); /* --muted-foreground */
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 640px) {
+  .text-lg.text-muted-foreground.leading-relaxed {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}

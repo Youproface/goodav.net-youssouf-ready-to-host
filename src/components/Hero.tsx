@@ -49,7 +49,10 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     </motion.span>
   );
 };
-const heroBackground = '/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.gif';
+// Use optimized MP4 and WebP for hero background
+const heroBackgroundMp4 = '/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.mp4';
+const heroBackgroundWebp = '/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.webp';
+const heroBackgroundFallback = '/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.gif';
 import { useNavigate } from 'react-router-dom';
 import ProjectStartingModal from './forms/ProjectStartingModal';
 const Hero = () => {
@@ -63,7 +66,7 @@ const Hero = () => {
   // Preload background image for better performance
   useEffect(() => {
     const img = new Image();
-    img.src = heroBackground;
+    img.src = heroBackgroundWebp;
     img.onload = () => setImageLoaded(true);
   }, []);
   
@@ -124,61 +127,84 @@ const Hero = () => {
       >
         Skip to main content
       </a>
-      
+
       <section 
         className="relative" 
         role="banner" 
         aria-labelledby="hero-heading"
       >
-      {/* Background Image */}
-      <motion.div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat hero-bg"
-        initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={prefersReducedMotion ? { duration: 0 } : { duration: 1 }}
-      >
-        <img 
-          src={heroBackground} 
-          alt="Dynamic video production background showcasing African creativity and global excellence at Goodav AV Agency" 
-          className={`w-full h-full object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-          loading="eager"
-          decoding="async"
-          onLoad={() => setImageLoaded(true)}
-        />
+        {/* Background Video or Image */}
         <motion.div 
-          className="absolute inset-0 bg-gradient-hero"
+          className="absolute inset-0 hero-bg"
           initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={prefersReducedMotion ? { duration: 0 } : { duration: 1, delay: 0.5 }}
-        />
-      </motion.div>
-
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 py-20 text-center">
-        <motion.div 
-          className="max-w-5xl mx-auto"
-          initial={prefersReducedMotion ? "show" : "hidden"}
-          animate="show"
-          variants={prefersReducedMotion ? {
-            hidden: {},
-            show: {
-              transition: {
-                staggerChildren: 0,
-                delayChildren: 0
-              }
-            }
-          } : {
-            hidden: {},
-            show: {
-              transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.3
-              }
-            }
-          }}
+          transition={prefersReducedMotion ? { duration: 0 } : { duration: 1 }}
         >
+          {prefersReducedMotion ? (
+            <picture>
+              <source srcSet={heroBackgroundWebp.replace('webp', 'avif')} type="image/avif" />
+              <source srcSet={heroBackgroundWebp} type="image/webp" />
+              <img 
+                src={heroBackgroundFallback}
+                srcSet={`${heroBackgroundFallback} 1x, ${heroBackgroundWebp} 2x`}
+                alt="Dynamic video production background showcasing African creativity and global excellence at Goodav AV Agency"
+                className={`hero-bg-img transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                loading="eager"
+                decoding="async"
+                onLoad={() => setImageLoaded(true)}
+              />
+            </picture>
+          ) : (
+            <video
+              className="hero-bg-video"
+              autoPlay
+              loop
+              muted
+              playsInline
+              poster={heroBackgroundWebp}
+              width={1280}
+              height={480}
+            >
+              <source src={heroBackgroundMp4} type="video/mp4" />
+              <source src={heroBackgroundWebp.replace('webp', 'avif')} type="image/avif" />
+              <source src={heroBackgroundWebp} type="image/webp" />
+              <img src={heroBackgroundFallback} alt="Hero background" loading="eager" width="1280" height="480" decoding="async" />
+            </video>
+          )}
           <motion.div 
-            className="mb-8 flex justify-center"
+            className="absolute inset-0 bg-gradient-hero"
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={prefersReducedMotion ? { duration: 0 } : { duration: 1, delay: 0.5 }}
+          />
+        </motion.div>
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4 py-20 text-center">
+          <motion.div 
+            className="max-w-5xl mx-auto"
+            initial={prefersReducedMotion ? "show" : "hidden"}
+            animate="show"
+            variants={prefersReducedMotion ? {
+              hidden: {},
+              show: {
+                transition: {
+                  staggerChildren: 0,
+                  delayChildren: 0
+                }
+              }
+            } : {
+              hidden: {},
+              show: {
+                transition: {
+                  staggerChildren: 0.1,
+                  delayChildren: 0.3
+                }
+              }
+            }}
+          >
+            <motion.div 
+              className="mb-8 flex justify-center"
             variants={{
               hidden: { opacity: 0, y: 20 },
               show: { 
@@ -280,7 +306,7 @@ const Hero = () => {
               <span className="gradient-text">Visual Stories</span>
             </motion.h2>
             <motion.p 
-              className="text-lg text-muted-foreground italic max-w-2xl mx-auto"
+              className="text-lg text-gray-200 italic max-w-2xl mx-auto"
               variants={{
                 hidden: { opacity: 0, y: 10 },
                 show: { 

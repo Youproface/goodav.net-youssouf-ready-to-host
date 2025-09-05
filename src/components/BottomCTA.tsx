@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useAnimation, useInView, AnimatePresence, useReducedMotion } from 'framer-motion';
-import ProjectStartingModal from "./forms/ProjectStartingModal";
+import React, { Suspense } from 'react';
+const ProjectStartingModal = React.lazy(() => import('./forms/ProjectStartingModal'));
 import { FaBolt, FaArrowRight, FaStar, FaRocket, FaCheckCircle, FaClock, FaUsers } from 'react-icons/fa';
 
 export default function BottomCTA() {
@@ -167,7 +168,7 @@ export default function BottomCTA() {
           </motion.span>
         </motion.h2>
 
-        <p className="mt-4 text-sm text-zinc-400 max-w-2xl mx-auto" id="cta-subheading">
+        <p className="mt-4 text-sm text-gray-300 max-w-2xl mx-auto" id="cta-subheading">
           See what our clients say about working with GoodAV's professional audiovisual services.
         </p>
 
@@ -204,7 +205,7 @@ export default function BottomCTA() {
           {/* Client testimonial (lightweight, accessible) */}
           <blockquote className="mt-6 border-l-2 border-orange-500/30 pl-4 text-left text-zinc-300" aria-label="Client testimonial">
             <p className="text-base italic">“GoodAV took our event from a concept to a show-stopping production. Professional team and on-time delivery.”</p>
-            <cite className="block mt-2 text-sm text-zinc-400">— Amina K., Event Producer</cite>
+            <cite className="block mt-2 text-sm text-gray-300">— Amina K., Event Producer</cite>
           </blockquote>
 
           {/* Feature highlights */}
@@ -235,7 +236,9 @@ export default function BottomCTA() {
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 1.4 }}
         >
-          <ProjectStartingModal open={open} onClose={() => setOpen(false)} />
+          <Suspense fallback={null}>
+            <ProjectStartingModal open={open} onClose={() => setOpen(false)} />
+          </Suspense>
           <motion.button
             onClick={() => setOpen(true)}
             className="group relative inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-400 px-8 py-4 text-lg font-bold text-zinc-900 shadow-2xl hover:shadow-orange-500/25 transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-400/50 overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
@@ -320,7 +323,7 @@ export default function BottomCTA() {
 
           {/* Enhanced Trust indicators */}
           <motion.div
-            className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-zinc-400"
+            className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-300"
             initial={{ opacity: 0 }}
             animate={isVisible ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 1.6 }}
@@ -378,7 +381,7 @@ export default function BottomCTA() {
 
           {/* Additional Social Proof */}
           <motion.div
-            className="mt-6 flex items-center justify-center gap-4 text-xs text-zinc-500"
+            className="mt-6 flex items-center justify-center gap-4 text-xs text-gray-300"
             initial={{ opacity: 0 }}
             animate={isVisible ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 1.8 }}

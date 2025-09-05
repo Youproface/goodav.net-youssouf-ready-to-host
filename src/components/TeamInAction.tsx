@@ -3,13 +3,13 @@ import { Rocket, Star, Trophy, Globe, Bolt, Play, Video } from "lucide-react";
 
 const teamImages = [
   {
-    src: "/images/Home/Team/Team_3.png",
+    src: "/images/all_site_images/Home/Team/Team_3.png",
     alt: "GoodAV Team in action - Creative collaboration in progress",
     captionTitle: "Creative Collaboration",
     captionText: "Teamwork brings visions to life"
   },
   {
-    src: "/images/Home/Team/Team_2.png",
+    src: "/images/all_site_images/Home/Team/Team_2.png",
     alt: "GoodAV Team in action - Professional equipment and setup",
     captionTitle: "Professional Excellence",
     captionText: "Quality equipment for outstanding results"

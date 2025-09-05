@@ -151,7 +151,7 @@ const GlobalImpact: React.FC = () => {
       </motion.h2>
 
       <motion.p
-        className="text-muted-foreground max-w-4xl mx-auto mb-12 text-lg leading-relaxed"
+        className="text-gray-200 max-w-4xl mx-auto mb-12 text-lg leading-relaxed"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -194,7 +194,7 @@ const GlobalImpact: React.FC = () => {
             <div className="uppercase font-bold text-primary text-sm mb-2 tracking-wider">
               {subTextBold}
             </div>
-            <div className="italic text-muted-foreground text-sm">{subTextItalic}</div>
+            <div className="italic text-gray-300 text-sm">{subTextItalic}</div>
           </motion.div>
         ))}
       </motion.div>

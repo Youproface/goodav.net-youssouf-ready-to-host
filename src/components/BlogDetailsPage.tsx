@@ -71,7 +71,7 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
       <meta name="keywords" content="Rwanda, Africa, documentary, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda, blog, article, engagement, customer conversion" />
       <meta property="og:title" content={`${blog.title} | GoodAV - Rwanda, Africa, Documentary`} />
       <meta property="og:description" content={blog.excerpt} />
-      <meta property="og:image" content={blog.image} />
+  <meta property="og:image" content={blogImage} />
       <meta property="og:type" content="article" />
       <meta property="og:url" content={`https://goodav.net/blog/${blog.slug}`} />
       <meta name="robots" content="index, follow" />
@@ -81,7 +81,7 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={`${blog.title} | GoodAV - Rwanda, Africa, Documentary`} />
       <meta name="twitter:description" content={blog.excerpt} />
-      <meta name="twitter:image" content={blog.image} />
+  <meta name="twitter:image" content={blogImage} />
       {/* Structured Data */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
   {/* HERO */}
@@ -256,7 +256,6 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
                   a: ({node, ...props}) => <a className="text-orange-400 hover:text-orange-300 underline focus:outline focus:ring-2 focus:ring-orange-400" target="_blank" rel="noopener noreferrer" tabIndex={0} {...props} />,
                   ul: ({node, ...props}) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />,
                   ol: ({node, ...props}) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />,
-                  li: ({node, ...props}) => <li className="text-zinc-300" {...props} />,
                   blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-orange-400 pl-4 italic my-4 text-zinc-300" tabIndex={0} {...props} />,
                   code: ({node, ...props}) => <code className="bg-zinc-800 text-orange-300 px-1.5 py-0.5 rounded text-sm" tabIndex={0} {...props} />,
                   pre: ({node, ...props}) => <pre className="bg-zinc-900 p-4 rounded-lg overflow-x-auto my-4" tabIndex={0} {...props} />,

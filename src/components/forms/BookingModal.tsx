@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { createPortal } from 'react-dom';
+import './booking-modal.css';
 import {
   Video,
   Camera,
@@ -49,6 +50,9 @@ export default function BookingModal({
   const [confirmationMessage, setConfirmationMessage] = useState<React.ReactNode | null>(null);
   const [timeSlotConfirmed, setTimeSlotConfirmed] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+
+  // Progress bar width calculation
+  const progressWidth = `${(step / 8) * 100}%`;
   const [popupType, setPopupType] = useState<'success' | 'error' | 'warning' | null>(null);
   const [popupMessage, setPopupMessage] = useState('');
   const [popupDetails, setPopupDetails] = useState('');
@@ -521,10 +525,10 @@ export default function BookingModal({
         <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-black/80 backdrop-blur-lg">
           <div className="mb-6">
             {/* Branded Loading Animation */}
-            <svg id="goodav-bimi.svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.2 387.4" className="w-32 h-auto animate-spin" style={{ animationDuration: '2s', animationTimingFunction: 'linear', animationIterationCount: 'infinite' }}>
+            <svg id="goodav-bimi.svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.2 387.4" className="w-32 h-auto animate-spin loading-logo">
               <defs>
                 <style>
-                  {`.cls-1{fill:#f6953a;}.cls-1,.cls-2,.cls-3,.cls-4,.cls-5{stroke-width:0px;}.cls-2{fill:#010101;}.cls-3{fill:#fff;}.cls-4{fill:#41964c;}.cls-5{fill:#f04f44;}`}
+                  {`.cls-1{fill:#f6953a;}.cls-1,.cls-2,.cls-3,.cls-4,.cls-5{stroke-width:0px;}.cls-2{fill:#010101;}.cls-3{fill:#fff;}.cls-4{fill:#41964c;}.cls-5{fill:#f04f44;}.loading-logo{animation-duration:2s;animation-timing-function:linear;animation-iteration-count:infinite;}`}
                 </style>
               </defs>
               <ellipse className="cls-2" cx="195.1" cy="193.7" rx="195.1" ry="193.7"/>
@@ -580,8 +584,8 @@ export default function BookingModal({
               {/* Progress Bar */}
               <div className="w-full bg-gray-700 h-2 rounded-full mb-4 overflow-hidden">
                 <div
-                  className="bg-orange-500 h-full rounded-full transition-all duration-500 ease-out booking-progress-bar"
-                  style={{ width: `${(step / 8) * 100}%` }}
+                  className={`bg-orange-500 h-full rounded-full transition-all duration-500 ease-out booking-progress-bar`}
+                  data-progress={step}
                 ></div>
               </div>
 

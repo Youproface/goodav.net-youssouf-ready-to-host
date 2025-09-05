@@ -142,7 +142,7 @@ const CaseStudiesNew: React.FC = () => {
         >
           <div className="hero-background absolute inset-0" aria-hidden="true">
             <img
-              src="/images/all_site_images/Home/BG/Home_BG.png"
+              src="/images/all_site_images/Home/BG/Home_BG.webp"
               alt=""
               className="w-full h-full object-cover opacity-20"
               loading="eager"

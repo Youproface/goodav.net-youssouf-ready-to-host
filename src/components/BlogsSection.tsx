@@ -4,6 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import { BlogPost, blogPosts } from '../data/blog';
 import { FaCalendarAlt, FaClock } from 'react-icons/fa';
 
+// Helper function to get correct blog image path
+const getBlogImagePath = (blog: BlogPost): string => {
+  // If the image already has the correct path, use it
+  if (blog.image.includes('/blog-')) {
+    return blog.image;
+  }
+  // Otherwise, map to the correct blog-{id}.jpg format
+  return `/images/all_site_images/Blog/blog-${blog.id}.jpg`;
+};
+
 export default function BlogsSection() {
     const navigate = useNavigate();
     
@@ -42,7 +52,7 @@ export default function BlogsSection() {
                 <StoryCard
                   onClick={() => handleBlogClick(post)}
                   category={post.category}
-                  image={post.image}
+                  image={getBlogImagePath(post)}
                   title={post.title}
                   excerpt={post.excerpt}
                   date={post.date}

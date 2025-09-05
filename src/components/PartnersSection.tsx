@@ -180,7 +180,7 @@ const PartnersSection = () => {
                 Building Africa's Future Through Collaboration
               </motion.h3>
               <motion.p 
-                className="text-lg text-muted-foreground leading-relaxed"
+                className="text-lg text-gray-200 leading-relaxed"
                 initial={prefersReducedMotion ? { opacity: 1, y: 10 } : { opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -283,7 +283,7 @@ const PartnersSection = () => {
                 {stat.label}
               </motion.div>
               <motion.div 
-                className="text-xs text-gray-400 text-center mt-1"
+                className="text-xs text-gray-300 text-center mt-1"
                 initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.3 }}

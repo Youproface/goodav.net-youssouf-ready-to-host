@@ -265,7 +265,7 @@ export default function Partners() {
           {/* Project 1 */}
           <div className="group relative h-64 rounded-lg overflow-hidden cursor-pointer">
             <img 
-              src="/src/assets/images/all_site_images/Home/Feature_Video/Feature_Video_01.jpg" 
+              src="/images/all_site_images/Home/Feature_Video/Feature_Video_01.webp" 
               alt="Featured Project 1"
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
@@ -278,7 +278,7 @@ export default function Partners() {
           {/* Project 2 */}
           <div className="group relative h-64 rounded-lg overflow-hidden cursor-pointer">
             <img 
-              src="/src/assets/images/all_site_images/Home/Feature_Video/Feature_Video_02.jpg" 
+              src="/images/all_site_images/Home/Feature_Video/Feature_Video_02.webp" 
               alt="Featured Project 2"
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
@@ -291,7 +291,7 @@ export default function Partners() {
           {/* Project 3 */}
           <div className="group relative h-64 rounded-lg overflow-hidden cursor-pointer">
             <img 
-              src="/src/assets/images/all_site_images/Home/Feature_Video/Feature_Video_03.jpg" 
+              src="/images/all_site_images/Home/Feature_Video/Feature_Video_03.webp" 
               alt="Featured Project 3"
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />

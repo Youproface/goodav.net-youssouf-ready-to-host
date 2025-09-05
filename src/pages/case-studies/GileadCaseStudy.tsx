@@ -1,4 +1,4 @@
-import React from 'react';
+// ...existing code...
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -29,7 +29,8 @@ import {
 } from 'react-icons/fa';
 import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
-import YouTubeModal from '../../components/YouTubeModal';
+import React, { Suspense } from 'react';
+const YouTubeModal = React.lazy(() => import('../../components/YouTubeModal'));
 import { caseStudies } from '../../data/caseStudies';
 
 const GileadCaseStudy: React.FC = () => {
@@ -393,13 +394,15 @@ const GileadCaseStudy: React.FC = () => {
                 transition={{ delay: index * 0.2 }}
                 className="flex justify-center"
               >
-                <YouTubeModal
+                <Suspense fallback={null}>
+                  <YouTubeModal
                   videoId={video.url}
                   title={video.title}
                   className="w-full max-w-sm"
                   containerClassName="h-48 md:h-56"
                   buttonClassName="w-12 h-12"
-                />
+                  />
+                </Suspense>
               </motion.div>
             ))}
           </div>

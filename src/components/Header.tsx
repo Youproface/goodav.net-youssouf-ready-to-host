@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 // Use public path for logo
 const logo = '/images/all_site_images/Assets/logo-full-color.svg';
 import { Link } from "react-router-dom";
-import ConsultationModal from "./forms/ConsultationModal";
+const ConsultationModal = React.lazy(() => import("./forms/ConsultationModal"));
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -99,10 +99,12 @@ const Header = () => {
       </nav>
 
       {/* Consultation Modal */}
-      <ConsultationModal
-        isOpen={isConsultationOpen}
-        onClose={() => setIsConsultationOpen(false)}
-      />
+      <Suspense fallback={null}>
+        <ConsultationModal
+          isOpen={isConsultationOpen}
+          onClose={() => setIsConsultationOpen(false)}
+        />
+      </Suspense>
     </header>
   );
 };

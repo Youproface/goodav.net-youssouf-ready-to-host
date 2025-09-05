@@ -5,7 +5,8 @@ import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } 
 import { FaWhatsapp } from 'react-icons/fa';
 import ContactSection from './ContactSection';
 import BottomCTA from './BottomCTA';
-import LegalModal from './Legal/Legal-modal';
+const LegalModal = React.lazy(() => import('./Legal/Legal-modal'));
+import { Suspense } from 'react';
 import { useState } from 'react';
 import { cookiePolicy, privacyPolicy, termsAndConditions } from './Legal/legaldata';
 const Footer = () => {
@@ -66,7 +67,7 @@ const Footer = () => {
                     <span className="text-2xl font-bold text-foreground cursor-pointer">GoodAV</span>
                   </Link>
                 </div>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
+                <p className="text-gray-200 mb-6 leading-relaxed">
                   Africa's premier audiovisual agency transforming ideas into impactful visual stories. 
                   Where African creativity meets global excellence.
                 </p>
@@ -74,15 +75,15 @@ const Footer = () => {
                   {/* Removed standalone phone number as requested */}
                 </div>
                 <div className="space-y-3">
-                  <div className="flex items-center text-muted-foreground">
+                  <div className="flex items-center text-gray-200">
                     <Mail className="h-4 w-4 mr-3 text-primary" />
                     <span className="text-sm">info@goodav.net</span>
                   </div>
-                  <div className="flex items-center text-muted-foreground">
+                  <div className="flex items-center text-gray-200">
                     <Phone className="h-4 w-4 mr-3 text-primary" />
                     <span className="text-sm">+250 788 613 332</span>
                   </div>
-                  <div className="flex items-center text-muted-foreground">
+                  <div className="flex items-center text-gray-200">
                     <MapPin className="h-4 w-4 mr-3 text-primary" />
                     <span className="text-sm">Kigali, Rwanda, Africa</span>
                   </div>
@@ -96,7 +97,7 @@ const Footer = () => {
                     <li key={index}>
                       <Link
                         to={link.href}
-                        className="text-muted-foreground hover:text-primary transition-colors"
+                        className="text-gray-200 hover:text-primary transition-colors"
                       >
                         {link.name}
                       </Link>
@@ -112,7 +113,7 @@ const Footer = () => {
                     <li key={index}>
                       <Link
                         to={service.href}
-                        className="text-muted-foreground hover:text-primary transition-colors"
+                        className="text-gray-200 hover:text-primary transition-colors"
                       >
                         {service.name}
                       </Link>
@@ -123,9 +124,6 @@ const Footer = () => {
               {/* Newsletter & Social Links */}
               <div>
                 <h3 className="text-lg font-bold mb-6 text-foreground">Stay Connected</h3>
-                <p className="text-muted-foreground mb-4">
-                  Subscribe to get the latest updates on African storytelling and our projects.
-                </p>
                 <div className="space-y-4">
                   <div className="flex">
                     <a
@@ -149,7 +147,7 @@ const Footer = () => {
                         aria-label={label}
                         className="inline-block mr-4"
                       >
-                        <Icon className="h-6 w-6 text-muted-foreground hover:text-primary transition-colors" />
+                        <Icon className="h-6 w-6 text-gray-200 hover:text-primary transition-colors" />
                       </a>
                     ))}
                   </div>
@@ -160,24 +158,26 @@ const Footer = () => {
           {/* Bottom Bar */}
           <div className="py-8 border-t border-border">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <div className="text-muted-foreground text-sm">
+              <div className="text-gray-200 text-sm">
                 2024 GoodAV. All rights reserved. Made with in Africa.
               </div>
               <div className="flex space-x-6 text-sm">
-                <a  className="cursor-pointer text-muted-foreground hover:text-primary transition-colors" onClick={() => {setIsOpen(true); setTitle("Privacy Policy"); setContent(privacyPolicy);}}>
+                <a  className="cursor-pointer text-gray-200 hover:text-primary transition-colors" onClick={() => {setIsOpen(true); setTitle("Privacy Policy"); setContent(privacyPolicy);}}>
                   Privacy Policy
                 </a>
-                <a  className="cursor-pointer text-muted-foreground hover:text-primary transition-colors" onClick={() => {setIsOpen(true); setTitle("Terms of Service"); setContent(termsAndConditions);}}>
+                <a  className="cursor-pointer text-gray-200 hover:text-primary transition-colors" onClick={() => {setIsOpen(true); setTitle("Terms of Service"); setContent(termsAndConditions);}}>
                   Terms of Service
                 </a>
-                <a  className="cursor-pointer text-muted-foreground hover:text-primary transition-colors" onClick={() => {setIsOpen(true); setTitle("Cookie Policy"); setContent(cookiePolicy);}}>
+                <a  className="cursor-pointer text-gray-200 hover:text-primary transition-colors" onClick={() => {setIsOpen(true); setTitle("Cookie Policy"); setContent(cookiePolicy);}}>
                   Cookie Policy
                 </a>
               </div>
             </div>
           </div>
         </div>
-        <LegalModal isOpen={isOpen} onClose={() => {setIsOpen(false)}} title={title} content={content} />
+        <Suspense fallback={null}>
+          <LegalModal isOpen={isOpen} onClose={() => {setIsOpen(false)}} title={title} content={content} />
+        </Suspense>
       </div>
     </footer>
   );

@@ -1,4 +1,4 @@
-const heroBackground = '/images/all_site_images/Home/BG/Home_BG.png';
+const heroBackground = '/images/all_site_images/Home/BG/Home_BG.webp';
 import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import './FAQAnimations.css';

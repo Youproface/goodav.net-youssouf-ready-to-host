@@ -102,19 +102,19 @@ const Index = () => {
           ]
         }}
       />
-      <Suspense fallback={<Loading />}>
-        <main>
-          <Hero />
-          <PartnersSection />
-          <ServicesSection />
-          <MissionSection />
-          <GlobalImpact />
-          <AboutUs />
-          <OurJourney />
-          <FeaturedProjects />
-          <FoundersVision />
-          <CreativeExcellence />
-          <RecentEvents />
+      <main>
+        <Suspense fallback={<Loading />}><Hero /></Suspense>
+        <Suspense fallback={<Loading />}><PartnersSection /></Suspense>
+        <Suspense fallback={<Loading />}><ServicesSection /></Suspense>
+        <Suspense fallback={<Loading />}><MissionSection /></Suspense>
+        <Suspense fallback={<Loading />}><GlobalImpact /></Suspense>
+        <Suspense fallback={<Loading />}><AboutUs /></Suspense>
+        <Suspense fallback={<Loading />}><OurJourney /></Suspense>
+        <Suspense fallback={<Loading />}><FeaturedProjects /></Suspense>
+        <Suspense fallback={<Loading />}><FoundersVision /></Suspense>
+        <Suspense fallback={<Loading />}><CreativeExcellence /></Suspense>
+        <Suspense fallback={<Loading />}><RecentEvents /></Suspense>
+        <Suspense fallback={<Loading />}>
           <PartnersLogos 
             title="Our Valued Partners"
             subtitle="Building impactful relationships with leading organizations across Africa and beyond to create meaningful audiovisual experiences."
@@ -123,14 +123,14 @@ const Index = () => {
             showSubtitle={true}
             containerPadding="py-20"
           />
-          <Testimonials />
-          <Blogs />
-          <BTSMasterProdcution />
-          <Excellence />
-          <BottomCTA />
-          <ContactSection />
-        </main>
-      </Suspense>
+        </Suspense>
+        <Suspense fallback={<Loading />}><Testimonials /></Suspense>
+        <Suspense fallback={<Loading />}><Blogs /></Suspense>
+        <Suspense fallback={<Loading />}><BTSMasterProdcution /></Suspense>
+        <Suspense fallback={<Loading />}><Excellence /></Suspense>
+        <Suspense fallback={<Loading />}><BottomCTA /></Suspense>
+        <Suspense fallback={<Loading />}><ContactSection /></Suspense>
+      </main>
     </div>
   );
 };

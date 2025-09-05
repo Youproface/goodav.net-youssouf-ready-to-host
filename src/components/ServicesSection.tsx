@@ -115,7 +115,7 @@ const ServicesSection = () => {
             <span className="gradient-text">WHAT WE OFFER</span>
           </motion.h2>
           <motion.p 
-            className="text-lg lg:text-xl text-muted-foreground max-w-4xl mx-auto mb-12"
+            className="text-lg lg:text-xl text-gray-200 max-w-4xl mx-auto mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -179,7 +179,7 @@ const ServicesSection = () => {
                 {/* Description */}
                 <p 
                   id={`service-${service.id}-description`}
-                  className="text-base lg:text-lg text-muted-foreground mb-4 leading-relaxed"
+                  className="text-base lg:text-lg text-gray-200 mb-4 leading-relaxed"
                 >
                   {service.description}
                 </p>
@@ -221,7 +221,7 @@ const ServicesSection = () => {
                         viewport={{ once: true }}
                         aria-hidden="true"
                       />
-                      <span className="text-sm lg:text-base text-muted-foreground">{feature}</span>
+                      <span className="text-sm lg:text-base text-gray-200">{feature}</span>
                     </motion.li>
                   ))}
                 </motion.ul>

@@ -1,7 +1,8 @@
 import Map from "./Map";
 import { useState, useRef } from "react";
 import { createPortal } from 'react-dom';
-import BookingModal from './forms/BookingModal';
+import React, { Suspense } from 'react';
+const BookingModal = React.lazy(() => import('./forms/BookingModal'));
 import { FaCalendarAlt, FaPhone, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaCheck } from 'react-icons/fa';
 import { Helmet } from 'react-helmet-async';
 
@@ -302,12 +303,12 @@ export default function ContactUs() {
                       className="mt-2 w-full rounded-xl bg-white/[0.06] px-4 py-3 text-sm sm:text-base text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60"
                       placeholder="Describe the goals, audience, deliverables, and any references"
                       aria-required="true"
-                      aria-invalid={fieldErrors.message ? "true" : "false"}
+                      aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
                     />
                   </div>
 
                   {errors.length > 0 && (
-                    <div className="rounded-md border border-red-600/30 bg-red-600/5 p-3 text-sm text-red-300">
+                    <div id="contact-message-error" className="rounded-md border border-red-600/30 bg-red-600/5 p-3 text-sm text-red-300">
                       <strong className="font-semibold block">Please fix the following:</strong>
                       <ul className="mt-2 list-disc list-inside">
                         {errors.map((er, i) => <li key={i}>{er}</li>)}
@@ -363,7 +364,9 @@ export default function ContactUs() {
 
         {window.location.pathname === '/contact' && <Map/>}
   {/* Booking modal for consultation booking triggered from this section */}
-  <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+  <Suspense fallback={null}>
+    <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+  </Suspense>
       </section>
     );
   }
@@ -389,7 +392,7 @@ export default function ContactUs() {
     return (
       <div>
         <Label>{label}</Label>
-        {errorMsg ? (
+    {errorMsg ? (
           <input
             type={type}
             name={name}
@@ -398,7 +401,7 @@ export default function ContactUs() {
             ref={inputRef}
             className={`mt-2 w-full rounded-xl bg-white/[0.06] px-3 py-2 text-sm text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60 ${'border border-red-500/70'}`}
             placeholder={label.replace("*", "")}
-            aria-invalid="true"
+      aria-describedby={`${name}-error`}
           />
         ) : (
           <input
@@ -409,10 +412,9 @@ export default function ContactUs() {
             ref={inputRef}
             className={`mt-2 w-full rounded-xl bg-white/[0.06] px-3 py-2 text-sm text-zinc-100 placeholder-zinc-400 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-orange-400/60`}
             placeholder={label.replace("*", "")}
-            aria-invalid="false"
           />
         )}
-        {errorMsg && <div className="text-xs text-red-400 mt-1">{errorMsg}</div>}
+    {errorMsg && <div id={`${name}-error`} className="text-xs text-red-400 mt-1">{errorMsg}</div>}
       </div>
     );
   }
@@ -435,7 +437,7 @@ export default function ContactUs() {
           </span>
           <div>
             <div className="text-sm font-semibold text-zinc-100">{title}</div>
-            <div className="text-[12px] text-zinc-400">{sub}</div>
+            <div className="text-[12px] text-gray-300">{sub}</div>
           </div>
         </div>
       </div>

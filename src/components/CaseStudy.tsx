@@ -1,4 +1,4 @@
-import React from 'react';
+// ...existing code...
 import { motion } from 'framer-motion';
 import { useParams, Navigate, useNavigate, Link } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
@@ -6,7 +6,8 @@ import { getCaseStudyById } from '@/data/caseStudies';
 import { getFeaturedCaseStudies } from '@/data/featuredCaseStudies';
 import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
-import YouTubeModal from './YouTubeModal';
+import React, { Suspense } from 'react';
+const YouTubeModal = React.lazy(() => import('./YouTubeModal'));
 
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.6, staggerChildren: 0.12, delayChildren: 0.15 } } };
 const itemVariants = { hidden: { opacity: 0, y: 24, scale: 0.98 }, visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6 } } };
@@ -127,12 +128,14 @@ const CaseStudy: React.FC = () => {
             <motion.div variants={cardVariants} className="bg-zinc-900/60 rounded-2xl overflow-hidden p-6 border border-zinc-700">
               <h3 className="font-semibold mb-4">Project Video</h3>
               <div className="flex justify-center">
-                <YouTubeModal
+                <Suspense fallback={null}>
+                  <YouTubeModal
                   videoId={caseStudy.youtubeUrl}
                   title={`${caseStudy.title} - Project Video`}
                   className="w-full max-w-2xl"
                   containerClassName="aspect-video"
-                />
+                  />
+                </Suspense>
               </div>
             </motion.div>
           )}
@@ -143,13 +146,15 @@ const CaseStudy: React.FC = () => {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {caseStudy.videos.map((video: any, i: number) => (
                   <motion.div key={i} variants={itemVariants} className="space-y-3">
-                    <YouTubeModal
+                    <Suspense fallback={null}>
+                      <YouTubeModal
                       videoId={video.url}
                       title={video.title}
                       className="w-full"
                       containerClassName="aspect-video"
                       buttonClassName="w-12 h-12"
-                    />
+                      />
+                    </Suspense>
                     <h4 className="text-zinc-200 font-semibold">{video.title}</h4>
                     {video.description && <p className="text-zinc-400 text-sm">{video.description}</p>}
                   </motion.div>
@@ -164,13 +169,15 @@ const CaseStudy: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 {caseStudy.youtubeUrls.map((v: any, i: number) => (
                   <motion.div key={i} variants={itemVariants} className="space-y-3">
-                    <YouTubeModal
+                    <Suspense fallback={null}>
+                      <YouTubeModal
                       videoId={v.url}
                       title={v.title}
                       className="w-full"
                       containerClassName="aspect-video"
                       buttonClassName="w-12 h-12"
-                    />
+                      />
+                    </Suspense>
                     <h4 className="text-zinc-200 font-semibold">{v.title}</h4>
                     {v.description && <p className="text-zinc-400 text-sm">{v.description}</p>}
                   </motion.div>

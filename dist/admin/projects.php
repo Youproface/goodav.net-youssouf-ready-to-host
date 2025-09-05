@@ -23,7 +23,7 @@ if ($adminUser && $adminPass) {
   }
 } else {
   // Fallback to token query param for compatibility (if no admin user/pass set)
-  $ADMIN_TOKEN = getenv('ADMIN_TOKEN') ?: 'devtoken';
+  $ADMIN_TOKEN = getenv('ADMIN_TOKEN');
   $provided = $_GET['token'] ?? '';
   if ($provided !== $ADMIN_TOKEN) {
     http_response_code(403);
