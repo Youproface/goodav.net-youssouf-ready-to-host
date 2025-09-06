@@ -1,10 +1,14 @@
+
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
 import { Button } from './ui/button';
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const { pathname } = useLocation();
 
+  // Show/hide button on scroll
   useEffect(() => {
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
@@ -13,10 +17,14 @@ export default function ScrollToTop() {
         setIsVisible(false);
       }
     };
-
     window.addEventListener('scroll', toggleVisibility);
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [pathname]);
 
   const scrollToTop = () => {
     window.scrollTo({

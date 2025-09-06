@@ -94,26 +94,24 @@ $time = trim($data['time']);
 $timezone = isset($data['timezone']) ? trim($data['timezone']) : '';
 $meetingSoftware = isset($data['meetingSoftware']) ? trim($data['meetingSoftware']) : '';
 
-// Database (SQLite) path
-$dbFile = __DIR__ . DIRECTORY_SEPARATOR . 'bookings.db';
-
+// Database connection - MySQL for GoDaddy hosting
 try {
-    $pdo = new PDO('sqlite:' . $dbFile);
+    $pdo = new PDO('mysql:host=localhost;dbname=goodav_db;charset=utf8mb4', 'goodav_rw', 'xocgyg-tawhub-Junqy9');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Create table if not exists
+    // Create table if not exists (MySQL syntax)
     $pdo->exec("CREATE TABLE IF NOT EXISTS bookings (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        email TEXT,
-        phone TEXT,
-        organization TEXT,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255),
+        email VARCHAR(255),
+        phone VARCHAR(50),
+        organization VARCHAR(255),
         project TEXT,
-        date TEXT,
-        time TEXT,
-        timezone TEXT,
-        meetingSoftware TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        date VARCHAR(20),
+        time VARCHAR(20),
+        timezone VARCHAR(100),
+        meetingSoftware VARCHAR(100),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
     $stmt = $pdo->prepare("INSERT INTO bookings (name, email, phone, organization, project, date, time, timezone, meetingSoftware) VALUES (:name, :email, :phone, :organization, :project, :date, :time, :timezone, :meetingSoftware)");
@@ -133,15 +131,15 @@ try {
 
     // Also record into central submissions DB for unified access
     try {
-        $subDb = new PDO('sqlite:' . __DIR__ . DIRECTORY_SEPARATOR . 'submissions.db');
+        $subDb = new PDO('mysql:host=localhost;dbname=goodav_db;charset=utf8mb4', 'goodav_rw', 'xocgyg-tawhub-Junqy9');
         $subDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $subDb->exec("CREATE TABLE IF NOT EXISTS submissions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            source TEXT,
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            source VARCHAR(50),
             payload TEXT,
-            email TEXT,
-            name TEXT,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            email VARCHAR(255),
+            name VARCHAR(255),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )");
         $payloadJson = json_encode($data);
         $sstmt = $subDb->prepare("INSERT INTO submissions (source, payload, email, name) VALUES (:source, :payload, :email, :name)");
@@ -179,36 +177,7 @@ try {
     $plainAdmin .= "Timezone: $timezone\n";
     $plainAdmin .= "Meeting Platform: $meetingSoftware\n";
 
-    $templateFile = __DIR__ . '/emails/booking_confirmation.html';
-    if ($type === 'consultation' || $type === 'free_consultation') {
-        $templateFile = __DIR__ . '/emails/consultation_confirmation.html';
-    }
-
-    $htmlBodyClient = null;
-    if (file_exists($templateFile)) {
-        $htmlBodyClient = file_get_contents($templateFile);
-        $brandLogoUrl = getenv('BRAND_LOGO_URL') ?: (getenv('SITE_URL') ? rtrim(getenv('SITE_URL'), '/') . '/favicon.ico' : '');
-        $replacements = [
-                '{{firstName}}' => htmlspecialchars(explode(' ', $name)[0] ?? $name, ENT_QUOTES),
-                '{{lastName}}' => htmlspecialchars(explode(' ', $name)[1] ?? '', ENT_QUOTES),
-                '{{service}}' => htmlspecialchars($project, ENT_QUOTES),
-                '{{date}}' => htmlspecialchars($date, ENT_QUOTES),
-                '{{time}}' => htmlspecialchars($time, ENT_QUOTES),
-                '{{location}}' => htmlspecialchars($meetingSoftware, ENT_QUOTES),
-                '{{id}}' => $insertId,
-                '{{support_email}}' => $mainAdmin,
-                '{{site_url}}' => getenv('SITE_URL') ?: '',
-                '{{logo_url}}' => $brandLogoUrl,
-                '{{from_email}}' => $fromEmail,
-            ];
-        $htmlBodyClient = strtr($htmlBodyClient, $replacements);
-    }
-
-    $adminMailSent = false;
-    $clientMailSent = false;
-    $mailWarnings = [];
-
-    // Determine SMTP settings from ACTIVE_SMTP_PROFILE or generic vars
+    // Determine SMTP settings and email configuration early for template processing
     $activeProfile = getenv('ACTIVE_SMTP_PROFILE') ?: '';
     if ($activeProfile) {
         $prefix = 'SMTP_' . strtoupper($activeProfile) . '_';
@@ -225,14 +194,59 @@ try {
         $smtpSecure = getenv('SMTP_SECURE') ?: 'tls';
     }
 
+    // Configure noreply setup for iCloud SMTP
+    $noreplyEmail = getenv('NOREPLY_EMAIL') ?: 'noreply@goodav.net';
+    $useNoreplyForFrom = getenv('USE_NOREPLY_FROM') === '1' || getenv('USE_NOREPLY_FROM') === 'true';
+    
+    // Set envelope sender to authenticated SMTP user (required for iCloud)
+    $envelopeSender = $smtpUser ?: $fromEmail;
+    
+    // Determine visible FROM address based on noreply configuration
+    if ($useNoreplyForFrom && $noreplyEmail) {
+        $visibleFromEmail = $noreplyEmail;
+    } else {
+        $visibleFromEmail = $smtpUser ?: $fromEmail;
+    }
+
+    $templateFile = __DIR__ . '/emails/booking_confirmation.html';
+    if ($type === 'consultation' || $type === 'free_consultation') {
+        $templateFile = __DIR__ . '/emails/consultation_confirmation.html';
+    }
+
+    $htmlBodyClient = null;
+    if (file_exists($templateFile)) {
+        $htmlBodyClient = file_get_contents($templateFile);
+        $brandLogoUrl = getenv('BRAND_LOGO_URL') ?: (getenv('SITE_URL') ? rtrim(getenv('SITE_URL'), '/') . '/favicon.ico' : '');
+        $replacements = [
+                '{{firstName}}' => htmlspecialchars(explode(' ', $name)[0] ?? $name, ENT_QUOTES),
+                '{{lastName}}' => htmlspecialchars(explode(' ', $name)[1] ?? '', ENT_QUOTES),
+                '{{name}}' => htmlspecialchars($name, ENT_QUOTES),
+                '{{service}}' => htmlspecialchars($project, ENT_QUOTES),
+                '{{date}}' => htmlspecialchars($date, ENT_QUOTES),
+                '{{time}}' => htmlspecialchars($time, ENT_QUOTES),
+                '{{location}}' => htmlspecialchars($meetingSoftware, ENT_QUOTES),
+                '{{organization}}' => htmlspecialchars($organization, ENT_QUOTES),
+                '{{description}}' => isset($data['description']) ? nl2br(htmlspecialchars($data['description'], ENT_QUOTES)) : (isset($data['notes']) ? nl2br(htmlspecialchars($data['notes'], ENT_QUOTES)) : ''),
+                '{{id}}' => $insertId,
+                '{{support_email}}' => $mainAdmin,
+                '{{site_url}}' => getenv('SITE_URL') ?: '',
+                '{{logo_url}}' => $brandLogoUrl,
+                '{{from_email}}' => $visibleFromEmail,
+            ];
+        $htmlBodyClient = strtr($htmlBodyClient, $replacements);
+    }
+
+    $adminMailSent = false;
+    $clientMailSent = false;
+    $mailWarnings = [];
+
     $enableSmtpDebug = getenv('ENABLE_SMTP_DEBUG') === '1';
-    // Align envelope/sender with authenticated SMTP account (important for iCloud and other providers)
-    $envelopeSender = $smtpUser ?: ($fromEmail);
 
     if ($smtpHost && class_exists('\PHPMailer\PHPMailer\PHPMailer')) {
         // Send admin notification
         try {
             $adminMailer = new \PHPMailer\PHPMailer\PHPMailer(true);
+            $adminMailer->CharSet = 'UTF-8';
             $adminMailer->SMTPDebug = $enableSmtpDebug ? 2 : 0;
             if ($enableSmtpDebug) {
                 $adminMailer->Debugoutput = function($str, $level) { $line = date('c') . " [booking-admin] [level=$level] " . trim($str) . "\n"; @file_put_contents('/tmp/php-smtp.log', $line, FILE_APPEND); };
@@ -245,10 +259,11 @@ try {
             $adminMailer->SMTPSecure = $smtpSecure;
             $adminMailer->Port = (int)$smtpPort;
 
-            // Visible From remains the site noreply; envelope sender set to authenticated SMTP user
-            $adminMailer->setFrom($fromEmail, 'Booking System');
+            // Set visible FROM to noreply (if configured) with envelope sender as SMTP user
+            $adminMailer->setFrom($visibleFromEmail, 'GoodAV Booking System');
+            // Critical: Set envelope sender to authenticated SMTP user for iCloud compatibility
             if (!empty($envelopeSender)) {
-                $adminMailer->Sender = $envelopeSender; // set SMTP MAIL FROM / envelope
+                $adminMailer->Sender = $envelopeSender; // SMTP MAIL FROM envelope
             }
             // add each admin recipient
             foreach ($adminEmails as $addr) {
@@ -289,12 +304,13 @@ try {
                     '{{location}}' => htmlspecialchars($meetingSoftware, ENT_QUOTES),
                     '{{phone}}' => htmlspecialchars($phone, ENT_QUOTES),
                     '{{notes}}' => isset($data['notes']) ? nl2br(htmlspecialchars($data['notes'], ENT_QUOTES)) : '',
+                    '{{description}}' => isset($data['description']) ? nl2br(htmlspecialchars($data['description'], ENT_QUOTES)) : (isset($data['notes']) ? nl2br(htmlspecialchars($data['notes'], ENT_QUOTES)) : ''),
                     '{{site_url}}' => getenv('SITE_URL') ?: '',
-                    '{{from_email}}' => $fromEmail,
+                    '{{from_email}}' => $visibleFromEmail,
                     '{{logo_url}}' => $brandLogoUrl,
                 ];
                 // deliverability helpers
-                try { $adminMailer->addCustomHeader('List-Unsubscribe', '<mailto:' . ($mainAdmin ?: $fromEmail) . '>'); } catch (Exception $e) {}
+                try { $adminMailer->addCustomHeader('List-Unsubscribe', '<mailto:' . ($mainAdmin ?: $visibleFromEmail) . '>'); } catch (Exception $e) {}
                 try { $adminMailer->addCustomHeader('X-Entity-Ref-ID', 'booking-' . $insertId); } catch (Exception $e) {}
                 try { $adminMailer->addCustomHeader('Feedback-ID', 'goodav.net:booking:' . $insertId); } catch (Exception $e) {}
                 // set Message-ID domain if possible
@@ -317,6 +333,7 @@ try {
         // Send client confirmation
         try {
             $clientMailer = new \PHPMailer\PHPMailer\PHPMailer(true);
+            $clientMailer->CharSet = 'UTF-8';
             $clientMailer->SMTPDebug = $enableSmtpDebug ? 2 : 0;
             if ($enableSmtpDebug) {
                 $clientMailer->Debugoutput = function($str, $level) { $line = date('c') . " [booking-client] [level=$level] " . trim($str) . "\n"; @file_put_contents('/tmp/php-smtp.log', $line, FILE_APPEND); };
@@ -329,7 +346,7 @@ try {
             $clientMailer->SMTPSecure = $smtpSecure;
             $clientMailer->Port = (int)$smtpPort;
 
-            $clientMailer->setFrom($fromEmail, 'GoodAV');
+            $clientMailer->setFrom($visibleFromEmail, 'GoodAV');
             if (!empty($envelopeSender)) $clientMailer->Sender = $envelopeSender;
             $clientMailer->addAddress($email);
             $clientMailer->addReplyTo($mainAdmin);
@@ -368,7 +385,7 @@ try {
         if (!empty($adminForward) && filter_var($adminForward, FILTER_VALIDATE_EMAIL)) {
             $bccHeader = "Bcc: $adminForward\r\n";
         }
-        $headersAdmin = "From: $fromEmail\r\n" .
+        $headersAdmin = "From: $visibleFromEmail\r\n" .
                         "Reply-To: $email\r\n" .
                         $bccHeader .
                         "Content-Type: text/plain; charset=utf-8\r\n";
@@ -385,8 +402,8 @@ try {
             $adminMailSent = false;
         }
 
-        $headersClient = "From: $fromEmail\r\n" .
-                         "Reply-To: " . (!empty($adminEmails[0]) ? $adminEmails[0] : $fromEmail) . "\r\n" .
+        $headersClient = "From: $visibleFromEmail\r\n" .
+                         "Reply-To: " . (!empty($adminEmails[0]) ? $adminEmails[0] : $visibleFromEmail) . "\r\n" .
                          "Content-Type: text/plain; charset=utf-8\r\n";
         try {
             $clientSent = @mail($email, ($type === 'consultation' ? 'Your consultation request is received' : 'Your booking is confirmed') . " (#" . $insertId . ")", $plainAdmin, $headersClient);

@@ -1,94 +1,29 @@
-/**
- * 🎬 FeaturedProjects Component
- * 
- * PERFORMANCE OPTIMIZATIONS:
- * - Memoized project data and calculations
- * - Lazy loading images with proper loading attributes
- * - Reduced motion support via prefers-reduced-motion
- * - Efficient marquee animation using RAF and motion values
- * - Minimal re-renders with stable refs and memoization
- * 
- * ACCESSIBILITY FEATURES:
- * - Full keyboard navigation support
- * - Screen reader friendly with proper ARIA labels
- * - Focus management and skip links
- * - Semantic HTML structure with proper roles
- * - High contrast and reduced motion support
- * 
- * SEO OPTIMIZATIONS:
- * - Structured data (JSON-LD) for rich snippets
- * - Semantic HTML headings and meta descriptions
- * - Optimized alt text and image attributes
- * - Schema.org VideoObject markup for each project
- */
-
-import React, { useEffect, useMemo, useRef, useState, useCallback, Suspense } from "react";
-const VideoPlaceholder = React.lazy(() => import('./VideoPlaceholder'));
-const LucideReactPromise = import('lucide-react');
+import React, { useState, useEffect, useMemo, useCallback, useRef, Suspense } from 'react';
+import { useNavigate } from 'react-router-dom';
 const FramerMotionPromise = import('framer-motion');
-import { useNavigate } from "react-router-dom";
+const LucideReactPromise = import('lucide-react');
+import VideoPlaceholder from './VideoPlaceholder';
 
-// Helper to load framer-motion and lucide-react icons for main component
-type MotionLib = typeof import('framer-motion');
-type LucideIcons = { Eye: any; X: any };
-
-/**
- * ⚡ High-Performance Infinite Marquee Hook
- * 
- * OPTIMIZATIONS:
- * - Uses requestAnimationFrame for smooth 60fps animations
- * - ResizeObserver for efficient responsive updates
- * - Minimal DOM queries with ref-based measurements
- * - Memory-efficient animation with motion values
- * - Automatic reduced motion support
- * 
- * FEATURES:
- * - Seamless infinite loop with calculated copy count
- * - Bidirectional support (left/right)
- * - Pause on hover/focus for accessibility
- * - Responsive container width calculations
- */
-
-// 📊 Performance: Optimized project data structure
-interface Project {
+type Project = {
   id: number;
   title: string;
   category: string;
-  // `video` now stores the YouTube video ID (e.g. '5Cjbze8jBIA')
   video: string;
-  // `thumbnail` may be either a full URL or a videoId; when absent we derive from `video`
   thumbnail?: string;
   description?: string;
   year?: string;
   client?: string;
-}
+};
 
-/** 
- * 🎯 Enhanced Project Card Component
- * 
- * PERFORMANCE:
- * - Memoized to prevent unnecessary re-renders
- * - Lazy loading images with intersection observer support
- * - Optimized hover animations with will-change CSS
- * 
- * ACCESSIBILITY:
- * - Full keyboard navigation (Enter/Space)
- * - Screen reader optimized ARIA labels
- * - Focus visible states and proper tab order
- * - High contrast support with visible borders
- * 
- * SEO:
- * - Semantic markup with proper alt text
- * - Descriptive titles and meta information
- * - YouTube thumbnail optimization for faster loading
- */
 interface ProjectCardProps {
   project: Project;
   setSelectedVideo: (video: string | null) => void;
   variants: any;
+  motionLib: any;
+  PlayIcon: any;
 }
 
-const ProjectCard: React.FC<ProjectCardProps & { motionLib: MotionLib; PlayIcon: any }> = React.memo(({ project, setSelectedVideo, variants, motionLib, PlayIcon }) => {
+const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelectedVideo, variants, motionLib, PlayIcon }) => {
   const { motion } = motionLib;
   const handleClick = useCallback(() => {
     setSelectedVideo(project.video);
@@ -199,8 +134,6 @@ const ProjectCard: React.FC<ProjectCardProps & { motionLib: MotionLib; PlayIcon:
     </motion.article>
   );
 });
-
-// Add display name for debugging
 ProjectCard.displayName = 'ProjectCard';
 
 /**
@@ -713,6 +646,7 @@ const FeaturedProjects: React.FC = () => {
                 >
                   {firstRowProjects.map((project) => (
                     <div key={`left-${copyIndex}-${project.id}`} className="w-72 h-48 flex-shrink-0">
+                      {/* ProjectCard is defined above and available here */}
                       <ProjectCard
                         project={project}
                         setSelectedVideo={setSelectedVideo}
@@ -748,6 +682,7 @@ const FeaturedProjects: React.FC = () => {
                 >
                   {secondRowProjects.map((project) => (
                     <div key={`right-${copyIndex}-${project.id}`} className="w-72 h-48 flex-shrink-0">
+                      {/* ProjectCard is defined above and available here */}
                       <ProjectCard
                         project={project}
                         setSelectedVideo={setSelectedVideo}

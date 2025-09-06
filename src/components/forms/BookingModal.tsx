@@ -52,7 +52,7 @@ export default function BookingModal({
   const [showPopup, setShowPopup] = useState(false);
 
   // Progress bar width calculation
-  const progressWidth = `${(step / 8) * 100}%`;
+  const progressWidth = `${Math.max(0, Math.min(100, (step / 8) * 100))}%`;
   const [popupType, setPopupType] = useState<'success' | 'error' | 'warning' | null>(null);
   const [popupMessage, setPopupMessage] = useState('');
   const [popupDetails, setPopupDetails] = useState('');
@@ -601,6 +601,7 @@ export default function BookingModal({
               <div className="w-full bg-gray-700 h-2 rounded-full mb-4 overflow-hidden">
                 <div
                   className={`bg-orange-500 h-full rounded-full transition-all duration-500 ease-out booking-progress-bar`}
+                  style={{ width: progressWidth }}
                   data-progress={step}
                 ></div>
               </div>

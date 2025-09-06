@@ -133,7 +133,16 @@ export function generateServiceStructuredData(service: ServiceType) {
           '@type': 'Person',
           name: 'Client Testimonial'
         },
-        reviewBody: `Exceptional ${service.title.toLowerCase()} services from GoodAV. Professional, reliable, and outstanding quality.`
+        reviewBody: `Exceptional ${service.title.toLowerCase()} services from GoodAV. Professional, reliable, and outstanding quality.`,
+        itemReviewed: {
+          '@type': 'Service',
+          name: `${service.title} Services`,
+          provider: {
+            '@type': 'Organization',
+            name: 'GoodAV',
+            url: baseUrl
+          }
+        }
       }
     ]
   };

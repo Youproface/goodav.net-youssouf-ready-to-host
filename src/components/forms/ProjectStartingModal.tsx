@@ -216,12 +216,12 @@ export default function ProjectStartingModal({ open, onClose }) {
           <Dialog.Overlay className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300${showPopup ? ' pointer-events-none' : ''}`} />
           <Dialog.Content
             ref={dialogRef}
-            className={`fixed inset-0 sm:left-1/2 sm:top-1/2 z-50 w-full max-w-5xl 
-                       sm:-translate-x-1/2 sm:-translate-y-1/2 
-                       rounded-none sm:rounded-3xl border-0 sm:border sm:border-white/15 
+            className={`fixed left-1/2 top-1/2 z-50 w-full max-w-5xl max-w-[95vw] 
+                       -translate-x-1/2 -translate-y-1/2 
+                       rounded-3xl border border-white/15 
                        bg-gradient-to-br from-white/8 to-white/4 shadow-2xl backdrop-blur-xl 
-                       p-0 overflow-y-auto sm:overflow-hidden 
-                       max-h-screen sm:max-h-[90vh]
+                       p-0 overflow-y-auto 
+                       max-h-[90vh]
                        ${showPopup ? ' pointer-events-none' : ''}`}
             aria-modal="true"
             role="dialog"

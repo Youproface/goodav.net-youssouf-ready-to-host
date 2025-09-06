@@ -117,6 +117,7 @@ export default function Testimonials() {
               author: { "@type": "Person", name: "Karl Schmid" },
               reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
               reviewBody: "Thanks everyone for your hard work, professionalism. It's been a pleasure working with you all. Thanks for helping Plus Life produce some great content.",
+              itemReviewed: { "@type": "Organization", name: "GoodAV" }
             },
           ],
           aggregateRating: { "@type": "AggregateRating", ratingValue: "5", reviewCount: "200" },
