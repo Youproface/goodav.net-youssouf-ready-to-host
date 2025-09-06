@@ -16,7 +16,6 @@ const Blogs = lazy(() => import('@/components/BlogsSection'));
 const BTSMasterProdcution = lazy(() => import('@/components/BTSMasterProdcution'));
 const Excellence = lazy(() => import('@/components/Excellence'));
 const BottomCTA = lazy(() => import('@/components/BottomCTA'));
-const ContactSection = lazy(() => import('@/components/ContactSection'));
 const GlobalImpact = lazy(() => import('@/components/GlobalImpact'));
 import SEO from '@/components/SEOEnhanced';
 import SchemaMarkup from '@/components/SchemaMarkup';
@@ -208,7 +207,6 @@ const Index = () => {
         <Suspense fallback={null}><BTSMasterProdcution /></Suspense>
         <Suspense fallback={null}><Excellence /></Suspense>
         <Suspense fallback={null}><BottomCTA /></Suspense>
-        <Suspense fallback={null}><ContactSection /></Suspense>
       </main>
     </div>
   );

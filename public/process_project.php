@@ -240,6 +240,7 @@ try {
         // Send admin notification
         try {
             $adminMailer = new \PHPMailer\PHPMailer\PHPMailer(true);
+            $adminMailer->CharSet = 'UTF-8';
             $adminMailer->isSMTP();
             $adminMailer->Host = $smtpHost;
             $adminMailer->SMTPAuth = true;
@@ -308,6 +309,7 @@ try {
         // Send client confirmation (separate message)
         try {
             $clientMailer = new \PHPMailer\PHPMailer\PHPMailer(true);
+            $clientMailer->CharSet = 'UTF-8';
             $clientMailer->isSMTP();
             $clientMailer->Host = $smtpHost;
             $clientMailer->SMTPAuth = true;

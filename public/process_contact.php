@@ -221,6 +221,7 @@ try {
     if ($smtpHost && class_exists('\PHPMailer\PHPMailer\PHPMailer')) {
         try {
             $adminMailer = new \PHPMailer\PHPMailer\PHPMailer(true);
+            $adminMailer->CharSet = 'UTF-8';
             // Enable SMTP debug only when explicitly requested via environment (safe default: off)
             $enableSmtpDebug = getenv('ENABLE_SMTP_DEBUG') === '1';
             if ($enableSmtpDebug) {
@@ -316,6 +317,7 @@ try {
 
         try {
             $clientMailer = new \PHPMailer\PHPMailer\PHPMailer(true);
+            $clientMailer->CharSet = 'UTF-8';
             if ($enableSmtpDebug) {
                 $clientMailer->SMTPDebug = 2;
                 $clientMailer->Debugoutput = function($str, $level) {

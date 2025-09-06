@@ -300,13 +300,28 @@ export default function BookingModal({
       setStep(1);
       // Clear any previous submit status when modal opens
       setSubmitStatus('');
+      // Prevent body scroll on mobile and desktop
       document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
+      document.body.style.height = "100%";
+      document.body.classList.add("modal-open");
     } else {
+      // Restore body scroll
       document.body.style.overflow = "unset";
+      document.body.style.position = "unset";
+      document.body.style.width = "unset";
+      document.body.style.height = "unset";
+      document.body.classList.remove("modal-open");
     }
 
     return () => {
+      // Cleanup on unmount
       document.body.style.overflow = "unset";
+      document.body.style.position = "unset";
+      document.body.style.width = "unset";
+      document.body.style.height = "unset";
+      document.body.classList.remove("modal-open");
     };
   }, [isOpen]);
 
@@ -544,19 +559,19 @@ export default function BookingModal({
       )}
       {modalOpen && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center 
+          className="booking-modal-backdrop fixed inset-0 z-50 flex items-start sm:items-center justify-center 
                 bg-gradient-to-br from-black/70 via-gray-900/60 to-black/70 
-                backdrop-blur-sm min-h-screen p-2 sm:p-4 md:p-6
-                overflow-y-auto"
+                backdrop-blur-sm min-h-screen p-0 sm:p-4 md:p-6
+                overflow-y-auto overflow-x-hidden booking-modal-scroll"
           role="dialog"
           aria-modal="true"
           aria-labelledby="dialog-title"
           aria-describedby="dialog-description"
         >
           <div 
-            className="bg-[#1b1b1d] w-full max-w-4xl rounded-xl shadow-lg text-white 
-                mx-auto my-4 max-h-[95vh] overflow-hidden flex flex-col
-                transform transition-all duration-300 ease-out">
+            className="booking-modal-content bg-[#1b1b1d] w-full max-w-4xl rounded-none sm:rounded-xl shadow-lg text-white 
+                mx-auto my-0 sm:my-4 min-h-screen sm:min-h-0 sm:max-h-[95vh] 
+                overflow-hidden flex flex-col transform transition-all duration-300 ease-out">
             {/* Close Button */}
             <button
               type="button"
@@ -574,7 +589,8 @@ export default function BookingModal({
             </button>
 
             {/* Modal Content */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6 md:p-8">
+            <div className="booking-modal-inner-content flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 md:p-8 
+                         scrollbar-hide">
               {/* Header */}
               <h2 id="dialog-title" className="text-lg sm:text-xl font-semibold text-orange-400 flex items-center gap-2 mb-4">
                 Why are you booking?
@@ -595,7 +611,7 @@ export default function BookingModal({
               </p>
 
               {/* Step Content */}
-              <div className="mb-8">
+              <div className="mb-8 pb-20 sm:pb-8">
                 {step === 1 && <Step1 setCanProceed={setCanProceed} />}
                 {step === 2 && <Step2 setCanProceed={setCanProceed} />}
                 {step === 3 && <Step3 setCanProceed={setCanProceed} />}
@@ -608,7 +624,8 @@ export default function BookingModal({
             </div>
 
             {/* Navigation */}
-            <div className="flex justify-between items-center p-4 sm:p-6 border-t border-gray-700 bg-[#1a1a1c]">
+            <div className="booking-modal-footer sticky bottom-0 flex justify-between items-center p-4 sm:p-6 
+                         border-t border-gray-700 bg-[#1a1a1c] backdrop-blur-sm">
               {step > 1 ? (
                 <button
                   onClick={prevStep}

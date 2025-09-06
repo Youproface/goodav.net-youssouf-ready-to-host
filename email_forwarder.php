@@ -129,10 +129,12 @@ try {
     </html>
     ";
 
-    // Email headers
+    // Email headers with noreply configuration
+    $noreplyEmail = 'noreply@goodav.net'; // This should be configured as alias/forward in iCloud
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From: GoodAV Contact Form <noreply@goodav.net>" . "\r\n";
+    $headers .= "From: GoodAV Contact Form <{$noreplyEmail}>" . "\r\n";
+    $headers .= "Reply-To: info@goodav.net" . "\r\n";
 
     // Send email
     $email_sent = mail($to, $subject, $message, $headers);

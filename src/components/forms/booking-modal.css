@@ -1,3 +1,71 @@
 .booking-progress-bar {
   transition: width 0.5s ease-out !important;
 }
+
+/* Loading spinner animation */
+.loading-spinner {
+  animation-duration: 2s !important;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+}
+
+/* Mobile-optimized modal scrolling */
+@media (max-width: 640px) {
+  .booking-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+  
+  .booking-modal-content {
+    min-height: 100vh;
+    min-height: 100svh; /* Safari viewport height support */
+    overflow: visible;
+    border-radius: 0;
+  }
+  
+  .booking-modal-inner-content {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+  
+  .booking-modal-footer {
+    position: sticky;
+    bottom: 0;
+    background: rgba(26, 26, 28, 0.95);
+    backdrop-filter: blur(10px);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Ensure proper scrollbar styling */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Smooth scrolling for all modal content */
+.booking-modal-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Prevent body scroll when modal is open */
+.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}

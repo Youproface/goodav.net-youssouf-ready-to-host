@@ -190,7 +190,7 @@ export default function ProjectStartingModal({ open, onClose }) {
         <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-black/80 backdrop-blur-lg">
           <div className="mb-6">
             {/* Branded Loading Animation */}
-            <svg id="goodav-bimi.svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.2 387.4" className="w-32 h-auto animate-spin" style={{ animationDuration: '2s', animationTimingFunction: 'linear', animationIterationCount: 'infinite' }}>
+            <svg id="goodav-bimi.svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390.2 387.4" className="w-32 h-auto animate-spin loading-spinner">
               <defs>
                 <style>
                   {`.cls-1{fill:#f6953a;}.cls-1,.cls-2,.cls-3,.cls-4,.cls-5{stroke-width:0px;}.cls-2{fill:#010101;}.cls-3{fill:#fff;}.cls-4{fill:#41964c;}.cls-5{fill:#f04f44;}`}
@@ -216,7 +216,13 @@ export default function ProjectStartingModal({ open, onClose }) {
           <Dialog.Overlay className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300${showPopup ? ' pointer-events-none' : ''}`} />
           <Dialog.Content
             ref={dialogRef}
-            className={`fixed left-1/2 top-1/2 z-50 w-full max-w-5xl -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-white/15 bg-gradient-to-br from-white/8 to-white/4 shadow-2xl backdrop-blur-xl p-0 overflow-hidden${showPopup ? ' pointer-events-none' : ''}`}
+            className={`fixed inset-0 sm:left-1/2 sm:top-1/2 z-50 w-full max-w-5xl 
+                       sm:-translate-x-1/2 sm:-translate-y-1/2 
+                       rounded-none sm:rounded-3xl border-0 sm:border sm:border-white/15 
+                       bg-gradient-to-br from-white/8 to-white/4 shadow-2xl backdrop-blur-xl 
+                       p-0 overflow-y-auto sm:overflow-hidden 
+                       max-h-screen sm:max-h-[90vh]
+                       ${showPopup ? ' pointer-events-none' : ''}`}
             aria-modal="true"
             role="dialog"
             itemScope
@@ -301,7 +307,7 @@ export default function ProjectStartingModal({ open, onClose }) {
             {/* Enhanced Project Form */}
             <motion.form
               onSubmit={handleSubmit}
-              className="grid gap-6 p-8"
+              className="grid gap-6 p-4 sm:p-8 pb-20 sm:pb-8 overflow-y-auto"
               aria-labelledby="project-starting-title"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -659,10 +665,29 @@ function Popup({ show, type, message, details, onClose }: PopupProps) {
         onClose();
       }
     };
-    document.body.style.overflow = show ? 'hidden' : '';
+    
+    // Enhanced body scroll prevention for mobile
+    if (show) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.height = '100%';
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+      document.body.classList.remove('modal-open');
+    }
+    
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+      document.body.classList.remove('modal-open');
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [show, onClose]);
