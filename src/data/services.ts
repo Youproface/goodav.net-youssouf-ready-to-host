@@ -7,6 +7,7 @@ export interface ServiceType {
   description: string;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   features: string[];
+  link?: string; // Optional link property for navigation
   details: {
     heroTitle: string;
     heroDescription: string;

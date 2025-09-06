@@ -199,9 +199,9 @@ export default function FoundersVision() {
                     <p className="text-base md:text-lg lg:text-xl text-gray-300 leading-relaxed mb-6">
                       {event.description}
                     </p>
-                    {event.images.length > 0 && (
+                    {(event.images?.length ?? 0) > 0 && (
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-                        {event.images.map((image) => (
+                        {(event.images ?? []).map((image) => (
                           <div key={image} className="aspect-square overflow-hidden rounded-lg bg-black/20">
                             <img 
                               src={image} 

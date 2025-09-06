@@ -1,0 +1,32 @@
+# Commit Message Template
+
+# Commit Message Format:
+# <type>(<scope>): <subject>
+#
+# Types:
+# - feat: A new feature
+# - fix: A bug fix
+# - docs: Documentation changes
+# - style: Code style changes (formatting, no logic changes)
+# - refactor: Code refactoring (no functional changes)
+# - test: Adding or updating tests
+# - chore: Maintenance tasks (e.g., dependency updates)
+#
+# Scope (optional):
+# The scope should be the name of the module or file being changed (e.g., auth, booking, utils).
+#
+# Subject:
+# A short description of the change (imperative mood, e.g., "Add feature X").
+#
+# Example Commit Messages:
+# feat(auth): Add user authentication
+# fix(booking): Resolve double booking issue
+# docs: Update README with setup instructions
+# style: Format code with Prettier
+# refactor(utils): Simplify data processing logic
+# test: Add unit tests for booking module
+# chore: Update dependencies to latest versions
+
+# Detailed Description (optional):
+# Provide additional context or reasoning for the change if necessary.
+# Wrap text at 72 characters.
