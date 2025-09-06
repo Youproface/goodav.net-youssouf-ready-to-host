@@ -23,7 +23,6 @@
  */
 
 import React, { useEffect, useMemo, useRef, useState, useCallback, Suspense } from "react";
-const SEO = React.lazy(() => import('./SEO'));
 const VideoPlaceholder = React.lazy(() => import('./VideoPlaceholder'));
 const LucideReactPromise = import('lucide-react');
 const FramerMotionPromise = import('framer-motion');
@@ -624,14 +623,6 @@ const FeaturedProjects: React.FC = () => {
 
   return (
     <>
-      <Suspense fallback={null}>
-        <SEO
-          title="Featured Projects | GoodAV - World-Class Audiovisual, Rwanda, Africa, Documentary, Conferences, Conversion"
-          description="Explore GoodAV's world-class featured audiovisual projects for Rwanda, Africa, conferences, documentaries, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and more. Our work drives engagement, customer conversion, and international recognition."
-          keywords="Rwanda, Africa, documentary, conversion, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda, world-class audiovisual, professional media, customer conversion, global impact, international events, Africa documentary, Rwanda documentary, Kigali events, Africa conferences, Rwanda conferences, Africa tourism, Rwanda tourism, Africa branding, Rwanda branding, Africa creative, Rwanda creative"
-          canonical="https://goodav.net/projects"
-        />
-      </Suspense>
   <motion.section
         className="relative bg-gradient-to-b from-background via-muted/30 to-background text-foreground py-20 px-6 md:px-12 lg:px-20 overflow-hidden"
         initial="hidden"

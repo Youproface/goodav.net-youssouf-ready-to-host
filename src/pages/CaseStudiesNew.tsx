@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaCalendarAlt, FaMapMarkerAlt, FaBuilding, FaArrowRight } from 'react-icons/fa';
 import { getFeaturedCaseStudies } from '@/data/featuredCaseStudies';
-import SEO from '@/components/SEO';
+import SEOEnhanced from '@/components/SEOEnhanced';
 import SchemaMarkup from '@/components/SchemaMarkup';
 
 // Animation variants
@@ -64,32 +64,18 @@ const CaseStudiesNew: React.FC = () => {
 
   return (
     <>
-      <SEO
+      <SEOEnhanced
         title="Case Studies - GoodAV | Success Stories & Client Projects"
         description="Explore GoodAV's portfolio of successful audiovisual projects, from international conferences to digital campaigns. See our impact across various industries."
-        keywords="GoodAV case studies, client success stories, audiovisual projects, conference coverage, video production portfolio, photography portfolio"
+        keywords="GoodAV case studies, client success stories, audiovisual projects, conference coverage, video production portfolio, photography portfolio, Rwanda video production, African storytelling, documentary production, live streaming services"
         canonical="https://goodav.net/case-studies"
         type="website"
-        openGraph={{
-          title: "Case Studies - GoodAV | Success Stories & Client Projects",
-          description: "Explore GoodAV's portfolio of successful audiovisual projects, from international conferences to digital campaigns. See our impact across various industries.",
-          url: "https://goodav.net/case-studies",
-          type: "website",
-          images: [
-            {
-              url: "https://goodav.net/images/case-studies-og-image.jpg",
-              width: 1200,
-              height: 630,
-              alt: "GoodAV Case Studies - Success Stories & Client Projects"
-            }
-          ]
-        }}
-        twitter={{
-          card: "summary_large_image",
-          title: "Case Studies - GoodAV | Success Stories & Client Projects",
-          description: "Explore GoodAV's portfolio of successful audiovisual projects, from international conferences to digital campaigns. See our impact across various industries.",
-          image: "https://goodav.net/images/case-studies-og-image.jpg"
-        }}
+        sections={featuredCaseStudies.slice(0, 6).map((study, index) => ({
+          id: study.slug,
+          title: study.title,
+          description: study.description,
+          keywords: study.tags ? study.tags.slice(0, 4) : []
+        }))}
       />
       
       <SchemaMarkup
@@ -133,6 +119,7 @@ const CaseStudiesNew: React.FC = () => {
       <main className="min-h-screen bg-[#0f1012] text-white">
         {/* Hero Section */}
         <motion.header
+          id="case-studies-hero"
           className="hero-section relative mt-6 py-32 px-4 -mx-4 sm:-mx-6 md:-mx-8 bg-transparent text-center mb-16 flex flex-col items-center justify-center min-h-[420px] rounded-b-2xl"
           role="banner"
           initial="hidden"
@@ -167,7 +154,7 @@ const CaseStudiesNew: React.FC = () => {
         </motion.header>
 
         {/* Featured Case Studies */}
-        <section className="py-16">
+        <section id="featured-projects" className="py-16">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-orange-400 mb-4">Featured Projects</h2>

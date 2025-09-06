@@ -18,17 +18,98 @@ const Excellence = lazy(() => import('@/components/Excellence'));
 const BottomCTA = lazy(() => import('@/components/BottomCTA'));
 const ContactSection = lazy(() => import('@/components/ContactSection'));
 const GlobalImpact = lazy(() => import('@/components/GlobalImpact'));
-import SEO from '@/components/SEO';
+import SEO from '@/components/SEOEnhanced';
 import SchemaMarkup from '@/components/SchemaMarkup';
 
 const Index = () => {
   return (
     <div className="min-h-screen">
       <SEO
-        title="GoodAV - Trust Partner in Audiovisual Industry | Rwanda, Kigali Convention Center, Visit Rwanda"
-        description="GoodAV is your trusted audiovisual partner in Rwanda. We support conferences at Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, Rwanda Convention Bureau, and international events. Discover why global organizations choose GoodAV for audiovisual excellence."
-        keywords="Rwanda, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda"
+        title="GoodAV - Africa's Premier Audiovisual Agency | Transforming Ideas into Visual Stories"
+        description="Africa's premier audiovisual agency transforming ideas into impactful visual stories. Award-winning video production, documentary, live streaming, and creative services where African creativity meets global excellence."
+        keywords="Africa's premier audiovisual agency, video production Rwanda, documentary filmmaking Africa, live streaming services, audiovisual excellence, African creativity, global impact, transforming ideas visual stories, creative agency Africa, event media coverage Rwanda, cinematography Africa, storytelling through film"
         canonical="https://goodav.net/"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "GoodAV - Africa's Premier Audiovisual Agency",
+          "description": "Africa's premier audiovisual agency transforming ideas into impactful visual stories",
+          "url": "https://goodav.net/",
+          "mainEntity": {
+            "@type": "Organization",
+            "name": "GoodAV",
+            "url": "https://goodav.net"
+          },
+          "hasPart": [
+            {
+              "@type": "WebPageElement",
+              "@id": "https://goodav.net/#hero",
+              "name": "Hero Section",
+              "description": "Africa's Premier Audiovisual Agency introduction",
+              "url": "https://goodav.net/#hero"
+            },
+            {
+              "@type": "WebPageElement", 
+              "@id": "https://goodav.net/#featured-projects",
+              "name": "Featured Projects",
+              "description": "Showcase of award-winning audiovisual productions",
+              "url": "https://goodav.net/#featured-projects"
+            },
+            {
+              "@type": "WebPageElement",
+              "@id": "https://goodav.net/#services", 
+              "name": "Services",
+              "description": "Professional audiovisual services offered",
+              "url": "https://goodav.net/#services"
+            },
+            {
+              "@type": "WebPageElement",
+              "@id": "https://goodav.net/#mission",
+              "name": "Mission",
+              "description": "Our mission to empower African narratives",
+              "url": "https://goodav.net/#mission"
+            },
+            {
+              "@type": "WebPageElement",
+              "@id": "https://goodav.net/#about",
+              "name": "About",
+              "description": "About GoodAV and our creative excellence",
+              "url": "https://goodav.net/#about"
+            }
+          ]
+        }}
+        sections={[
+          {
+            id: "hero",
+            title: "Africa's Premier Audiovisual Agency",
+            description: "Transforming ideas into impactful visual stories across Africa and beyond",
+            keywords: ["audiovisual agency", "Africa premier", "visual storytelling", "creative excellence"]
+          },
+          {
+            id: "featured-projects",
+            title: "Featured Projects - World-Class Audiovisual Productions",
+            description: "Showcase of our award-winning documentaries, conferences, and creative productions",
+            keywords: ["featured projects", "documentaries", "conference coverage", "creative productions", "Rwanda projects"]
+          },
+          {
+            id: "services",
+            title: "Professional Audiovisual Services",
+            description: "Comprehensive video production, live streaming, photography, and media services",
+            keywords: ["video production", "live streaming", "photography", "media services", "professional audiovisual"]
+          },
+          {
+            id: "mission",
+            title: "Our Mission - Empowering African Narratives",
+            description: "Dedicated to showcasing African excellence through powerful visual storytelling",
+            keywords: ["mission", "African narratives", "storytelling", "cultural empowerment", "visual excellence"]
+          },
+          {
+            id: "about",
+            title: "About GoodAV - Creative Excellence Since 2014",
+            description: "Leading audiovisual agency with over a decade of experience in Africa",
+            keywords: ["about goodav", "creative excellence", "audiovisual experience", "African creativity"]
+          }
+        ]}
       />
       <SchemaMarkup
         schema={{

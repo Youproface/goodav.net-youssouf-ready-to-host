@@ -4,6 +4,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getServiceById } from '@/data/services';
 import SEO from '@/components/SEO';
 import { ArrowLeft } from 'lucide-react';
+import { 
+  generateServiceKeywords,
+  generateServiceDescription,
+  generateServiceTitle,
+  generateServiceStructuredData,
+  generateServiceFAQStructuredData,
+  generateServiceBreadcrumbStructuredData
+} from '@/utils/servicesSEO';
 
 const ServiceDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -13,7 +21,12 @@ const ServiceDetails: React.FC = () => {
   if (!service) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-[#0f1012] text-white">
-        <SEO title="Service Not Found | GoodAV" description="Requested service could not be found." canonical="https://goodav.net/services" />
+        <SEO 
+          title="Service Not Found | GoodAV - Professional Audiovisual Services" 
+          description="The requested audiovisual service could not be found. Explore our comprehensive range of video production, photography, and media services." 
+          canonical="https://goodav.net/services"
+          keywords="GoodAV services, audiovisual services, video production, photography, live streaming, audio production, sound systems, lighting"
+        />
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Service not found</h1>
           <button
@@ -28,13 +41,47 @@ const ServiceDetails: React.FC = () => {
     );
   }
 
+  // Generate dynamic SEO data
+  const serviceTitle = generateServiceTitle(service);
+  const serviceDescription = generateServiceDescription(service);
+  const serviceKeywords = generateServiceKeywords(service);
+  const serviceStructuredData = generateServiceStructuredData(service);
+  const faqStructuredData = generateServiceFAQStructuredData(service);
+  const breadcrumbStructuredData = generateServiceBreadcrumbStructuredData(service);
+
+  // Combine structured data
+  const combinedStructuredData = [
+    serviceStructuredData,
+    breadcrumbStructuredData,
+    ...(faqStructuredData ? [faqStructuredData] : [])
+  ];
+
   return (
   <div className="bg-black text-white min-h-screen">
       <SEO
-        title={`${service.title} | GoodAV - Rwanda, Kigali Convention Center, Visit Rwanda, Gorilla Naming`}
-        description={`${service.details.heroDescription} GoodAV is your trusted audiovisual partner for conferences, events, and tourism in Rwanda. We support Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and more.`}
-        keywords="Rwanda, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda"
+        title={serviceTitle}
+        description={serviceDescription}
+        keywords={serviceKeywords}
         canonical={`https://goodav.net/services/${service.id}`}
+        schema={combinedStructuredData}
+        openGraph={{
+          title: serviceTitle,
+          description: serviceDescription,
+          type: 'website',
+          url: `https://goodav.net/services/${service.id}`,
+          images: [{
+            url: `https://goodav.net/images/services/${service.id}-hero.jpg`,
+            width: 1200,
+            height: 630,
+            alt: `${service.title} Services by GoodAV`
+          }]
+        }}
+        twitter={{
+          card: 'summary_large_image',
+          title: serviceTitle,
+          description: serviceDescription,
+          image: `https://goodav.net/images/services/${service.id}-hero.jpg`
+        }}
       />
 
       {/* Top Bar */}

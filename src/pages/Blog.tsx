@@ -1,34 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { blogPosts } from "../data/blog";
-
-const BlogSEO = () => (
-	<>
-		<title>Blog | GoodAV - Africa's Creative Industries & Audiovisual Leadership</title>
-		<meta name="description" content="Explore Africa's booming creative industries, Rwanda's audiovisual leadership, and global appeal. Read expert insights, news, and tips on GoodAV's blog." />
-		<link rel="canonical" href="https://goodav.net/blog" />
-		<meta property="og:title" content="Blog | GoodAV - Africa's Creative Industries & Audiovisual Leadership" />
-		<meta property="og:description" content="Explore Africa's booming creative industries, Rwanda's audiovisual leadership, and global appeal." />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content="https://goodav.net/blog" />
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content="Blog | GoodAV - Africa's Creative Industries & Audiovisual Leadership" />
-		<meta name="twitter:description" content="Explore Africa's booming creative industries, Rwanda's audiovisual leadership, and global appeal." />
-		<meta name="robots" content="index, follow" />
-		<meta httpEquiv="Content-Language" content="en" />
-		{/* Structured Data */}
-		<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-			"@context": "https://schema.org",
-			"@type": "Blog",
-			"name": "GoodAV Blog",
-			"url": "https://goodav.net/blog"
-		}) }} />
-	</>
-);
+import SEO from "../components/SEO";
 
 const Blog: React.FC = () => (
 		<main role="main" aria-label="Blog" className="max-w-5xl mx-auto p-4">
-			<BlogSEO />
+			<SEO
+				title="Blog Archive | GoodAV - Africa's Creative Industries & Audiovisual Insights"
+				description="Discover the latest insights on Africa's booming creative economy, Rwanda's audiovisual leadership, and innovative storytelling. Expert analysis on creative industries, technology trends, and African innovation."
+				keywords="Africa creative industries blog, Rwanda audiovisual insights, African storytelling trends, creative economy analysis, audiovisual innovation Africa, Rwanda development blog, African media industry, creative technology Africa, audiovisual trends Rwanda, African creative leadership"
+				canonical="https://goodav.net/blog"
+				type="website"
+			/>
 			<header>
 				<h1 className="text-4xl font-bold mb-4" id="blog-list-title">GoodAV Blog</h1>
 				<p className="mb-8 text-lg text-gray-700">Africa's creative industries, Rwanda's audiovisual leadership, and global insights.</p>

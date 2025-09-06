@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import React, { Suspense } from 'react';
 const BookingModal = React.lazy(() => import('./forms/BookingModal'));
 import { FaCalendarAlt, FaPhone, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaCheck } from 'react-icons/fa';
-import { Helmet } from 'react-helmet-async';
 
 export default function ContactUs() {
   // ...existing code...
@@ -162,20 +161,6 @@ export default function ContactUs() {
 
   return (
     <section id="contact-section" className="relative bg-[#0e0f10] text-zinc-100">
-      {/* SEO Meta Tags & Structured Data for Contact/Conversion */}
-      <Helmet>
-        <title>Contact GoodAV | Audiovisual Services Rwanda, Africa, Documentary, Conversion</title>
-        <meta name="description" content="Contact GoodAV for world-class audiovisual services in Rwanda, Africa, and globally. Get a quote for video production, documentary, live streaming, photography, and more. Trusted partner for conferences, tourism, conversion, and international events." />
-        <meta name="keywords" content="Contact, Rwanda, Africa, documentary, conversion, audiovisual services, video production, live streaming, photography, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, Trust Partner Rwanda, event media coverage, customer conversion, global impact, Africa documentary, Rwanda documentary, international events, Africa tourism, Rwanda tourism, Africa branding, Rwanda branding, Africa creative, Rwanda creative" />
-        <meta name="author" content="GoodAV" />
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        <link rel="canonical" href="https://goodav.net/contact" />
-        <meta name="geo.region" content="RW" />
-        <meta name="geo.placename" content="Kigali, Rwanda" />
-        <meta name="language" content="English" />
-        <meta name="industry" content="Media Production, Audiovisual Services" />
-        <meta name="category" content="Professional Services, Creative Agency" />
-      </Helmet>
       {/* Branded Loading Overlay for Contact Form Submission */}
       {submitting && typeof window !== 'undefined' && createPortal(
         <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-black/80 backdrop-blur-lg">

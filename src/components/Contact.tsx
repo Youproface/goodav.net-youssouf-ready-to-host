@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { motion, useAnimation, useInView } from 'framer-motion';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope, FaClock, FaInstagram, FaYoutube, FaFacebook, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
+import SEO from './SEO';
 
 const heroBackground = '/images/all_site_images/Home/BG/Home_BG.png';
 
@@ -119,6 +120,13 @@ export default function Contact() {
       itemScope
       itemType="https://schema.org/ContactPage"
     >
+      <SEO
+        title="Contact GoodAV | Get Professional Audiovisual Services Quote"
+        description="Contact GoodAV for professional audiovisual services in Rwanda and across Africa. Get a quote for video production, photography, live streaming, and more."
+        keywords="contact GoodAV, audiovisual services quote, video production contact, Rwanda production company, professional audiovisual services, get quote"
+        canonical="https://goodav.net/contact"
+        type="website"
+      />
       {/* SEO Structured Data */}
       <script type="application/ld+json">
         {JSON.stringify({

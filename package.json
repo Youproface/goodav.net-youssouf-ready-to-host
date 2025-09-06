@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "postbuild": "npx critical dist/index.html --inline --base dist/ --width 1920 --height 1080",
-  "build:dev": "vite build --mode development",
+    "dev": "vite",
+    "build": "vite build",
+    "postbuild": "npx critical dist/index.html --inline --base dist/ --width 1920 --height 1080",
+    "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "auto-commit": "sh -c \"if [ -n \\\"$(git status --porcelain)\\\" ]; then git add -A && git commit -m 'chore: automated commit' || true; else echo 'No changes to commit'; fi\"",
     "preview": "vite preview",
@@ -15,6 +15,7 @@
     "php-server": "sh ./scripts/php-server.sh"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.7",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
@@ -70,6 +71,7 @@
     "react-markdown": "^10.1.0",
     "react-resizable-panels": "^2.1.9",
     "react-router-dom": "^6.30.1",
+    "react-toastify": "^11.0.5",
     "recharts": "^2.15.4",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",

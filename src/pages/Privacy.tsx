@@ -7,6 +7,15 @@ import remarkGfm from "remark-gfm";
 import { useState, useRef, useEffect } from "react";
 import SchemaMarkup from "../components/SchemaMarkup";
 import "../AppPrivacyPolicy.css";
+import { 
+  generateLegalKeywords,
+  generateLegalDescription,
+  generateLegalTitle,
+  generateLegalStructuredData,
+  generateLegalOrganizationStructuredData,
+  generateLegalBreadcrumbStructuredData,
+  generateLegalFAQStructuredData
+} from "../utils/legalSEO";
 
 export default function PrivacyPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,31 +28,51 @@ export default function PrivacyPage() {
     }
   }, [isOpen]);
 
+  // Generate dynamic SEO data
+  const pageId = 'privacy';
+  const privacyTitle = generateLegalTitle(pageId);
+  const privacyDescription = generateLegalDescription(pageId);
+  const privacyKeywords = generateLegalKeywords(pageId);
+  const privacyStructuredData = generateLegalStructuredData(pageId);
+  const organizationStructuredData = generateLegalOrganizationStructuredData();
+  const breadcrumbStructuredData = generateLegalBreadcrumbStructuredData(pageId);
+  const faqStructuredData = generateLegalFAQStructuredData(pageId);
+
+  // Combine structured data
+  const combinedStructuredData = [
+    privacyStructuredData,
+    organizationStructuredData,
+    breadcrumbStructuredData,
+    ...(faqStructuredData ? [faqStructuredData] : [])
+  ];
+
   return (
     <>
       <SEO
-        title="Privacy Policy | GoodAV | Rwanda, Africa, Documentary, Kigali Convention Center, Visit Rwanda"
-        description="Read GoodAV's professional privacy policy, compliant with GDPR and CCPA. Learn how we protect your data and your rights. GoodAV is your trusted audiovisual partner for Rwanda, Africa, documentary, conferences, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and more."
-        keywords="privacy policy, GDPR, CCPA, data protection, GoodAV, Rwanda, Africa, documentary, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda"
+        title={privacyTitle}
+        description={privacyDescription}
+        keywords={privacyKeywords}
         canonical="https://goodav.net/privacy"
+        schema={combinedStructuredData}
         noindex={false}
         breadcrumbs={[{ name: "Home", url: "/" }, { name: "Privacy Policy", url: "/privacy" }]}
-      />
-      <SchemaMarkup
-        schema={{
-          "@context": "https://schema.org",
-          "@type": ["WebPage", "LegalService"],
-          "name": "Privacy Policy",
-          "url": "https://goodav.net/privacy",
-          "description": "Read GoodAV's professional privacy policy, compliant with GDPR and CCPA. Learn how we protect your data and your rights.",
-          "provider": {
-            "@type": "Organization",
-            "name": "GOODAV Ltd",
-            "url": "https://goodav.net"
-          },
-          "areaServed": "RW",
-          "datePublished": "2025-09-01",
-          "inLanguage": "en"
+        openGraph={{
+          title: privacyTitle,
+          description: privacyDescription,
+          type: 'website',
+          url: 'https://goodav.net/privacy',
+          images: [{
+            url: 'https://goodav.net/images/goodav-legal-privacy.jpg',
+            width: 1200,
+            height: 630,
+            alt: 'GoodAV Privacy Policy - Data Protection and GDPR Compliance'
+          }]
+        }}
+        twitter={{
+          card: 'summary_large_image',
+          title: privacyTitle,
+          description: privacyDescription,
+          image: 'https://goodav.net/images/goodav-legal-privacy.jpg'
         }}
       />
       <div
@@ -71,6 +100,29 @@ export default function PrivacyPage() {
         </React.Suspense>
         <div className="prose prose-lg text-gray-100">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{privacyPolicy}</ReactMarkdown>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="mt-12 bg-gray-900/50 rounded-xl p-8 border border-gray-700">
+          <h2 className="text-2xl font-bold text-orange-400 mb-6">Frequently Asked Questions</h2>
+          <div className="space-y-6">
+            <div className="border-b border-gray-700 pb-4">
+              <h3 className="text-lg font-semibold text-white mb-2">What personal data does GoodAV collect?</h3>
+              <p className="text-gray-300">We collect personal information that you voluntarily provide, such as your name, email address, and any details submitted through our website forms, communications, or project requests.</p>
+            </div>
+            <div className="border-b border-gray-700 pb-4">
+              <h3 className="text-lg font-semibold text-white mb-2">How does GoodAV protect my personal data?</h3>
+              <p className="text-gray-300">We implement industry-standard security measures to protect your data from unauthorized access, disclosure, alteration, or destruction. All data is stored securely and accessed only by authorized personnel.</p>
+            </div>
+            <div className="border-b border-gray-700 pb-4">
+              <h3 className="text-lg font-semibold text-white mb-2">Does GoodAV share my data with third parties?</h3>
+              <p className="text-gray-300">We do not sell, rent, or share your personal data with third parties except as required by law or with your explicit consent.</p>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-white mb-2">What are my rights regarding my personal data?</h3>
+              <p className="text-gray-300">You have the right to access, correct, or delete your personal information, object to or restrict certain processing, withdraw consent at any time, and lodge a complaint with a supervisory authority.</p>
+            </div>
+          </div>
         </div>
         <div className="mt-8 flex flex-col gap-2">
           <a

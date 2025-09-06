@@ -2,6 +2,7 @@ const heroBackground = '/images/all_site_images/Home/BG/Home_BG.webp';
 import BlogsSection from './BlogsSection';
 import { blogPosts, BlogPost } from '@/data/blog';
 import { useState, useMemo } from 'react';
+import SEO from './SEO';
 export default function BlogArchive() {
   // Modal state for company profile (not visible in render)
   const [profileModalOpen, setProfileModalOpen] = useState(false);
@@ -24,6 +25,38 @@ export default function BlogArchive() {
 
   return (
     <div className="min-h-screen bg-black text-zinc-200">
+      <SEO
+        title="Blog | GoodAV - Africa's Creative Industries & Audiovisual Leadership"
+        description="Explore Africa's booming creative industries, Rwanda's audiovisual leadership, and global appeal. Read expert insights, news, and tips on GoodAV's blog."
+        keywords="Africa creative industries, Rwanda audiovisual, blog, GoodAV insights, creative economy, audiovisual leadership, Africa media, creative news, industry tips, African storytelling, Rwanda development, creative innovation"
+        canonical="https://goodav.net/blog"
+        type="website"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          "name": "GoodAV Blog - African Creative Industries",
+          "description": "Expert insights on Africa's creative industries, Rwanda's audiovisual leadership, and innovative storytelling",
+          "url": "https://goodav.net/blog",
+          "publisher": {
+            "@type": "Organization",
+            "name": "GoodAV",
+            "url": "https://goodav.net",
+            "logo": "https://goodav.net/images/all_site_images/Assets/logo-full-color.svg"
+          },
+          "blogPost": blogPosts.slice(0, 10).map(post => ({
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "description": post.excerpt,
+            "datePublished": post.date,
+            "url": `https://goodav.net/blog/${post.slug}`,
+            "image": `/images/all_site_images/Blog/blog-${post.id}.jpg`,
+            "author": {
+              "@type": "Organization",
+              "name": "GoodAV"
+            }
+          }))
+        }}
+      />
              {/* Hero */}
              <div className="relative mt-10 py-32 px-4 bg-transparent">
         {/* Background Image with Overlay */}

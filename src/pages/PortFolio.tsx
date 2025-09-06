@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
+import SEO from '@/components/SEO';
 
 // Home videos with custom thumbnails
 const HOME_VIDEOS = [
@@ -435,59 +435,12 @@ export default function PortFolio() {
 
 	return (
 		<>
-			<Helmet>
-				<title>
-					Portfolio | GoodAV - Audiovisual Projects, Rwanda, Africa, Documentary, Conferences, Visit Rwanda, Gorilla Naming
-				</title>
-				<meta
-					name="description"
-					content="Explore GoodAV's portfolio of impactful audiovisual projects for Rwanda, Africa, documentary, conferences, Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and international events. Discover why global organizations trust GoodAV for audiovisual excellence in Rwanda and Africa."
-				/>
-				<meta
-					name="keywords"
-					content="Rwanda, Africa, documentary, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda, portfolio, client work, media, marketing"
-				/>
-				<meta property="og:title" content="Portfolio | GoodAV - Audiovisual Projects & Creative Highlights" />
-				<meta property="og:description" content="Explore GoodAV's portfolio of impactful audiovisual projects, documentaries, events, and creative highlights. Discover our work with leading organizations and brands." />
-				<meta property="og:image" content="/images/all_site_images/Home/BG/Home_BG.webp" />
-				<meta property="og:type" content="website" />
-				<meta property="og:url" content="https://goodav.net/portfolio" />
-				<meta name="twitter:card" content="summary_large_image" />
-				<meta name="twitter:title" content="Portfolio | GoodAV - Audiovisual Projects & Creative Highlights" />
-				<meta name="twitter:description" content="Explore GoodAV's portfolio of impactful audiovisual projects, documentaries, events, and creative highlights. Discover our work with leading organizations and brands." />
-				<meta name="twitter:image" content="/images/all_site_images/Home/BG/Home_BG.webp" />
-				<meta name="robots" content="index, follow" />
-				<link rel="canonical" href="https://goodav.net/portfolio" />
-				<meta httpEquiv="Content-Language" content="en" />
-				<script type="application/ld+json">
-					{JSON.stringify({
-						'@context': 'https://schema.org',
-						'@type': 'ItemList',
-						'name': 'GoodAV Portfolio',
-						'itemListElement': ENRICHED_VIDEOS.map((video, idx) => ({
-							'@type': 'VideoObject',
-							position: idx + 1,
-							name: video.title,
-							description: `${video.title} by ${video.client} (${video.year})`,
-							thumbnailUrl: getThumbnail(video),
-							uploadDate: `${video.year}-01-01`,
-							url: `https://www.youtube.com/watch?v=${video.id}`,
-							embedUrl: `https://www.youtube.com/embed/${video.id}`,
-							contentUrl: `https://www.youtube.com/watch?v=${video.id}`,
-							duration: `PT${video.duration.replace(':', 'M')}S`,
-							interactionStatistic: {
-								'@type': 'InteractionCounter',
-								'interactionType': 'https://schema.org/WatchAction',
-								'userInteractionCount': video.views,
-							},
-							publisher: {
-								'@type': 'Organization',
-								name: video.client || 'GoodAV',
-							},
-						})),
-					})}
-				</script>
-			</Helmet>
+			<SEO
+				title="Portfolio | Award-Winning Audiovisual Projects by GoodAV"
+				description="Explore GoodAV's portfolio of award-winning audiovisual projects. From documentaries to corporate videos, see how we transform ideas into impactful visual stories."
+				keywords="GoodAV portfolio, video production portfolio, documentary projects, corporate videos, event coverage, Rwanda projects, Africa storytelling"
+				canonical="https://goodav.net/portfolio"
+			/>
 			<main className="bg-[#0f1012] text-zinc-100 min-h-screen px-4 py-0 relative">
 				{/* Full-bleed hero header (moved out of centered container) */}
 				<header

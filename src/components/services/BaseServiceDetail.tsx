@@ -5,6 +5,15 @@ import { MdVerified } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ServiceType } from '@/data/services';
+import SEO from '@/components/SEO';
+import { 
+  generateServiceKeywords,
+  generateServiceDescription,
+  generateServiceTitle,
+  generateServiceStructuredData,
+  generateServiceFAQStructuredData,
+  generateServiceBreadcrumbStructuredData
+} from '@/utils/servicesSEO';
 
 interface BaseServiceDetailProps {
   service: ServiceType;
@@ -26,6 +35,21 @@ const BaseServiceDetail: React.FC<BaseServiceDetailProps> = ({ service, children
     benefits = [],
     faqs = []
   } = details;
+
+  // Generate dynamic SEO data
+  const serviceTitle = generateServiceTitle(service);
+  const serviceDescription = generateServiceDescription(service);
+  const serviceKeywords = generateServiceKeywords(service);
+  const serviceStructuredData = generateServiceStructuredData(service);
+  const faqStructuredData = generateServiceFAQStructuredData(service);
+  const breadcrumbStructuredData = generateServiceBreadcrumbStructuredData(service);
+
+  // Combine structured data
+  const combinedStructuredData = [
+    serviceStructuredData,
+    breadcrumbStructuredData,
+    ...(faqStructuredData ? [faqStructuredData] : [])
+  ];
 
   // Animation variants (from Partners page)
   const animationVariants = useMemo(() => ({
@@ -78,6 +102,32 @@ const BaseServiceDetail: React.FC<BaseServiceDetailProps> = ({ service, children
 
   return (
     <main className="bg-[#0f1012] text-zinc-100 min-h-screen">
+      <SEO
+        title={serviceTitle}
+        description={serviceDescription}
+        keywords={serviceKeywords}
+        canonical={`https://goodav.net/services/${service.id}`}
+        schema={combinedStructuredData}
+        openGraph={{
+          title: serviceTitle,
+          description: serviceDescription,
+          type: 'website',
+          url: `https://goodav.net/services/${service.id}`,
+          images: [{
+            url: `https://goodav.net/images/services/${service.id}-hero.jpg`,
+            width: 1200,
+            height: 630,
+            alt: `${service.title} Services by GoodAV`
+          }]
+        }}
+        twitter={{
+          card: 'summary_large_image',
+          title: serviceTitle,
+          description: serviceDescription,
+          image: `https://goodav.net/images/services/${service.id}-hero.jpg`
+        }}
+      />
+      
       {/* Animated Hero Section */}
       <motion.header
         className="relative mt-6 py-32 px-4 -mx-4 sm:-mx-6 md:-mx-8 bg-transparent text-center mb-16 flex flex-col items-center justify-center min-h-[500px] rounded-b-2xl"
@@ -107,11 +157,11 @@ const BaseServiceDetail: React.FC<BaseServiceDetailProps> = ({ service, children
             className="mb-8 flex justify-center"
             variants={fadeInUpVariants}
             role="img"
-            aria-label="Trust badge: Trusted by 500+ Clients"
+            aria-label="Trust badge: Trusted by 50+ International Clients"
           >
             <div className="inline-flex items-center gap-3 bg-gradient-to-r from-orange-500/20 to-amber-500/20 border border-orange-500/30 text-orange-300 px-6 py-3 rounded-full backdrop-blur-sm">
               <MdVerified className="text-xl" aria-hidden="true" />
-              <span className="font-semibold">Trusted by 500+ Clients</span>
+              <span className="font-semibold">Trusted by 50+ International Clients</span>
             </div>
           </motion.div>
           <motion.h1 

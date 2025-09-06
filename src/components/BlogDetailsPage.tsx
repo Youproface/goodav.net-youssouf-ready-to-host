@@ -2,6 +2,8 @@
 import React, { ReactNode, useState, Suspense } from 'react';
 const heroBackground = '/images/all_site_images/Home/BG/Home_BG.png';
 import { BlogPost } from '../data/blog';
+import SEO from './SEO';
+import { generateBlogKeywords, generateBlogDescription, generateBlogStructuredData, generateBlogTitle } from '../utils/blogSEO';
 
 // Dynamic imports for heavy dependencies
 const ReactMarkdown = React.lazy(() => import('react-markdown'));
@@ -78,27 +80,24 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
   };
   // Use new image naming convention for blog images: blog-1.jpg, blog-2.jpg, ...
   const blogImage = `/images/all_site_images/Blog/blog-${blog.id}.jpg`;
+
   return (
     <main className="min-h-screen bg-[#0f1012] text-zinc-100" role="main" aria-label="Blog Post">
-      {/* SEO Meta Tags */}
-      <title>{`${blog.title} | GoodAV - Rwanda, Africa, Documentary, Gorilla Naming, Kigali Convention Center, Visit Rwanda`}</title>
-      <meta name="description" content={`Read about ${blog.title} - ${blog.excerpt} | GoodAV is your trusted audiovisual partner for Rwanda, Africa, documentary, conferences, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina, gorilla naming, Rwanda visa, national parks, and more.`} />
-      <meta name="keywords" content="Rwanda, Africa, documentary, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda, blog, article, engagement, customer conversion" />
-      <meta property="og:title" content={`${blog.title} | GoodAV - Rwanda, Africa, Documentary`} />
-      <meta property="og:description" content={blog.excerpt} />
-  <meta property="og:image" content={blogImage} />
-      <meta property="og:type" content="article" />
-      <meta property="og:url" content={`https://goodav.net/blog/${blog.slug}`} />
-      <meta name="robots" content="index, follow" />
-      <link rel="canonical" href={`https://goodav.net/blog/${blog.slug}`} />
-      <meta httpEquiv="Content-Language" content="en" />
-      {/* Twitter Card */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={`${blog.title} | GoodAV - Rwanda, Africa, Documentary`} />
-      <meta name="twitter:description" content={blog.excerpt} />
-  <meta name="twitter:image" content={blogImage} />
-      {/* Structured Data */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <SEO
+        title={generateBlogTitle(blog)}
+        description={generateBlogDescription(blog)}
+        keywords={generateBlogKeywords(blog)}
+        canonical={`https://goodav.net/blog/${blog.slug}`}
+        type="article"
+        image={blogImage}
+        article={{
+          author: "GoodAV Team",
+          publishedTime: blog.date,
+          section: blog.category,
+          tags: [blog.category, "Africa", "Rwanda", "Creative Industries", "Audiovisual"]
+        }}
+        schema={generateBlogStructuredData(blog, blogImage)}
+      />
   {/* HERO */}
   <section className="relative mt-20" tabIndex={-1} aria-labelledby="blog-title">
         <div className="relative mt-10 py-28 px-4 bg-transparent">
