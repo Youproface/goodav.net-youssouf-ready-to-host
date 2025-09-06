@@ -94,26 +94,24 @@ $time = trim($data['time']);
 $timezone = isset($data['timezone']) ? trim($data['timezone']) : '';
 $meetingSoftware = isset($data['meetingSoftware']) ? trim($data['meetingSoftware']) : '';
 
-// Database (SQLite) path
-$dbFile = __DIR__ . DIRECTORY_SEPARATOR . 'bookings.db';
-
+// Database connection - MySQL for GoDaddy hosting
 try {
-    $pdo = new PDO('sqlite:' . $dbFile);
+    $pdo = new PDO('mysql:host=localhost;dbname=goodav_db;charset=utf8mb4', 'goodav_rw', 'xocgyg-tawhub-Junqy9');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Create table if not exists
+    // Create table if not exists (MySQL syntax)
     $pdo->exec("CREATE TABLE IF NOT EXISTS bookings (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        email TEXT,
-        phone TEXT,
-        organization TEXT,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255),
+        email VARCHAR(255),
+        phone VARCHAR(50),
+        organization VARCHAR(255),
         project TEXT,
-        date TEXT,
-        time TEXT,
-        timezone TEXT,
-        meetingSoftware TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        date VARCHAR(20),
+        time VARCHAR(20),
+        timezone VARCHAR(100),
+        meetingSoftware VARCHAR(100),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
     $stmt = $pdo->prepare("INSERT INTO bookings (name, email, phone, organization, project, date, time, timezone, meetingSoftware) VALUES (:name, :email, :phone, :organization, :project, :date, :time, :timezone, :meetingSoftware)");
@@ -133,15 +131,15 @@ try {
 
     // Also record into central submissions DB for unified access
     try {
-        $subDb = new PDO('sqlite:' . __DIR__ . DIRECTORY_SEPARATOR . 'submissions.db');
+        $subDb = new PDO('mysql:host=localhost;dbname=goodav_db;charset=utf8mb4', 'goodav_rw', 'xocgyg-tawhub-Junqy9');
         $subDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $subDb->exec("CREATE TABLE IF NOT EXISTS submissions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            source TEXT,
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            source VARCHAR(50),
             payload TEXT,
-            email TEXT,
-            name TEXT,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            email VARCHAR(255),
+            name VARCHAR(255),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )");
         $payloadJson = json_encode($data);
         $sstmt = $subDb->prepare("INSERT INTO submissions (source, payload, email, name) VALUES (:source, :payload, :email, :name)");

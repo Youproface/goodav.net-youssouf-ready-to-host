@@ -1,6 +1,6 @@
 <?php
 // process_project.php
-// Receives JSON project request data, validates, stores in SQLite, and attempts to forward via email.
+// Receives JSON project request data, validates, stores in MySQL, and attempts to forward via email.
 
 header('Content-Type: application/json; charset=utf-8');
 
@@ -113,23 +113,21 @@ $budget = isset($data['budget']) ? trim($data['budget']) : '';
 $timeline = isset($data['timeline']) ? trim($data['timeline']) : '';
 $description = trim($data['description']);
 
-$dbFile = __DIR__ . DIRECTORY_SEPARATOR . 'projects.db';
-
 try {
-    $pdo = new PDO('sqlite:' . $dbFile);
+    $pdo = new PDO('mysql:host=localhost;dbname=goodav_db;charset=utf8mb4', 'goodav_rw', 'xocgyg-tawhub-Junqy9');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $pdo->exec("CREATE TABLE IF NOT EXISTS projects (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        email TEXT,
-        phone TEXT,
-        organization TEXT,
-        project_type TEXT,
-        budget TEXT,
-        timeline TEXT,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255),
+        email VARCHAR(255),
+        phone VARCHAR(50),
+        organization VARCHAR(255),
+        project_type VARCHAR(100),
+        budget VARCHAR(100),
+        timeline VARCHAR(100),
         description TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
     $stmt = $pdo->prepare("INSERT INTO projects (name, email, phone, organization, project_type, budget, timeline, description) VALUES (:name, :email, :phone, :organization, :project_type, :budget, :timeline, :description)");
@@ -148,15 +146,15 @@ try {
 
     // record into central submissions DB
     try {
-        $subDb = new PDO('sqlite:' . __DIR__ . DIRECTORY_SEPARATOR . 'submissions.db');
+        $subDb = new PDO('mysql:host=localhost;dbname=goodav_db;charset=utf8mb4', 'goodav_rw', 'xocgyg-tawhub-Junqy9');
         $subDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $subDb->exec("CREATE TABLE IF NOT EXISTS submissions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            source TEXT,
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            source VARCHAR(50),
             payload TEXT,
-            email TEXT,
-            name TEXT,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            email VARCHAR(255),
+            name VARCHAR(255),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )");
         $payloadJson = json_encode($data);
         $sstmt = $subDb->prepare("INSERT INTO submissions (source, payload, email, name) VALUES (:source, :payload, :email, :name)");

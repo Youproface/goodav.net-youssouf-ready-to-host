@@ -1,6 +1,6 @@
 <?php
 // process_contact.php
-// Receives JSON contact form data, validates, stores in SQLite, and attempts to forward via email.
+// Receives JSON contact form data, validates, stores in MySQL, and attempts to forward via email.
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
@@ -107,20 +107,18 @@ $email = trim($data['email']);
 $subject = trim($data['subject']);
 $message = trim($data['message']);
 
-$dbFile = __DIR__ . DIRECTORY_SEPARATOR . 'contacts.db';
-
 try {
-    $pdo = new PDO('sqlite:' . $dbFile);
+    $pdo = new PDO('mysql:host=localhost;dbname=goodav_db;charset=utf8mb4', 'goodav_rw', 'xocgyg-tawhub-Junqy9');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $pdo->exec("CREATE TABLE IF NOT EXISTS contacts (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        first_name TEXT,
-        last_name TEXT,
-        email TEXT,
-        subject TEXT,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        first_name VARCHAR(255),
+        last_name VARCHAR(255),
+        email VARCHAR(255),
+        subject VARCHAR(500),
         message TEXT,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
 
     $stmt = $pdo->prepare("INSERT INTO contacts (first_name, last_name, email, subject, message) VALUES (:first_name, :last_name, :email, :subject, :message)");
@@ -136,13 +134,13 @@ try {
 
     // record into central submissions DB
     try {
-        $subDb = new PDO('sqlite:' . __DIR__ . DIRECTORY_SEPARATOR . 'submissions.db');
+        $subDb = new PDO('mysql:host=localhost;dbname=goodav_db;charset=utf8mb4', 'goodav_rw', 'xocgyg-tawhub-Junqy9');
         $subDb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $subDb->exec("CREATE TABLE IF NOT EXISTS submissions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            source TEXT,
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            source VARCHAR(50),
             payload TEXT,
-            email TEXT,
+            email VARCHAR(255),
             name TEXT,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )");
