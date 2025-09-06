@@ -22,12 +22,16 @@
  * - Schema.org VideoObject markup for each project
  */
 
-import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import SEO from './SEO';
-import VideoPlaceholder from './VideoPlaceholder';
-import { Play, X, Eye } from "lucide-react";
-import { motion, useAnimationFrame, useMotionValue, AnimatePresence, Variants } from "framer-motion";
+import React, { useEffect, useMemo, useRef, useState, useCallback, Suspense } from "react";
+const SEO = React.lazy(() => import('./SEO'));
+const VideoPlaceholder = React.lazy(() => import('./VideoPlaceholder'));
+const LucideReactPromise = import('lucide-react');
+const FramerMotionPromise = import('framer-motion');
 import { useNavigate } from "react-router-dom";
+
+// Helper to load framer-motion and lucide-react icons for main component
+type MotionLib = typeof import('framer-motion');
+type LucideIcons = { Eye: any; X: any };
 
 /**
  * ⚡ High-Performance Infinite Marquee Hook
@@ -45,100 +49,6 @@ import { useNavigate } from "react-router-dom";
  * - Pause on hover/focus for accessibility
  * - Responsive container width calculations
  */
-function useInfiniteMarquee(opts: {
-  direction?: "left" | "right";
-  speed?: number;           // px per second
-  pauseOnHover?: boolean;
-}) {
-  const { direction = "left", speed = 80, pauseOnHover = true } = opts;
-
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const copyRef = useRef<HTMLDivElement | null>(null);
-
-  const x = useMotionValue(0);
-  const baseXRef = useRef(0);
-  const widthRef = useRef(0);          // width of ONE copy
-  const containerWRef = useRef(0);     // container width
-  const [copies, setCopies] = useState(2);
-  const pausedRef = useRef(false);
-  const initRef = useRef(false);
-
-  // 🎨 Accessibility: Reduced motion support
-  const [reducedMotion, setReducedMotion] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const handleChange = () => setReducedMotion(mq.matches);
-    handleChange();
-    mq.addEventListener("change", handleChange);
-    return () => mq.removeEventListener("change", handleChange);
-  }, []);
-
-  // 📏 Performance: Efficient measurement with ResizeObserver
-  const measureCallback = useCallback(() => {
-    if (!copyRef.current || !containerRef.current) return;
-    const W = copyRef.current.getBoundingClientRect().width;
-    const CW = containerRef.current.getBoundingClientRect().width;
-    widthRef.current = W;
-    containerWRef.current = CW;
-
-    // Calculate minimum copies needed for seamless loop
-    const needed = Math.max(2, Math.ceil((CW + W) / Math.max(1, W)));
-    setCopies(needed);
-
-    // Initialize starting position for smooth startup
-    if (!initRef.current) {
-      const startPos = direction === "right" ? -W : 0;
-      baseXRef.current = startPos;
-      x.set(startPos);
-      initRef.current = true;
-    }
-  }, [direction, x]);
-
-  useEffect(() => {
-    measureCallback();
-    const ro = new ResizeObserver(measureCallback);
-    if (containerRef.current) ro.observe(containerRef.current);
-    if (copyRef.current) ro.observe(copyRef.current);
-    window.addEventListener("load", measureCallback);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("load", measureCallback);
-    };
-  }, [measureCallback]);
-
-  // 🚀 Performance: 60fps animation with RAF
-  useAnimationFrame((_, delta) => {
-    if (reducedMotion || pausedRef.current) return;
-    const sign = direction === "left" ? -1 : 1;
-    const dt = delta / 1000; // convert to seconds
-    const distance = speed * dt * sign;
-
-    baseXRef.current += distance;
-    const W = widthRef.current;
-
-    // Seamless wrapping at copy boundaries
-    if (sign < 0 && baseXRef.current <= -W) baseXRef.current += W;
-    if (sign > 0 && baseXRef.current >= 0) baseXRef.current -= W;
-
-    x.set(baseXRef.current);
-  });
-
-  // 🎯 Accessibility: Pause handlers for keyboard and mouse
-  const pauseHandlers = useMemo(
-    () =>
-      pauseOnHover
-        ? {
-            onMouseEnter: () => (pausedRef.current = true),
-            onMouseLeave: () => (pausedRef.current = false),
-            onFocus: () => (pausedRef.current = true),
-            onBlur: () => (pausedRef.current = false),
-          }
-        : {},
-    [pauseOnHover]
-  );
-
-  return { x, containerRef, copyRef, copies, pauseHandlers };
-}
 
 // 📊 Performance: Optimized project data structure
 interface Project {
@@ -176,29 +86,24 @@ interface Project {
 interface ProjectCardProps {
   project: Project;
   setSelectedVideo: (video: string | null) => void;
-  variants: Variants;
+  variants: any;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelectedVideo, variants }) => {
+const ProjectCard: React.FC<ProjectCardProps & { motionLib: MotionLib; PlayIcon: any }> = React.memo(({ project, setSelectedVideo, variants, motionLib, PlayIcon }) => {
+  const { motion } = motionLib;
   const handleClick = useCallback(() => {
-    // project.video now contains the YouTube ID
     setSelectedVideo(project.video);
   }, [project.video, setSelectedVideo]);
-
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       handleClick();
     }
   }, [handleClick]);
-
-  // 🖼️ Performance: Resolve thumbnail (accepts full URL or videoId)
   const thumbnailSrc = project.thumbnail && project.thumbnail.startsWith('http')
     ? project.thumbnail
     : `https://img.youtube.com/vi/${project.video}/hqdefault.jpg`;
-
   const optimizedThumbnail = `${thumbnailSrc}?format=webp&quality=85`;
-
   return (
     <motion.article
       className="relative group rounded-lg overflow-hidden glass-card shadow-md hover:shadow-xl transition-all duration-300 flex-shrink-0 w-72 h-48 cursor-pointer will-change-transform"
@@ -215,7 +120,6 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelect
       aria-label={`Play ${project.category.toLowerCase()} video: ${project.title}. ${project.description || ''} ${project.client ? `Client: ${project.client}.` : ''} Year: ${project.year || 'Unknown'}`}
       onKeyDown={handleKeyDown}
     >
-      {/* 🖼️ Optimized Image with WebP support and lazy loading */}
       <picture>
         <source srcSet={optimizedThumbnail.replace('webp', 'avif')} type="image/avif" />
         <source srcSet={optimizedThumbnail} type="image/webp" />
@@ -228,8 +132,6 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelect
           decoding="async"
         />
       </picture>
-
-      {/* 📝 Content with semantic structure (caption pill) */}
       <div className="absolute left-4 bottom-4 bg-black/40 text-white px-3 py-2 rounded-full backdrop-blur-sm max-w-[85%]">
         <div className="flex items-center gap-3">
           <span 
@@ -246,8 +148,6 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelect
           </div>
         </div>
       </div>
-
-      {/* 🎬 Accessible Play Button */}
       <div className="absolute inset-0 flex items-center justify-center" aria-hidden="true">
         <motion.div
           className="flex items-center justify-center w-14 h-14 rounded-full bg-primary/90 hover:bg-primary text-primary-foreground shadow-lg backdrop-blur-sm"
@@ -259,18 +159,14 @@ const ProjectCard: React.FC<ProjectCardProps> = React.memo(({ project, setSelect
           }}
           transition={{ duration: 0.3, delay: 0.1 }}
         >
-          <Play className="w-6 h-6 ml-1" fill="currentColor" />
+          <PlayIcon className="w-6 h-6 ml-1" fill="currentColor" />
           <span className="sr-only">Play video</span>
         </motion.div>
       </div>
-
-      {/* 🎨 Accessible Border - visible by default for better UX */}
       <div 
         className="absolute inset-0 rounded-lg border-2 border-primary opacity-100 transition-opacity duration-300 pointer-events-none group-focus-within:opacity-100 group-focus-within:border-accent"
         aria-hidden="true"
       />
-
-      {/* 🏷️ Micro-schema for individual project SEO */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -330,8 +226,22 @@ ProjectCard.displayName = 'ProjectCard';
  * - Performance optimizations for Core Web Vitals
  */
 const FeaturedProjects: React.FC = () => {
+  // Dynamically load framer-motion and lucide-react icons for use throughout component
+  const [motionLib, setMotionLib] = useState<any>(null);
+  const [icons, setIcons] = useState<any>(null);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    Promise.all([FramerMotionPromise, LucideReactPromise]).then(([fm, lucide]) => {
+      setMotionLib(fm);
+      setIcons({ Eye: lucide.Eye, X: lucide.X, Play: lucide.Play });
+    });
+  }, []);
+
+  // Always define these, fallback to empty objects if not loaded yet
+  const { motion, useMotionValue, useAnimationFrame, AnimatePresence } = motionLib || {};
+  const { Eye, X, Play } = icons || {};
 
   // 🚀 Performance: Memoized project data to prevent recreations
   const projects: Project[] = useMemo(() => [
@@ -506,18 +416,148 @@ const FeaturedProjects: React.FC = () => {
     };
   }, [projects]);
 
-  // 🎨 Performance: Optimized marquee instances with different speeds for visual variety
-  const leftMarquee = useInfiniteMarquee({
-    direction: "left",
-    speed: 45, // Slightly slower for better readability
-    pauseOnHover: true,
+  // Always call React hooks consistently, regardless of library loading state
+  // Create stable motion values and animation frame handlers
+  const [leftMarqueeState, setLeftMarqueeState] = useState({
+    x: 0,
+    copies: 2,
+    containerWidth: 0,
+    contentWidth: 0,
+    baseX: 0,
+    isPaused: false,
+    isInitialized: false
+  });
+  
+  const [rightMarqueeState, setRightMarqueeState] = useState({
+    x: 0,
+    copies: 2,
+    containerWidth: 0,
+    contentWidth: 0,
+    baseX: 0,
+    isPaused: false,
+    isInitialized: false
   });
 
-  const rightMarquee = useInfiniteMarquee({
-    direction: "right", 
-    speed: 50, // Slightly faster to create visual rhythm
-    pauseOnHover: true,
-  });
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const leftContainerRef = useRef<HTMLDivElement | null>(null);
+  const leftCopyRef = useRef<HTMLDivElement | null>(null);
+  const rightContainerRef = useRef<HTMLDivElement | null>(null);
+  const rightCopyRef = useRef<HTMLDivElement | null>(null);
+  const animationIdRef = useRef<number>();
+
+  // Check for reduced motion preference
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleChange = () => setReducedMotion(mq.matches);
+    handleChange();
+    mq.addEventListener("change", handleChange);
+    return () => mq.removeEventListener("change", handleChange);
+  }, []);
+
+  // Measure containers and initialize positions
+  const measureMarquees = useCallback(() => {
+    if (leftContainerRef.current && leftCopyRef.current) {
+      const containerWidth = leftContainerRef.current.getBoundingClientRect().width;
+      const contentWidth = leftCopyRef.current.getBoundingClientRect().width;
+      const copies = Math.max(2, Math.ceil((containerWidth + contentWidth) / Math.max(1, contentWidth)));
+      
+      setLeftMarqueeState(prev => ({
+        ...prev,
+        containerWidth,
+        contentWidth,
+        copies,
+        baseX: prev.isInitialized ? prev.baseX : 0,
+        isInitialized: true
+      }));
+    }
+
+    if (rightContainerRef.current && rightCopyRef.current) {
+      const containerWidth = rightContainerRef.current.getBoundingClientRect().width;
+      const contentWidth = rightCopyRef.current.getBoundingClientRect().width;
+      const copies = Math.max(2, Math.ceil((containerWidth + contentWidth) / Math.max(1, contentWidth)));
+      
+      setRightMarqueeState(prev => ({
+        ...prev,
+        containerWidth,
+        contentWidth,
+        copies,
+        baseX: prev.isInitialized ? prev.baseX : -contentWidth,
+        isInitialized: true
+      }));
+    }
+  }, []);
+
+  useEffect(() => {
+    measureMarquees();
+    const ro = new ResizeObserver(measureMarquees);
+    if (leftContainerRef.current) ro.observe(leftContainerRef.current);
+    if (leftCopyRef.current) ro.observe(leftCopyRef.current);
+    if (rightContainerRef.current) ro.observe(rightContainerRef.current);
+    if (rightCopyRef.current) ro.observe(rightCopyRef.current);
+    window.addEventListener("load", measureMarquees);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("load", measureMarquees);
+    };
+  }, [measureMarquees]);
+
+  // Animation loop
+  useEffect(() => {
+    if (reducedMotion) return;
+
+    const animate = () => {
+      const deltaTime = 16; // Approximate 60fps
+      const leftSpeed = 45;
+      const rightSpeed = 50;
+
+      setLeftMarqueeState(prev => {
+        if (prev.isPaused || !prev.isInitialized) return prev;
+        const distance = (leftSpeed * deltaTime) / 1000;
+        let newBaseX = prev.baseX - distance;
+        
+        if (newBaseX <= -prev.contentWidth) {
+          newBaseX += prev.contentWidth;
+        }
+        
+        return { ...prev, baseX: newBaseX, x: newBaseX };
+      });
+
+      setRightMarqueeState(prev => {
+        if (prev.isPaused || !prev.isInitialized) return prev;
+        const distance = (rightSpeed * deltaTime) / 1000;
+        let newBaseX = prev.baseX + distance;
+        
+        if (newBaseX >= 0) {
+          newBaseX -= prev.contentWidth;
+        }
+        
+        return { ...prev, baseX: newBaseX, x: newBaseX };
+      });
+
+      animationIdRef.current = requestAnimationFrame(animate);
+    };
+
+    animationIdRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
+    };
+  }, [reducedMotion]);
+
+  const leftPauseHandlers = useMemo(() => ({
+    onMouseEnter: () => setLeftMarqueeState(prev => ({ ...prev, isPaused: true })),
+    onMouseLeave: () => setLeftMarqueeState(prev => ({ ...prev, isPaused: false })),
+    onFocus: () => setLeftMarqueeState(prev => ({ ...prev, isPaused: true })),
+    onBlur: () => setLeftMarqueeState(prev => ({ ...prev, isPaused: false })),
+  }), []);
+
+  const rightPauseHandlers = useMemo(() => ({
+    onMouseEnter: () => setRightMarqueeState(prev => ({ ...prev, isPaused: true })),
+    onMouseLeave: () => setRightMarqueeState(prev => ({ ...prev, isPaused: false })),
+    onFocus: () => setRightMarqueeState(prev => ({ ...prev, isPaused: true })),
+    onBlur: () => setRightMarqueeState(prev => ({ ...prev, isPaused: false })),
+  }), []);
 
   // 🎯 Accessibility: Enhanced keyboard event handling
   const handleEscapeKey = useCallback((e: KeyboardEvent) => {
@@ -538,41 +578,61 @@ const FeaturedProjects: React.FC = () => {
   }, [handleEscapeKey]);
 
   // 🎨 Performance: Stable animation variants to prevent recreations
+  // Use supported string for 'ease' property
   const animationVariants = useMemo(() => ({
     container: {
       hidden: { opacity: 0 },
       visible: {
         opacity: 1,
         transition: {
-          staggerChildren: 0.08, // Slightly faster stagger
-          delayChildren: 0.1, // Reduced delay for faster perceived performance
+          staggerChildren: 0.08,
+          delayChildren: 0.1,
         },
       },
-    } as Variants,
+    },
     item: {
       hidden: { opacity: 0, y: 20 },
       visible: {
         opacity: 1,
         y: 0,
         transition: {
-          duration: 0.4, // Shorter duration for snappier feel
-          ease: [0.25, 0.46, 0.45, 0.94] // Custom easing for premium feel
-        }
+          duration: 0.4,
+          ease: 'easeOut',
+        },
       },
-    } as Variants,
-    // Add any additional variants here if needed
+    },
   }), []);
-  // ...existing code...
+
+  // Early return only if libraries not loaded
+  if (!motionLib || !icons) {
+    return (
+      <div className="relative bg-gradient-to-b from-background via-muted/30 to-background text-foreground py-20 px-6 md:px-12 lg:px-20 overflow-hidden">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="animate-pulse">
+            <div className="h-8 bg-muted rounded-lg w-48 mx-auto mb-4"></div>
+            <div className="h-12 bg-muted rounded-lg w-96 mx-auto mb-8"></div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="h-48 bg-muted rounded-lg"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
-      <SEO
-        title="Featured Projects | GoodAV - World-Class Audiovisual, Rwanda, Africa, Documentary, Conferences, Conversion"
-        description="Explore GoodAV's world-class featured audiovisual projects for Rwanda, Africa, conferences, documentaries, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and more. Our work drives engagement, customer conversion, and international recognition."
-        keywords="Rwanda, Africa, documentary, conversion, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda, world-class audiovisual, professional media, customer conversion, global impact, international events, Africa documentary, Rwanda documentary, Kigali events, Africa conferences, Rwanda conferences, Africa tourism, Rwanda tourism, Africa branding, Rwanda branding, Africa creative, Rwanda creative"
-        canonical="https://goodav.net/projects"
-      />
-      <motion.section
+      <Suspense fallback={null}>
+        <SEO
+          title="Featured Projects | GoodAV - World-Class Audiovisual, Rwanda, Africa, Documentary, Conferences, Conversion"
+          description="Explore GoodAV's world-class featured audiovisual projects for Rwanda, Africa, conferences, documentaries, tourism, Kigali Convention Center, Visit Rwanda, Kwita Izina gorilla naming, Rwanda visa, national parks, and more. Our work drives engagement, customer conversion, and international recognition."
+          keywords="Rwanda, Africa, documentary, conversion, Kigali Convention Center, Visit Rwanda, conference in Rwanda, Kwita Izina, gorilla naming, Rwanda visa, Rwandan national park, Rwanda Convention Bureau, audiovisual industry Rwanda, Trust Partner Rwanda, event media coverage, video production Rwanda, live streaming Rwanda, tourism Rwanda, international conference Rwanda, creative economy Rwanda, NGO storytelling Rwanda, African creative industries, cultural preservation Rwanda, pan-African media agency, impact storytelling Rwanda, professional media coverage, global events Rwanda, tourism investment Rwanda, e-learning Rwanda, documentary filmmaking Rwanda, branding Rwanda, high-quality video editing, media production Rwanda, creative direction Rwanda, audiovisual innovation Rwanda, world-class audiovisual, professional media, customer conversion, global impact, international events, Africa documentary, Rwanda documentary, Kigali events, Africa conferences, Rwanda conferences, Africa tourism, Rwanda tourism, Africa branding, Rwanda branding, Africa creative, Rwanda creative"
+          canonical="https://goodav.net/projects"
+        />
+      </Suspense>
+  <motion.section
         className="relative bg-gradient-to-b from-background via-muted/30 to-background text-foreground py-20 px-6 md:px-12 lg:px-20 overflow-hidden"
         initial="hidden"
         whileInView="visible"
@@ -643,20 +703,20 @@ const FeaturedProjects: React.FC = () => {
         >
           {/* First Row - Enhanced with accessibility */}
           <div
-            ref={leftMarquee.containerRef}
+            ref={leftContainerRef}
             className="relative overflow-hidden rounded-lg"
-            {...leftMarquee.pauseHandlers}
+            {...leftPauseHandlers}
             role="marquee"
             aria-label="Featured projects sliding left to right"
           >
             <motion.div
               className="flex gap-6 w-max"
-              style={{ x: leftMarquee.x }}
+              style={{ transform: `translateX(${leftMarqueeState.x}px)` }}
             >
-              {Array.from({ length: leftMarquee.copies }).map((_, copyIndex) => (
+              {Array.from({ length: leftMarqueeState.copies }).map((_, copyIndex) => (
                 <div 
                   key={`left-row-${copyIndex}`} 
-                  ref={copyIndex === 0 ? leftMarquee.copyRef : undefined} 
+                  ref={copyIndex === 0 ? leftCopyRef : undefined} 
                   className="flex gap-6 flex-shrink-0"
                   {...(copyIndex > 0 && { "aria-hidden": "true" })} // Hide duplicate copies from screen readers
                 >
@@ -666,6 +726,8 @@ const FeaturedProjects: React.FC = () => {
                         project={project}
                         setSelectedVideo={setSelectedVideo}
                         variants={animationVariants.item}
+                        motionLib={motionLib}
+                        PlayIcon={Play}
                       />
                     </div>
                   ))}
@@ -676,20 +738,20 @@ const FeaturedProjects: React.FC = () => {
 
           {/* Second Row - Enhanced with accessibility */}
           <div
-            ref={rightMarquee.containerRef}
+            ref={rightContainerRef}
             className="relative overflow-hidden rounded-lg"
-            {...rightMarquee.pauseHandlers}
+            {...rightPauseHandlers}
             role="marquee"
             aria-label="Featured projects sliding right to left"
           >
             <motion.div
               className="flex gap-6 w-max"
-              style={{ x: rightMarquee.x }}
+              style={{ transform: `translateX(${rightMarqueeState.x}px)` }}
             >
-              {Array.from({ length: rightMarquee.copies }).map((_, copyIndex) => (
+              {Array.from({ length: rightMarqueeState.copies }).map((_, copyIndex) => (
                 <div 
                   key={`right-row-${copyIndex}`} 
-                  ref={copyIndex === 0 ? rightMarquee.copyRef : undefined} 
+                  ref={copyIndex === 0 ? rightCopyRef : undefined} 
                   className="flex gap-6 flex-shrink-0"
                   {...(copyIndex > 0 && { "aria-hidden": "true" })}
                 >
@@ -699,6 +761,8 @@ const FeaturedProjects: React.FC = () => {
                         project={project}
                         setSelectedVideo={setSelectedVideo}
                         variants={animationVariants.item}
+                        motionLib={motionLib}
+                        PlayIcon={Play}
                       />
                     </div>
                   ))}
@@ -800,7 +864,7 @@ const FeaturedProjects: React.FC = () => {
               whileTap={{ scale: 0.9 }}
               autoFocus
             >
-              <X className="w-6 h-6" />
+              <icons.X className="w-6 h-6" />
             </motion.button>
 
             {/* Hidden titles for screen readers */}
@@ -820,14 +884,16 @@ const FeaturedProjects: React.FC = () => {
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
             >
-              {selectedVideo && (
-                <VideoPlaceholder
-                  videoId={selectedVideo}
-                  title="GoodAV Project Video - Featured Portfolio Showcase"
-                  showClose={true}
-                  onClose={() => setSelectedVideo(null)}
-                />
-              )}
+              <Suspense fallback={null}>
+                {selectedVideo && (
+                  <VideoPlaceholder
+                    videoId={selectedVideo}
+                    title="GoodAV Project Video - Featured Portfolio Showcase"
+                    showClose={true}
+                    onClose={() => setSelectedVideo(null)}
+                  />
+                )}
+              </Suspense>
             </motion.div>
 
             {/* Loading indicator */}

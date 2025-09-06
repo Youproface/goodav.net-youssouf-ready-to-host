@@ -829,12 +829,7 @@ export default function Partners() {
         </motion.section>
 
         {/* Partner Logos Section - Using Reusable Component */}
-        <Suspense fallback={
-          <div className="flex justify-center items-center py-20" role="status" aria-label="Loading partner logos">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
-            <span className="sr-only">Loading partner logos...</span>
-          </div>
-        }>
+        <Suspense fallback={null}>
           <PartnersLogos />
         </Suspense>
 

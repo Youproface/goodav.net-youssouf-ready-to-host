@@ -3,8 +3,8 @@ import { useLocation, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Youtube } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
-import ContactSection from './ContactSection';
-import BottomCTA from './BottomCTA';
+const ContactSection = React.lazy(() => import('./ContactSection'));
+const BottomCTA = React.lazy(() => import('./BottomCTA'));
 const LegalModal = React.lazy(() => import('./Legal/Legal-modal'));
 import { Suspense } from 'react';
 import { useState } from 'react';
@@ -51,8 +51,14 @@ const Footer = () => {
     <footer className="bg-gradient-section border-t border-border" role="contentinfo">
       <div>
         {/* Always show Contact section at the top of the footer for all pages, including services */}
-        <ContactSection />
-        {!isContactPage && !isHomePage && <BottomCTA />}
+        <React.Suspense fallback={null}>
+          <ContactSection />
+        </React.Suspense>
+        {!isContactPage && !isHomePage && (
+          <React.Suspense fallback={null}>
+            <BottomCTA />
+          </React.Suspense>
+        )}
         <div className="container mx-auto px-4">
           {/* Main Footer Content */}
           <div className="py-16">
@@ -62,7 +68,7 @@ const Footer = () => {
                 <div className="flex items-center space-x-2 mb-6">
                   <Link to="/" className="flex items-center space-x-2">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center">
-                      <img src="/images/all_site_images/Assets/logo-icon-white.svg" alt="brand-logo" className="cursor-pointer" />
+                      <img src="/images/all_site_images/Assets/logo-icon-white.svg" alt="brand-logo" className="cursor-pointer" loading="eager" decoding="async" />
                     </div>
                     <span className="text-2xl font-bold text-foreground cursor-pointer">GoodAV</span>
                   </Link>

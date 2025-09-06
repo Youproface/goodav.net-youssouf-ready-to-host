@@ -1,5 +1,6 @@
+import React from "react";
 import SEO from "../components/SEO";
-import LegalModal from "../components/Legal/Legal-modal";
+const LegalModal = React.lazy(() => import("../components/Legal/Legal-modal"));
 import { cookiePolicy } from "../components/Legal/legaldata";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -56,12 +57,14 @@ export default function CookiePolicyPage() {
         >
           View in Modal
         </button>
-        <LegalModal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          title="Cookie Policy"
-          content={cookiePolicy}
-        />
+        <React.Suspense fallback={null}>
+          <LegalModal
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            title="Cookie Policy"
+            content={cookiePolicy}
+          />
+        </React.Suspense>
         <div className="prose prose-lg text-gray-100">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{cookiePolicy}</ReactMarkdown>
         </div>

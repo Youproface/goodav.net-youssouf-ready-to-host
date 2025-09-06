@@ -27,7 +27,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/">
-            <img src={logo} alt="GoodAV Logo" className="h-10 w-auto" />
+            <img src={logo} alt="GoodAV Logo" className="h-10 w-auto" loading="eager" decoding="async" />
           </Link>
 
           {/* Desktop Navigation */}

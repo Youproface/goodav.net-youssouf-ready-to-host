@@ -1,5 +1,6 @@
+import React from "react";
 import SEO from "../components/SEO";
-import LegalModal from "../components/Legal/Legal-modal";
+const LegalModal = React.lazy(() => import("../components/Legal/Legal-modal"));
 import { termsAndConditions } from "../components/Legal/legaldata";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -56,12 +57,14 @@ export default function TermsPage() {
         >
           View in Modal
         </button>
-        <LegalModal
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-          title="Terms of Service"
-          content={termsAndConditions}
-        />
+        <React.Suspense fallback={null}>
+          <LegalModal
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            title="Terms of Service"
+            content={termsAndConditions}
+          />
+        </React.Suspense>
         <div className="prose prose-lg text-gray-100">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>{termsAndConditions}</ReactMarkdown>
         </div>

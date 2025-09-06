@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 interface SidebarLinkProps {
@@ -29,6 +29,16 @@ interface GalleryImgProps {
 
 export default function BTSMasterProduction() {
   const [previewImgIndex, setPreviewImgIndex] = useState<number | null>(null);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  // Delay entire component rendering to ensure it loads in natural order
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setImagesLoaded(true);
+    }, 1500); // Load after 1.5 seconds to ensure it appears in its natural place
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   const images = [
     { src: "/images/all_site_images/Home/BTS/GOODAV_BTS_1.jpg", className: "col-span-2 h-40" },
@@ -58,7 +68,14 @@ export default function BTSMasterProduction() {
   };
 
   return (
-    <main className="bg-[transparent] mt-10 text-zinc-100">
+    <>
+      {!imagesLoaded ? (
+        // Loading placeholder that takes minimal space
+        <div className="bg-[transparent] mt-10 text-zinc-100 h-20 flex items-center justify-center">
+          <div className="text-zinc-400 text-sm">Loading...</div>
+        </div>
+      ) : (
+        <main className="bg-[transparent] mt-10 text-zinc-100">
       {/* HERO */}
 
       {/* BTS GALLERY */}
@@ -82,17 +99,23 @@ export default function BTSMasterProduction() {
         </div>
 
         {/* Grid gallery (balanced layout) */}
-        <div className="mt-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {images.map((img, index) => (
-            <GalleryImg
-              key={index}
-              src={img.src}
-              className={img.className}
-              alt={`Behind the scenes ${index + 1}`}
-              onClick={() => setPreviewImgIndex(index)}
-            />
-          ))}
-        </div>
+        {imagesLoaded ? (
+          <div className="mt-6 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {images.map((img, index) => (
+              <GalleryImg
+                key={index}
+                src={img.src}
+                className={img.className}
+                alt={`Behind the scenes ${index + 1}`}
+                onClick={() => setPreviewImgIndex(index)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-6 text-center text-zinc-400">
+            Loading gallery...
+          </div>
+        )}
 
         {/* Preview Modal */}
         {previewImgIndex !== null && (
@@ -126,6 +149,8 @@ export default function BTSMasterProduction() {
         )}
       </section>
     </main>
+      )}
+    </>
   );
 }
 
@@ -140,6 +165,8 @@ function GalleryImg({ src, className = "", alt = "Behind the scenes", onClick }:
       <img
         src={src}
         alt={alt}
+        loading="lazy"
+        decoding="async"
         className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03] cursor-pointer"
       />
       <div className="pointer-events-none absolute inset-0 bg-black/0 transition duration-300 group-hover:bg-black/15" />

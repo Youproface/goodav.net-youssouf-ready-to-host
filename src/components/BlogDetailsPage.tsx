@@ -1,11 +1,14 @@
-import { ReactNode, useState } from 'react';
+
+import React, { ReactNode, useState, Suspense } from 'react';
 const heroBackground = '/images/all_site_images/Home/BG/Home_BG.png';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 import { BlogPost } from '../data/blog';
-import { Facebook, Twitter } from 'lucide-react';
-import { FaWhatsapp, FaDownload } from 'react-icons/fa';
+
+// Dynamic imports for heavy dependencies
+const ReactMarkdown = React.lazy(() => import('react-markdown'));
+const remarkGfmPromise = import('remark-gfm');
+const rehypeRawPromise = import('rehype-raw');
+const LucideReactPromise = import('lucide-react');
+const ReactIconsFaPromise = import('react-icons/fa');
 
 interface SidebarLinkProps {
   href: string;
@@ -33,12 +36,24 @@ interface BlogDetailsPageProps {
 
 export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
   const [profileModalOpen, setProfileModalOpen] = useState(false);
+  const [remarkGfm, setRemarkGfm] = useState<any>(null);
+  const [rehypeRaw, setRehypeRaw] = useState<any>(null);
+  const [icons, setIcons] = useState<any>({});
+  React.useEffect(() => {
+    // Load markdown plugins and icons dynamically
+    remarkGfmPromise.then((mod) => setRemarkGfm(() => mod.default || mod));
+    rehypeRawPromise.then((mod) => setRehypeRaw(() => mod.default || mod));
+    Promise.all([LucideReactPromise, ReactIconsFaPromise]).then(([lucide, fa]) => {
+      setIcons({
+        Facebook: lucide.Facebook,
+        Twitter: lucide.Twitter,
+        FaWhatsapp: fa.FaWhatsapp,
+        FaDownload: fa.FaDownload,
+      });
+    });
+  }, []);
   if (!blog) {
-    return (
-      <div className="min-h-screen bg-[#0f1012] flex items-center justify-center" role="status" aria-live="polite">
-        <p className="text-zinc-300">Loading blog post...</p>
-      </div>
-    );
+    return null;
   }
   // SEO and structured data
   const structuredData = {
@@ -163,7 +178,7 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
                 type="button"
                 aria-label="View company profile PDF"
               >
-                <FaDownload className="h-4 w-4" />
+                {icons.FaDownload ? <icons.FaDownload className="h-4 w-4" /> : null}
                 <span>View Company Profile</span>
               </button>
             </div>
@@ -245,33 +260,39 @@ export default function BlogDetailsPage({ blog }: BlogDetailsPageProps) {
 
             {/* Full content (Markdown-supported) */}
             <div className="prose prose-invert prose-zinc max-w-none text-zinc-300">
-              <ReactMarkdown 
-                remarkPlugins={[remarkGfm]} 
-                rehypePlugins={[rehypeRaw]}
-                components={{
-                  h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-orange-400 mt-8 mb-4" tabIndex={0} {...props} />,
-                  h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-orange-400 mt-8 mb-3" tabIndex={0} {...props} />,
-                  h3: ({node, ...props}) => <h3 className="text-xl font-semibold text-orange-400 mt-6 mb-2" tabIndex={0} {...props} />,
-                  p: ({node, ...props}) => <p className="text-zinc-300 mb-4 leading-relaxed" tabIndex={0} {...props} />,
-                  a: ({node, ...props}) => <a className="text-orange-400 hover:text-orange-300 underline focus:outline focus:ring-2 focus:ring-orange-400" target="_blank" rel="noopener noreferrer" tabIndex={0} {...props} />,
-                  ul: ({node, ...props}) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />,
-                  ol: ({node, ...props}) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />,
-                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-orange-400 pl-4 italic my-4 text-zinc-300" tabIndex={0} {...props} />,
-                  code: ({node, ...props}) => <code className="bg-zinc-800 text-orange-300 px-1.5 py-0.5 rounded text-sm" tabIndex={0} {...props} />,
-                  pre: ({node, ...props}) => <pre className="bg-zinc-900 p-4 rounded-lg overflow-x-auto my-4" tabIndex={0} {...props} />,
-                  img: ({node, ...props}) => <img className="rounded-lg my-6 w-full h-auto" loading="lazy" decoding="async" {...props} />
-                }}
-              >
-                {blog.content}
-              </ReactMarkdown>
+              <Suspense fallback={null}>
+                {remarkGfm && rehypeRaw ? (
+                  <ReactMarkdown 
+                    remarkPlugins={[remarkGfm]} 
+                    rehypePlugins={[rehypeRaw]}
+                    components={{
+                      h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-orange-400 mt-8 mb-4" tabIndex={0} {...props} />, 
+                      h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-orange-400 mt-8 mb-3" tabIndex={0} {...props} />, 
+                      h3: ({node, ...props}) => <h3 className="text-xl font-semibold text-orange-400 mt-6 mb-2" tabIndex={0} {...props} />, 
+                      p: ({node, ...props}) => <p className="text-zinc-300 mb-4 leading-relaxed" tabIndex={0} {...props} />, 
+                      a: ({node, ...props}) => <a className="text-orange-400 hover:text-orange-300 underline focus:outline focus:ring-2 focus:ring-orange-400" target="_blank" rel="noopener noreferrer" tabIndex={0} {...props} />, 
+                      ul: ({node, ...props}) => <ul className="list-disc pl-6 mb-4 space-y-2" {...props} />, 
+                      ol: ({node, ...props}) => <ol className="list-decimal pl-6 mb-4 space-y-2" {...props} />, 
+                      blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-orange-400 pl-4 italic my-4 text-zinc-300" tabIndex={0} {...props} />, 
+                      code: ({node, ...props}) => <code className="bg-zinc-800 text-orange-300 px-1.5 py-0.5 rounded text-sm" tabIndex={0} {...props} />, 
+                      pre: ({node, ...props}) => <pre className="bg-zinc-900 p-4 rounded-lg overflow-x-auto my-4" tabIndex={0} {...props} />, 
+                      img: ({node, ...props}) => <img className="rounded-lg my-6 w-full h-auto" loading="lazy" decoding="async" {...props} />
+                    }}
+                  >
+                    {blog.content}
+                  </ReactMarkdown>
+                ) : null}
+              </Suspense>
             </div>
 
             {/* Share */}
             <div className="flex items-center gap-4 text-sm text-zinc-400">
               <span>Share:</span>
-              <ShareBtn label="Twitter" />
-              <ShareBtn label="Facebook" />
-              <ShareBtn label="WhatsApp" />
+              <Suspense fallback={<span>...</span>}>
+                <ShareBtn label="Twitter" icons={icons} />
+                <ShareBtn label="Facebook" icons={icons} />
+                <ShareBtn label="WhatsApp" icons={icons} />
+              </Suspense>
             </div>
           </article>
         </div>
@@ -315,11 +336,11 @@ function SidebarLink({ href, children, active = false }: SidebarLinkProps) {
   );
 }
 
-function ShareBtn({ label }: { label: string }) {
+function ShareBtn({ label, icons }: { label: string; icons: any }) {
   let Icon = null;
-  if (label === 'Twitter') Icon = Twitter;
-  if (label === 'Facebook') Icon = Facebook;
-  
+  if (label === 'Twitter') Icon = icons.Twitter;
+  if (label === 'Facebook') Icon = icons.Facebook;
+  if (label === 'WhatsApp') Icon = icons.FaWhatsapp;
   return (
     <button
       className="grid h-7 w-7 place-items-center rounded bg-white/10 text-zinc-200 ring-1 ring-white/10 hover:bg-white/15"
@@ -337,7 +358,7 @@ function ShareBtn({ label }: { label: string }) {
         if (shareUrl) window.open(shareUrl, '_blank', 'noopener,noreferrer');
       }}
     >
-      {label !== 'WhatsApp' ? <Icon className="h-4 w-4" /> : <span className="h-4 w-4"><i className="fab fa-whatsapp h-4 w-4"></i></span>}
+      {Icon ? <Icon className="h-4 w-4" /> : null}
     </button>
   );
 }

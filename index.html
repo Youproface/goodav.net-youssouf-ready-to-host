@@ -2,6 +2,68 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <style>
+      /* Prevent any initial flash */
+      html, body, #root {
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: hsl(220, 13%, 9%) !important;
+      }
+      
+      /* Critical CSS for LCP text in PartnersSection */
+      .text-lg.text-muted-foreground.leading-relaxed {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+        color: hsl(215.4, 16.3%, 46.9%); /* --muted-foreground */
+        font-family: 'Inter', system-ui, sans-serif;
+        font-weight: 400;
+        margin-bottom: 1.5rem;
+      }
+      @media (max-width: 640px) {
+        .text-lg.text-muted-foreground.leading-relaxed {
+          font-size: 1rem;
+          line-height: 1.5;
+        }
+      }
+
+      /* Critical CSS for Hero above-the-fold */
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        overflow: hidden;
+        background: linear-gradient(135deg, hsl(220, 13%, 9%, 0.9), hsl(16, 90%, 58%, 0.1));
+        background-attachment: fixed;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+        /* Ensure immediate rendering */
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        will-change: auto;
+      }
+      
+      /* Ensure hero section is immediately visible */
+      section[role="banner"] {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+      .hero-bg-video, .hero-bg-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        overflow: hidden;
+        opacity: 1 !important;
+      }
+      .bg-gradient-hero {
+        background: linear-gradient(135deg, hsl(220 13% 9% / 0.9), hsl(16 90% 58% / 0.1));
+      }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GoodAV | Professional Audiovisual Services in Rwanda & Africa</title>
     <link rel="icon" href="favicon.ico" />
@@ -43,8 +105,8 @@
     <meta name="twitter:title" content="GoodAV - Africa's Premier AV Agency" />
     <meta name="twitter:description" content="Transforming Ideas Into Impactful Visual Stories" />
   <meta name="twitter:image" content="/images/all_site_images/Home/BG/Home_BG.webp" />
-  <!-- Preload critical hero assets for LCP optimization -->
-  <link rel="preload" as="image" href="/images/all_site_images/Home/BG/Home_BG.webp" type="image/webp" />
+  <!-- Preload critical hero assets for LCP optimization - commented out to prevent early loading -->
+  <!-- <link rel="preload" as="image" href="/images/all_site_images/Home/BG/Home_BG.webp" type="image/webp" /> -->
   <!-- Only preload above-the-fold images. Remove or defer preloading for images not used immediately. -->
   <!-- <link rel="preload" as="video" href="/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.mp4" type="video/mp4" /> -->
   <!-- <link rel="preload" as="image" href="/images/all_site_images/Home/Feature_Video/Feature_Video_01.webp" type="image/webp" /> -->
@@ -72,7 +134,30 @@
       }
 
       /* Critical CSS for Hero above-the-fold */
-      .hero-bg, .hero-bg-video, .hero-bg-img {
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        overflow: hidden;
+        background: linear-gradient(135deg, hsl(220, 13%, 9%, 0.9), hsl(16, 90%, 58%, 0.1));
+        background-attachment: fixed;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+        /* Ensure immediate rendering */
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        will-change: auto;
+      }
+      
+      /* Ensure hero section is immediately visible */
+      section[role="banner"] {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+      .hero-bg-video, .hero-bg-img {
         position: absolute;
         inset: 0;
         width: 100%;
@@ -80,9 +165,7 @@
         object-fit: cover;
         z-index: 0;
         overflow: hidden;
-      }
-      .hero-bg-video, .hero-bg-img {
-        object-fit: cover;
+        opacity: 1 !important;
       }
       .bg-gradient-hero {
         background: linear-gradient(135deg, hsl(220, 13%, 9%, 0.9), hsl(16, 90%, 58%, 0.1));

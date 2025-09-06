@@ -49,25 +49,26 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
     </motion.span>
   );
 };
-// Use optimized MP4 and WebP for hero background
+// Use optimized MP4 for hero background
 const heroBackgroundMp4 = '/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.mp4';
-const heroBackgroundWebp = '/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.webp';
-const heroBackgroundFallback = '/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.gif';
 import { useNavigate } from 'react-router-dom';
 import ProjectStartingModal from './forms/ProjectStartingModal';
 const Hero = () => {
   const [open, setOpen] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const navigate = useNavigate();
   
   // Check for reduced motion preference
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   
-  // Preload background image for better performance
+  // Load background video after component mounts to prevent early loading
   useEffect(() => {
-    const img = new Image();
-    img.src = heroBackgroundWebp;
-    img.onload = () => setImageLoaded(true);
+    // Add a longer delay to ensure Hero text content loads first and is visible
+    const timer = setTimeout(() => {
+      setVideoLoaded(true);
+    }, 500); // Increased delay to 500ms to ensure main content renders first
+    
+    return () => clearTimeout(timer);
   }, []);
   
   return (
@@ -134,50 +135,24 @@ const Hero = () => {
         aria-labelledby="hero-heading"
       >
         {/* Background Video or Image */}
-        <motion.div 
-          className="absolute inset-0 hero-bg"
-          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={prefersReducedMotion ? { duration: 0 } : { duration: 1 }}
-        >
-          {prefersReducedMotion ? (
-            <picture>
-              <source srcSet={heroBackgroundWebp.replace('webp', 'avif')} type="image/avif" />
-              <source srcSet={heroBackgroundWebp} type="image/webp" />
-              <img 
-                src={heroBackgroundFallback}
-                srcSet={`${heroBackgroundFallback} 1x, ${heroBackgroundWebp} 2x`}
-                alt="Dynamic video production background showcasing African creativity and global excellence at Goodav AV Agency"
-                className={`hero-bg-img transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                loading="eager"
-                decoding="async"
-                onLoad={() => setImageLoaded(true)}
-              />
-            </picture>
-          ) : (
+        <div className="absolute inset-0 hero-bg">
+          {!prefersReducedMotion && videoLoaded && (
             <video
-              className="hero-bg-video"
+              className="hero-bg-video fade-in"
               autoPlay
               loop
               muted
               playsInline
-              poster={heroBackgroundWebp}
+              preload="none"
               width={1280}
               height={480}
             >
               <source src={heroBackgroundMp4} type="video/mp4" />
-              <source src={heroBackgroundWebp.replace('webp', 'avif')} type="image/avif" />
-              <source src={heroBackgroundWebp} type="image/webp" />
-              <img src={heroBackgroundFallback} alt="Hero background" loading="eager" width="1280" height="480" decoding="async" />
+              Sorry, your browser doesn't support embedded videos.
             </video>
           )}
-          <motion.div 
-            className="absolute inset-0 bg-gradient-hero"
-            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={prefersReducedMotion ? { duration: 0 } : { duration: 1, delay: 0.5 }}
-          />
-        </motion.div>
+          <div className="absolute inset-0 bg-gradient-hero"></div>
+        </div>
 
         {/* Content */}
         <div className="relative z-10 container mx-auto px-4 py-20 text-center">

@@ -1,9 +1,9 @@
 import React, { Suspense, lazy } from 'react';
 import Header from '@/components/Header';
-const Hero = lazy(() => import('@/components/Hero'));
-const PartnersSection = lazy(() => import('@/components/PartnersSection'));
-const ServicesSection = lazy(() => import('@/components/ServicesSection'));
-const MissionSection = lazy(() => import('@/components/MissionSection'));
+import Hero from '@/components/Hero'; // Import Hero directly instead of lazy loading
+const PartnersSection = lazy(() => import('@/components/PartnersSection')); // Make PartnersSection lazy
+const ServicesSection = lazy(() => import('@/components/ServicesSection')); // Make ServicesSection lazy
+const MissionSection = lazy(() => import('@/components/MissionSection')); // Make MissionSection lazy
 const AboutUs = lazy(() => import('../components/AboutSection'));
 const OurJourney = lazy(() => import('@/components/OurJourney'));
 const FeaturedProjects = lazy(() => import('@/components/FeaturedProjects'));
@@ -11,7 +11,7 @@ const FoundersVision = lazy(() => import('@/components/FoundersVision'));
 const CreativeExcellence = lazy(() => import('@/components/CreativeExcellence'));
 const RecentEvents = lazy(() => import('@/components/RecentEvents'));
 const PartnersLogos = lazy(() => import('@/components/PartnersLogos'));
-const Testimonials = lazy(() => import('@/components/Testimonials'));
+// Remove duplicate Testimonials component since BottomCTA contains testimonials
 const Blogs = lazy(() => import('@/components/BlogsSection'));
 const BTSMasterProdcution = lazy(() => import('@/components/BTSMasterProdcution'));
 const Excellence = lazy(() => import('@/components/Excellence'));
@@ -20,7 +20,6 @@ const ContactSection = lazy(() => import('@/components/ContactSection'));
 const GlobalImpact = lazy(() => import('@/components/GlobalImpact'));
 import SEO from '@/components/SEO';
 import SchemaMarkup from '@/components/SchemaMarkup';
-import Loading from '@/components/Loading';
 
 const Index = () => {
   return (
@@ -103,18 +102,18 @@ const Index = () => {
         }}
       />
       <main>
-        <Suspense fallback={<Loading />}><Hero /></Suspense>
-        <Suspense fallback={<Loading />}><PartnersSection /></Suspense>
-        <Suspense fallback={<Loading />}><ServicesSection /></Suspense>
-        <Suspense fallback={<Loading />}><MissionSection /></Suspense>
-        <Suspense fallback={<Loading />}><GlobalImpact /></Suspense>
-        <Suspense fallback={<Loading />}><AboutUs /></Suspense>
-        <Suspense fallback={<Loading />}><OurJourney /></Suspense>
-        <Suspense fallback={<Loading />}><FeaturedProjects /></Suspense>
-        <Suspense fallback={<Loading />}><FoundersVision /></Suspense>
-        <Suspense fallback={<Loading />}><CreativeExcellence /></Suspense>
-        <Suspense fallback={<Loading />}><RecentEvents /></Suspense>
-        <Suspense fallback={<Loading />}>
+        <Hero />
+        <Suspense fallback={null}><PartnersSection /></Suspense>
+        <Suspense fallback={null}><ServicesSection /></Suspense>
+        <Suspense fallback={null}><MissionSection /></Suspense>
+        <Suspense fallback={null}><GlobalImpact /></Suspense>
+        <Suspense fallback={null}><AboutUs /></Suspense>
+        <Suspense fallback={null}><OurJourney /></Suspense>
+        <Suspense fallback={null}><FeaturedProjects /></Suspense>
+        <Suspense fallback={null}><FoundersVision /></Suspense>
+        <Suspense fallback={null}><CreativeExcellence /></Suspense>
+        <Suspense fallback={null}><RecentEvents /></Suspense>
+        <Suspense fallback={null}>
           <PartnersLogos 
             title="Our Valued Partners"
             subtitle="Building impactful relationships with leading organizations across Africa and beyond to create meaningful audiovisual experiences."
@@ -124,12 +123,11 @@ const Index = () => {
             containerPadding="py-20"
           />
         </Suspense>
-        <Suspense fallback={<Loading />}><Testimonials /></Suspense>
-        <Suspense fallback={<Loading />}><Blogs /></Suspense>
-        <Suspense fallback={<Loading />}><BTSMasterProdcution /></Suspense>
-        <Suspense fallback={<Loading />}><Excellence /></Suspense>
-        <Suspense fallback={<Loading />}><BottomCTA /></Suspense>
-        <Suspense fallback={<Loading />}><ContactSection /></Suspense>
+        <Suspense fallback={null}><Blogs /></Suspense>
+        <Suspense fallback={null}><BTSMasterProdcution /></Suspense>
+        <Suspense fallback={null}><Excellence /></Suspense>
+        <Suspense fallback={null}><BottomCTA /></Suspense>
+        <Suspense fallback={null}><ContactSection /></Suspense>
       </main>
     </div>
   );

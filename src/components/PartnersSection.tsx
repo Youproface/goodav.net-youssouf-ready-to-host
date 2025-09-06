@@ -41,6 +41,16 @@ const PartnersSection = () => {
   const partners = React.useMemo(() => partnerLogos, []);
   const [imagesLoaded, setImagesLoaded] = useState<Set<number>>(new Set());
   const [isHovered, setIsHovered] = useState(false);
+  const [componentMounted, setComponentMounted] = useState(false);
+  
+  // Delay mounting to prevent flash of images before main content
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setComponentMounted(true);
+    }, 200); // Small delay to ensure Hero loads first
+    
+    return () => clearTimeout(timer);
+  }, []);
   
   const partnershipStats = React.useMemo(() => [
     { 
@@ -349,7 +359,7 @@ const PartnersSection = () => {
                     src={partner.logo} 
                     alt={`${partner.name} logo - Strategic partnership with Goodav AV Agency for professional video production and media services`} 
                     className="h-full w-full object-contain opacity-70 hover:opacity-100 focus:opacity-100 transition-opacity duration-300"
-                    loading={index < 8 ? "eager" : "lazy"}
+                    loading="lazy"
                     decoding="async"
                     whileHover={prefersReducedMotion ? {} : { scale: 1.1 }}
                     onLoad={() => setImagesLoaded(prev => new Set([...prev, partner.id]))}
@@ -412,7 +422,7 @@ const PartnersSection = () => {
                     src={partner.logo} 
                     alt={`${partner.name} logo - Strategic partnership with Goodav AV Agency for professional video production and media services`} 
                     className="h-full w-full object-contain opacity-70 hover:opacity-100 focus:opacity-100 transition-opacity duration-300"
-                    loading={index < 8 ? "eager" : "lazy"}
+                    loading="lazy"
                     decoding="async"
                     whileHover={prefersReducedMotion ? {} : { scale: 1.1 }}
                     onLoad={() => setImagesLoaded(prev => new Set([...prev, partner.id]))}

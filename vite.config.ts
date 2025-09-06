@@ -34,7 +34,25 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: {
           react: ['react', 'react-dom', 'react-router-dom'],
-          vendor: ['framer-motion', 'lucide-react'],
+          vendor: [
+            'framer-motion',
+            'lucide-react',
+            'react-markdown',
+            'remark-gfm',
+            'rehype-raw',
+            '@tanstack/react-query',
+            '@headlessui/react',
+            'react-helmet-async',
+            'react-icons',
+            'react-syntax-highlighter',
+            'react-share',
+            'react-toastify',
+            'react-dropzone',
+            'react-player',
+            'react-slick',
+            'slick-carousel',
+            // add more as needed
+          ],
         },
         // Ensure consistent chunk naming for better caching
         chunkFileNames: 'assets/js/[name]-[hash].js',
