@@ -68,7 +68,7 @@ const Footer = () => {
                 <div className="flex items-center space-x-2 mb-6">
                   <Link to="/" className="flex items-center space-x-2">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center">
-                      <img src="/images/all_site_images/Assets/logo-icon-white.svg" alt="brand-logo" className="cursor-pointer" loading="eager" decoding="async" />
+                      <img src="/images/all_site_images/Assets/logo-icon-white.svg" alt="brand-logo" className="cursor-pointer" loading="eager" decoding="async" width="40" height="40" />
                     </div>
                     <span className="text-2xl font-bold text-foreground cursor-pointer">GoodAV</span>
                   </Link>

@@ -73,7 +73,7 @@ export default function ProjectStartingModal({ open, onClose }) {
   const [timeline, setTimeline] = useState('When do you need this completed?');
   const [description, setDescription] = useState('');
   const [consent, setConsent] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupType, setPopupType] = useState(null);

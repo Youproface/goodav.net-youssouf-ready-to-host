@@ -50,7 +50,7 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ service }) => {
                   </Button>
                   <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 px-8 py-6 text-lg font-medium rounded-lg group">
                     <Play className="w-5 h-5 mr-2 group-hover:text-orange-400 transition-colors" />
-                    Learn More
+                    {`Learn more about ${title}`}
                   </Button>
                 </div>
               </div>

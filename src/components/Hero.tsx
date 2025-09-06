@@ -50,6 +50,8 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
 };
 // Use optimized MP4 for hero background
 const heroBackgroundMp4 = '/images/all_site_images/Home/Banner/Home_Video_Banner_Optimized.mp4';
+const heroBackgroundWebp = '/images/all_site_images/Home/BG/Home_BG.webp';
+const heroBackgroundJpg = '/images/all_site_images/Home/BG/Home_BG.jpg';
 import { useNavigate } from 'react-router-dom';
 import ProjectStartingModal from './forms/ProjectStartingModal';
 const Hero = () => {
@@ -85,9 +87,9 @@ const Hero = () => {
         role="banner" 
         aria-labelledby="hero-heading"
       >
-        {/* Background Video or Image */}
+        {/* Background Video or fallback color/gradient only */}
         <div className="absolute inset-0 hero-bg">
-          {!prefersReducedMotion && videoLoaded && (
+          {!prefersReducedMotion && videoLoaded ? (
             <video
               className="hero-bg-video fade-in"
               autoPlay
@@ -101,6 +103,8 @@ const Hero = () => {
               <source src={heroBackgroundMp4} type="video/mp4" />
               Sorry, your browser doesn't support embedded videos.
             </video>
+          ) : (
+            <div className="w-full h-full bg-gradient-hero"></div>
           )}
           <div className="absolute inset-0 bg-gradient-hero"></div>
         </div>

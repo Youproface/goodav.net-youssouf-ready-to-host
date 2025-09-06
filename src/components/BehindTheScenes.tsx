@@ -47,11 +47,19 @@ const BehindTheScenes = () => {
         {/* Image Row */}
         <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
   <div className="group relative overflow-hidden rounded-xl">
-    <img
-  src="/images/all_site_images/Home/Team/Team_2.png"
-      alt="Behind the scenes 1"
-      className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-    />
+    <picture>
+      <source srcSet="/images/all_site_images/Home/Team/Team_2.avif" type="image/avif" />
+      <source srcSet="/images/all_site_images/Home/Team/Team_2.webp" type="image/webp" />
+      <img
+        src="/images/all_site_images/Home/Team/Team_2.png"
+        alt="Behind the scenes 1"
+        className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+        loading="lazy"
+        decoding="async"
+        width="400"
+        height="300"
+      />
+    </picture>
 
     {/* gradient + text overlay (hidden until hover) */}
     <div className="pointer-events-none absolute inset-0 flex items-end bg-gradient-to-t from-black/70 via-black/25 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">

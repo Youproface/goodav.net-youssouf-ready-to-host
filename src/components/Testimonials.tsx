@@ -180,16 +180,21 @@ export default function Testimonials() {
           </h2>
           <p className="mx-auto mt-4 max-w-3xl text-lg text-zinc-300 leading-relaxed">
             Ready to work with Africa's premier AV agency?
-            <a href="#contact" className="block mt-2 font-bold text-orange-400 hover:text-orange-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded" onClick={(e) => {
-              const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-              const target = document.getElementById('contact');
-              if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: (reduceMotion || prefersReduced) ? 'auto' : 'smooth', block: 'start' });
-                (target as HTMLElement).setAttribute('tabindex', '-1');
-                (target as HTMLElement).focus({ preventScroll: true });
-              }
-            }}>
+            <a 
+              href="#contact"
+              className="block mt-2 font-bold text-orange-400 hover:text-orange-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 rounded"
+              aria-label="Scroll to contact section and start your project with GoodAV"
+              onClick={(e) => {
+                const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                const target = document.getElementById('contact');
+                if (target) {
+                  e.preventDefault();
+                  target.scrollIntoView({ behavior: (reduceMotion || prefersReduced) ? 'auto' : 'smooth', block: 'start' });
+                  (target as HTMLElement).setAttribute('tabindex', '-1');
+                  (target as HTMLElement).focus({ preventScroll: true });
+                }
+              }}
+            >
               Get Started Today
             </a>
           </p>

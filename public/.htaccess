@@ -1,0 +1,90 @@
+
+<IfModule mod_rewrite.c>
+  Options -MultiViews -Indexes
+  RewriteEngine On
+
+  # 1. Primary Redirects (Force HTTPS + WWW)
+  RewriteCond %{HTTPS} off [OR]
+  RewriteCond %{HTTP_HOST} !^www\.goodav\.net$ [NC]
+  RewriteRule ^ https://www.goodav.net%{REQUEST_URI} [R=301,L]
+
+  # 2. Security Headers
+  <IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+  </IfModule>
+
+  # 3. RSS Feed Handling
+  RewriteRule ^feed\.xml$ feed.php [L,T=application/rss+xml]
+  <Files feed.php>
+    Header set Content-Type "application/rss+xml; charset=UTF-8"
+  </Files>
+
+  # 4. Clean URL Handling
+  RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+  RewriteRule ^([^.]+)\.html$ /$1 [R=301,L,NE]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^([^/]+)/?$ $1.html [L]
+
+  # 5. SPA Fallback for React/Vite
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.html [L]
+
+  # 6. Static Files Protection
+  RewriteCond %{REQUEST_URI} !\.(mp4|css|js|jpg|jpeg|png|gif|woff|woff2|ttf|eot|svg|ico|pdf|zip|xml|json|webp|avi|mov|ogg|otf|txt|html|php)$ [NC]
+  RewriteRule ^ - [L]
+
+  # 7. Trailing Slash Removal (except directories)
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} ^(.+)/$
+  RewriteRule ^ %1 [R=301,L]
+</IfModule>
+
+# 8. Cache Control for Static Assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType text/html "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/pdf "access plus 1 month"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/otf "access plus 1 year"
+  ExpiresDefault "access plus 1 month"
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\\.(js|css|png|jpg|jpeg|webp|avif|svg|woff2|woff|ttf|otf)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# 9. File Access Restrictions
+<FilesMatch "\\.(htaccess|htpasswd|ini|log|sh|sql|bak|old|config)$">
+  Order Allow,Deny
+  Deny from all
+</FilesMatch>
+
+# 10. Custom Error Documents
+ErrorDocument 400 /400.html
+ErrorDocument 401 /401.html
+ErrorDocument 403 /403.html
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+ErrorDocument 502 /502.html
+ErrorDocument 503 /503.html
+

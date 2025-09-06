@@ -130,11 +130,22 @@ function StoryCard({ category, image, title, excerpt, date, read, cta, onClick }
     return (
   <article
         className="group rounded-2xl ring-1 ring-white/10 bg-white/5 backdrop-blur shadow-[0_8px_30px_rgba(0,0,0,0.25)] overflow-hidden hover:ring-white/20 transition-all duration-300 focus-within:ring-white/30"
-        
       >
         {/* image with category ribbon */}
         <div className="relative">
-          <img src={image} alt={`${category} story image`} className="h-44 w-full object-cover" loading="lazy" />
+          <picture>
+            <source srcSet={image.replace(/\.jpg$/i, '.avif')} type="image/avif" />
+            <source srcSet={image.replace(/\.jpg$/i, '.webp')} type="image/webp" />
+            <img
+              src={image}
+              alt={`${category} story image`}
+              className="h-44 w-full object-cover"
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="176"
+            />
+          </picture>
           {/* category badge with small underline bar */}
           <div className="absolute left-3 top-3">
             <span className="inline-flex items-center gap-2 rounded-full bg-black/60 px-2.5 py-1 text-[10px] sm:text-xs md:text-sm font-bold uppercase tracking-wide text-orange-200 ring-1 ring-white/10">

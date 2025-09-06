@@ -36,7 +36,7 @@ export default function CreativeExcellence() {
   const videoId = "QuQ_TyWyFUs";
 
   return (
-    <section className="relative bg-gradient-to-b from-[#1a0f0a] to-[#0d0d0d] text-white py-20 px-6 md:px-12 lg:px-20">
+    <section className="relative bg-gradient-to-b from-[#1a0f0a] to-[#0d0d0d] text-white py-20 px-6 md:px-12 lg:px-20" role="region" aria-label="Creative Excellence Team Section">
       <div className="max-w-6xl mx-auto text-center">
         {/* Badge & Header */}
         <div className="flex justify-center mb-6">
@@ -69,7 +69,19 @@ export default function CreativeExcellence() {
         {/* First Team Image - Creative Collaboration */}
         <div className="team-image-showcase mb-6">
           <div className="main-image relative">
-            <img src="/images/all_site_images/Home/Team/Team_3.png" alt="GoodAV Team in action - Creative collaboration in progress" className="img-fluid rounded-xl w-full object-cover" loading="lazy" />
+            <picture>
+              <source srcSet="/images/all_site_images/Home/Team/Team_3.avif" type="image/avif" />
+              <source srcSet="/images/all_site_images/Home/Team/Team_3.webp" type="image/webp" />
+              <img
+                src="/images/all_site_images/Home/Team/Team_3.png"
+                alt="GoodAV Team in action - Creative collaboration in progress"
+                className="img-fluid rounded-xl w-full object-cover"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="533"
+              />
+            </picture>
             <div className="image-caption absolute left-0 bottom-0 bg-black/60 text-white p-3 rounded-b-xl w-full">
               <h6 className="font-semibold text-base">Creative Collaboration</h6>
               <p className="text-sm">Teamwork brings visions to life</p>
@@ -99,12 +111,19 @@ export default function CreativeExcellence() {
           {/* Vertical Control Room Image */}
           <div className="w-full md:w-1/2 flex flex-col justify-center">
             <div className="relative h-[400px] rounded-xl overflow-hidden shadow-lg">
-              <img
-                src="/images/all_site_images/Home/Team/Team_1.png"
-                alt="GoodAV production team in control room"
-                className="w-full h-full object-cover rounded-xl"
-                loading="lazy"
-              />
+              <picture>
+                <source srcSet="/images/all_site_images/Home/Team/Team_1.avif" type="image/avif" />
+                <source srcSet="/images/all_site_images/Home/Team/Team_1.webp" type="image/webp" />
+                <img
+                  src="/images/all_site_images/Home/Team/Team_1.png"
+                  alt="GoodAV production team in control room"
+                  className="w-full h-full object-cover rounded-xl"
+                  loading="lazy"
+                  decoding="async"
+                  width="800"
+                  height="533"
+                />
+              </picture>
               <div className="absolute left-0 bottom-0 bg-black/60 text-white p-4 w-full rounded-b-xl">
                 <h6 className="font-semibold text-base">Live Production Control</h6>
                 <p className="text-sm">Delivering seamless event coverage</p>
@@ -129,7 +148,19 @@ export default function CreativeExcellence() {
         {/* Second Team Image - Added at the bottom as requested */}
         <div className="team-image-showcase mb-6">
           <div className="main-image relative">
-            <img src="/images/all_site_images/Home/Team/Team_2.png" alt="GoodAV Team in action - Professional equipment and setup" className="img-fluid rounded-xl w-full object-cover" loading="lazy" />
+            <picture>
+              <source srcSet="/images/all_site_images/Home/Team/Team_2.avif" type="image/avif" />
+              <source srcSet="/images/all_site_images/Home/Team/Team_2.webp" type="image/webp" />
+              <img
+                src="/images/all_site_images/Home/Team/Team_2.png"
+                alt="GoodAV Team in action - Professional equipment and setup"
+                className="img-fluid rounded-xl w-full object-cover"
+                loading="lazy"
+                decoding="async"
+                width="800"
+                height="533"
+              />
+            </picture>
             <div className="image-caption absolute left-0 bottom-0 bg-black/60 text-white p-3 rounded-b-xl w-full">
               <h6 className="font-semibold text-base">Professional Excellence</h6>
               <p className="text-sm">Quality equipment for outstanding results</p>

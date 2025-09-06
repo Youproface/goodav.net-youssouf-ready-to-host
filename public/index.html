@@ -18,35 +18,82 @@
     <meta name="googlebot" content="index, follow">
     <meta name="theme-color" content="#FF6B35">
   <meta name="color-scheme" content="light dark">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     
     <!-- Geo Location -->
     <meta name="geo.region" content="RW">
     <meta name="geo.placename" content="Kigali, Rwanda">
     <meta name="geo.position" content="-1.9403;30.0619">
     <!-- TrustBox script -->
-    <script type="text/javascript" src="https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
+    <script>
+      // Defer Trustpilot script until Trustpilot section is visible
+      document.addEventListener('DOMContentLoaded', function() {
+        var trustpilotSection = document.getElementById('trustpilot-section');
+        if (!trustpilotSection) return;
+        var loaded = false;
+        var observer = new window.IntersectionObserver(function(entries) {
+          if (entries[0].isIntersecting && !loaded) {
+            var script = document.createElement('script');
+            script.src = 'https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js';
+            script.async = true;
+            document.body.appendChild(script);
+            loaded = true;
+            observer.disconnect();
+          }
+        });
+        observer.observe(trustpilotSection);
+      });
+    </script>
     <!-- End TrustBox script -->
 
 
     <!-- DNS Prefetch & Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
+    <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin>
     <link rel="dns-prefetch" href="//www.google-analytics.com">
     <link rel="dns-prefetch" href="//www.googletagmanager.com">
 
+    <!-- Inline critical CSS: font-face, hero, header, nav, base colors -->
+    <style>
+      @font-face {
+        font-family: 'Inter';
+        src: url('/fonts/inter-var.woff2') format('woff2');
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+      }
+      .hero-bg-img-cover { object-fit: cover; width: 100%; height: 100%; }
+      .lazy-fallback { padding: 2rem; text-align: center; font-size: 1.25rem; color: #ff6b35; }
+      :root {
+        --background: #161616;
+        --foreground: #fafafa;
+        --primary: #ff6b35;
+        --primary-foreground: #fff;
+        --card: #232323;
+        --card-foreground: #fafafa;
+        --muted: #222;
+        --muted-foreground: #aaa;
+        --radius: 0.75rem;
+      }
+      body { background: var(--background); color: var(--foreground); }
+      header, nav { background: transparent; color: var(--foreground); }
+      /* Safari/iOS support for backdrop-filter */
+      .backdrop-blur-md {
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+      }
+    </style>
 
     <meta name="ICBM" content="-1.9403, 30.0619">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="GoodAV - Africa's Premier AV Agency" />
     <meta name="twitter:description" content="Transforming Ideas Into Impactful Visual Stories" />
     <meta name="twitter:image" content="/hero-background.jpg" />
-    <link rel="stylesheet" 
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <script type="module" crossorigin src="/assets/js/index-r4CVq9II.js"></script>
+    <!-- Preload main CSS for faster paint -->
+    <link rel="preload" as="style" href="/assets/css/index-BHK8Yr6i.css" crossorigin>
     <link rel="modulepreload" crossorigin href="/assets/js/react-QLrdM8zg.js">
     <link rel="modulepreload" crossorigin href="/assets/js/vendor-CnlDlmLs.js">
     <link rel="stylesheet" crossorigin href="/assets/css/index-BHK8Yr6i.css">
@@ -54,5 +101,6 @@
 
   <body>
     <div id="root"></div>
+    <script type="module" crossorigin defer src="/assets/js/index-r4CVq9II.js"></script>
   </body>
 </html>

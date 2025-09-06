@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import styles from "./ConsultationModal.module.css";
 import { createPortal } from 'react-dom';
 import {
   Video,
@@ -41,18 +42,19 @@ export default function ConsultationModal({
   const [countryCode, setCountryCode] = useState("+250"); // Rwanda default
   const [organization, setOrganization] = useState("");
   const [project, setProject] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
+  type SelectedDate = { year: number; month: number; day: number } | null;
+  const [selectedDate, setSelectedDate] = useState<SelectedDate>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [timezone, setTimezone] = useState('Africa/Kigali');
   const [meetingSoftware, setMeetingSoftware] = useState("Zoom"); // New state for meeting software
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState<React.ReactNode | null>(null);
   const [timeSlotConfirmed, setTimeSlotConfirmed] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupType, setPopupType] = useState<'success' | 'error' | 'warning' | null>(null);
-  const [popupMessage, setPopupMessage] = useState('');
-  const [popupDetails, setPopupDetails] = useState('');
+  const [popupMessage, setPopupMessage] = useState<string>('');
+  const [popupDetails, setPopupDetails] = useState<string>('');
 
   const modalRef = useFocusTrap(isOpen);
 
@@ -345,7 +347,8 @@ export default function ConsultationModal({
 
   // Handle time slot confirmation - accept optional user note
   const handleTimeConfirmation = (note?: string) => {
-    const formattedDate = new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
+  if (!selectedDate) return;
+  const formattedDate = new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -603,7 +606,7 @@ export default function ConsultationModal({
               {/* Progress Bar */}
               <div className="w-full bg-gray-700 h-2 rounded-full mb-4 overflow-hidden">
                 <div
-                  className="bg-orange-500 h-full rounded-full transition-all duration-500 ease-out booking-progress-bar"
+                  className={styles.bookingProgressBar + " booking-progress-bar"}
                   style={{ width: `${(step / 8) * 100}%` }}
                   aria-label={`Progress: Step ${step} of 8`}
                 ></div>
@@ -979,7 +982,7 @@ function Step2({ setCanProceed }) {
    STEP 3
 ------------------------- */
 function Step3({ setCanProceed }) {
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState<number | null>(null);
   // Step 3: canProceed is true only if an option is selected
   useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
   const options = [
@@ -1036,7 +1039,7 @@ function Step3({ setCanProceed }) {
    STEP 4
 ------------------------- */
 function Step4({ setCanProceed }) {
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState<number | null>(null);
   // Step 4: canProceed is true only if an option is selected
   useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
   const options = [
@@ -1278,10 +1281,10 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
   const daysInMonth = getDaysInMonth(calendarYear, calendarMonth);
   const firstDayOfWeek = getFirstDayOfWeek(calendarYear, calendarMonth);
   // Build calendar grid
-  const calendarGrid = [];
+  const calendarGrid: (number | null)[][] = [];
   let dayNum = 1;
   for (let i = 0; i < 6; i++) {
-    const week = [];
+  const week: (number | null)[] = [];
     for (let j = 0; j < 7; j++) {
       if ((i === 0 && j < firstDayOfWeek) || dayNum > daysInMonth) {
         week.push(null);
@@ -1317,7 +1320,8 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
 
   // Confirmation popup state
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
-  const [pendingConfirmation, setPendingConfirmation] = useState(null);
+  type PendingConfirmation = { slot: string; note: string } | null;
+  const [pendingConfirmation, setPendingConfirmation] = useState<PendingConfirmation>(null);
 
   // Step 7: canProceed is true only if date and time are selected AND confirmed
   useEffect(() => { setCanProceed(selectedDate && selectedTime && timeSlotConfirmed); }, [selectedDate, selectedTime, timeSlotConfirmed, setCanProceed]);

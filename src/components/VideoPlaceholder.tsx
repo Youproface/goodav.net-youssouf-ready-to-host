@@ -117,7 +117,7 @@ const VideoPlaceholder: React.FC<VideoPlaceholderProps> = ({
             <button
               onClick={(e) => { e.stopPropagation(); handlePlay(); }}
               aria-label={title ? `Play ${title}` : 'Play video'}
-              className="pointer-events-auto w-16 h-16 flex items-center justify-center bg-primary/90 rounded-full shadow-lg text-primary-foreground focus:outline-none focus:ring-2 focus:ring-primary/60 z-30"
+              className="pointer-events-auto w-16 h-16 flex items-center justify-center bg-primary/90 rounded-full shadow-lg text-primary-foreground focus:outline focus:outline-2 focus:outline-orange-400 z-30"
             >
               <Play className="w-6 h-6 text-white" aria-hidden="true" />
             </button>
@@ -153,7 +153,7 @@ const VideoPlaceholder: React.FC<VideoPlaceholderProps> = ({
             <button
               onClick={handleClose}
               aria-label="Close video"
-              className="absolute top-3 right-3 z-10 bg-black/60 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-primary/60"
+              className="absolute top-3 right-3 z-10 bg-black/60 text-white rounded-full p-2 focus:outline focus:outline-2 focus:outline-orange-400"
             >
               <X className="w-4 h-4" />
             </button>

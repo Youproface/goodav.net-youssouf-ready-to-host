@@ -564,6 +564,7 @@ const FeaturedProjects: React.FC = () => {
         variants={animationVariants.container}
         aria-labelledby="portfolio-heading"
         role="region"
+        aria-label="Featured Projects Portfolio Section"
       >
       {/* 🎯 Accessibility: Enhanced skip link */}
       <a
@@ -879,7 +880,7 @@ const FeaturedProjects: React.FC = () => {
                   "description": project.description || `${project.title} - Professional ${project.category.toLowerCase()} video production by GoodAV${project.client ? ` for ${project.client}` : ''}`,
                   "thumbnailUrl": [
                     project.thumbnail,
-                    project.thumbnail.replace('hqdefault', 'maxresdefault')
+                    project.thumbnail ? project.thumbnail.replace('hqdefault', 'maxresdefault') : ''
                   ],
                   "uploadDate": project.year ? `${project.year}-01-01T00:00:00Z` : "2024-01-01T00:00:00Z",
                   "duration": "PT3M", // Estimated duration

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Consultation received - GoodAV</title>
+    <meta name="description" content="Thanks - we received your consultation request. Our team will reply within 1-2 business days." />
+    <style>
+      /* GoodAV orange themed client email */
+      body { margin:0; padding:0; font-family: Inter, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif; background:#fff7ed; }
+      .wrapper { width:100%; table-layout:fixed; padding:20px 0; }
+      .main { background:#fff; margin:0 auto; max-width:680px; border-radius:8px; overflow:hidden; border:1px solid #fff1e6; }
+      .header { background:#fb923c; padding:18px; color:#fff; }
+      .brand { display:flex; gap:24px; align-items:center; }
+      .brand img { width:44px; height:44px; border-radius:8px; background:#fff; padding:6px; margin-right:8px; }
+      .content { padding:20px; color:#0f172a; line-height:1.45; }
+      .btn { background:#fb923c; color:#fff; padding:10px 14px; border-radius:6px; display:inline-block; text-decoration:none; }
+      .meta { background:#fff7ed; border-top:1px solid #fff1e6; padding:12px 20px; color:#475569; font-size:13px; }
+  .muted { color:#b45309; }
+      .small { font-size:12px; color:#92400e; }
+      .summary { margin-top:8px; margin-bottom:12px; }
+      .details { background:#fff7ed; padding:12px; border-radius:6px; color:#0f172a; }
+      .social a { color:#b45309; text-decoration:none; margin:0 6px }
+      .brand-title { margin:0; font-size:18px; }
+      .section-title { margin-top:4px; margin-bottom:6px; }
+      .intro-text { margin-top:0; margin-bottom:12px; }
+      .summary-label { vertical-align:top; padding-right:12px; min-width:120px; font-weight:600; }
+      .summary-content { vertical-align:top; }
+      .summary-item { font-size:14px; margin-bottom:6px; }
+      .message-title { margin:0 0 12px 0; }
+      .update-text { margin-top:14px; }
+      .cta-text { margin-top:16px; }
+      .social-centered { text-align:center; margin-bottom:10px; }
+      @media (max-width:480px) { .content { padding:16px; } }
+    </style>
+  </head>
+  <body>
+    <center class="wrapper">
+      <table class="main" role="presentation" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="header">
+            <div class="brand">
+              <span class="logo">
+                <img src="https://goodav.net/apple-touch-icon.png" alt="GoodAV Logo" width="44" height="44">
+              </span>
+              <div>
+                <h1 class="brand-title">GoodAV</h1>
+                <div class="small">Professional AV production &amp; services</div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="content">
+            <p class="muted">Hi {{firstName}},</p>
+            <h2 class="section-title">Thanks - we received your consultation request</h2>
+            <p class="intro-text">We've received your request for a <strong>free consultation</strong>. Our team will review it and reply within 1-2 business days.</p>
+
+            <table class="summary" role="presentation" width="100%">
+              <tr>
+                <td class="summary-label">Summary</td>
+                <td class="summary-content">
+                  <div class="summary-item"><strong>Organization:</strong> {{organization}}</div>
+                  <div class="summary-item"><strong>Preferred Platform:</strong> {{location}}</div>
+                  <div class="summary-item"><strong>Preferred Time:</strong> {{date}} {{time}}</div>
+                </td>
+              </tr>
+            </table>
+
+            <p class="message-title"><strong>Your message</strong></p>
+            <div class="details">{{description}}</div>
+
+            <p class="update-text">If you need to update your request or attach files, reply to this message or contact us at <a href="mailto:update@goodav.net">update@goodav.net</a>.</p>
+
+            <p class="cta-text"><a class="btn" href="{{site_url}}">View our services</a></p>
+          </td>
+        </tr>
+        <tr>
+          <td class="meta">
+            <div class="social social-centered">
+              Connect:
+              <a href="https://www.youtube.com/@goodaudiovisuals" target="_blank" rel="noopener">YouTube</a>
+              <a href="https://www.instagram.com/goodaudiovisual" target="_blank" rel="noopener">Instagram</a>
+              <a href="https://x.com/AudiovisualGood" target="_blank" rel="noopener">X</a>
+              <a href="https://www.linkedin.com/company/goodav" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="https://www.facebook.com/goodaudiovisuals" target="_blank" rel="noopener">Facebook</a>
+              <a href="https://www.flickr.com/photos/202425883@N07" target="_blank" rel="noopener">Flickr</a>
+            </div>
+            <strong>Important Notice:</strong> You are receiving this message because you interacted with our website (<a href="https://goodav.net">goodav.net</a>). If you did not initiate this request, please ignore and delete this email immediately. To report any suspicious activity, contact <a href="mailto:report@goodav.net">report@goodav.net</a> for immediate support.<br>
+            For assistance, reach out to <a href="mailto:support@goodav.net">support@goodav.net</a>.<br>
+            If you interacted with us, please review our <a href="https://goodav.net/privacy">Privacy Policy</a> for details about your privacy, or contact <a href="mailto:privacy@goodav.net">privacy@goodav.net</a> for further information.<br>
+            GoodAV &bull; Kigali, Rwanda &bull; Reference: #{{id}}
+          </td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>

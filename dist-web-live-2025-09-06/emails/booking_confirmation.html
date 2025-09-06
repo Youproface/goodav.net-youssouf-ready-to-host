@@ -1,0 +1,64 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking confirmed - GoodAV</title>
+    <style>
+      body { margin:0; padding:0; background:#fff7ed; font-family: Arial, Helvetica, sans-serif; }
+      .container { max-width:600px; margin:32px auto; background:#fff; border-radius:10px; box-shadow:0 2px 12px #0001; border:1px solid #fff1e6; }
+      .header { background:#fb923c; color:#fff; text-align:center; padding:24px 0 16px 0; border-radius:10px 10px 0 0; }
+      .logo { display:inline-block; width:56px; height:56px; vertical-align:middle; margin-bottom:16px; }
+      .logo img { border-radius: 8px; }
+      .brand-title { font-size:22px; font-weight:700; margin:8px 0 4px 0; }
+      .brand-desc { font-size:15px; color:#fff8; margin-bottom:0; }
+      .content { padding:24px 24px 0 24px; color:#0f172a; }
+      .details { background:#fff7ed; padding:12px; border-radius:6px; margin:16px 0; }
+  .footer { background:#fff7ed; color:#92400e; font-size:13px; padding:18px 24px; text-align:center; border-radius:0 0 10px 10px; }
+  .social { margin-bottom:10px; }
+  .social-links { margin-bottom:8px; }
+  .social-links a { color:#b45309; text-decoration:none; margin:0 8px; }
+      a { color:#b45309; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <span class="logo">
+          <img src="https://goodav.net/apple-touch-icon.png" alt="GoodAV Logo" width="56" height="56">
+        </span>
+        <div class="brand-title">GoodAV</div>
+        <div class="brand-desc">Professional AV production &amp; services</div>
+      </div>
+      <div class="content">
+        <p>Hi {{name}},</p>
+        <h2>Thanks - we received your booking</h2>
+        <p>We've received your booking for <strong>{{service}}</strong>. Our team will reply within 1-2 business days.</p>
+        <div class="details">
+          <div><strong>Date:</strong> {{date}}</div>
+          <div><strong>Time:</strong> {{time}}</div>
+          <div><strong>Location:</strong> {{location}}</div>
+        </div>
+        <p><strong>Your message:</strong></p>
+        <div class="details">{{description}}</div>
+        <p>If you need to update your booking or attach files, reply to this message or contact us at <a href="mailto:update@goodav.net">update@goodav.net</a>.</p>
+      </div>
+      <div class="footer">
+  <div class="social">
+          Connect:
+          <a href="https://www.youtube.com/@goodaudiovisuals" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://www.instagram.com/goodaudiovisual" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://x.com/AudiovisualGood" target="_blank" rel="noopener">X</a>
+          <a href="https://www.linkedin.com/company/goodav" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://www.facebook.com/goodaudiovisuals" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.flickr.com/photos/202425883@N07" target="_blank" rel="noopener">Flickr</a>
+        </div>
+        <strong>Important Notice:</strong> You are receiving this message because you interacted with our website (<a href="https://goodav.net">goodav.net</a>). If you did not initiate this request, please ignore and delete this email immediately. To report any suspicious activity, contact <a href="mailto:report@goodav.net">report@goodav.net</a> for immediate support.<br>
+        For assistance, reach out to <a href="mailto:support@goodav.net">support@goodav.net</a>.<br>
+        If you interacted with us, please review our <a href="https://goodav.net/privacy">Privacy Policy</a> for details about your privacy, or contact <a href="mailto:privacy@goodav.net">privacy@goodav.net</a> for further information.<br>
+        GoodAV &bull; Kigali, Rwanda &bull; Reference: #{{id}}
+      </div>
+    </div>
+  </body>
+</html>

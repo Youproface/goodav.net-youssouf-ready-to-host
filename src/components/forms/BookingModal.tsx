@@ -1,3 +1,4 @@
+  type PendingConfirmation = { slot: string; note: string } | null;
 import { useEffect, useState } from "react";
 import { createPortal } from 'react-dom';
 import './booking-modal.css';
@@ -41,11 +42,12 @@ export default function BookingModal({
   const [countryCode, setCountryCode] = useState("+250"); // Rwanda default
   const [organization, setOrganization] = useState("");
   const [project, setProject] = useState("");
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState(null);
+  type SelectedDate = { year: number; month: number; day: number } | null;
+  const [selectedDate, setSelectedDate] = useState<SelectedDate>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [timezone, setTimezone] = useState('Africa/Kigali');
   const [meetingSoftware, setMeetingSoftware] = useState("Zoom"); // New state for meeting software
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [submitStatus, setSubmitStatus] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [confirmationMessage, setConfirmationMessage] = useState<React.ReactNode | null>(null);
   const [timeSlotConfirmed, setTimeSlotConfirmed] = useState(false);
@@ -54,8 +56,8 @@ export default function BookingModal({
   // Progress bar width calculation
   const progressWidth = `${Math.max(0, Math.min(100, (step / 8) * 100))}%`;
   const [popupType, setPopupType] = useState<'success' | 'error' | 'warning' | null>(null);
-  const [popupMessage, setPopupMessage] = useState('');
-  const [popupDetails, setPopupDetails] = useState('');
+  const [popupMessage, setPopupMessage] = useState<string>('');
+  const [popupDetails, setPopupDetails] = useState<string>('');
 
   // Comprehensive list of country codes
   const countryCodes = [
@@ -346,7 +348,8 @@ export default function BookingModal({
 
   // Handle time slot confirmation - accept optional user note
   const handleTimeConfirmation = (note?: string) => {
-    const formattedDate = new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
+  if (!selectedDate) return;
+  const formattedDate = new Date(selectedDate.year, selectedDate.month, selectedDate.day).toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -581,7 +584,7 @@ export default function BookingModal({
                 h-10 w-10 sm:h-12 sm:w-12 rounded-full 
                 bg-white/10 backdrop-blur-xl ring-2 ring-white/30 
                 hover:bg-white/20 flex items-center justify-center shadow-lg
-                active:scale-95 transition-transform"
+                active:scale-95 transition-transform focus:outline focus:outline-2 focus:outline-orange-400"
             >
               <span className="h-6 w-6 sm:h-8 sm:w-8 rounded-full bg-gradient-to-br from-zinc-100/80 to-white/60 shadow-inner flex items-center justify-center">
                 <FaTimesCircle className="h-4 w-4 text-zinc-800/80" aria-hidden />
@@ -739,11 +742,12 @@ export default function BookingModal({
       {showPopup && createPortal(
         <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <div className="bg-[#1b1b1d] w-full max-w-md mx-auto rounded-xl shadow-2xl border border-gray-700 
-            p-4 sm:p-6 relative popup-enter transform translate-y-0 max-h-[90vh] overflow-y-auto"
-            role="alertdialog"
-            aria-labelledby="popup-title"
-            aria-describedby="popup-description"
-          >
+              p-4 sm:p-6 relative popup-enter transform translate-y-0 max-h-[90vh] overflow-y-auto"
+              role="alertdialog"
+              aria-labelledby="popup-title"
+              aria-describedby="popup-description"
+              aria-live="assertive"
+            >
             {/* Close Button */}
             <button
               onClick={closePopup}
@@ -779,12 +783,12 @@ export default function BookingModal({
             </div>
 
             {/* Title */}
-            <h3 id="popup-title" className={`text-lg sm:text-xl font-semibold text-center mb-2 ${
+            <h2 id="popup-title" className={`text-lg sm:text-xl font-semibold text-center mb-2 ${
               popupType === 'success' ? 'text-orange-400' :
               popupType === 'warning' ? 'text-orange-400' : 'text-red-400'
             }`}>
               {popupMessage}
-            </h3>
+            </h2>
 
             {/* Details */}
             {popupDetails && (
@@ -801,7 +805,7 @@ export default function BookingModal({
               <button
                 onClick={closePopup}
                 className={`px-6 py-3 rounded-lg font-medium transition-colors min-h-[44px] 
-                  touch-manipulation active:scale-95 text-sm sm:text-base ${
+                  touch-manipulation active:scale-95 text-sm sm:text-base focus:outline focus:outline-2 focus:outline-orange-400 ${
                   popupType === 'success'
                     ? 'bg-orange-600 hover:bg-orange-700 text-white'
                     : popupType === 'warning'
@@ -980,7 +984,7 @@ function Step2({ setCanProceed }) {
    STEP 3
 ------------------------- */
 function Step3({ setCanProceed }) {
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState<number | null>(null);
   // Step 3: canProceed is true only if an option is selected
   useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
   const options = [
@@ -1037,7 +1041,7 @@ function Step3({ setCanProceed }) {
    STEP 4
 ------------------------- */
 function Step4({ setCanProceed }) {
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState<number | null>(null);
   // Step 4: canProceed is true only if an option is selected
   useEffect(() => { setCanProceed(active !== null); }, [active, setCanProceed]);
   const options = [
@@ -1280,10 +1284,10 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
   const daysInMonth = getDaysInMonth(calendarYear, calendarMonth);
   const firstDayOfWeek = getFirstDayOfWeek(calendarYear, calendarMonth);
   // Build calendar grid
-  const calendarGrid = [];
+  const calendarGrid: (number | null)[][] = [];
   let dayNum = 1;
   for (let i = 0; i < 6; i++) {
-    const week = [];
+  const week: (number | null)[] = [];
     for (let j = 0; j < 7; j++) {
       if ((i === 0 && j < firstDayOfWeek) || dayNum > daysInMonth) {
         week.push(null);
@@ -1319,7 +1323,7 @@ function Step7({ setCanProceed, selectedDate, setSelectedDate, selectedTime, set
 
   // Confirmation popup state
   const [showConfirmationPopup, setShowConfirmationPopup] = useState(false);
-  const [pendingConfirmation, setPendingConfirmation] = useState(null);
+  const [pendingConfirmation, setPendingConfirmation] = useState<PendingConfirmation>(null);
 
   // Step 7: canProceed is true only if date and time are selected AND confirmed
   useEffect(() => { setCanProceed(selectedDate && selectedTime && timeSlotConfirmed); }, [selectedDate, selectedTime, timeSlotConfirmed, setCanProceed]);

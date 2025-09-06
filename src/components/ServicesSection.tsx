@@ -68,7 +68,7 @@ const ServicesSection = () => {
       aria-labelledby="services-heading"
       role="region"
     >
-      <div className="container mx-auto px-4">
+  <div className="container mx-auto px-4">
         {/* Skip Link for Accessibility */}
         <a 
           href="#main-content" 
@@ -128,205 +128,103 @@ const ServicesSection = () => {
           {/* Service Stats Removed as requested */}
         </motion.div>
 
-        {/* Services Grid */}
-        <motion.div 
+        {/* Services List */}
+        <h3 id="services-grid-heading" className="sr-only">Our Service Offerings</h3>
+        <motion.ul 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-50px" }}
-          role="grid"
           aria-labelledby="services-grid-heading"
         >
-          <h3 id="services-grid-heading" className="sr-only">Our Service Offerings</h3>
           {memoizedServices.map((service, index) => {
             const IconComponent = service.icon;
             return (
-              <motion.div 
+              <li
                 key={index}
-                className="p-6 glass-card rounded-xl hover-lift group"
-                variants={item}
-                whileHover={{ 
-                  y: -5,
-                  transition: { duration: 0.2 }
-                }}
-                role="article"
                 aria-labelledby={`service-${service.id}-title`}
                 aria-describedby={`service-${service.id}-description`}
-                tabIndex={0}
               >
-                {/* Icon */}
                 <motion.div 
-                  className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4 group-hover:shadow-glow transition-all duration-300"
+                  className="p-6 glass-card rounded-xl hover-lift group"
+                  variants={item}
                   whileHover={{ 
-                    rotate: 5,
-                    scale: 1.05,
+                    y: -5,
                     transition: { duration: 0.2 }
                   }}
-                  aria-hidden="true"
+                  tabIndex={0}
                 >
-                  <IconComponent className="h-6 w-6 text-primary-foreground" />
-                </motion.div>
-
-                {/* Title */}
-                <h3 
-                  id={`service-${service.id}-title`}
-                  className="text-xl lg:text-2xl font-bold mb-3 group-hover:text-primary transition-colors"
-                >
-                  {service.title}
-                </h3>
-
-                {/* Description */}
-                <p 
-                  id={`service-${service.id}-description`}
-                  className="text-base lg:text-lg text-gray-200 mb-4 leading-relaxed"
-                >
-                  {service.description}
-                </p>
-
-                {/* Features */}
-                <motion.ul 
-                  className="space-y-2 mb-6"
-                  role="list"
-                  aria-label={`Key features of ${service.title}`}
-                >
-                  {service.features.map((feature, featureIndex) => (
-                    <motion.li 
-                      key={featureIndex} 
-                      className="flex items-start"
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ 
-                        opacity: 1, 
-                        x: 0,
-                        transition: { 
-                          delay: 0.1 + (featureIndex * 0.05),
-                          duration: 0.3
-                        }
-                      }}
-                      viewport={{ once: true }}
-                      role="listitem"
-                    >
-                      <motion.div 
-                        className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0"
-                        initial={{ scale: 0 }}
-                        whileInView={{ 
-                          scale: 1,
-                          transition: { 
-                            delay: 0.05 + (featureIndex * 0.05),
-                            type: 'spring',
-                            stiffness: 300,
-                            damping: 15
-                          }
-                        }}
-                        viewport={{ once: true }}
-                        aria-hidden="true"
-                      />
-                      <span className="text-sm lg:text-base text-gray-200">{feature}</span>
-                    </motion.li>
-                  ))}
-                </motion.ul>
-
-                {/* Learn More Button */}
-                <Link 
-                  to={`/services/${service.id}`}
-                  aria-label={`Learn more about ${service.title} service`}
-                >
-                  <Button 
-                    variant="outline" 
-                    size="lg" 
-                    className="mt-4 group text-base"
-                    aria-describedby={`service-${service.id}-title`}
+                  {/* Icon */}
+                  <motion.div 
+                    className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4 group-hover:shadow-glow transition-all duration-300"
+                    whileHover={{ 
+                      rotate: 5,
+                      scale: 1.05,
+                      transition: { duration: 0.2 }
+                    }}
+                    aria-hidden="true"
                   >
-                    <motion.span
-                      initial={{ x: 0 }}
-                      whileHover={{ x: 5 }}
-                      transition={{ type: 'spring', stiffness: 300 }}
-                      className="flex items-center"
-                    >
-                      Learn More
-                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                    </motion.span>
-                  </Button>
-                </Link>
-              </motion.div>
+                    <IconComponent className="h-6 w-6 text-primary-foreground" />
+                  </motion.div>
+
+                  {/* Title */}
+                  <h3 
+                    id={`service-${service.id}-title`}
+                    className="text-xl lg:text-2xl font-bold mb-3 group-hover:text-primary transition-colors"
+                  >
+                    {service.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p 
+                    id={`service-${service.id}-description`}
+                    className="text-base lg:text-lg text-gray-200 mb-4 leading-relaxed"
+                  >
+                    {service.description}
+                  </p>
+
+                  {/* Features */}
+                  <ul 
+                    className="space-y-2 mb-6"
+                    role="list"
+                    aria-label={`Key features of ${service.title}`}
+                  >
+                    {service.features.map((feature, featureIndex) => (
+                      <li 
+                        key={featureIndex} 
+                        className="flex items-start"
+                        role="listitem"
+                      >
+                        <motion.div 
+                          className="w-2 h-2 bg-primary rounded-full mt-2 mr-3 flex-shrink-0"
+                          initial={{ scale: 0 }}
+                          whileInView={{ 
+                            scale: 1,
+                            transition: { delay: 0.2, duration: 0.3 }
+                          }}
+                          aria-hidden="true"
+                        />
+                        <span className="text-gray-100 text-sm lg:text-base">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Learn More Link */}
+                  <a
+                    href={service.link}
+                    className="inline-flex items-center gap-2 text-primary font-semibold hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 rounded transition-all duration-200"
+                    aria-label={`Learn more about ${service.title}`}
+                  >
+                    Learn More
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </motion.div>
+              </li>
             );
           })}
-        </motion.div>
+        </motion.ul>
       </div>
-      
-      {/* Structured Data for SEO - WebPage Schema for Services Section */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "Our Services - Professional Audiovisual Production",
-            "description": "Comprehensive audiovisual services including video production, photography, live streaming, audio production, sound systems, and lighting services",
-            "url": "https://goodav.net#services-section",
-            "mainEntity": {
-              "@type": "OfferCatalog",
-              "name": "Audiovisual Services",
-              "description": "Professional audiovisual production services across Africa",
-              "itemListElement": [
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Video Production",
-                    "description": "Professional video production services including documentaries, corporate videos, and event coverage"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Photography",
-                    "description": "Professional photography services for events, portraits, and commercial projects"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Live Streaming",
-                    "description": "Professional live streaming services for conferences, events, and online broadcasts"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Audio Production",
-                    "description": "Professional audio production including voice-over, sound design, and podcast production"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Sound System Rental",
-                    "description": "Professional sound system rental and audio engineering for events"
-                  }
-                },
-                {
-                  "@type": "Offer",
-                  "itemOffered": {
-                    "@type": "Service",
-                    "name": "Lighting Services",
-                    "description": "Professional lighting design and rental for events and productions"
-                  }
-                }
-              ]
-            },
-            "isPartOf": {
-              "@type": "WebSite",
-              "name": "GoodAV",
-              "url": "https://goodav.net"
-            }
-          })
-        }}
-      />
     </motion.section>
   );
 };

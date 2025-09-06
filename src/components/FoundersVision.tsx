@@ -120,11 +120,19 @@ export default function FoundersVision() {
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8">
               {/* Avatar / Image placeholder */}
               <div className="relative h-24 w-24 md:h-28 md:w-28 lg:h-32 lg:w-32 rounded-full overflow-hidden">
-                <img
-                  src="/images/all_site_images/Home/founder/Founder&CEO.jpeg"
-                  alt="Founder"
-                  className="object-cover"
-                />
+                <picture>
+                  <source srcSet="/images/all_site_images/Home/founder/Founder&CEO.avif" type="image/avif" />
+                  <source srcSet="/images/all_site_images/Home/founder/Founder&CEO.webp" type="image/webp" />
+                  <img
+                    src="/images/all_site_images/Home/founder/Founder&CEO.jpeg"
+                    alt="Founder"
+                    className="object-cover"
+                    loading="lazy"
+                    decoding="async"
+                    width="128"
+                    height="128"
+                  />
+                </picture>
                 <span className="sr-only">Photo of Founder</span>
               </div>
               {/* Text */}
