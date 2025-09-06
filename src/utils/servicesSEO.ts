@@ -119,7 +119,13 @@ export function generateServiceStructuredData(service: ServiceType) {
       '@type': 'AggregateRating',
       ratingValue: '4.9',
       reviewCount: '150',
-      bestRating: '5'
+      bestRating: '5',
+      itemReviewed: {
+        '@type': 'Organization',
+        name: 'GoodAV',
+        url: baseUrl,
+        description: `${service.title} Services`
+      }
     },
     review: [
       {
@@ -135,13 +141,10 @@ export function generateServiceStructuredData(service: ServiceType) {
         },
         reviewBody: `Exceptional ${service.title.toLowerCase()} services from GoodAV. Professional, reliable, and outstanding quality.`,
         itemReviewed: {
-          '@type': 'Service',
-          name: `${service.title} Services`,
-          provider: {
-            '@type': 'Organization',
-            name: 'GoodAV',
-            url: baseUrl
-          }
+          '@type': 'Organization',
+          name: 'GoodAV',
+          url: baseUrl,
+          description: `${service.title} Services`
         }
       }
     ]

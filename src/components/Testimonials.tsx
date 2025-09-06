@@ -119,6 +119,55 @@ export default function Testimonials() {
               reviewBody: "Thanks everyone for your hard work, professionalism. It's been a pleasure working with you all. Thanks for helping Plus Life produce some great content.",
               itemReviewed: { "@type": "Organization", name: "GoodAV" }
             },
+            {
+              "@type": "Review",
+              author: { "@type": "Person", name: "Michelle Pilling" },
+              reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+              reviewBody: "We had an absolutely wonderful experience working with Youssof and his local film production team in Rwanda. From start to finish, they were extremely professional, well-organized, and detail-oriented. Communication was clear and easy, and they went out of their way to ensure everything ran smoothly. Beyond their professionalism, they were truly kind and genuine people — a pleasure to spend time with on set. Their creativity and technical skill showed in the final product, which exceeded our expectations. I would highly recommend this team to anyone looking for top-quality film production support in Rwanda. They deliver excellent work and make the entire process enjoyable.",
+              itemReviewed: { "@type": "Organization", name: "GoodAV" }
+            },
+            {
+              "@type": "Review",
+              author: { "@type": "Person", name: "Mangesh Verma Kumar" },
+              reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+              reviewBody: "Their video and photography redefined our brand. The team is reliable, innovative, and simply outstanding.",
+              itemReviewed: { "@type": "Organization", name: "GoodAV" }
+            },
+            {
+              "@type": "Review",
+              author: { "@type": "Person", name: "Dieudonne Ishimwe" },
+              reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+              reviewBody: "Our live-streamed event was flawless—zero frame drops and crystal-clear quality. GoodAV delivered beyond expectations.",
+              itemReviewed: { "@type": "Organization", name: "GoodAV" }
+            },
+            {
+              "@type": "Review",
+              author: { "@type": "Person", name: "Gloria Mutamba" },
+              reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+              reviewBody: "The voiceovers and audio work were exceptional. They understood our vision and executed it brilliantly.",
+              itemReviewed: { "@type": "Organization", name: "GoodAV" }
+            },
+            {
+              "@type": "Review",
+              author: { "@type": "Person", name: "Carine Rutari" },
+              reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+              reviewBody: "The final film was exactly what we envisioned—clear, moving, and professional. GoodAV delivered with both technical expertise and cultural sensitivity.",
+              itemReviewed: { "@type": "Organization", name: "GoodAV" }
+            },
+            {
+              "@type": "Review",
+              author: { "@type": "Person", name: "Will Dell" },
+              reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+              reviewBody: "Just wanted to send a HUGE thanks to everyone for such an amazing experience in Kigali. The work was great and clients are thrilled.",
+              itemReviewed: { "@type": "Organization", name: "GoodAV" }
+            },
+            {
+              "@type": "Review",
+              author: { "@type": "Person", name: "Tina Simon" },
+              reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+              reviewBody: "I like the storytelling and the shooting angles as well as the well-organized and performed interviews — very professional!",
+              itemReviewed: { "@type": "Organization", name: "GoodAV" }
+            }
           ],
           aggregateRating: { "@type": "AggregateRating", ratingValue: "5", reviewCount: "200" },
         })}
